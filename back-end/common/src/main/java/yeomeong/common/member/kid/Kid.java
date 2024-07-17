@@ -1,11 +1,12 @@
-package yeomeong.common.entity.kid;
+package yeomeong.common.member.kid;
 
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import yeomeong.common.entity.Ban;
-import yeomeong.common.entity.Bus;
+import yeomeong.common.ban.Ban;
+import yeomeong.common.bus.Bus;
+import yeomeong.common.member.kidParent;
 
 import java.util.ArrayList;
 import java.util.List;
