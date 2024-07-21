@@ -6,3 +6,7 @@
   font-family: 'PretendardVariable';
   src: url('./assets/font/PretendardVariable.ttf');
 }
+
+body {
+  @apply font-pretendard;
+}
