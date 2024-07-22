@@ -1,9 +1,9 @@
 import React from 'react';
 import Icon from '@/assets/icons/arrow-left-line.svg';
 
-type BackButtonProps = {
+interface BackButtonProps {
   // onClick: () => void;
-};
+}
 
 const BackButton: React.FC<BackButtonProps> = ({}) => {
   return (

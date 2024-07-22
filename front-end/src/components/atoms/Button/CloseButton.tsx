@@ -1,9 +1,9 @@
 import React from 'react';
 import Icon from '@/assets/icons/close-line.svg';
 
-type CloseButtonProps = {
+interface CloseButtonProps {
   // onClick: () => void;
-};
+}
 
 const CloseButton: React.FC<CloseButtonProps> = ({}) => {
   return (

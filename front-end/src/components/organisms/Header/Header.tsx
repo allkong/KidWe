@@ -2,10 +2,10 @@ import React from 'react';
 import BackButton from '@/components/atoms/Button/BackButton';
 import CloseButton from '@/components/atoms/Button/CloseButton';
 
-type HeaderProps = {
+interface HeaderProps {
   title: string;
   buttonType: 'back' | 'close';
-};
+}
 
 const Header: React.FC<HeaderProps> = ({title, buttonType}) => {
   return (

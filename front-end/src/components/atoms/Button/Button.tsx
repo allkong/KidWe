@@ -1,15 +1,15 @@
 import React from 'react';
 
-type ButtonProps = {
+interface ButtonProps {
   label: string;
-};
+  variant?: 'positive' | 'negative';
+}
 
-const Button: React.FC<ButtonProps> = ({label}) => {
-  return (
-    <button className="px-6 py-2 font-bold text-white rounded-full text-large bg-primary">
-      {label}
-    </button>
-  );
+const Button: React.FC<ButtonProps> = ({label, variant = 'positive'}) => {
+  const baseClass = 'px-6 py-2 font-bold text-white rounded-full text-large';
+  const variantClass = variant === 'positive' ? 'bg-primary' : 'bg-gray-200';
+
+  return <button className={`${baseClass} ${variantClass}`}>{label}</button>;
 };
 
 export default Button;
