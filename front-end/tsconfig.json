@@ -14,7 +14,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": ["es6", "dom"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts"]
 }

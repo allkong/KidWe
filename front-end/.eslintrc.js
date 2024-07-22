@@ -16,4 +16,13 @@ export default {
       {allowConstantExport: true},
     ],
   },
+  overrides: [
+    {
+      files: ['*.css', '*.scss', '*.html'],
+      rules: {
+        'react-refresh/only-export-components': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
+      },
+    },
+  ],
 };
