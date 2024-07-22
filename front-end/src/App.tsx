@@ -1,6 +1,6 @@
 import React from 'react';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <div className="bg-primary font-pretendard">Font 및 색상 테스트</div>

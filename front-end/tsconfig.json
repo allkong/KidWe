@@ -11,11 +11,10 @@
     "baseUrl": ".",
     "jsx": "react",
     "strict": true,
+    "lib": ["es6", "dom"],
     "paths": {
       "@/*": ["src/*"]
     },
     "esModuleInterop": true,
-    "lib": ["es6", "dom"]
-  },
   "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts"]
 }
