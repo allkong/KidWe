@@ -1,12 +1,12 @@
 import React from 'react';
 import {ReactNode} from 'react';
 
-type DropDownMainProps = {
+export interface DropDownMainProps {
   children?: ReactNode;
   isOpen: boolean;
-};
+}
 
-const DropDownMain: React.FC<DropDownMainProps> = ({children, isOpen}) => {
+const DropDownMain = ({children, isOpen}: DropDownMainProps) => {
   if (!isOpen) {
     return null;
   }

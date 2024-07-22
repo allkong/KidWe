@@ -1,10 +1,10 @@
 import React from 'react';
 
-export type TestTextProps = {
+export interface TestTextProps {
   text: string;
-};
+}
 
-const TestText: React.FC<TestTextProps> = ({text}) => {
+const TestText = ({text}: TestTextProps) => {
   return <p>{text}</p>;
 };
 
