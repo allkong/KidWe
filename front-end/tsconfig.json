@@ -11,6 +11,7 @@
     "baseUrl": ".",
     "jsx": "react",
     "strict": true,
+    "lib": ["es6", "dom"],
     "paths": {
       "@/*": ["src/*"]
     },
