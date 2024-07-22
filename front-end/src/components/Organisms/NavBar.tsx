@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from './../atoms/Icon';
+import Icon from '@/components/atoms/Icon';
 const NavBar = () => {
   return (
-    <nav className="fixed bottom-0  w-full font-pretendard  border-t border-gray-100 text-gray-100 text-base pt-2">
+    <nav className="fixed bottom-0 w-full pt-2 text-base text-gray-100 border-t border-gray-100">
       <div className="flex flex-row ">
         <Icon
           src="/public/icons/home.png"

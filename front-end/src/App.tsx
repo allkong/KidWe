@@ -1,20 +1,14 @@
 import React from 'react';
-import TestText from '@/components/atoms/TestText';
-import './App.css';
-import NavBar from './components/Organisms/NavBar';
-import MemoWrite from './components/atoms/Write';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <div className="bg-primary">
-        <p>여기는 공지사항 Header</p>
-      </div>
-
-      <TestText text={'Component Test'} />
-      <MemoWrite />
-      <NavBar />
-    </div>
+    <>
+      <div className="bg-primary">Font 및 색상 테스트</div>
+      <div className="bg-secondary">Font 및 색상 테스트</div>
+      <div className="bg-gray-100">Font 및 색상 테스트</div>
+      <div className="bg-gray-200">Font 및 색상 테스트</div>
+      <div className="bg-gray-300">Font 및 색상 테스트</div>
+    </>
   );
 };
 

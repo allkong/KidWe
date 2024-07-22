@@ -21,7 +21,7 @@ const Tag = ({text, color}: TagProps) => {
 
   return (
     <div
-      className={`font-pretendard w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      className={`w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
     >
       {text}
     </div>

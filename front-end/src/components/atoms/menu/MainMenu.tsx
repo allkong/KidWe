@@ -14,9 +14,7 @@ const MainMenu = ({img, text}: MainMenuProps) => {
       >
         <img src={getImage(img)} width="32" />
       </div>
-      <p className="text-xs font-semibold text-gray-300 font-pretendard">
-        {text}
-      </p>
+      <p className="text-xs font-semibold text-gray-300">{text}</p>
     </div>
   );
 };
