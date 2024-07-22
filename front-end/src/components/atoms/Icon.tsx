@@ -16,7 +16,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   text,
 }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <img src={src} alt={alt} width={width} height={height} />
       <p>{text}</p>
     </div>
