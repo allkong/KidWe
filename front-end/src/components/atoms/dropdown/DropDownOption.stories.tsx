@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import DropDownOption from './DropDownOption';
+import DropDownOption from '@/components/atoms/DropDown/DropDownOption';
 
 const meta: Meta<typeof DropDownOption> = {
   component: DropDownOption,

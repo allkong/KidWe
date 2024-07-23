@@ -9,14 +9,14 @@ export default meta;
 
 type Story = StoryObj<typeof MainMenu>;
 
-export const riceBowl: Story = {
+export const RiceBowl: Story = {
   args: {
     img: 'riceBowl',
     text: '식단',
   },
 };
 
-export const sketchBook: Story = {
+export const SketchBook: Story = {
   args: {
     img: 'sketchBook',
     text: '알림장',

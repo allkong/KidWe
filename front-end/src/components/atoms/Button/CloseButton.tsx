@@ -5,7 +5,7 @@ interface CloseButtonProps {
   // onClick: () => void;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = ({}) => {
+const CloseButton: React.FC<CloseButtonProps> = () => {
   return (
     <button>
       <img src={Icon} alt="icon" />

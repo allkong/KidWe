@@ -5,7 +5,7 @@ interface BackButtonProps {
   // onClick: () => void;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({}) => {
+const BackButton: React.FC<BackButtonProps> = () => {
   return (
     <button>
       <img src={Icon} alt="icon" />

@@ -1,8 +1,8 @@
 import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
-import DropDownMain from './DropDownMain';
-import DropDownOption from './DropDownOption';
-import DropDownDivider from './DropDownDivider';
+import DropDownDivider from '@/components/atoms/DropDown/DropDownDivider';
+import DropDownMain from '@/components/atoms/DropDown/DropDownMain';
+import DropDownOption from '@/components/atoms/DropDown/DropDownOption';
 
 const meta: Meta<typeof DropDownMain> = {
   component: DropDownMain,

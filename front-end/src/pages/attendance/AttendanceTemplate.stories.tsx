@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import AttendanceTemplate from '@/components/templates/attendance/AttendanceTemplate';
+import AttendanceTemplate from '@/pages/attendance/AttendanceTemplate';
 
 const meta: Meta<typeof AttendanceTemplate> = {
   component: AttendanceTemplate,

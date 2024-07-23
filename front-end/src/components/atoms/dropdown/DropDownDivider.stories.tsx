@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import DropDownDivider from './DropDownDivider';
+import DropDownDivider from '@/components/atoms/DropDown/DropDownDivider';
 
 const meta: Meta<typeof DropDownDivider> = {
   component: DropDownDivider,

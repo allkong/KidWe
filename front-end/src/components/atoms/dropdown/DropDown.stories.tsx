@@ -1,5 +1,5 @@
-import type {StoryObj, Meta} from '@storybook/react';
-import DropDown from './DropDown';
+import type {Meta, StoryObj} from '@storybook/react';
+import DropDown from '@/components/atoms/DropDown/DropDown';
 
 const meta: Meta<typeof DropDown> = {
   component: DropDown,
@@ -8,3 +8,7 @@ const meta: Meta<typeof DropDown> = {
 export default meta;
 
 type Story = StoryObj<typeof DropDown>;
+
+export const Default: Story = {
+  args: {},
+};
