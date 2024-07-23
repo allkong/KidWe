@@ -1,10 +1,10 @@
 import React from 'react';
-import commentIcon from '@/assets/icons/message-line.svg';
+// import commentIcon from '@/assets/icons/message-line.svg';
+import CommentCount from '@/components/atoms/Comment/CommentCount';
 interface AnnounceItemProps {
   title: string;
   writer: string;
   date: Date;
-  comments: number;
   src?: string;
 }
 
@@ -12,7 +12,6 @@ const AnnounceItem: React.FC<AnnounceItemProps> = ({
   title,
   writer,
   date,
-  comments,
   src,
 }) => {
   const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
@@ -28,10 +27,7 @@ const AnnounceItem: React.FC<AnnounceItemProps> = ({
           <span className="mx-2">|</span>
           <p>{formattedDate}</p>
           <span className="mx-2">|</span>
-          <p className="flex flex-row space-x-2 items-center">
-            <img src={commentIcon} alt="" />
-            {comments}
-          </p>
+          <CommentCount count={10} />
         </div>
       </div>
       <div className="col-span-3 flex justify-center">
