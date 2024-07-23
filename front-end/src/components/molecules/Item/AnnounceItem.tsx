@@ -1,5 +1,5 @@
 import React from 'react';
-
+import commentIcon from '@/assets/icons/message-line.svg';
 interface AnnounceItemProps {
   title: string;
   writer: string;
@@ -30,7 +30,7 @@ const AnnounceItem: React.FC<AnnounceItemProps> = ({
           <p>{formattedDate}</p>
           <span className="mx-2">|</span>
           <p className="flex flex-row space-x-2 items-center">
-            <img src="/public/icons/comment.png" alt="" />
+            <img src={commentIcon} alt="" />
             {comments}
           </p>
         </div>

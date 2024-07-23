@@ -14,6 +14,6 @@ export const Basic: Story = {
     writer: '백승우 선생님',
     date: new Date(),
     comments: 10,
-    src: './../../../public/icons/calender.png',
+    src: '',
   },
 };
