@@ -16,7 +16,6 @@ const AnnounceItem: React.FC<AnnounceItemProps> = ({
   src,
 }) => {
   const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
-
   return (
     <div className="grid grid-cols-12 items-center border-b border-gray-200 p-4 m-2 ">
       <div className="col-span-9">

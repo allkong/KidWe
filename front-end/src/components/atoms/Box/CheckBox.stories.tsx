@@ -1,14 +1,16 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import CheckBox from '@/components/atoms/Box/CheckBox';
+import Checkbox from '@/components/atoms/Box/CheckBox';
 
-const meta: Meta<typeof CheckBox> = {
-  component: CheckBox,
+const meta: Meta<typeof Checkbox> = {
+  component: Checkbox,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof CheckBox>;
+type Story = StoryObj<typeof Checkbox>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '찬성',
+  },
 };
