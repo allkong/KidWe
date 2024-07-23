@@ -1,6 +1,8 @@
 import React from 'react';
 
-interface TextAreaProps extends React.ComponentProps<'textarea'> {
+interface TextAreaProps
+  extends Omit<React.ComponentProps<'textarea'>, 'value'> {
+  value: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
