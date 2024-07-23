@@ -10,7 +10,7 @@ interface IconProps {
 
 const Icon: React.FC<IconProps> = ({src, alt, width, height, text}) => {
   return (
-    <div className="flex flex-col w-1/3 items-center">
+    <div className="flex flex-col items-center w-1/3">
       <img src={src} alt={alt} width={width} height={height} />
       <p>{text}</p>
     </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import {ReactNode} from 'react';
 
-export interface DropDownMainProps {
+export interface DropdownMainProps {
   children?: ReactNode;
   isOpen: boolean;
 }
 
-const DropDownMain = ({children, isOpen}: DropDownMainProps) => {
+const DropdownMain = ({children, isOpen}: DropdownMainProps) => {
   if (!isOpen) {
     return null;
   }
@@ -18,4 +18,4 @@ const DropDownMain = ({children, isOpen}: DropDownMainProps) => {
   );
 };
 
-export default DropDownMain;
+export default DropdownMain;

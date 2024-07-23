@@ -1,12 +1,12 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import DropDownDivider from '@/components/atoms/DropDown/DropDownDivider';
+import DropdownDivider from '@/components/atoms/Dropdown/DropdownDivider';
 
-const meta: Meta<typeof DropDownDivider> = {
-  component: DropDownDivider,
+const meta: Meta<typeof DropdownDivider> = {
+  component: DropdownDivider,
 };
 export default meta;
 
-type Story = StoryObj<typeof DropDownDivider>;
+type Story = StoryObj<typeof DropdownDivider>;
 
 export const Default: Story = {
   args: {},

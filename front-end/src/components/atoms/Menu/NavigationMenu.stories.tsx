@@ -1,5 +1,5 @@
 import type {StoryObj, Meta} from '@storybook/react';
-import NavigationMenu from '@/components/atoms/menu/NavigationMenu';
+import NavigationMenu from '@/components/atoms/Menu/NavigationMenu';
 
 const meta: Meta<typeof NavigationMenu> = {
   component: NavigationMenu,

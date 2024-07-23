@@ -1,10 +1,10 @@
-import DropDownMain from '@/components/atoms/DropDown/DropDownMain';
-import DropDownOption from '@/components/atoms/DropDown/DropDownOption';
-import DropDownDivider from '@/components/atoms/DropDown/DropDownDivider';
+import DropdownMain from '@/components/atoms/Dropdown/DropdownMain';
+import DropdownOption from '@/components/atoms/Dropdown/DropdownOption';
+import DropdownDivider from '@/components/atoms/Dropdown/DropdownDivider';
 
-const DropDown = Object.assign(DropDownMain, {
-  Option: DropDownOption,
-  Divider: DropDownDivider,
+const Dropdown = Object.assign(DropdownMain, {
+  Option: DropdownOption,
+  Divider: DropdownDivider,
 });
 
-export default DropDown;
+export default Dropdown;

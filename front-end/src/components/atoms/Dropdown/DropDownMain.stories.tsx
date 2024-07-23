@@ -1,24 +1,24 @@
 import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
-import DropDownDivider from '@/components/atoms/DropDown/DropDownDivider';
-import DropDownMain from '@/components/atoms/DropDown/DropDownMain';
-import DropDownOption from '@/components/atoms/DropDown/DropDownOption';
+import DropdownDivider from '@/components/atoms/Dropdown/DropdownDivider';
+import DropdownMain from '@/components/atoms/Dropdown/DropdownMain';
+import DropdownOption from '@/components/atoms/Dropdown/DropdownOption';
 
-const meta: Meta<typeof DropDownMain> = {
-  component: DropDownMain,
+const meta: Meta<typeof DropdownMain> = {
+  component: DropdownMain,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof DropDownMain>;
+type Story = StoryObj<typeof DropdownMain>;
 
 export const Default: Story = {
   args: {
     children: [
-      <DropDownOption text="test1" />,
-      <DropDownDivider />,
-      <DropDownOption text="test2" />,
-      <DropDownOption text="test3" />,
+      <DropdownOption text="test1" />,
+      <DropdownDivider />,
+      <DropdownOption text="test2" />,
+      <DropdownOption text="test3" />,
     ],
   },
 };

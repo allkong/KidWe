@@ -1,5 +1,5 @@
 import type {StoryObj, Meta} from '@storybook/react';
-import MainMenu from './MainMenu';
+import MainMenu from '@/components/atoms/Menu/MainMenu';
 
 const meta: Meta<typeof MainMenu> = {
   component: MainMenu,
