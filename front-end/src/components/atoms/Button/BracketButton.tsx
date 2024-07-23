@@ -6,7 +6,9 @@ interface BracketButtonProps {
   // onClick: () => void;
 }
 
-const BracketButton: React.FC<BracketButtonProps> = ({direction}) => {
+const BracketButton: React.FC<BracketButtonProps> = ({
+  direction,
+}: BracketButtonProps) => {
   const rotationClass = direction === 'right' ? 'rotate-180' : '';
 
   return (
