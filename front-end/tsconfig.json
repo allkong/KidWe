@@ -9,7 +9,7 @@
     "checkJs": false,
     "removeComments": true,
     "baseUrl": ".",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "lib": ["es6", "dom"],
     "paths": {
