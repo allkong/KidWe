@@ -22,6 +22,12 @@ export default {
       '6xl': '4rem',
       '7xl': '5rem',
     },
+    borderRadius: {
+      sm: '0.375rem',
+      md: '0.5rem',
+      lg: '1rem',
+      full: '9999px',
+    },
     extend: {
       colors: {
         primary: '#FFC36A',
