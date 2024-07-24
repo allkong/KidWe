@@ -1,5 +1,3 @@
-import React from 'react';
-
 import attendanceImage from '@/assets/menu/attendance.png';
 import bookImage from '@/assets/menu/book.png';
 import busImage from '@/assets/menu/bus.png';
@@ -19,6 +17,7 @@ interface MenuItem {
   color: string;
 }
 
+// icon 사용하지 않을 수도 있음
 const menuItems: {[key: string]: MenuItem} = {
   attendance: {image: attendanceImage, color: 'bg-[#FFD4DA]'},
   book: {image: bookImage, color: 'bg-[#EAD7FF]'},
@@ -35,11 +34,11 @@ const menuItems: {[key: string]: MenuItem} = {
   sketchBook: {image: sketchBookImage, color: 'bg-[#C8D7FF]'},
 };
 
-const getImage = (key: string): string => {
+const getImage = (key: keyof typeof menuItems): string => {
   return menuItems[key]?.image || '';
 };
 
-const getColor = (key: string): string => {
+const getColor = (key: keyof typeof menuItems): string => {
   return menuItems[key]?.color || '';
 };
 
@@ -52,11 +51,13 @@ const MainMenu = ({img, text}: MainMenuProps) => {
   return (
     <div className="flex flex-col items-center w-fit h-fit ">
       <div
-        className={`${getColor(img)} p-2 mb-1 w-12 h-12 flex justify-center items-center rounded-2xl`}
+        className={`${getColor(img)} p-2 mb-1 w-12 h-12 flex justify-center items-center rounded-lg`}
       >
         <img src={getImage(img)} width="32" />
       </div>
-      <p className="text-xs font-semibold text-gray-300">{text}</p>
+      <p className="text-xs font-semibold text-gray-300 whitespace-nowrap">
+        {text}
+      </p>
     </div>
   );
 };

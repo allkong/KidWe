@@ -1,4 +1,3 @@
-import React from 'react';
 import NavigationMenu from '@/components/atoms/Menu/NavigationMenu';
 import homeIcon from '@/assets/icons/home-fill.svg';
 import scheduleIcon from '@/assets/icons/calendar-fill.svg';

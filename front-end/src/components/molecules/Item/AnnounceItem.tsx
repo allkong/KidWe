@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface AnnounceItemProps {
   title: string;
   writer: string;
@@ -8,7 +6,7 @@ interface AnnounceItemProps {
   src?: string;
 }
 
-const AnnounceItem: React.FC<AnnounceItemProps> = ({
+const AnnounceItem = ({
   title,
   writer,
   date,

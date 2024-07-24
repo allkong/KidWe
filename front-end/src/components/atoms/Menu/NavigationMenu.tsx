@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface NavigationMenuProps {
   src: string;
   alt: string;
@@ -8,7 +6,7 @@ interface NavigationMenuProps {
   text: string;
 }
 
-const NavigationMenu: React.FC<NavigationMenuProps> = ({
+const NavigationMenu = ({
   src,
   alt,
   width,

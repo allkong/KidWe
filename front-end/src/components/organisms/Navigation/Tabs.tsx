@@ -9,7 +9,7 @@ interface TabsProps {
   }[];
 }
 
-const Tabs: React.FC<TabsProps> = ({tabs}) => {
+const Tabs = ({tabs}: TabsProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   const handleTabClick = (id: number) => {
