@@ -1,11 +1,10 @@
-import React from 'react';
 import BracketButton from '@/components/atoms/Button/BracketButton';
 
 interface DateNavigatorProps {
   title: string;
 }
 
-const DateNavigator: React.FC<DateNavigatorProps> = ({title}) => {
+const DateNavigator = ({title}: DateNavigatorProps) => {
   return (
     <div className="flex items-center p-3.5 bg-white justify-evenly">
       <BracketButton direction="left" />

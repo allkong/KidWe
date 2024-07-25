@@ -9,7 +9,7 @@ interface TabsProps {
   }[];
 }
 
-const Tabs: React.FC<TabsProps> = ({tabs}) => {
+const Tabs = ({tabs}: TabsProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   const handleTabClick = (id: number) => {
@@ -18,7 +18,7 @@ const Tabs: React.FC<TabsProps> = ({tabs}) => {
 
   return (
     <div>
-      <div className="py-3 border-b">
+      <div className="py-3 bg-white border-b">
         <TabList
           tabs={tabs}
           activeTab={activeTab}
