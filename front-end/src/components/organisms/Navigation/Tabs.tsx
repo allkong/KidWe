@@ -18,7 +18,7 @@ const Tabs = ({tabs}: TabsProps) => {
 
   return (
     <div>
-      <div className="py-3 border-b">
+      <div className="py-3 bg-white border-b">
         <TabList
           tabs={tabs}
           activeTab={activeTab}

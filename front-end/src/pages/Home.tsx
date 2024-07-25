@@ -2,10 +2,18 @@ import NotificationButton from '@/components/atoms/Button/NotificationButton';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
 import UsercardItem from '@/components/molecules/Item/UserCardItem';
 import HomeMenu from '@/components/organisms/Content/HomeMenu';
+import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 
 const Home = () => {
+  const userInfo = {
+    profile:
+      'https://flexible.img.hani.co.kr/flexible/normal/960/960/imgdb/resize/2019/0121/00501111_20190121.JPG',
+    userName: '강혁준',
+    role: '선생님',
+  };
+
   return (
-    <div className="min-h-screen px-5 space-y-4 bg-secondary">
+    <div className="min-h-screen px-5 space-y-3 bg-secondary">
       <div className="flex justify-between pt-5">
         {/* 서비스명 & 로고 */}
         <div></div>
@@ -18,14 +26,20 @@ const Home = () => {
       </div>
       {/* 사용자 카드 */}
       <div>
-        <UsercardItem profile="" userName="강혁준 선생님" cardType="arrow" />
+        <UsercardItem
+          profile={userInfo.profile}
+          userName={`${userInfo.userName} ${userInfo.role}`}
+          cardType="arrow"
+        />
       </div>
       {/* 메뉴 카드 */}
       <div>
         <HomeMenu />
       </div>
       {/* 메모 카드 */}
-      <div></div>
+      <div>
+        <MemoShortcut />
+      </div>
     </div>
   );
 };
