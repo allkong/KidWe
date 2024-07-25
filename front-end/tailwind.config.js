@@ -8,8 +8,8 @@ export default {
   theme: {
     fontSize: {
       xxs: '.5rem',
-      xs: '.75rem',
       '2xs': '.70rem',
+      xs: '.75rem',
       sm: '.875rem',
       tiny: '.875rem',
       base: '1rem',
@@ -34,6 +34,7 @@ export default {
         secondary: '#FFF1A7',
         'gray-50': '#F8F8F8',
         'gray-100': '#EAEAEA',
+        'gray-150': '#C3C3C3',
         'gray-200': '#AFAFAF',
         'gray-300': '#3E3E3E',
       },

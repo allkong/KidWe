@@ -15,8 +15,8 @@ const Home = () => {
 
   return (
     <div>
-      <div className="min-h-screen px-5 space-y-3 bg-pink-700">
-        <div className="flex justify-between pt-5">
+      <div className="min-h-screen px-5 space-y-3 border-t bg-secondary">
+        <div className="flex justify-between pt-7">
           {/* 서비스명 & 로고 */}
           <div></div>
           <NotificationButton />
