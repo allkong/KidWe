@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface IconProps {
+interface NavigationMenuProps {
   src: string;
   alt: string;
   width?: number;
@@ -8,7 +8,13 @@ interface IconProps {
   text: string;
 }
 
-const Icon: React.FC<IconProps> = ({src, alt, width, height, text}) => {
+const NavigationMenu: React.FC<NavigationMenuProps> = ({
+  src,
+  alt,
+  width,
+  height,
+  text,
+}: NavigationMenuProps) => {
   return (
     <div className="flex flex-col items-center w-1/3">
       <img src={src} alt={alt} width={width} height={height} />
@@ -17,4 +23,4 @@ const Icon: React.FC<IconProps> = ({src, alt, width, height, text}) => {
   );
 };
 
-export default Icon;
+export default NavigationMenu;
