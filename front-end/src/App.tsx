@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
+import LoginMain from '@/pages/Login/LoginMain';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
         </Routes>
       </BrowserRouter>
+      <LoginMain /> {/* 로그인 안 되어있으면 Login */}
     </div>
   );
 };
