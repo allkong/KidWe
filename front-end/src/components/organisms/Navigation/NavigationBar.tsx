@@ -5,8 +5,8 @@ import mypageIcon from '@/assets/icons/baby-fill.svg';
 
 const NavigationBar = () => {
   return (
-    <nav className="fixed bottom-0 w-full py-5 text-base text-gray-100 border-t border-gray-100">
-      <div className="flex flex-row ">
+    <nav className="box-border fixed bottom-0 w-full py-3 text-base text-gray-100 bg-white border-t">
+      <div className="flex flex-row">
         <NavigationMenu
           src={homeIcon}
           alt=""
