@@ -1,29 +1,32 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import Input from '@/components/atoms/Input/Input';
 import Button from '@/components/atoms/Button/Button';
 
 interface InputProps
-  extends Omit<React.ComponentProps<'input'>, 'value' | 'onClick'> {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  extends Omit<
+    React.ComponentProps<'input'>,
+    'value' | 'onClick' | 'onChange'
+  > {
+  inputValue: string;
+  setValue: (value: string) => void;
 }
 
 interface ButtonProps {
-  label: string;
+  buttonLabel: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 interface InputFormProps extends InputProps, ButtonProps {}
 
 const InputForm = ({
-  value,
-  label,
+  inputValue: value,
+  buttonLabel: label,
   setValue,
   onClick,
   ...props
 }: InputFormProps) => {
-  const handleValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+  const handleValue = (value: string) => {
+    setValue(value);
   };
 
   return (
