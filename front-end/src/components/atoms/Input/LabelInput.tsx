@@ -12,9 +12,9 @@ const LabelInput: React.FC<LabelInputProps> = ({
 }: LabelInputProps) => {
   return (
     <div>
-      <p className="py-2">{label}</p>
+      <p className="text-gray-300">{label}</p>
       <input
-        className="w-full h-8 px-2 border border-black bg-white rounded-lg text-gray-300 font-normal text-xs "
+        className="w-full h-10 px-4 border border-gray-200 bg-white rounded-xl text-gray-200 font-normal text-xs"
         {...props}
         placeholder={value}
       />

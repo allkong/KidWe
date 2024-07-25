@@ -16,7 +16,7 @@ const App: React.FC = () => {
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
         </Routes>
       </BrowserRouter>
-      <LoginMain /> {/* 로그인 안 되어있으면 Login */}
+      <LoginMain />
     </div>
   );
 };
