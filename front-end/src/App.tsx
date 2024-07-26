@@ -16,7 +16,6 @@ const App: React.FC = () => {
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
         </Routes>
       </BrowserRouter>
-      <LoginMain />
     </div>
   );
 };

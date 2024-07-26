@@ -1,5 +1,4 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import SignUpMain from '../SignUp/SignUpMain';
