@@ -1,6 +1,8 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
+import SignUpMain from '../SignUp/SignUpMain';
 
 const LoginMain: React.FC = () => {
   return (
@@ -22,7 +24,7 @@ const LoginMain: React.FC = () => {
           <p>비밀번호 찾기</p>
         </div>
       </div>
-      <div className="fixed bottom-4">
+      <div className="absolute bottom-8">
         <Button label="회원 가입props로키울거임" />
       </div>
     </div>
