@@ -1,6 +1,6 @@
 import React from 'react';
 import checkIcon from '@/assets/icons/check-fill.svg';
-import PencilIcon from '@/assets/icons/pencil.svg';
+import CheckWhiteIcon from '@/assets/icons/check-fill-white.svg';
 
 interface RoleSelectorProps {
   isSelected: boolean;
@@ -27,7 +27,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
           <p>{value}</p>
           <p>{explain}</p>
         </div>
-        <img src={isSelected ? PencilIcon : checkIcon} alt="" />
+        <img src={isSelected ? CheckWhiteIcon : checkIcon} alt="" />
       </button>
     </div>
   );
