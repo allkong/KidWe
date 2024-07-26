@@ -10,5 +10,17 @@ export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    isOpen: true,
+  },
+  render: function () {
+    return (
+      <Dropdown isOpen={true}>
+        <Dropdown.Option text={'option1'}></Dropdown.Option>
+        <Dropdown.Divider></Dropdown.Divider>
+        <Dropdown.Option text={'option2'}></Dropdown.Option>
+        <Dropdown.Option text={'option3'}></Dropdown.Option>
+      </Dropdown>
+    );
+  },
 };
