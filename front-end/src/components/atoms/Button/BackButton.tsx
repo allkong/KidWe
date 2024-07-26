@@ -1,11 +1,6 @@
-import React from 'react';
 import Icon from '@/assets/icons/arrow-left-line.svg';
 
-interface BackButtonProps {
-  // onClick: () => void;
-}
-
-const BackButton: React.FC<BackButtonProps> = () => {
+const BackButton = () => {
   return (
     <button>
       <img src={Icon} alt="icon" />
