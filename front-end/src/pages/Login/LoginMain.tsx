@@ -1,7 +1,6 @@
 import React from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
-import SignUpMain from '../SignUp/SignUpMain';
 
 const LoginMain: React.FC = () => {
   return (
