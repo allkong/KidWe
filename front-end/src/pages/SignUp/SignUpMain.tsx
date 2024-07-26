@@ -30,7 +30,7 @@ const SignUpMain: React.FC = () => {
           value="원장님"
         />
       </div>
-      <div className="flex items-center justify-center  absolute bottom-8">
+      <div className="flex items-center justify-center px-4 bottom-8 ">
         <Button label="역할 선택" />
       </div>
     </div>
