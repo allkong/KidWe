@@ -12,17 +12,15 @@ type Story = StoryObj<typeof Toggle>;
 
 export const Default: Story = {
   render: function () {
-    const [checked, setChecked] = useState(false);
-
-    const handleCheck = (value: boolean) => {
-      setChecked(value);
-    };
-
-    return <Toggle checked={checked} onChange={handleCheck} />;
+    return (
+      <div>
+        <Toggle />
+      </div>
+    );
   },
 };
 
-export const Page: Story = {
+export const State: Story = {
   render: function () {
     const [checked, setChecked] = useState(false);
 
@@ -31,8 +29,9 @@ export const Page: Story = {
     };
 
     return (
-      <div className="flex items-center justify-center w-40 h-40 bg-pink-500">
+      <div>
         <Toggle checked={checked} onChange={handleCheck} />
+        <div>{checked ? 'true' : 'false'}</div>
       </div>
     );
   },
