@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState} from '@storybook/preview-api';
+import {useState, useRef} from '@storybook/preview-api';
 import type {Meta, StoryObj} from '@storybook/react';
 import TextArea from '@/components/atoms/Input/TextArea';
 
@@ -10,15 +9,8 @@ export default meta;
 
 type Story = StoryObj<typeof TextArea>;
 
-export const Default: Story = {
-  args: {
-    value: 'textarea',
-    onChange: () => window.alert(),
-    placeholder: 'placeholder test',
-  },
-};
-
-export const State: Story = {
+export const Controlled: Story = {
+  args: {},
   render: function () {
     const [text, setText] = useState('');
 
@@ -26,11 +18,47 @@ export const State: Story = {
       setText(value);
     };
 
+    const handleClick = () => {
+      window.alert(text);
+    };
+
     return (
-      <>
+      <div>
         <TextArea value={text} onChange={handleText} />
-        <p>{text}</p>
-      </>
+        <button onClick={handleClick}>[click me]</button>
+        <div>
+          <h1>Re-Rendering Test</h1>
+          <p>1</p>
+          <p>2</p>
+          <p>3</p>
+          <p>4</p>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const Uncontrolled: Story = {
+  args: {},
+  render: function () {
+    const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
+    const handleClick = () => {
+      window.alert(inputRef.current?.value);
+    };
+
+    return (
+      <div>
+        <TextArea ref={inputRef} />
+        <button onClick={handleClick}>[click me]</button>
+        <div>
+          <h1>Re-Rendering Test</h1>
+          <p>1</p>
+          <p>2</p>
+          <p>3</p>
+          <p>4</p>
+        </div>
+      </div>
     );
   },
 };

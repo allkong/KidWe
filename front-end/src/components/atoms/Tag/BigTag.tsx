@@ -1,5 +1,5 @@
 interface ColorVariant {
-  variant?: 'red' | 'green' | 'blue' | 'primary';
+  variant?: 'green' | 'deepGreen' | 'gray' | 'primary';
 }
 
 interface TagProps extends ColorVariant {
@@ -8,12 +8,12 @@ interface TagProps extends ColorVariant {
 
 const getColorClass = (variant: ColorVariant['variant']) => {
   switch (variant) {
-    case 'red':
-      return 'bg-red-400 text-white';
+    case 'gray':
+      return 'bg-gray-200 text-white';
     case 'green':
-      return 'bg-lime-600 text-white';
-    case 'blue':
-      return 'bg-blue-400 text-white';
+      return 'bg-[#C3E4C0] text-gray-300';
+    case 'deepGreen':
+      return 'bg-[#7AB675] text-white';
     case 'primary':
       return 'bg-primary text-white';
     default:
@@ -21,16 +21,16 @@ const getColorClass = (variant: ColorVariant['variant']) => {
   }
 };
 
-const Tag = ({text, variant: color}: TagProps) => {
+const BigTag = ({text, variant: color}: TagProps) => {
   const colorClass = getColorClass(color);
 
   return (
     <div
-      className={`w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      className={`w-fit text-xs min-w-5 box-border py-2 px-2 rounded-lg text-center ${colorClass}`}
     >
       {text}
     </div>
   );
 };
 
-export default Tag;
+export default BigTag;
