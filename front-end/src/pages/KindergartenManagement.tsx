@@ -9,12 +9,12 @@ const KindergartenManagement = () => {
   const {headerTitle} = useHeader();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="h-screen">
       <Header title={headerTitle} buttonType="back" />
-      <div className="flex-grow bg-[#F8F8F8]">
+      <div className="h-screen py-20 bg-[#F8F8F8]">
         <Routes>
           <Route path="/memo" element={<MemoList />}></Route>
-          <Route path="/memo" element={<MemoWrite />}></Route>
+          <Route path="/write" element={<MemoWrite />}></Route>
         </Routes>
       </div>
       <NavigationBar />
