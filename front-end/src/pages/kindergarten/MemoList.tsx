@@ -15,7 +15,7 @@ const MemoList = memo(() => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col h-full items-center bg-[#F8F8F8]">
       <div className="min-w-full mb-10">
         <DateNavigator title="7.16 (화)" />
       </div>
