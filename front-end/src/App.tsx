@@ -1,18 +1,14 @@
-import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Home from '@/pages/Home';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import LoginMain from '@/pages/Login/LoginMain';
 
 const App: React.FC = () => {
   return (
     <div>
-      {/* <div className="bg-primary">Font 및 색상 테스트</div>
-      <div className="bg-secondary">Font 및 색상 테스트</div>
-      <div className="bg-gray-100">Font 및 색상 테스트</div>
-      <div className="bg-gray-200">Font 및 색상 테스트</div>
-      <div className="bg-gray-300">Font 및 색상 테스트</div> */}
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
         </Routes>
       </BrowserRouter>

@@ -9,4 +9,6 @@
 
 body {
   @apply font-pretendard;
+  margin: 0;
+  padding: 0;
 }
