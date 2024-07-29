@@ -15,7 +15,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="min-h-screen px-5 space-y-3 border-t bg-secondary">
         <div className="flex justify-between pt-7">
           {/* 서비스명 & 로고 */}
@@ -34,7 +34,7 @@ const Home = () => {
         <MemoShortcut />
       </div>
       <NavigationBar />
-    </div>
+    </>
   );
 };
 
