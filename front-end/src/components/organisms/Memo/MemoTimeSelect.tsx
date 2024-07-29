@@ -1,4 +1,4 @@
-import PopupModal from '@/components/organisms/Modal/PopupModal';
+import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {useState} from 'react';
 
@@ -6,10 +6,6 @@ const MemoTimeSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleModalSubmit = () => {
     setIsOpen(false);
   };
 
@@ -29,14 +25,23 @@ const MemoTimeSelect = () => {
         </p>
       </div>
       <ModalPortal>
-        <PopupModal
-          isOpen={isOpen}
-          title="설정"
-          onCancelButtonClick={handleModalClose}
-          onSubmitButtonClick={handleModalSubmit}
-        >
-          시간을 입력해주세요
-        </PopupModal>
+        <Modal isOpen={isOpen}>
+          <Modal.Header title="시간 선택" />
+          <Modal.Body></Modal.Body>
+          <Modal.BottomButton
+            label="취소"
+            onClick={handleModalClose}
+            size="large"
+            variant="negative"
+          />
+          <Modal.BottomButton
+            label="등록"
+            onClick={handleModalClose}
+            variant="positive"
+            size="large"
+          />
+          <Modal.Background onClick={handleModalClose} />
+        </Modal>
       </ModalPortal>
     </>
   );
