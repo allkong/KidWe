@@ -4,6 +4,9 @@ import Home from '@/pages/Home';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
+import SignUpMain from '@/pages/sign-up/SignUpMain';
+import Register from '@/pages/sign-up/Register';
+import RegisterKindergarden from '@/pages/sign-up/RegisterKindergarden';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +16,13 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
+          <Route path="/signup" element={<SignUpMain />}></Route>
+          <Route path="/login" element={<LoginMain />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/register/kindergarden"
+            element={<RegisterKindergarden />}
+          ></Route>
           <Route
             path="/kindergarten/*"
             element={<KindergartenManagement />}

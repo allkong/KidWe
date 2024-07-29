@@ -36,12 +36,16 @@ const PopupModal = ({
             <Button
               label={cancelButtonLabel ? cancelButtonLabel : '취소'}
               variant="negative"
+              size="large"
+              onClick={onCancelButtonClick}
             />
           )}
           {onSubmitButtonClick !== undefined && (
             <Button
               label={submitButtonLabel ? submitButtonLabel : '확인'}
               variant="positive"
+              size="large"
+              onClick={onSubmitButtonClick}
             />
           )}
         </div>

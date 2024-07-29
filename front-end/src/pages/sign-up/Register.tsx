@@ -41,6 +41,7 @@ const Register: React.FC = () => {
         className={`${isShort ? 'absolute bottom-8' : 'relative mt-8'} w-full flex justify-center px-4`}
       >
         <Button label="회원 가입" />
+        {/* 이렇게 회원 가입을 한 후 role에 따라 rendering 되는 page가 달라짐 */}
       </div>
     </div>
   );

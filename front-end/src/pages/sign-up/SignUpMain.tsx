@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import RoleSelector from '@/components/atoms/Selector/RoleSelector';
 import Button from '@/components/atoms/Button/Button';
+import PopupModal from '@/components/organisms/Modal/PopupModal';
+
+import {useNavigate} from 'react-router-dom';
 
 const roleItems = [
   {value: '학부모', label: '학부모'},
@@ -10,6 +13,20 @@ const roleItems = [
 
 const SignUpMain: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegisterButtonClick = () => {
+    if (selectedRole === '') {
+      setIsModalOpen(true);
+    } else {
+      navigate('/register');
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleRoleChange = (role: string) => {
     setSelectedRole(role);
@@ -30,7 +47,14 @@ const SignUpMain: React.FC = () => {
         ))}
       </div>
       <div className="flex items-center justify-center px-4 bottom-8 ">
-        <Button label="역할 선택" />
+        <Button label="역할 선택" onClick={handleRegisterButtonClick} />
+        {isModalOpen && (
+          <PopupModal
+            isOpen={true}
+            title={'역할을 정해주세요'}
+            onCancelButtonClick={closeModal}
+          />
+        )}
       </div>
     </div>
   );
