@@ -4,14 +4,14 @@ import {Routes, Route} from 'react-router-dom';
 import MemoList from '@/pages/kindergarten/MemoList';
 import MemoWrite from '@/pages/kindergarten/MemoWrite';
 import FoodInfo from '@/pages/kindergarten/FoodInfo';
-import {useHeader} from '@/contexts/header/HeaderContext';
+// import {useHeader} from '@/contexts/header/HeaderContext';
 
 const KindergartenManagement = () => {
-  const {headerTitle} = useHeader();
+  // const {headerTitle} = useHeader();
 
   return (
     <div className="h-screen">
-      <Header title={headerTitle} buttonType="back" />
+      <Header title={'메모'} buttonType="back" />
       <div className="h-screen pb-[4.3rem] bg-white pt-[3.3rem]">
         <Routes>
           <Route path="/memo" element={<MemoList />}></Route>

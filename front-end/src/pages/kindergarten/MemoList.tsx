@@ -1,16 +1,16 @@
 import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import {useEffect, memo} from 'react';
+import {memo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useHeader} from '@/contexts/header/HeaderContext';
+// import {useHeader} from '@/contexts/header/HeaderContext';
 
 const MemoList = memo(() => {
-  const {handleHeaderTitle} = useHeader();
+  // const {handleHeaderTitle} = useHeader();
 
-  useEffect(() => {
-    handleHeaderTitle('관찰 메모');
-  }, [handleHeaderTitle]);
+  // useEffect(() => {
+  //   handleHeaderTitle('관찰 메모');
+  // }, [handleHeaderTitle]);
 
   const navigate = useNavigate();
 
