@@ -1,5 +1,9 @@
 interface ColorVariant {
   variant?: 'red' | 'green' | 'blue' | 'primary';
+  bgColor?: string;
+  textColor?: string;
+  width?: string;
+  height?: string;
 }
 
 interface TagProps extends ColorVariant {
@@ -21,12 +25,20 @@ const getColorClass = (variant: ColorVariant['variant']) => {
   }
 };
 
-const Tag = ({text, variant: color}: TagProps) => {
-  const colorClass = getColorClass(color);
+const Tag = ({
+  text,
+  variant,
+  width,
+  height,
+  bgColor: backgroundColor,
+  textColor: color,
+}: TagProps) => {
+  const colorClass = getColorClass(variant);
 
   return (
     <div
-      className={`w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      className={`inline-block w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      style={{width: width, height, backgroundColor, color}}
     >
       {text}
     </div>

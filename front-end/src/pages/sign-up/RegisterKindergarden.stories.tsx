@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import RegisterKindergarden from './RegisterKindergarden';
+import RegisterKindergarden from '@/pages/sign-up/RegisterKindergarden';
 
 const meta: Meta<typeof RegisterKindergarden> = {
   component: RegisterKindergarden,
