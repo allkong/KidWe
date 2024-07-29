@@ -11,6 +11,7 @@ const Home = () => {
       'https://flexible.img.hani.co.kr/flexible/normal/960/960/imgdb/resize/2019/0121/00501111_20190121.JPG',
     userName: '강혁준',
     role: '선생님',
+    kindergartenName: '싸피 유치원',
   };
 
   return (
@@ -22,7 +23,7 @@ const Home = () => {
           <NotificationButton />
         </div>
         <div className="">
-          <KindergartenCard kindergartenName="싸피 유치원" />
+          <KindergartenCard kindergartenName={userInfo.kindergartenName} />
         </div>
         <UsercardItem
           profile={userInfo.profile}

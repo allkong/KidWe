@@ -4,9 +4,9 @@ import scheduleIcon from '@/assets/icons/calendar-fill.svg';
 import mypageIcon from '@/assets/icons/baby-fill.svg';
 
 const menuItems = [
-  {src: homeIcon, alt: '홈', text: '홈', width: 26},
-  {src: scheduleIcon, alt: '일정', text: '일정', width: 26},
-  {src: mypageIcon, alt: '마이', text: '마이', width: 26},
+  {src: homeIcon, alt: '홈', text: '홈', to: '/'},
+  {src: scheduleIcon, alt: '일정', text: '일정', to: '/schedule'},
+  {src: mypageIcon, alt: '마이', text: '마이', to: '/mypage'},
 ];
 
 const NavigationBar = () => {
@@ -19,7 +19,7 @@ const NavigationBar = () => {
             src={item.src}
             alt={item.alt}
             text={item.text}
-            width={item.width}
+            to={item.to}
           />
         ))}
       </div>
