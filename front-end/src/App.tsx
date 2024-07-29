@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from '@/pages/Home';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import KindergartenManagement from '@/pages/KindergartenManagement';
-import LoginMain from '@/pages/Login/LoginMain';
+import LoginMain from '@/pages/login/LoginMain';
 
 const App: React.FC = () => {
   return (
