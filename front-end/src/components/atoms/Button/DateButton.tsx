@@ -9,7 +9,7 @@ const DateButton = ({
   isSelected = false,
   disabled = false,
 }: DateButtonProps) => {
-  const colorClass = isSelected ? 'bg-primary' : 'bg-gray-200';
+  const colorClass = isSelected ? 'bg-primary' : 'bg-gray-100';
 
   return (
     <button
