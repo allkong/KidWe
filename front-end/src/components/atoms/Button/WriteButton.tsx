@@ -1,4 +1,3 @@
-import React from 'react';
 import pencil from '@/assets/icons/pencil.svg';
 interface WriteButtonProps {
   onClick: React.MouseEventHandler<HTMLDivElement>;

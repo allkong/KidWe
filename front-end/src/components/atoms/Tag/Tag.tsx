@@ -1,23 +1,28 @@
-import React from 'react';
-
-interface TagProps {
-  text: string;
-  color: string;
+interface ColorVariant {
+  variant?: 'red' | 'green' | 'blue' | 'primary';
 }
 
-const Tag = ({text, color}: TagProps) => {
-  const colorClass = (() => {
-    switch (color) {
-      case 'red':
-        return 'bg-red-400 text-white';
-      case 'green':
-        return 'bg-lime-600 text-white';
-      case 'blue':
-        return 'bg-blue-400 text-white';
-      default:
-        return 'bg-gray-200 text-white';
-    }
-  })();
+interface TagProps extends ColorVariant {
+  text?: string;
+}
+
+const getColorClass = (variant: ColorVariant['variant']) => {
+  switch (variant) {
+    case 'red':
+      return 'bg-red-400 text-white';
+    case 'green':
+      return 'bg-lime-600 text-white';
+    case 'blue':
+      return 'bg-blue-400 text-white';
+    case 'primary':
+      return 'bg-primary text-white';
+    default:
+      return 'bg-gray-200 text-white';
+  }
+};
+
+const Tag = ({text, variant: color}: TagProps) => {
+  const colorClass = getColorClass(color);
 
   return (
     <div

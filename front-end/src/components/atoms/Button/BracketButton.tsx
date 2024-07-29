@@ -1,4 +1,3 @@
-import React from 'react';
 import Icon from '@/assets/icons/left-line.svg';
 
 interface BracketButtonProps {
@@ -6,7 +5,7 @@ interface BracketButtonProps {
   // onClick: () => void;
 }
 
-const BracketButton: React.FC<BracketButtonProps> = ({direction}) => {
+const BracketButton = ({direction}: BracketButtonProps) => {
   const rotationClass = direction === 'right' ? 'rotate-180' : '';
 
   return (

@@ -1,12 +1,16 @@
-import React from 'react';
-
 interface ProfileImageProps {
   src: string;
+  size?: string;
 }
 
-const ProfileImage: React.FC<ProfileImageProps> = ({src}) => {
+const ProfileImage = ({src, size = '2.5rem'}: ProfileImageProps) => {
   return (
-    <img className="object-cover w-10 h-10 rounded-full" src={src} alt="" />
+    <img
+      className="object-cover rounded-full"
+      src={src}
+      alt=""
+      style={{width: size, height: size}}
+    />
   );
 };
 
