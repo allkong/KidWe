@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import LoginMain from '@/pages/Login/LoginMain';
+import LoginMain from '@/pages/login/LoginMain';
 
 const meta: Meta<typeof LoginMain> = {
   component: LoginMain,
