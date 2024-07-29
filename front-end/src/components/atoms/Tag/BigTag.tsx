@@ -26,7 +26,7 @@ const BigTag = ({text, variant: color}: TagProps) => {
 
   return (
     <div
-      className={`w-fit text-xs min-w-5 box-border py-2 px-2 rounded-lg text-center ${colorClass}`}
+      className={`inline-block w-fit text-xs min-w-5 box-border py-2 px-2 rounded-lg text-center ${colorClass}`}
     >
       {text}
     </div>
