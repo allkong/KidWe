@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="theme-color" content="#8C383A" />
+    <meta name="theme-color" content="#FFF1A7" />
     <link rel="icon" href="icons/favicon-196x196.png" type="image/png" />
     <link rel="alternate icon" href="/favicon.ico" type="ico" sizes="16x16" />
     <link
@@ -23,14 +23,14 @@
         // site using the default scope.
         navigator.serviceWorker
           .register('/sw.js')
-          .then((registration) => {
-            console.log('Service worker registration succeeded:', registration)
+          .then(registration => {
+            console.log('Service worker registration succeeded:', registration);
           })
-          .catch((err) => {
-            console.log('Service worker registration failed:', error)
-          })
+          .catch(err => {
+            console.log('Service worker registration failed:', error);
+          });
       } else {
-        console.log('Service workers are not supported.')
+        console.log('Service workers are not supported.');
       }
     </script>
   </body>
