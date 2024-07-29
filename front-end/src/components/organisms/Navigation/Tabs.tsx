@@ -17,7 +17,7 @@ const Tabs = ({tabs}: TabsProps) => {
   };
 
   return (
-    <div>
+    <>
       <div className="py-3 bg-white border-b">
         <TabList
           tabs={tabs}
@@ -26,7 +26,7 @@ const Tabs = ({tabs}: TabsProps) => {
         />
       </div>
       <div>{tabs.find(tab => tab.id === activeTab)?.content}</div>
-    </div>
+    </>
   );
 };
 
