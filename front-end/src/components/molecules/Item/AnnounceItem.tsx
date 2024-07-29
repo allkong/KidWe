@@ -8,12 +8,7 @@ interface AnnounceItemProps {
   src?: string;
 }
 
-const AnnounceItem = ({
-  title,
-  writer,
-  date,
-  src,
-}: AnnounceItemProps) => {
+const AnnounceItem = ({title, writer, date, src}: AnnounceItemProps) => {
   const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
   return (
     <div className="grid items-center grid-cols-12 p-4 m-2 border-b border-gray-200 ">
