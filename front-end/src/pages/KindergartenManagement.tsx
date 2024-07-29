@@ -4,6 +4,7 @@ import {Routes, Route} from 'react-router-dom';
 import MemoList from '@/pages/kindergarten/MemoList';
 import MemoWrite from '@/pages/kindergarten/MemoWrite';
 import FoodInfo from '@/pages/kindergarten/FoodInfo';
+import FoodInfoWrite from '@/pages/kindergarten/FoodInfoWrite';
 // import {useHeader} from '@/contexts/header/HeaderContext';
 
 const KindergartenManagement = () => {
@@ -17,6 +18,7 @@ const KindergartenManagement = () => {
           <Route path="/memo" element={<MemoList />}></Route>
           <Route path="/write" element={<MemoWrite />}></Route>
           <Route path="/food" element={<FoodInfo />}></Route>
+          <Route path="/food/write" element={<FoodInfoWrite />}></Route>
         </Routes>
       </div>
       <NavigationBar />
