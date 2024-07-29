@@ -33,7 +33,20 @@ export const ChildrenOverflow: Story = {
 export const TagOverflow: Story = {
   args: {
     children: ['정다빈', '백승우', '강혁준'],
-    tags: ['점심시간', '사탕', '놀이', '오버플로우', '에러', '여명 화이팅'],
+    tags: [
+      '점심시간',
+      '사탕',
+      '놀이',
+      '오버플로우',
+      '에러',
+      '여명 화이팅',
+      '오버플로우',
+      '테스트',
+      '테스트',
+      '테스트',
+      '테스트',
+      '테스트',
+    ],
     time: '10:12 AM',
   },
 };
