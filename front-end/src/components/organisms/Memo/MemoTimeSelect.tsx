@@ -32,13 +32,15 @@ const MemoTimeSelect = () => {
             label="취소"
             onClick={handleModalClose}
             size="large"
+            round="full"
             variant="negative"
           />
           <Modal.BottomButton
             label="등록"
             onClick={handleModalClose}
-            variant="positive"
             size="large"
+            round="full"
+            variant="positive"
           />
           <Modal.Background onClick={handleModalClose} />
         </Modal>
