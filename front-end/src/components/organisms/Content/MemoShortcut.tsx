@@ -22,7 +22,7 @@ const MemoShortcut = () => {
           <img className="w-4 h-4" src={pencilIcon} />
         </div>
       </div>
-      <Button label="+ 메모 등록하기" />
+      <Button label="+ 메모 등록하기" size="large" round="full" />
     </div>
   );
 };

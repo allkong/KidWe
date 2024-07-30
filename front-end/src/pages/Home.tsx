@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen px-5 space-y-3 border-t bg-secondary">
+      <div className="min-h-screen px-5 space-y-3 border-t pb-[8rem] bg-secondary">
         <div className="flex justify-between pt-7">
           {/* 서비스명 & 로고 */}
           <div></div>
