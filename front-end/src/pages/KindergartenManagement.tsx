@@ -6,6 +6,7 @@ import MemoWrite from '@/pages/kindergarten/MemoWrite';
 import FoodInfo from '@/pages/kindergarten/FoodInfo';
 import FoodInfoWrite from '@/pages/kindergarten/FoodInfoWrite';
 // import {useHeader} from '@/contexts/header/HeaderContext';
+import {containerClass} from '@/styles/styles';
 
 const KindergartenManagement = () => {
   // const {headerTitle} = useHeader();
@@ -13,7 +14,7 @@ const KindergartenManagement = () => {
   return (
     <div className="h-screen">
       <Header title={'메모'} buttonType="back" />
-      <div className="h-screen pb-[4.3rem] bg-white pt-[3.3rem]">
+      <div className={containerClass}>
         <Routes>
           <Route path="/memo" element={<MemoList />}></Route>
           <Route path="/write" element={<MemoWrite />}></Route>

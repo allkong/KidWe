@@ -1,18 +1,27 @@
-import {Link} from 'react-router-dom';
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 interface NavigationMenuProps {
-  src: string;
-  alt: string;
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   text: string;
   to: string;
 }
 
-const NavigationMenu = ({src, alt, text, to}: NavigationMenuProps) => {
+const NavigationMenu: React.FC<NavigationMenuProps> = ({Icon, text, to}) => {
   return (
-    <Link to={to} className="flex flex-col items-center w-1/3 p-1 space-y-1">
-      <img src={src} alt={alt} className="w-7" />
-      <p className="font-medium text-2xs">{text}</p>
-    </Link>
+    <NavLink
+      to={to}
+      className={({isActive}) =>
+        `flex flex-col items-center w-1/3 p-1 space-y-1 ${isActive ? 'text-black' : 'text-gray-150'}`
+      }
+    >
+      {({isActive}) => (
+        <>
+          <Icon fill={isActive ? 'black' : '#C3C3C3'} width="26" height="26" />
+          <p className="font-medium text-2xs">{text}</p>
+        </>
+      )}
+    </NavLink>
   );
 };
 
