@@ -11,7 +11,7 @@ const roleItems = [
   {value: '원장님', label: '원장님'},
 ];
 
-const SignUpMain: React.FC = () => {
+const RoleSelect: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -60,4 +60,4 @@ const SignUpMain: React.FC = () => {
   );
 };
 
-export default SignUpMain;
+export default RoleSelect;

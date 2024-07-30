@@ -15,7 +15,7 @@ interface IAddr {
   zonecode: string;
 }
 
-const RegisterKindergarden: React.FC = () => {
+const RegisterKindergarten: React.FC = () => {
   const [isShort, setIsShort] = useState(true);
   const [addr, setAddr] = useState('');
   const [zipNo, setZipNo] = useState('');
@@ -26,7 +26,7 @@ const RegisterKindergarden: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  const handleRegisterKindergardenButtonClick = () => {
+  const handleRegisterKindergartenButtonClick = () => {
     // if (
     //   name === '' ||
     //   name === '이름을 적어주세요' ||
@@ -139,7 +139,7 @@ const RegisterKindergarden: React.FC = () => {
       >
         <Button
           label="유치원 등록"
-          onClick={handleRegisterKindergardenButtonClick}
+          onClick={handleRegisterKindergartenButtonClick}
         />
       </div>
       {isModalOpen && (
@@ -153,4 +153,4 @@ const RegisterKindergarden: React.FC = () => {
   );
 };
 
-export default RegisterKindergarden;
+export default RegisterKindergarten;
