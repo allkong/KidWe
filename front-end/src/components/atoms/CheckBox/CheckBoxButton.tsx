@@ -34,7 +34,7 @@ const CheckBoxButton = forwardRef(
 
     return (
       <div
-        className={`${colorClass} cursor-pointer box-border flex items-center justify-center h-8 px-2 py-2 text-center text-gray-300 border rounded-md min-w-14 w-fit`}
+        className={`${colorClass} cursor-pointer box-border flex items-center justify-center h-8 px-2 py-2 text-center text-gray-300 border rounded-md min-w-14`}
         onClick={handleClick}
       >
         <input
