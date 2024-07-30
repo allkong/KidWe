@@ -17,7 +17,7 @@ const RegisterCompleted: React.FC = () => {
         </div>
       </div>
       <div className="text-lg">
-        <p>원장님 키위에 가입해주셔서 감사합니다 :D</p>
+        <p>role님 키위에 가입해주셔서 감사합니다 :D</p>
         <p>좋은 서비스로 보답하겠습니다!</p>
       </div>
 

@@ -18,8 +18,8 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
   return (
     <div>
       <button
-        className={`px-4 py-2 rounded w-full h-24 flex items-center justify-between ${
-          isSelected ? 'bg-secondary text-white' : 'bg-gray-100 text-black'
+        className={`px-4 py-2 rounded w-full h-24 flex items-center justify-between text-black ${
+          isSelected ? 'bg-secondary ' : 'bg-gray-100 '
         }`}
         onClick={onClick}
       >
