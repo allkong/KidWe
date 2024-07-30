@@ -4,10 +4,11 @@ import Home from '@/pages/Home';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
-import SignUpMain from '@/pages/sign-up/SignUpMain';
+import RoleSelect from '@/pages/sign-up/RoleSelect';
 import Register from '@/pages/sign-up/Register';
-import RegisterKindergarden from '@/pages/sign-up/RegisterKindergarden';
+import RegisterKindergarten from '@/pages/sign-up/RegisterKindergarten';
 import RegisterCompleted from '@/pages/sign-up/RegisterCompleted';
+import KindergartenSearch from '@/pages/sign-up/KindergartenSearch';
 const App: React.FC = () => {
   return (
     <div>
@@ -16,12 +17,16 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-          <Route path="/signup" element={<SignUpMain />}></Route>
+          <Route path="/signup" element={<RoleSelect />}></Route>
           <Route path="/login" element={<LoginMain />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route
-            path="/register/kindergarden"
-            element={<RegisterKindergarden />}
+            path="register/kindergarten/search"
+            element={<KindergartenSearch />}
+          ></Route>
+          <Route
+            path="/register/kindergarten"
+            element={<RegisterKindergarten />}
           ></Route>
           <Route
             path="/kindergarten/*"
