@@ -3,11 +3,15 @@ import React from 'react';
 interface LabelInputProps {
   value: string;
   label?: string;
+  readOnly?: boolean;
+  disabled?: boolean;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
   value,
   label,
+  disabled,
+  readOnly,
   ...props
 }: LabelInputProps) => {
   return (
@@ -15,8 +19,10 @@ const LabelInput: React.FC<LabelInputProps> = ({
       <p className="text-gray-300">{label}</p>
       <input
         className="w-full h-10 px-4 border border-gray-200 bg-white rounded-xl text-gray-200 font-normal text-xs"
-        {...props}
+        disabled={disabled}
+        readOnly={readOnly}
         placeholder={value}
+        {...props}
       />
     </div>
   );
