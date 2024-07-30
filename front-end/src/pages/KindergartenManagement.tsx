@@ -1,6 +1,6 @@
+import {Routes, Route} from 'react-router-dom';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {Routes, Route} from 'react-router-dom';
 import MemoList from '@/pages/kindergarten/MemoList';
 import MemoWrite from '@/pages/kindergarten/MemoWrite';
 import FoodInfo from '@/pages/kindergarten/FoodInfo';
