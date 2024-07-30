@@ -15,7 +15,7 @@ const MemoWrite = () => {
         <KindergartenInfomationSelect />
       </div>
       <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
-        <Button label="메모 작성하기" />
+        <Button label="메모 작성하기" onClick={() => {}} size="large" />
       </div>
     </div>
   );
