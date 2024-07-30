@@ -5,7 +5,7 @@ interface UserCardItemProps {
   profile: string;
   userName: string;
   banName?: string;
-  cardType: 'detail' | 'status' | 'check' | 'arrow';
+  cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
