@@ -9,6 +9,7 @@ import Register from '@/pages/sign-up/Register';
 import RegisterKindergarten from '@/pages/sign-up/RegisterKindergarten';
 import RegisterCompleted from '@/pages/sign-up/RegisterCompleted';
 import KindergartenSearch from '@/pages/sign-up/KindergartenSearch';
+import KindergartenSearchCompleted from './pages/sign-up/KindergartenSearchCompleted';
 const App: React.FC = () => {
   return (
     <div>
@@ -23,6 +24,10 @@ const App: React.FC = () => {
           <Route
             path="register/kindergarten/search"
             element={<KindergartenSearch />}
+          ></Route>
+          <Route
+            path="register/kindergarten/search/completed"
+            element={<KindergartenSearchCompleted />}
           ></Route>
           <Route
             path="/register/kindergarten"

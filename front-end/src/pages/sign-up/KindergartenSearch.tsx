@@ -16,7 +16,7 @@ const KindergartenSearch: React.FC = () => {
   const navigate = useNavigate();
 
   const handleKindergartenSearchButtonClick = () => {
-    navigate('/register/kindergarten/completed');
+    navigate('/register/kindergarten/search/completed');
   };
 
   const handleCitySelect = (city: string) => {
@@ -118,18 +118,22 @@ const KindergartenSearch: React.FC = () => {
             <KindergartenItem
               name="싸피 유치원"
               address="서울특별시 테헤란로 212 멀티캠퍼스"
+              onClick={handleKindergartenSearchButtonClick}
             />
             <KindergartenItem
               name="싸피 유치원2"
               address="서울특별시 테헤란로 2123 멀티캠퍼스"
+              onClick={handleKindergartenSearchButtonClick}
             />
             <KindergartenItem
               name="싸피 유치원3"
               address="서울특별시 테헤란로 2124 멀티캠퍼스"
+              onClick={handleKindergartenSearchButtonClick}
             />
             <KindergartenItem
               name="싸피 유치원4"
               address="서울특별시 테헤란로 2125 멀티캠퍼스"
+              onClick={handleKindergartenSearchButtonClick}
             />
           </div>
         )}
