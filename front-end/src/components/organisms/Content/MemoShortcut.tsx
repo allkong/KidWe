@@ -1,3 +1,4 @@
+import {useNavigate} from 'react-router-dom';
 import Button from '@/components/atoms/Button/Button';
 import pencilIcon from '@/assets/menu/pencil.png';
 
@@ -11,6 +12,11 @@ const MemoShortcut = () => {
   };
   const formattedDate = today.toLocaleDateString('ko-KR', dateOptions);
 
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="p-5 space-y-2 bg-white rounded-lg">
       <div>
@@ -22,7 +28,12 @@ const MemoShortcut = () => {
           <img className="w-4 h-4" src={pencilIcon} />
         </div>
       </div>
-      <Button label="+ 메모 등록하기" size="large" round="full" />
+      <Button
+        label="+ 메모 등록하기"
+        size="large"
+        round="full"
+        onClick={handleButtonClick}
+      />
     </div>
   );
 };
