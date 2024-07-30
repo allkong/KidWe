@@ -1,25 +1,44 @@
-interface TagProps {
-  text: string;
-  color: string;
+interface ColorVariant {
+  variant?: 'red' | 'green' | 'blue' | 'primary';
+  bgColor?: string;
+  textColor?: string;
+  width?: string;
+  height?: string;
 }
 
-const Tag = ({text, color}: TagProps) => {
-  const colorClass = (() => {
-    switch (color) {
-      case 'red':
-        return 'bg-red-400 text-white';
-      case 'green':
-        return 'bg-lime-600 text-white';
-      case 'blue':
-        return 'bg-blue-400 text-white';
-      default:
-        return 'bg-gray-200 text-white';
-    }
-  })();
+interface TagProps extends ColorVariant {
+  text?: string;
+}
+
+const getColorClass = (variant: ColorVariant['variant']) => {
+  switch (variant) {
+    case 'red':
+      return 'bg-red-400 text-white';
+    case 'green':
+      return 'bg-lime-600 text-white';
+    case 'blue':
+      return 'bg-blue-400 text-white';
+    case 'primary':
+      return 'bg-primary text-white';
+    default:
+      return 'bg-gray-200 text-white';
+  }
+};
+
+const Tag = ({
+  text,
+  variant,
+  width,
+  height,
+  bgColor: backgroundColor,
+  textColor: color,
+}: TagProps) => {
+  const colorClass = getColorClass(variant);
 
   return (
     <div
-      className={`w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      className={`inline-block w-fit text-xxs min-w-5 box-border py-1 px-2 rounded-lg text-center ${colorClass}`}
+      style={{width: width, height, backgroundColor, color}}
     >
       {text}
     </div>
