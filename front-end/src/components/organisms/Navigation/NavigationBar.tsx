@@ -1,12 +1,12 @@
 import NavigationMenu from '@/components/atoms/Menu/NavigationMenu';
-import homeIcon from '@/assets/icons/home-fill.svg';
-import scheduleIcon from '@/assets/icons/calendar-fill.svg';
-import mypageIcon from '@/assets/icons/baby-fill.svg';
+import homeIcon from '@/assets/icons/home-fill.svg?react';
+import scheduleIcon from '@/assets/icons/calendar-fill.svg?react';
+import mypageIcon from '@/assets/icons/baby-fill.svg?react';
 
 const menuItems = [
-  {src: homeIcon, alt: '홈', text: '홈', width: 26},
-  {src: scheduleIcon, alt: '일정', text: '일정', width: 26},
-  {src: mypageIcon, alt: '마이', text: '마이', width: 26},
+  {Icon: homeIcon, alt: 'home icon', text: '홈', to: '/'},
+  {Icon: scheduleIcon, alt: 'schedule icon', text: '일정', to: '/schedule'},
+  {Icon: mypageIcon, alt: 'mypage icon', text: '마이', to: '/mypage'},
 ];
 
 const NavigationBar = () => {
@@ -16,10 +16,9 @@ const NavigationBar = () => {
         {menuItems.map((item, index) => (
           <NavigationMenu
             key={index}
-            src={item.src}
-            alt={item.alt}
+            Icon={item.Icon}
             text={item.text}
-            width={item.width}
+            to={item.to}
           />
         ))}
       </div>

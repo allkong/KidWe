@@ -1,21 +1,23 @@
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
   size?: 'small' | 'large';
   variant?: 'positive' | 'negative';
-  round?: 'full';
+  round?: 'small' | 'full';
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
+
 const Button = ({
   label,
   size = 'small',
   variant = 'positive',
-  round,
+  round = 'small',
   onClick,
 }: ButtonProps) => {
   const baseClass = 'py-2 font-semibold text-white text-large';
   const sizeClass = size === 'small' ? 'px-6' : 'w-full';
   const variantClass = variant === 'positive' ? 'bg-primary' : 'bg-gray-200';
   const roundClass = round === 'full' ? 'rounded-full' : 'rounded-sm';
+
   return (
     <button
       onClick={onClick}
