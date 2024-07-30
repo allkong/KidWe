@@ -34,7 +34,7 @@ const SignUpMain: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-full space-y-8 mt-16 ">
+    <div className="flex flex-col min-h-full space-y-8 mt-16 mx-4">
       <p className="text-xl mb-8">역할을 선택해주세요</p>
       <div className=" w-full items-center justify-center space-y-4 text-lg">
         {roleItems.map((item, index) => (

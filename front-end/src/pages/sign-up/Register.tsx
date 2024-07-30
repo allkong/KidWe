@@ -9,7 +9,7 @@ const Register: React.FC = () => {
     const handleResize = () => {
       const mainContainer = document.querySelector('.main-container');
       if (mainContainer) {
-        setIsShort(mainContainer.clientHeight < window.innerHeight);
+        setIsShort(mainContainer.clientHeight + 56 < window.innerHeight);
       }
     };
 
