@@ -7,7 +7,7 @@ const LoginMain: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSignUpButtonClick = () => {
-    navigate('/signup');
+    navigate('/signup/role');
   };
 
   const handleLoginButtonClick = () => {

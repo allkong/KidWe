@@ -20,7 +20,7 @@ const RoleSelect: React.FC = () => {
     if (selectedRole === '') {
       setIsModalOpen(true);
     } else {
-      navigate('/register');
+      navigate('/signup/info');
     }
   };
 

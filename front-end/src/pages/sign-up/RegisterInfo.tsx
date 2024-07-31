@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 
-const Register: React.FC = () => {
+const RegisterInfo: React.FC = () => {
   const [isShort, setIsShort] = useState(true);
 
   useEffect(() => {
@@ -47,4 +47,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default RegisterInfo;
