@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import RoleSelector from '@/components/atoms/Selector/RoleSelector';
 import Button from '@/components/atoms/Button/Button';
-import PopupModal from '@/components/organisms/Modal/PopupModal';
+import Modal from '@/components/organisms/Modal/Modal';
 
 import {useNavigate} from 'react-router-dom';
 
@@ -49,11 +49,20 @@ const RoleSelect: React.FC = () => {
       <div className="flex items-center justify-center px-4 bottom-8 ">
         <Button label="역할 선택" onClick={handleRegisterButtonClick} />
         {isModalOpen && (
-          <PopupModal
-            isOpen={true}
-            title={'역할을 정해주세요'}
-            onCancelButtonClick={closeModal}
-          />
+          <Modal isOpen={true}>
+            <Modal.Header title="경고!" />
+            <Modal.Body>
+              <div className="text-lg text-center text-gray-300">
+                <p>역할을 정해주세요</p>
+              </div>
+            </Modal.Body>
+            <Modal.BottomButton
+              label="확인"
+              onClick={closeModal}
+              size="large"
+            />
+            <Modal.Background onClick={closeModal} />
+          </Modal>
         )}
       </div>
     </div>
