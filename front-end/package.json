@@ -19,6 +19,7 @@
     "posttest": "yarn.cmd run lint"
   },
   "dependencies": {
+    "dayjs": "^1.11.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -49,12 +50,14 @@
     "eslint-plugin-storybook": "^0.8.0",
     "gts": "^5.3.1",
     "postcss": "^8.4.39",
+    "storybook-addon-remix-react-router": "^3.0.0",
     "stylelint": "^16.7.0",
     "stylelint-config-recommended": "^14.0.1",
     "stylelint-config-tailwindcss": "^0.0.7",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.4.3",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "packageManager": "yarn@4.3.1"
 }

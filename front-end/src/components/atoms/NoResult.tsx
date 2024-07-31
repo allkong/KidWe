@@ -1,5 +1,5 @@
 import React from 'react';
-import ghostIcon from '@/assets/icons/ghost-fill.svg';
+import GhostIcon from '@/assets/icons/ghost-fill.svg?react';
 
 interface NoResultProps {
   text: string;
@@ -7,8 +7,8 @@ interface NoResultProps {
 
 const NoResult: React.FC<NoResultProps> = ({text}) => {
   return (
-    <div className="flex flex-col items-center">
-      <img src={ghostIcon} alt="" />
+    <div className="flex flex-col items-center space-y-2 text-gray-200">
+      <GhostIcon width="47" height="47" />
       <p>{text}</p>
     </div>
   );

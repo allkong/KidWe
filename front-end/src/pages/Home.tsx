@@ -1,6 +1,7 @@
+import {useNavigate} from 'react-router-dom';
 import NotificationButton from '@/components/atoms/Button/NotificationButton';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
-import UsercardItem from '@/components/molecules/Item/UserCardItem';
+import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import HomeMenu from '@/components/organisms/Content/HomeMenu';
 import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
@@ -14,9 +15,14 @@ const Home = () => {
     kindergartenName: '싸피 유치원',
   };
 
+  const navigate = useNavigate();
+  const handleUserCardItemClick = () => {
+    navigate('/mypage');
+  };
+
   return (
-    <div>
-      <div className="min-h-screen px-5 space-y-3 border-t bg-secondary">
+    <>
+      <div className="min-h-screen px-5 space-y-3 border-t pb-[8rem] bg-secondary">
         <div className="flex justify-between pt-7">
           {/* 서비스명 & 로고 */}
           <div></div>
@@ -25,16 +31,17 @@ const Home = () => {
         <div className="">
           <KindergartenCard kindergartenName={userInfo.kindergartenName} />
         </div>
-        <UsercardItem
+        <UserCardItem
           profile={userInfo.profile}
           userName={`${userInfo.userName} ${userInfo.role}`}
           cardType="arrow"
+          onClick={handleUserCardItemClick}
         />
         <HomeMenu />
         <MemoShortcut />
       </div>
       <NavigationBar />
-    </div>
+    </>
   );
 };
 

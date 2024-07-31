@@ -5,9 +5,9 @@ interface TabButtonProps {
 }
 
 const TabButton = ({isActive, label, onClick}: TabButtonProps) => {
-  const variantClass = isActive ? 'text-black' : 'text-gray-200';
+  const activeClass = isActive ? 'text-black' : 'text-gray-200';
   return (
-    <button className={`${variantClass}`} onClick={onClick}>
+    <button className={`${activeClass}`} onClick={onClick}>
       {label}
     </button>
   );

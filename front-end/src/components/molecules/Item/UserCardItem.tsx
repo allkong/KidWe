@@ -5,7 +5,8 @@ interface UserCardItemProps {
   profile: string;
   userName: string;
   banName?: string;
-  cardType: 'detail' | 'status' | 'check' | 'arrow';
+  cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const UserCardItem = ({
@@ -13,6 +14,7 @@ const UserCardItem = ({
   userName,
   banName,
   cardType,
+  onClick,
 }: UserCardItemProps) => {
   const arrowClass = cardType === 'arrow' ? 'rounded-lg' : 'border-b';
 
@@ -23,7 +25,9 @@ const UserCardItem = ({
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>
-      {cardType === 'arrow' && <BracketButton direction="right" />}
+      {cardType === 'arrow' && (
+        <BracketButton onClick={onClick || (() => {})} direction="right" />
+      )}
     </div>
   );
 };
