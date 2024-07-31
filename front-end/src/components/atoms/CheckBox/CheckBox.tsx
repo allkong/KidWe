@@ -4,7 +4,7 @@ import Check from '@/assets/icons/check-fill.svg?react';
 
 interface CheckBoxProps {
   isChecked?: boolean;
-  onClick?: () => void;
+  onClick?: (value: boolean) => void;
 }
 
 const CheckBox = forwardRef(
@@ -12,7 +12,11 @@ const CheckBox = forwardRef(
     {isChecked: controlledIsChecked, onClick}: CheckBoxProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    const [isChecked, handleClick] = useCheckBox(controlledIsChecked, onClick);
+    const [isChecked, setIsChecked] = useCheckBox(controlledIsChecked, onClick);
+
+    const handleClick = () => {
+      setIsChecked(!isChecked);
+    };
 
     return (
       <div
