@@ -4,104 +4,40 @@ import Tag from '@/components/atoms/Tag/Tag';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import AllergyView from '@/components/organisms/Food/AllergyView';
-import CheckBoxButton from '@/components/atoms/CheckBox/CheckBoxButton';
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
+import {allergies} from '@/constants/allergy';
+import type {Allergy} from '@/constants/allergy';
 
 interface FoodInfoWriteItemProps {
   label?: string;
 }
 
-const allergies = [
-  {
-    value: '달걀',
-    isChecked: false,
-  },
-  {
-    value: '우유',
-    isChecked: false,
-  },
-  {
-    value: '메밀',
-    isChecked: false,
-  },
-  {
-    value: '땅콩',
-    isChecked: false,
-  },
-  {
-    value: '대두',
-    isChecked: false,
-  },
-  {
-    value: '밀',
-    isChecked: false,
-  },
-  {
-    value: '고등어',
-    isChecked: false,
-  },
-  {
-    value: '게',
-    isChecked: false,
-  },
-  {
-    value: '돼지고기',
-    isChecked: false,
-  },
-  {
-    value: '새우',
-    isChecked: false,
-  },
-  {
-    value: '복숭아',
-    isChecked: false,
-  },
-  {
-    value: '토마토',
-    isChecked: false,
-  },
-];
-
 const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [datas, setDatas] = useState(allergies);
+  const [datas, setDatas] = useState<Allergy[]>(allergies);
+  const [copiedDatas, setCopiedDatas] = useState<Allergy[]>([...datas]);
   const [isDataChecked, setIsDataChecked] = useState(false);
-  const checkBoxRefs = useRef<null[] | HTMLInputElement[]>([]);
 
   useEffect(() => {
     setIsDataChecked(datas.find(value => value.isChecked) !== undefined);
   }, [datas]);
 
-  const clearData = () => {
-    setDatas(
-      datas.map(data => {
-        return {...data, isChecked: false};
-      })
-    );
-  };
-
-  const checkData = () => {
-    setDatas(
-      datas.map((data, idx) =>
-        checkBoxRefs.current[idx]!.checked
-          ? {...data, isChecked: true}
-          : {...data}
-      )
-    );
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   const handleModalOpen = () => {
-    clearData();
     setIsModalOpen(true);
   };
 
-  const handleSubmit = () => {
-    checkData();
+  const handleModalClose = () => {
+    setCopiedDatas([...datas]);
     setIsModalOpen(false);
+  };
+
+  const handleSubmit = () => {
+    setDatas([...copiedDatas]);
+    setIsModalOpen(false);
+  };
+
+  const handleChangeData = (value: Allergy[]) => {
+    setCopiedDatas(value);
   };
 
   return (
@@ -111,13 +47,8 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
         <div className="w-full h-20">
           <TextArea />
         </div>
-        <div className="w-full h-10">
-          {!isDataChecked ? (
-            <DashedButton
-              onClick={handleModalOpen}
-              label="알레르기 정보 추가"
-            />
-          ) : (
+        <div className="w-full h-fit min-h-7">
+          {isDataChecked ? (
             <div
               className="flex flex-wrap w-full gap-2"
               onClick={handleModalOpen}
@@ -128,6 +59,11 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
                 ) : null
               )}
             </div>
+          ) : (
+            <DashedButton
+              onClick={handleModalOpen}
+              label="알레르기 정보 추가"
+            />
           )}
         </div>
       </div>
@@ -135,20 +71,7 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
         <Modal isOpen={isModalOpen}>
           <Modal.Header title="알레르기 선택" />
           <Modal.Body>
-            <AllergyView
-              render={() => {
-                return (
-                  datas &&
-                  datas.map((data, idx) => (
-                    <CheckBoxButton
-                      key={idx}
-                      label={data.value}
-                      ref={element => (checkBoxRefs.current[idx] = element)}
-                    />
-                  ))
-                );
-              }}
-            />
+            <AllergyView datas={copiedDatas} onChangeData={handleChangeData} />
           </Modal.Body>
           <Modal.BottomButton
             label="취소"
