@@ -7,7 +7,7 @@ export interface Allergy {
 export const allergies: Allergy[] = [
   {
     id: 1,
-    value: '달걀',
+    value: '알류',
     isChecked: false,
   },
   {
@@ -37,17 +37,17 @@ export const allergies: Allergy[] = [
   },
   {
     id: 7,
-    value: '고등어',
+    value: '잣',
     isChecked: false,
   },
   {
     id: 8,
-    value: '게',
+    value: '호두',
     isChecked: false,
   },
   {
     id: 9,
-    value: '돼지고기',
+    value: '게',
     isChecked: false,
   },
   {
@@ -57,12 +57,47 @@ export const allergies: Allergy[] = [
   },
   {
     id: 11,
-    value: '복숭아',
+    value: '오징어',
     isChecked: false,
   },
   {
     id: 12,
+    value: '고등어',
+    isChecked: false,
+  },
+  {
+    id: 13,
+    value: '조개류',
+    isChecked: false,
+  },
+  {
+    id: 14,
+    value: '복숭아',
+    isChecked: false,
+  },
+  {
+    id: 15,
     value: '토마토',
+    isChecked: false,
+  },
+  {
+    id: 16,
+    value: '닭고기',
+    isChecked: false,
+  },
+  {
+    id: 17,
+    value: '돼지고기',
+    isChecked: false,
+  },
+  {
+    id: 18,
+    value: '쇠고기',
+    isChecked: false,
+  },
+  {
+    id: 19,
+    value: '아황산류',
     isChecked: false,
   },
 ];

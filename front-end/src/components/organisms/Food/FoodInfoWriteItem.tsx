@@ -47,7 +47,7 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
         <div className="w-full h-20">
           <TextArea />
         </div>
-        <div className="w-full h-10">
+        <div className="w-full h-fit min-h-7">
           {isDataChecked ? (
             <div
               className="flex flex-wrap w-full gap-2"
