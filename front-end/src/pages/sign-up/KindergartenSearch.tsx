@@ -16,7 +16,7 @@ const KindergartenSearch: React.FC = () => {
   const navigate = useNavigate();
 
   const handleKindergartenSearchButtonClick = () => {
-    navigate('/register/kindergarten/search/completed');
+    navigate('/signup/kindergarten/ban');
   };
 
   const handleCitySelect = (city: string) => {

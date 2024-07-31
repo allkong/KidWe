@@ -40,7 +40,7 @@ const RegisterKindergarten: React.FC = () => {
     // } else {
     //   navigate('/register/completed');
     // }
-    navigate('/register/completed');
+    navigate('/signup/complete');
   };
   // 원래 등록 양식이 다 입력되어야만 다음 completed창으로 갈 수 있음
 
