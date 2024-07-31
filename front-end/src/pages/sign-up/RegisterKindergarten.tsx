@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
-import PopupModal from '@/components/organisms/Modal/PopupModal';
+import Modal from '@/components/organisms/Modal/Modal';
 
 declare global {
   interface Window {
@@ -143,11 +143,15 @@ const RegisterKindergarten: React.FC = () => {
         />
       </div>
       {isModalOpen && (
-        <PopupModal
-          isOpen={true}
-          title={'유치원 정보를 입력해주세요'}
-          onCancelButtonClick={closeModal}
-        />
+        <Modal isOpen={true}>
+          <Modal.Header title="경고" />
+          <Modal.Body>
+            <div className="text-sm text-center text-gray-300">
+              <p>내용을 다 작성해주세요</p>
+            </div>
+          </Modal.Body>
+          <Modal.Background onClick={closeModal} />
+        </Modal>
       )}
     </div>
   );
