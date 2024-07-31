@@ -19,6 +19,7 @@
     "posttest": "yarn.cmd run lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.15",
     "axios": "^1.7.2",
     "dayjs": "^1.11.12",
     "react": "^18.3.1",
@@ -36,6 +37,7 @@
     "@storybook/react": "^8.2.4",
     "@storybook/react-vite": "^8.2.4",
     "@storybook/test": "^8.2.4",
+    "@tanstack/eslint-plugin-query": "^5.51.15",
     "@types/node": "20.12.7",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
