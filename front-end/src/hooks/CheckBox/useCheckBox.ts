@@ -2,27 +2,31 @@ import {useCallback, useState} from 'react';
 
 /**
  *
- * @param controlledIsChecked 직접 state를 이용해 관리하고 싶은 경우
- * @param onClick checkbox 클릭 시 실행될 Event Listener
- * @returns boolean 변수, 클릭 시 boolean 변수를 변경하는 함수, controlled 여부를 반환합니다
+ * @param controlledIsChecked 직접 state를 이용해 관리하고 싶은 경우 값 입력
+ * @param onClick checkbox 클릭 시 실행될 Event Listener, 직접 관리하고 싶은 경우 입력
+ * @returns boolean 변수, 클릭 시 boolean 변수를 변경하는 함수를 반환합니다
  */
 export function useCheckBox(
   controlledIsChecked?: boolean,
-  onClick?: () => void
-): [isChecked: boolean, handleClick: () => void, isControlled: boolean] {
+  onClick?: (value: boolean) => void
+): [isChecked: boolean, setIsChecked: (value: boolean) => void] {
   const isControlled = controlledIsChecked !== undefined;
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [innerIsChecked, setInnerIsChecked] = useState(false);
 
-  const handleClick = useCallback(() => {
-    if (!isControlled) {
-      setIsChecked(!isChecked);
-    }
-    onClick?.();
-  }, [isControlled, isChecked, onClick]);
+  const setIsChecked = useCallback(
+    (value: boolean) => {
+      if (!isControlled) {
+        setInnerIsChecked(value);
+      }
+      onClick?.(value);
+    },
+    [isControlled, setInnerIsChecked, onClick]
+  );
 
+  let isChecked = innerIsChecked;
   if (isControlled) {
-    return [controlledIsChecked, handleClick, isControlled];
+    isChecked = controlledIsChecked;
   }
-  return [isChecked, handleClick, isControlled];
+  return [isChecked, setIsChecked];
 }

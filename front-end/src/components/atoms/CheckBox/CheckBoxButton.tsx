@@ -12,7 +12,11 @@ const CheckBoxButton = forwardRef(
     {isChecked: controlledIsChecked, onClick, label}: CheckBoxButtonProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
-    const [isChecked, handleClick] = useCheckBox(controlledIsChecked, onClick);
+    const [isChecked, setIsChecked] = useCheckBox(controlledIsChecked, onClick);
+
+    const handleClick = () => {
+      setIsChecked(!isChecked);
+    };
 
     const notSelectedClass = 'bg-white border-gray-200';
     const selectedClass = 'bg-secondary border-primary';
