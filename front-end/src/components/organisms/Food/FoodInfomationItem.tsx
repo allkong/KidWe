@@ -25,6 +25,17 @@ function getVariant(variant: string): {
   }
 }
 
+function getColorVariant(variant: string) {
+  switch (variant) {
+    case 'snack':
+      return 'border-[#C0E583] shadow-[#C0E583]';
+    case 'dinner':
+      return 'border-[#C99FFF] shadow-[#C99FFF]';
+    default:
+      return 'border-[#FFC36A] shadow-[#FFC36A]';
+  }
+}
+
 const FoodInfomationItem = ({
   variant = 'lunch',
   menus,
@@ -32,7 +43,8 @@ const FoodInfomationItem = ({
   onClick,
 }: FoodInfomationItemProps) => {
   const {color, src, title} = getVariant(variant);
-  const colorClass = `border-[${color}] shadow-[${color}]`;
+  const colorClass = getColorVariant(variant);
+
   return (
     <div
       onClick={onClick}
