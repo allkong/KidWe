@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface LabelInputProps {
-  value: string;
   label?: string;
+  placeholder?: string;
   readOnly?: boolean;
   disabled?: boolean;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
-  value,
+  placeholder,
   label,
   disabled,
   readOnly,
@@ -16,12 +16,12 @@ const LabelInput: React.FC<LabelInputProps> = ({
 }: LabelInputProps) => {
   return (
     <div className="space-y-2">
-      <p className="text-gray-300">{label}</p>
+      <p>{label}</p>
       <input
-        className="w-full h-10 px-4 border border-gray-200 rounded-lg bg-white  text-gray-200 font-normal text-xs"
+        className="w-full h-10 px-4 text-xs font-normal text-gray-200 bg-white border border-gray-200 rounded-lg"
         disabled={disabled}
         readOnly={readOnly}
-        placeholder={value}
+        placeholder={placeholder}
         {...props}
       />
     </div>

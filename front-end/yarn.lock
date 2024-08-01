@@ -2647,6 +2647,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/aspect-ratio@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@tailwindcss/aspect-ratio@npm:0.4.2"
+  peerDependencies:
+    tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
+  checksum: 10c0/c821a8061f80200b20db26f9cf2a711ffb17814adf847a72d4d4632804d1cabf6671df8e99e06cedfb2ba97b968d7843cd435d1201519c86acdde702efca418b
+  languageName: node
+  linkType: hard
+
 "@tanstack/eslint-plugin-query@npm:^5.51.15":
   version: 5.51.15
   resolution: "@tanstack/eslint-plugin-query@npm:5.51.15"
@@ -5536,6 +5545,7 @@ __metadata:
     "@storybook/react": "npm:^8.2.4"
     "@storybook/react-vite": "npm:^8.2.4"
     "@storybook/test": "npm:^8.2.4"
+    "@tailwindcss/aspect-ratio": "npm:^0.4.2"
     "@tanstack/eslint-plugin-query": "npm:^5.51.15"
     "@tanstack/react-query": "npm:^5.51.15"
     "@types/node": "npm:20.12.7"

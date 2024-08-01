@@ -15,9 +15,8 @@ const MoreButton = ({options}: MoreButtonProps) => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (value: string) => {
+  const handleOptionClick = () => {
     setIsOpen(false);
-    console.log(value);
   };
 
   useEffect(() => {
@@ -43,9 +42,7 @@ const MoreButton = ({options}: MoreButtonProps) => {
               <DropdownOption
                 key={idx}
                 text={option}
-                onClick={() => {
-                  handleOptionClick(option);
-                }}
+                onClick={handleOptionClick}
               />
             ))}
         </Dropdown>

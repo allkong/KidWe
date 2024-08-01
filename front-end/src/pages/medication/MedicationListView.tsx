@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
-import {toKorM} from '@/utils/dayjsPlugin';
+import {getToday} from '@/utils/dayjsPlugin';
 import {groupByDate} from '@/utils/groupByDate';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
@@ -60,7 +60,7 @@ const MedicationListView = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header title={'투약의뢰서'} buttonType="close" />
-      <DateNavigator title={toKorM()} />
+      <DateNavigator title={getToday('M월')} />
       <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
         {monthOfMedication.length === 0 ? (
           <div className="flex items-center justify-center h-full">

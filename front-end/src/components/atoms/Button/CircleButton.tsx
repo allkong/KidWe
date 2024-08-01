@@ -1,26 +1,24 @@
-import React from 'react';
-
 interface CircleButtonProps {
   label: string;
-  date: Date;
+  date: string;
   variant?: 'positive' | 'negative';
 }
 
 const CircleButton: React.FC<CircleButtonProps> = ({
   label,
   date,
-  variant = 'positive',
+  variant = 'negative',
 }) => {
   const baseClass =
-    'px-6 py-2 w-28 h-28 flex flex-col justify-center items-center font-bold rounded-full text-base';
+    'w-1/3 aspect-square flex flex-col justify-center items-center rounded-full';
   const variantClass =
-    variant === 'positive' ? 'bg-primary text-white' : 'bg-gray-200';
-  const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+    variant === 'positive' ? 'bg-primary text-white' : 'bg-gray-100 text-black';
+
   return (
-    <button className={`${baseClass} ${variantClass}`}>
-      <p>{label}</p>
-      <p>{formattedDate}</p>
-    </button>
+    <div className={`${baseClass} ${variantClass}`}>
+      <p className="text-2xl font-medium">{label}</p>
+      <p className="text-sm">{date}</p>
+    </div>
   );
 };
 

@@ -12,7 +12,6 @@ const ConsentSignatureCard = ({
   signatureUrl,
 }: ConsentSignatureCardProps) => {
   const textLines = text.split('\\n');
-  console.log(textLines);
 
   return (
     <div className="p-6 space-y-2">

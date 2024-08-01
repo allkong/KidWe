@@ -12,6 +12,6 @@ type Story = StoryObj<typeof CircleButton>;
 export const Default: Story = {
   args: {
     label: '오늘',
-    date: new Date(),
+    date: '8월 1일',
   },
 };
