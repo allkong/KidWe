@@ -1,12 +1,12 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import DropdownOption from '@/components/atoms/Dropdown/DropdownOption';
+import Option from '@/components/atoms/Option/Option';
 
-const meta: Meta<typeof DropdownOption> = {
-  component: DropdownOption,
+const meta: Meta<typeof Option> = {
+  component: Option,
 };
 export default meta;
 
-type Story = StoryObj<typeof DropdownOption>;
+type Story = StoryObj<typeof Option>;
 
 export const Function: Story = {
   args: {
