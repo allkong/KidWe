@@ -5,8 +5,8 @@ import {useNavigate} from 'react-router-dom';
 const RegisterCompleted: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleGoHomeButtonClick = () => {
-    navigate('/');
+  const handleGoLoginButtonClick = () => {
+    navigate('/login');
   };
 
   return (
@@ -25,7 +25,7 @@ const RegisterCompleted: React.FC = () => {
         <Button
           label="우리 유치원 가기"
           size="large"
-          onClick={handleGoHomeButtonClick}
+          onClick={handleGoLoginButtonClick}
         />
       </div>
     </div>

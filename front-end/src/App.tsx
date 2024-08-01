@@ -4,18 +4,12 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from '@/pages/Home';
 import Schedule from '@/pages/Schedule';
 import MyPage from '@/pages/MyPage';
-
+import SignUp from '@/pages/SignUp';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
-import RoleSelect from '@/pages/sign-up/RoleSelect';
-import Register from '@/pages/sign-up/Register';
-import RegisterKindergarten from '@/pages/sign-up/RegisterKindergarten';
-import RegisterCompleted from '@/pages/sign-up/RegisterCompleted';
-import KindergartenSearch from '@/pages/sign-up/KindergartenSearch';
-import KindergartenSearchCompleted from '@/pages/sign-up/KindergartenSearchCompleted';
 
 import NotFound from '@/pages/NotFound';
 
@@ -30,32 +24,18 @@ const App: React.FC = () => {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
+
           <Route path="/medication">
             <Route path="" element={<MedicationListView />} />
             <Route path=":medicationId" element={<MedicationDetail />} />
           </Route>
-          <Route path="/signup" element={<RoleSelect />}></Route>
+
+          <Route path="/signup/*" element={<SignUp />}></Route>
           <Route path="/login" element={<LoginMain />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route
-            path="register/kindergarten/search"
-            element={<KindergartenSearch />}
-          ></Route>
-          <Route
-            path="register/kindergarten/search/completed"
-            element={<KindergartenSearchCompleted />}
-          ></Route>
-          <Route
-            path="/register/kindergarten"
-            element={<RegisterKindergarten />}
-          ></Route>
+
           <Route
             path="/kindergarten/*"
             element={<KindergartenManagement />}
-          ></Route>
-          <Route
-            path="/register/completed"
-            element={<RegisterCompleted />}
           ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

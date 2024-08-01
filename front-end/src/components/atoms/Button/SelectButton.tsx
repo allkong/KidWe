@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@/assets/icons/down-small-fill.svg';
+import Icon from '@/assets/icons/down-small-fill-2.svg?react';
 
 interface SelectButtonProps {
   label: string;
@@ -11,12 +11,12 @@ const SelectButton = ({label, onClick}: SelectButtonProps) => {
   return (
     <button
       className={
-        'box-border gap-2 w-full flex flex-row items-center justify-center px-6 py-2 font-bold  border rounded-full h-9 text-large'
+        'box-border text-gray-200 border-gray-200 overflow-hidden justify-between w-full flex flex-row items-center px-3 py-1 font-normal border-2 rounded-full h-9 text-sm'
       }
       onClick={onClick}
     >
-      {label}
-      <img src={Icon} alt="icon" />
+      <p>{label}</p>
+      <Icon className="absolute right-3" height={10} width={10} />
     </button>
   );
 };

@@ -1,4 +1,5 @@
-import {forwardRef, useState} from 'react';
+import {useCheckBox} from '@/hooks/CheckBox/useCheckBox';
+import {forwardRef} from 'react';
 
 interface CheckBoxButtonProps {
   isChecked?: boolean;
@@ -11,26 +12,15 @@ const CheckBoxButton = forwardRef(
     {isChecked: controlledIsChecked, onClick, label}: CheckBoxButtonProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
-    const isControlled = controlledIsChecked !== undefined;
-
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useCheckBox(controlledIsChecked, onClick);
 
     const handleClick = () => {
-      if (!isControlled) {
-        setIsChecked(!isChecked);
-      }
-      onClick?.();
+      setIsChecked(!isChecked);
     };
 
     const notSelectedClass = 'bg-white border-gray-200';
     const selectedClass = 'bg-secondary border-primary';
-    let colorClass;
-
-    if (isControlled) {
-      colorClass = controlledIsChecked ? selectedClass : notSelectedClass;
-    } else {
-      colorClass = isChecked ? selectedClass : notSelectedClass;
-    }
+    const colorClass = isChecked ? selectedClass : notSelectedClass;
 
     return (
       <div
@@ -40,7 +30,7 @@ const CheckBoxButton = forwardRef(
         <input
           ref={ref}
           type="checkbox"
-          checked={isControlled ? controlledIsChecked : isChecked}
+          checked={isChecked}
           className="hidden"
           readOnly
         />
