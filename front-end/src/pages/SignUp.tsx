@@ -1,5 +1,5 @@
 import {Routes, Route} from 'react-router-dom';
-import {containerClass} from '@/styles/styles';
+import {containerHeaderClass} from '@/styles/styles';
 import RoleSelect from '@/pages/sign-up/RoleSelect';
 import RegisterInfo from '@/pages/sign-up/RegisterInfo';
 import RegisterKindergarten from '@/pages/sign-up/RegisterKindergarten';
@@ -14,7 +14,7 @@ const SignUp = () => {
 
   return (
     <div className="h-screen">
-      <div className={containerClass}>
+      <div className={containerHeaderClass}>
         <Routes>
           <Route path="/role" element={<RoleSelect />}></Route>
           <Route path="/info" element={<RegisterInfo />}></Route>
