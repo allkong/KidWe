@@ -84,11 +84,11 @@ const RegisterKindergarten: React.FC = () => {
   }, []);
 
   return (
-    <div className=" min-h-screen ">
-      <div className="main-container space-y-8 py-6 flex flex-col items-center w-full h-full px-10">
+    <div className="min-h-screen ">
+      <div className="flex flex-col items-center w-full h-full px-10 py-6 space-y-8 main-container">
         <div className="flex items-center justify-center text-lg">
           <p>유치원을 등록해주세요</p>
-          <div className="w-40 h-40 flex items-center justify-center border rounded-xl">
+          <div className="flex items-center justify-center w-40 h-40 border rounded-xl">
             <p>div까지 image</p>
           </div>
         </div>
@@ -104,7 +104,7 @@ const RegisterKindergarten: React.FC = () => {
                   onClick={onClickAddr}
                 />
               </div>
-              <div className="col-span-4 flex items-end">
+              <div className="flex items-end col-span-4">
                 <Button label="검색" onClick={onClickAddr} />
               </div>
             </div>

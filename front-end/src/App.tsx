@@ -7,8 +7,12 @@ import MyPage from '@/pages/MyPage';
 import SignUp from '@/pages/SignUp';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
+import MedicationDetail from '@/pages/medication/MedicationDetail';
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
+
+import NotFound from '@/pages/NotFound';
+
 const App: React.FC = () => {
   return (
     <div>
@@ -20,7 +24,12 @@ const App: React.FC = () => {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-          <Route path="/medication" element={<MedicationListView />}></Route>
+
+          <Route path="/medication">
+            <Route path="" element={<MedicationListView />} />
+            <Route path=":medicationId" element={<MedicationDetail />} />
+          </Route>
+
           <Route path="/signup/*" element={<SignUp />}></Route>
           <Route path="/login" element={<LoginMain />}></Route>
 
@@ -28,6 +37,7 @@ const App: React.FC = () => {
             path="/kindergarten/*"
             element={<KindergartenManagement />}
           ></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
       {/* </HeaderProvider> */}

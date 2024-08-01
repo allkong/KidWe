@@ -8,6 +8,20 @@ export default meta;
 
 type Story = StoryObj<typeof Tag>;
 
-export const Default: Story = {
-  args: {},
+export const Small: Story = {
+  args: {
+    text: '출석',
+    backgroundColor: '#AFAFAF',
+    textColor: 'white',
+    size: 'small',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    text: '발달 느림',
+    backgroundColor: '#FFDFDF',
+    textColor: 'black',
+    size: 'large',
+  },
 };

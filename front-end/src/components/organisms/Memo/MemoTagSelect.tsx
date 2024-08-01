@@ -1,5 +1,5 @@
 import Input from '@/components/atoms/Input/Input';
-import BigTag from '@/components/atoms/Tag/BigTag';
+import Tag from '@/components/atoms/Tag/Tag';
 import {useRef} from 'react';
 
 const MemoTagSelect = () => {
@@ -20,12 +20,12 @@ const MemoTagSelect = () => {
       <div className="box-border h-40 px-2 py-3 overflow-y-auto border border-gray-200 rounded-md text-wrap">
         {/* tag 받아오는 영역 */}
         <div className="inline-block m-1">
-          <BigTag variant="green" text="밥 남김" />
+          <Tag text="밥 남김" />
         </div>
       </div>
       <div className="w-full space-x-1 overflow-x-auto h-fit text-nowrap">
-        <BigTag variant="deepGreen" text="밥 남김" />
-        <BigTag variant="deepGreen" text="밥 남김" />
+        <Tag backgroundColor="#FFDFDF" text="밥 남김" size="large" />
+        <Tag backgroundColor="#FFDFDF" text="밥 남김" size="large" />
       </div>
     </div>
   );
