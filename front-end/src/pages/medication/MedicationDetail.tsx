@@ -4,6 +4,7 @@ import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import MedicationDetailItem from '@/components/molecules/Item/MedicationDetailItem';
+import ConsentSignatureCard from '@/components/organisms/Card/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const MedicationDetail = () => {
@@ -49,8 +50,9 @@ const MedicationDetail = () => {
           banName={userInfo.banName}
           cardType="detail"
           onClick={() => {}}
+          options={['삭제하기']}
         />
-        <div className="px-10 py-10 space-y-5">
+        <div className="space-y-5 border-b py-7 px-9">
           {medicationDetails.map((item, index) => (
             <MedicationDetailItem
               key={index}
@@ -62,7 +64,12 @@ const MedicationDetail = () => {
           ))}
         </div>
         {/* 서명 */}
-        <div></div>
+        <ConsentSignatureCard
+          text="학부모가 요청한 투약의뢰서에 따른 책임은\n 학부모에게 있습니다."
+          date="2024년 7월 11일"
+          parentName="신형만"
+          signatureUrl="https://habitual-sawfish-65b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F552f5903-0ff8-4755-a27c-4324d9d2fb6a%2F67a96011-c560-4598-ba77-45845356442b%2FUntitled.png?table=block&id=e317e6e8-c9d3-477f-8bfa-036af6ecf325&spaceId=552f5903-0ff8-4755-a27c-4324d9d2fb6a&width=2000&userId=&cache=v2"
+        />
       </div>
       <NavigationBar />
     </div>

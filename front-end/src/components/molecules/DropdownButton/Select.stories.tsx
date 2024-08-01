@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import Select from '@/components/molecules/Select/Select';
+import Select from '@/components/molecules/DropdownButton/Select';
 import {useState} from 'storybook/internal/preview-api';
 
 const meta: Meta<typeof Select> = {

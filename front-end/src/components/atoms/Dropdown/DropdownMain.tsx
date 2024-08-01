@@ -11,7 +11,7 @@ const DropdownMain = ({children, isOpen}: DropdownMainProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-1 p-2 border border-gray-200 border-solid rounded-md shadow-md w-fit h-fit">
+    <div className="flex flex-col gap-1 p-2 bg-white border border-gray-200 border-solid rounded-md shadow-md w-fit h-fit">
       {children}
     </div>
   );

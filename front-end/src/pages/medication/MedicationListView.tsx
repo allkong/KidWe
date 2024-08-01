@@ -53,6 +53,10 @@ const MedicationListView = () => {
     });
   };
 
+  const handleWriteButtonClick = () => {
+    navigate('/medication/write');
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <Header title={'투약의뢰서'} buttonType="close" />
@@ -83,7 +87,7 @@ const MedicationListView = () => {
           ))
         )}
       </div>
-      <WriteButton onClick={() => {}} />
+      <WriteButton onClick={handleWriteButtonClick} />
       <NavigationBar />
     </div>
   );

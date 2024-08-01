@@ -8,6 +8,8 @@ import SignUp from '@/pages/SignUp';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
+import MedicationWrite from '@/pages/medication/MedicationWrite';
+
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
 
@@ -28,6 +30,7 @@ const App: React.FC = () => {
           <Route path="/medication">
             <Route path="" element={<MedicationListView />} />
             <Route path=":medicationId" element={<MedicationDetail />} />
+            <Route path="write" element={<MedicationWrite />} />
           </Route>
 
           <Route path="/signup/*" element={<SignUp />}></Route>
