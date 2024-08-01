@@ -1,4 +1,4 @@
-import BigTag from '@/components/atoms/Tag/BigTag';
+import Tag from '@/components/atoms/Tag/Tag';
 
 interface MemoViewProps {
   time?: string;
@@ -24,11 +24,12 @@ const MemoView = ({time, lesson, children, tags, content}: MemoViewProps) => {
       <div className="flex flex-wrap gap-1 overflow-y-auto h-fit max-h-36">
         {tags &&
           tags.map((tag, idx) => (
-            <BigTag
+            <Tag
               key={idx}
-              bgColor="#FFDFDF"
-              textColor="#3E3E3E"
+              backgroundColor="#FFDFDF"
+              textColor="black"
               text={tag}
+              size="large"
             />
           ))}
       </div>

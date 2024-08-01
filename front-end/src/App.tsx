@@ -7,6 +7,7 @@ import MyPage from '@/pages/MyPage';
 
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
+import MedicationDetail from '@/pages/medication/MedicationDetail';
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
 import RoleSelect from '@/pages/sign-up/RoleSelect';
@@ -14,7 +15,10 @@ import Register from '@/pages/sign-up/Register';
 import RegisterKindergarten from '@/pages/sign-up/RegisterKindergarten';
 import RegisterCompleted from '@/pages/sign-up/RegisterCompleted';
 import KindergartenSearch from '@/pages/sign-up/KindergartenSearch';
-import KindergartenSearchCompleted from './pages/sign-up/KindergartenSearchCompleted';
+import KindergartenSearchCompleted from '@/pages/sign-up/KindergartenSearchCompleted';
+
+import NotFound from '@/pages/NotFound';
+
 const App: React.FC = () => {
   return (
     <div>
@@ -26,7 +30,10 @@ const App: React.FC = () => {
           <Route path="/mypage" element={<MyPage />}></Route>
 
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-          <Route path="/medication" element={<MedicationListView />}></Route>
+          <Route path="/medication">
+            <Route path="" element={<MedicationListView />} />
+            <Route path=":medicationId" element={<MedicationDetail />} />
+          </Route>
           <Route path="/signup" element={<RoleSelect />}></Route>
           <Route path="/login" element={<LoginMain />}></Route>
           <Route path="/register" element={<Register />}></Route>
@@ -50,6 +57,7 @@ const App: React.FC = () => {
             path="/register/completed"
             element={<RegisterCompleted />}
           ></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
       {/* </HeaderProvider> */}
