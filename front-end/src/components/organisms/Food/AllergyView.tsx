@@ -1,5 +1,7 @@
 import type {Allergy} from '@/constants/allergy';
-import CheckBoxButton from '@/components/atoms/CheckBox/CheckBoxButton';
+import CheckListItem from '@/components/organisms/Check/CheckListItem';
+import Input from '@/components/atoms/Input/Input';
+import {useCallback, useEffect, useState} from 'react';
 
 interface AllergyViewProps {
   datas?: Allergy[];
@@ -17,17 +19,47 @@ const AllergyView = ({datas, onChangeData}: AllergyViewProps) => {
     }
   };
 
+  const [filteredDatas, setFilteredDatas] = useState<Allergy[] | undefined>(
+    datas
+  );
+
+  const [input, setInput] = useState('');
+
+  const filterDatas = useCallback(
+    (value: string) => {
+      if (value === '') {
+        setFilteredDatas([...datas!]);
+      } else {
+        setFilteredDatas(
+          [...datas!].filter(data => data.value?.includes(value))
+        );
+      }
+    },
+    [datas]
+  );
+
+  useEffect(() => {
+    setFilteredDatas(datas);
+    filterDatas(input);
+  }, [datas, filterDatas, input]);
+
+  const handleInputChange = (value: string) => {
+    setInput(value);
+    filterDatas(input);
+  };
+
   return (
-    <div className="flex items-center justify-center w-full h-full py-6">
-      <div className="grid h-full grid-flow-row grid-cols-3 gap-3 w-fit">
-        {datas &&
-          datas.map(data => (
-            <CheckBoxButton
+    <div className="flex flex-col items-center justify-center w-full h-full gap-6 py-6">
+      <div className="box-border w-full px-6 h-fit">
+        <Input onChange={handleInputChange} placeholder="알레르기 입력" />
+      </div>
+      <div className="flex flex-col w-full overflow-y-auto h-72">
+        {filteredDatas &&
+          filteredDatas.map(data => (
+            <CheckListItem
               key={data.id}
-              label={data.value}
-              onClick={() => {
-                handleCheckBoxClick(data.id);
-              }}
+              text={data.value}
+              onClick={() => handleCheckBoxClick(data.id)}
               isChecked={data.isChecked}
             />
           ))}
