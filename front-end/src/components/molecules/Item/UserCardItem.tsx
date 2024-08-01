@@ -1,4 +1,5 @@
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import MoreButton from '@/components/atoms/Button/MoreButton';
 import BracketButton from '@/components/atoms/Button/BracketButton';
 
 interface UserCardItemProps {
@@ -25,6 +26,7 @@ const UserCardItem = ({
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>
+      {cardType === 'detail' && <MoreButton />}
       {cardType === 'arrow' && (
         <BracketButton onClick={onClick || (() => {})} direction="right" />
       )}

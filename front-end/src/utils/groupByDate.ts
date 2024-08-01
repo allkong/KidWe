@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 interface MedicationData {
+  medicationId: number;
   kidName: string;
   banName: string;
   kidDate: string;

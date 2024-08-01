@@ -18,7 +18,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
     <div className="space-y-2">
       <p className="text-gray-300">{label}</p>
       <input
-        className="w-full h-10 px-4 border border-gray-200 bg-white rounded-xl text-gray-200 font-normal text-xs"
+        className="w-full h-10 px-4 border border-gray-200 rounded-lg bg-white  text-gray-200 font-normal text-xs"
         disabled={disabled}
         readOnly={readOnly}
         placeholder={value}
