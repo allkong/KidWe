@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
-
-const RegisterInfo: React.FC = () => {
+interface RegisterInfoProps {
+  handleNext: () => void;
+}
+const RegisterInfo: React.FC<RegisterInfoProps> = ({handleNext}) => {
   const [isShort, setIsShort] = useState(true);
 
   useEffect(() => {
