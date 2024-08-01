@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 
-const RegisterCompleted: React.FC = () => {
+const RegisterComplete: React.FC = () => {
   const navigate = useNavigate();
 
   const handleGoLoginButtonClick = () => {
@@ -32,4 +32,4 @@ const RegisterCompleted: React.FC = () => {
   );
 };
 
-export default RegisterCompleted;
+export default RegisterComplete;
