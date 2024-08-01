@@ -17,9 +17,9 @@ function getVariant(variant: string): {
 } {
   switch (variant) {
     case 'snack':
-      return {color: '#C0E583', src: hotDog, title: '중식'};
+      return {color: '#C0E583', src: hotDog, title: '간식'};
     case 'dinner':
-      return {color: '#C99FFF', src: moon, title: '간식'};
+      return {color: '#C99FFF', src: moon, title: '석식'};
     default:
       return {color: '#FFC36A', src: sun, title: '중식'};
   }
@@ -52,15 +52,18 @@ const FoodInfomationItem = ({
     >
       <div className="flex flex-col items-center justify-center h-full gap-2 w-14">
         <img src={src} />
-        <Tag text={title} width="2.5rem" height="1.25rem" bgColor={color} />
+        <Tag
+          text={title}
+          textColor="white"
+          size="small"
+          backgroundColor={color}
+        />
       </div>
       <div className="flex flex-col justify-center w-56 h-full">
         <p className="mb-3 text-sm">{menus?.join(', ')}</p>
         {/* <p className="text-xs">{allergies?.join(', ')}</p>*/}
         <div className="flex flex-wrap gap-1">
-          {allergies?.map((allergy, idx) => (
-            <Tag key={idx} variant="primary" text={allergy} />
-          ))}
+          {allergies?.map((allergy, idx) => <Tag key={idx} text={allergy} />)}
         </div>
       </div>
     </div>
