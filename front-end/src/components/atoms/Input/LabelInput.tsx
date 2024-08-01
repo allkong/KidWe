@@ -5,7 +5,9 @@ interface LabelInputProps {
   label?: string;
   readOnly?: boolean;
   disabled?: boolean;
+  placeholder?: string;
   type?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
@@ -13,7 +15,9 @@ const LabelInput: React.FC<LabelInputProps> = ({
   label,
   disabled,
   readOnly,
+  placeholder,
   type,
+  onChange,
   ...props
 }: LabelInputProps) => {
   return (
@@ -23,7 +27,9 @@ const LabelInput: React.FC<LabelInputProps> = ({
         className="w-full h-10 px-4 border border-gray-200 rounded-lg bg-white  text-gray-200 font-normal text-xs"
         disabled={disabled}
         readOnly={readOnly}
-        placeholder={value}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
         type={type}
         {...props}
       />
