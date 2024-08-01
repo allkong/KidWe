@@ -5,6 +5,7 @@ interface LabelInputProps {
   label?: string;
   readOnly?: boolean;
   disabled?: boolean;
+  type?: string;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
@@ -12,6 +13,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
   label,
   disabled,
   readOnly,
+  type,
   ...props
 }: LabelInputProps) => {
   return (
@@ -22,6 +24,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
         disabled={disabled}
         readOnly={readOnly}
         placeholder={value}
+        type={type}
         {...props}
       />
     </div>

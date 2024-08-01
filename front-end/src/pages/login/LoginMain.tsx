@@ -23,7 +23,11 @@ const LoginMain: React.FC = () => {
       </div>
       <div className="w-full space-y-8">
         <LabelInput label="아이디" value="아이디 적어주세요" />
-        <LabelInput label="비밀번호" value="비밀번호 적어주세요" />
+        <LabelInput
+          label="비밀번호"
+          value="비밀번호 적어주세요"
+          type="password"
+        />
       </div>
       <div className="space-y-2 items-center justify-center">
         <Button label="로그인" size="large" onClick={handleLoginButtonClick} />

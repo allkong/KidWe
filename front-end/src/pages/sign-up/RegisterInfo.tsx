@@ -31,8 +31,15 @@ const RegisterInfo: React.FC = () => {
           <LabelInput label="이름" value="이름을 적어주세요" />
           <LabelInput label="아이디" value="아이디 적어주세요" />
           <div className="w-full space-y-4">
-            <LabelInput label="비밀번호" value="비밀번호 적어주세요" />
-            <LabelInput value="다시 한 번 비밀번호를 적어주세요" />
+            <LabelInput
+              label="비밀번호"
+              value="비밀번호 적어주세요"
+              type="password"
+            />
+            <LabelInput
+              value="다시 한 번 비밀번호를 적어주세요"
+              type="password"
+            />
           </div>
           <LabelInput label="이메일" value="이메일 적어주세요" />
         </div>
