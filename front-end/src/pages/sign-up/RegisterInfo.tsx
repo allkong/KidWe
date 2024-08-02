@@ -6,12 +6,15 @@ interface RegisterInfoProps {
 }
 const RegisterInfo: React.FC<RegisterInfoProps> = ({handleNext}) => {
   const [isShort, setIsShort] = useState(true);
-
+  const [username, setUsername] = useState('');
+  const [useremail, setUseremail] = useState('');
+  const [userpassword, setUserpassword] = useState('');
+  const [userpassword2, setUserpassword2] = useState('');
   useEffect(() => {
     const handleResize = () => {
       const mainContainer = document.querySelector('.main-container');
       if (mainContainer) {
-        setIsShort(mainContainer.clientHeight + 56 < window.innerHeight);
+        setIsShort(mainContainer.clientHeight < window.innerHeight);
       }
     };
 
@@ -30,24 +33,37 @@ const RegisterInfo: React.FC<RegisterInfoProps> = ({handleNext}) => {
           </div>
         </div>
         <div className="w-full space-y-8">
-          <LabelInput label="이름" value="이름을 적어주세요" />
-          <LabelInput label="아이디" value="아이디 적어주세요" />
+          <LabelInput
+            label="이름"
+            value={username}
+            placeholder="이름을 적어주세요"
+            onChange={e => setUsername(e.target.value)}
+          />
+          <LabelInput
+            label="이메일"
+            value={useremail}
+            placeholder="이메일을 적어주세요"
+            onChange={e => setUseremail(e.target.value)}
+          />
           <div className="w-full space-y-4">
             <LabelInput
               label="비밀번호"
-              value="비밀번호 적어주세요"
+              value={userpassword}
+              placeholder="비밀번호를 적어주세요"
               type="password"
+              onChange={e => setUserpassword(e.target.value)}
             />
             <LabelInput
-              value="다시 한 번 비밀번호를 적어주세요"
+              value={userpassword2}
+              placeholder="비밀번호를 다시 적어주세요"
               type="password"
+              onChange={e => setUserpassword2(e.target.value)}
             />
           </div>
-          <LabelInput label="이메일" value="이메일 적어주세요" />
         </div>
       </div>
       <div
-        className={`${isShort ? 'absolute bottom-8' : 'relative mt-8'} w-full flex justify-center px-4`}
+        className={`${isShort ? 'absolute bottom-4' : 'relative mt-4'} w-full flex justify-center px-4`}
       >
         <Button label="회원 가입" />
         {/* 이렇게 회원 가입을 한 후 role에 따라 rendering 되는 page가 달라짐 */}
