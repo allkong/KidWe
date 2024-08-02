@@ -1,3 +1,4 @@
+import {RecoilRoot} from 'recoil';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // import {HeaderProvider} from './contexts/header/HeaderContext';
 
@@ -17,34 +18,39 @@ import NotFound from '@/pages/NotFound';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <>
       {/* <HeaderProvider> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/schedule" element={<Schedule />}></Route>
-          <Route path="/mypage" element={<MyPage />}></Route>
+      <RecoilRoot>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/schedule" element={<Schedule />}></Route>
+            <Route path="/mypage" element={<MyPage />}></Route>
 
-          <Route path="/attendance" element={<AttentdanceManagement />}></Route>
+            <Route
+              path="/attendance"
+              element={<AttentdanceManagement />}
+            ></Route>
 
-          <Route path="/medication">
-            <Route path="" element={<MedicationListView />} />
-            <Route path=":medicationId" element={<MedicationDetail />} />
-            <Route path="write" element={<MedicationWrite />} />
-          </Route>
+            <Route path="/medication">
+              <Route path="" element={<MedicationListView />} />
+              <Route path=":medicationId" element={<MedicationDetail />} />
+              <Route path="write" element={<MedicationWrite />} />
+            </Route>
 
-          <Route path="/signup/*" element={<SignUp />}></Route>
-          <Route path="/login" element={<LoginMain />}></Route>
+            <Route path="/signup/*" element={<SignUp />}></Route>
+            <Route path="/login" element={<LoginMain />}></Route>
 
-          <Route
-            path="/kindergarten/*"
-            element={<KindergartenManagement />}
-          ></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </BrowserRouter>
+            <Route
+              path="/kindergarten/*"
+              element={<KindergartenManagement />}
+            ></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
       {/* </HeaderProvider> */}
-    </div>
+    </>
   );
 };
 

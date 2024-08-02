@@ -1,13 +1,11 @@
-import React from 'react';
-
 interface DashedButtonProps {
   label: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  src?: string;
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   variant?: 'positive' | 'negative';
 }
 
-const DashedButton = ({label, onClick, src, variant}: DashedButtonProps) => {
+const DashedButton = ({label, onClick, Icon, variant}: DashedButtonProps) => {
   const colorClass =
     variant === 'positive'
       ? 'border-primary text-primary'
@@ -15,10 +13,10 @@ const DashedButton = ({label, onClick, src, variant}: DashedButtonProps) => {
 
   return (
     <button
-      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 py-2 font-bold  border  border-dashed rounded-full h-9 text-large ${colorClass}`}
+      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 font-semibold  border-2  border-dashed rounded-md h-9 text-lg ${colorClass}`}
       onClick={onClick}
     >
-      <img src={src} />
+      {Icon && <Icon />}
       {label}
     </button>
   );
