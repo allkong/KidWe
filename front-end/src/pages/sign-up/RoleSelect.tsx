@@ -5,13 +5,17 @@ import Modal from '@/components/organisms/Modal/Modal';
 
 import {useNavigate} from 'react-router-dom';
 
+interface RoleSelectProps {
+  handleNext: () => void;
+}
+
 const roleItems = [
   {value: '학부모', label: '학부모'},
   {value: '선생님', label: '선생님'},
   {value: '원장님', label: '원장님'},
 ];
 
-const RoleSelect: React.FC = () => {
+const RoleSelect: React.FC<RoleSelectProps> = ({handleNext}) => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -20,6 +24,7 @@ const RoleSelect: React.FC = () => {
     if (selectedRole === '') {
       setIsModalOpen(true);
     } else {
+      handleNext();
       navigate('/signup/info');
     }
   };
