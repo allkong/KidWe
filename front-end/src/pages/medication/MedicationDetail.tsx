@@ -4,7 +4,7 @@ import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import MedicationDetailItem from '@/components/molecules/Item/MedicationDetailItem';
-import ConsentSignatureCard from '@/components/organisms/Card/ConsentSignatureCard';
+import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const MedicationDetail = () => {

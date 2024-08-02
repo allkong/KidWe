@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import ConsentSignatureCard from '@/components/organisms/Card/ConsentSignatureCard';
+import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 
 const meta: Meta<typeof ConsentSignatureCard> = {
   component: ConsentSignatureCard,
