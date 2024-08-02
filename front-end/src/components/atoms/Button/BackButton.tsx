@@ -1,13 +1,14 @@
-import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import Icon from '@/assets/icons/arrow-left-line.svg';
 
-interface BackButtonProps {
-  // onClick: () => void;
-}
+const BackButton = () => {
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
-const BackButton: React.FC<BackButtonProps> = () => {
   return (
-    <button>
+    <button onClick={handleGoBack}>
       <img src={Icon} alt="icon" />
     </button>
   );

@@ -1,12 +1,16 @@
 import React from 'react';
 
-interface ButtonProps {
+interface CircleButtonProps {
   label: string;
   date: Date;
   variant?: 'positive' | 'negative';
 }
 
-const Button: React.FC<ButtonProps> = ({label, date, variant = 'positive'}) => {
+const CircleButton: React.FC<CircleButtonProps> = ({
+  label,
+  date,
+  variant = 'positive',
+}) => {
   const baseClass =
     'px-6 py-2 w-28 h-28 flex flex-col justify-center items-center font-bold rounded-full text-base';
   const variantClass =
@@ -20,4 +24,4 @@ const Button: React.FC<ButtonProps> = ({label, date, variant = 'positive'}) => {
   );
 };
 
-export default Button;
+export default CircleButton;

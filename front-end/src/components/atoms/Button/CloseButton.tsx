@@ -1,13 +1,14 @@
-import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import Icon from '@/assets/icons/close-line.svg';
 
-interface CloseButtonProps {
-  // onClick: () => void;
-}
+const CloseButton = () => {
+  const navigate = useNavigate();
+  const handleGoHome = () => {
+    navigate('/');
+  };
 
-const CloseButton: React.FC<CloseButtonProps> = () => {
   return (
-    <button>
+    <button onClick={handleGoHome}>
       <img src={Icon} alt="icon" />
     </button>
   );

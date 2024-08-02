@@ -1,28 +1,37 @@
-import React from 'react';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import MoreButton from '@/components/atoms/Button/MoreButton';
+import BracketButton from '@/components/atoms/Button/BracketButton';
 
 interface UserCardItemProps {
   profile: string;
   userName: string;
-  className: string;
-  cardType: string; // type 수정하기
+  banName?: string;
+  cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const UsercardItem: React.FC<UserCardItemProps> = ({
+const UserCardItem = ({
   profile,
   userName,
-  className,
+  banName,
   cardType,
+  onClick,
 }: UserCardItemProps) => {
+  const arrowClass = cardType === 'arrow' ? 'rounded-lg' : 'border-b';
+
   return (
-    <div>
-      <div className="flex">
-        <ProfileImage src={profile} />
-        <span>{userName}</span>
-        <span>{className}</span>
+    <div className={`flex justify-between py-5 px-8 bg-white ${arrowClass}`}>
+      <div className="flex items-center space-x-3">
+        <ProfileImage src={profile} size="2.9rem" />
+        <span className="text-lg font-medium">{userName}</span>
+        {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>
+      {cardType === 'detail' && <MoreButton />}
+      {cardType === 'arrow' && (
+        <BracketButton onClick={onClick || (() => {})} direction="right" />
+      )}
     </div>
   );
 };
 
-export default UsercardItem;
+export default UserCardItem;

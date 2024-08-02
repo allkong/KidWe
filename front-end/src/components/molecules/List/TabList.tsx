@@ -1,4 +1,3 @@
-import React from 'react';
 import TabButton from '@/components/atoms/Button/TabButton';
 
 interface TabListProps {
@@ -7,7 +6,7 @@ interface TabListProps {
   onClickTab: (id: number) => void;
 }
 
-const TabList: React.FC<TabListProps> = ({tabs, activeTab, onClickTab}) => {
+const TabList = ({tabs, activeTab, onClickTab}: TabListProps) => {
   return (
     <div className="flex justify-around">
       {tabs.map(tab => (

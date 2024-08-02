@@ -8,10 +8,10 @@ export default {
   theme: {
     fontSize: {
       xxs: '.5rem',
-      xs: '.75rem',
       '2xs': '.70rem',
+      xs: '.75rem',
       sm: '.875rem',
-      tiny: '.875rem',
+      tiny: '.95rem',
       base: '1rem',
       lg: '1.125rem',
       xl: '1.25rem',
@@ -22,12 +22,19 @@ export default {
       '6xl': '4rem',
       '7xl': '5rem',
     },
+    borderRadius: {
+      sm: '0.375rem',
+      md: '0.5rem',
+      lg: '1rem',
+      full: '9999px',
+    },
     extend: {
       colors: {
         primary: '#FFC36A',
         secondary: '#FFF1A7',
         'gray-50': '#F8F8F8',
         'gray-100': '#EAEAEA',
+        'gray-150': '#C3C3C3',
         'gray-200': '#AFAFAF',
         'gray-300': '#3E3E3E',
       },

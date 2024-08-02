@@ -1,12 +1,11 @@
-import React from 'react';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import Tabs from '@/components/organisms/Navigation/Tabs';
 
-const AttendanceManagement: React.FC = () => {
+const AttendanceManagement = () => {
   const tabs = [
-    {id: 1, label: '미처리', content: <div>학생들</div>},
-    {id: 2, label: '처리 완료', content: <div>학생들2</div>},
+    {id: 0, label: '미처리', content: <div>학생들</div>},
+    {id: 1, label: '처리 완료', content: <div>학생들2</div>},
   ];
 
   return (

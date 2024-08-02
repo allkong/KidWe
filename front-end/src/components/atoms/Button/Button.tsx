@@ -1,18 +1,31 @@
-import React from 'react';
-
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
+  size?: 'small' | 'large';
   variant?: 'positive' | 'negative';
+  round?: 'small' | 'full';
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   label,
+  size = 'small',
   variant = 'positive',
+  round = 'small',
+  onClick,
 }: ButtonProps) => {
-  const baseClass = 'px-6 py-2 font-bold text-white rounded-full text-large';
+  const baseClass = 'py-2 font-semibold text-white text-large';
+  const sizeClass = size === 'small' ? 'px-6' : 'w-full';
   const variantClass = variant === 'positive' ? 'bg-primary' : 'bg-gray-200';
+  const roundClass = round === 'full' ? 'rounded-full' : 'rounded-sm';
 
-  return <button className={`${baseClass} ${variantClass}`}>{label}</button>;
+  return (
+    <button
+      onClick={onClick}
+      className={`${baseClass} ${sizeClass} ${variantClass} ${roundClass}`}
+    >
+      {label}
+    </button>
+  );
 };
 
 export default Button;
