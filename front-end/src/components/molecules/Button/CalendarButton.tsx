@@ -1,25 +1,32 @@
 import React, {useEffect, useRef, useState} from 'react';
 import CustomCalendar from '@/components/molecules/Calendar/CustomCalendar';
-import dayjs, {Dayjs} from 'dayjs';
+import {Dayjs} from 'dayjs';
 
 interface CalendarButtonProps {
   render: () => React.ReactNode;
   onClick?: (value: Dayjs) => void;
-  left?: boolean;
-  right?: boolean;
+  position?: 'left' | 'middle' | 'right';
   defaultDate?: Dayjs;
   showNavigation?: boolean;
   showNeighboringMonth?: boolean;
 }
 
+const getPositionClass = (position: 'left' | 'middle' | 'right') => {
+  switch (position) {
+    case 'left':
+      return '-right-3';
+    case 'right':
+      return '-left-3';
+    default:
+      return '-left-32';
+  }
+};
+
 const CalendarButton = ({
   render,
   onClick,
-  left,
-  right,
-  defaultDate,
-  showNavigation,
-  showNeighboringMonth,
+  position = 'middle',
+  ...props
 }: CalendarButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,12 +48,11 @@ const CalendarButton = ({
     setIsOpen(!isOpen);
   };
 
-  const handleChange = (value: Date) => {
-    onClick?.(dayjs(value));
+  const handleChange = (value: Dayjs) => {
+    onClick?.(value);
   };
 
-  const leftClass = left ? '-right-3' : '';
-  const rightClass = right ? '-left-3' : '';
+  const positionClass = getPositionClass(position);
 
   return (
     <div ref={selectRef} className="relative w-fit" onClick={handleOnClick}>
@@ -55,14 +61,9 @@ const CalendarButton = ({
         <>
           <div className="absolute w-0 h-0 border-b-8 border-l-8 border-r-8 border-white shadow-lg top-10 border-r-transparent border-l-transparent"></div>
           <div
-            className={`absolute px-2 py-2 bg-white rounded-lg ${leftClass} ${rightClass} top-[36px] w-72 shadow-lg`}
+            className={`absolute px-2 py-2 bg-white rounded-lg ${positionClass} top-[36px] w-72 shadow-lg`}
           >
-            <CustomCalendar
-              onChange={handleChange}
-              defaultDate={defaultDate?.toDate()}
-              showNavigation={showNavigation}
-              showNeighboringMonth={showNeighboringMonth}
-            />
+            <CustomCalendar onChange={handleChange} {...props} />
           </div>
         </>
       )}
