@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {containerHeaderClass} from '@/styles/styles';
 import RoleSelect from '@/pages/sign-up/RoleSelect';
@@ -8,16 +9,36 @@ import RegisterComplete from '@/pages/sign-up/RegisterComplete';
 import KindergartenSearch from '@/pages/sign-up/KindergartenSearch';
 import KindergartenBan from '@/pages/sign-up/KindergartenBan';
 import KindergartenChild from '@/pages/sign-up/KindergartenChild';
-
-const SignUp = () => {
+import ProgressMobileStepper from '@/pages/sign-up/ProgressMobileStepper';
+const SignUp: React.FC = () => {
   // const {headerTitle} = useHeader();
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = 6;
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => Math.min(prevActiveStep + 1, steps - 1));
+  };
 
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => Math.max(prevActiveStep - 1, 0));
+  };
   return (
     <div className="h-screen">
       <div className={containerHeaderClass}>
+        <ProgressMobileStepper
+          activeStep={activeStep}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          steps={steps}
+        />
         <Routes>
-          <Route path="/role" element={<RoleSelect />}></Route>
-          <Route path="/info" element={<RegisterInfo />}></Route>
+          <Route
+            path="/role"
+            element={<RoleSelect handleNext={handleNext} />}
+          ></Route>
+          <Route
+            path="/info"
+            element={<RegisterInfo handleNext={handleNext} />}
+          ></Route>
           <Route
             path="/kindergarten/register"
             element={<RegisterKindergarten />}

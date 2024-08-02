@@ -80,6 +80,11 @@ const SelectMain = ({
     return () => window.removeEventListener('mousedown', handleOutside);
   }, [selectRef]);
 
+  useEffect(() => {
+    setSelectedOption(undefined);
+    console.log(label);
+  }, [label]);
+
   return (
     <div ref={selectRef} className={`${sizeClass} box-border relative`}>
       <SelectButton

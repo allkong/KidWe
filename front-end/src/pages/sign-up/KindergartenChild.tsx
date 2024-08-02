@@ -13,6 +13,8 @@ const genderItems = [
 
 const KindergartenChild: React.FC = () => {
   const kindergartenName = '상태관리-유치원';
+  const [childname, setChildname] = useState('');
+  const [childbirth, setChildbirth] = useState('');
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [datas, setDatas] = useState(allergies);
@@ -70,8 +72,16 @@ const KindergartenChild: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col space-y-2">
-          <LabelInput value="원생 이름" />
-          <LabelInput value="생년월일" />
+          <LabelInput
+            value={childname}
+            placeholder="이름을 적어주세요"
+            onChange={e => setChildname(e.target.value)}
+          />
+          <LabelInput
+            value={childbirth}
+            placeholder="클릭하여 생일을 입력해주세요"
+            onChange={e => setChildbirth(e.target.value)}
+          />
           <div className="flex justify-center space-x-2">
             {genderItems.map((item, index) => (
               <Button

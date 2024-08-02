@@ -1,0 +1,15 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="200"
+    height="200"
+    viewBox="-10 -10 40 40"
+    fill="none"
+    stroke="#D3D3D3"
+    stroke-width="1"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+>
+    <rect x="6" y="2" width="8" height="8" rx="1" ry="1" transform="rotate(45 12 8)" />
+    <rect x="4" y="10" width="16" height="10" rx="2" ry="2" />
+    <path d="M9 14l2 2 4-4" />
+</svg>
