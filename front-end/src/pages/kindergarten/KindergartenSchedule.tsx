@@ -2,6 +2,7 @@ import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import ScheduleInfo from '@/components/organisms/Schedule/ScheduleInfo';
 import Select from '@/components/molecules/Select/Select';
 import Button from '@/components/atoms/Button/Button';
+import CustomCalendar from '@/components/molecules/Calendar/CustomCalendar';
 
 const KindergartenSchedule = () => {
   const kindergartens = ['전체', '햇살반', '꽃잎반'];
@@ -13,7 +14,9 @@ const KindergartenSchedule = () => {
         <div>
           <Select label="반" size="small">
             {kindergartens &&
-              kindergartens.map(data => <Select.Option text={data} />)}
+              kindergartens.map((data, idx) => (
+                <Select.Option key={idx} text={data} />
+              ))}
           </Select>
         </div>
         <div>
@@ -25,7 +28,11 @@ const KindergartenSchedule = () => {
           />
         </div>
       </div>
-      <div className="flex-grow w-full aspect-square">달력</div>
+      <div className="flex items-center justify-center flex-grow w-full">
+        <div className="max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">
+          <CustomCalendar showNavigation={false} />
+        </div>
+      </div>
       <ScheduleInfo />
     </div>
   );
