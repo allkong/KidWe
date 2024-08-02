@@ -21,7 +21,10 @@ const CheckBox = forwardRef(
     return (
       <div
         className="relative w-4 h-4 border border-gray-200 rounded-sm"
-        onClick={handleClick}
+        onClick={e => {
+          e.stopPropagation();
+          handleClick();
+        }}
       >
         {isChecked ? (
           <Check className="absolute" width={14} height={14} />
@@ -31,6 +34,7 @@ const CheckBox = forwardRef(
           ref={ref}
           type="checkbox"
           className="hidden"
+          readOnly
         />
       </div>
     );
