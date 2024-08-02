@@ -1,6 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import CustomCalendar from '@/components/molecules/Calendar/CustomCalendar';
 import {Dayjs} from 'dayjs';
+import {useClickOutside} from '@/hooks/useClickOutside';
 
 interface CalendarButtonProps {
   render: () => React.ReactNode;
@@ -28,21 +29,8 @@ const CalendarButton = ({
   position = 'middle',
   ...props
 }: CalendarButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const selectRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleOutside = (e: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener('click', handleOutside);
-
-    return () => window.removeEventListener('click', handleOutside);
-  }, [selectRef]);
+  const [isOpen, setIsOpen] = useClickOutside(selectRef);
 
   const handleOnClick = () => {
     setIsOpen(!isOpen);
