@@ -3,7 +3,7 @@ import MainMenu from '@/components/atoms/Menu/MainMenu';
 
 const menuItems = [
   {id: 1, img: 'sketchBook', text: '알림장', to: ''},
-  {id: 2, img: 'megaphone', text: '공지사항', to: ''},
+  {id: 2, img: 'megaphone', text: '공지사항', to: '/announcement'},
   {id: 3, img: 'attendance', text: '출석부', to: ''},
   {id: 4, img: 'book', text: '메모', to: ''},
   {id: 5, img: 'riceBowl', text: '식단', to: ''},
