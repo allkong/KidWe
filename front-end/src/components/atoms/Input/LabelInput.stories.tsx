@@ -11,6 +11,6 @@ type Story = StoryObj<typeof LabelInput>;
 export const Default: Story = {
   args: {
     label: '아이디',
-    value: '아이디를 입력해주세요',
+    placeholder: '아이디를 입력해주세요',
   },
 };

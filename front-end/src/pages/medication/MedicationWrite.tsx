@@ -4,6 +4,7 @@ import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
 import LabelInput from '@/components/atoms/Input/LabelInput';
+import ImageUpload from '@/components/atoms/Input/ImageUpload';
 import Select from '@/components/molecules/DropdownButton/Select';
 import RadioCheckBoxButton from '@/components/atoms/CheckBox/RadioCheckBoxButton';
 import ConsentSection from '@/components/organisms/Signature/ConsentSection';
@@ -47,7 +48,7 @@ const MedicationWrite = () => {
             />
           </div>
           <LabelInput label="증상" placeholder="예) 발열, 감기" />
-          {/* 사진 선택 추가 */}
+          <ImageUpload />
         </div>
         <AreaDivider />
         <div className="py-8 space-y-5 px-9">
