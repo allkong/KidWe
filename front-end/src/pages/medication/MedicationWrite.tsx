@@ -14,6 +14,7 @@ import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 const MedicationWrite = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedStorage, setSelectedStorage] = useState('');
+  const [image, setImage] = useState<string | null>(null);
 
   const handleDateChange = (option: string) => {
     setSelectedDate(option);
@@ -29,7 +30,13 @@ const MedicationWrite = () => {
     {label: '모레', date: getDayAfterTomorrow('M월 D일')},
   ];
 
-  const timeOptions = ['식사 직전', '식사 직후', '식후 30분', '취침 전'];
+  const timeOptions = [
+    '식사 직전',
+    '식사 직후',
+    '식후 30분',
+    '취침 전',
+    '기타',
+  ];
 
   const storageOptions = ['실온', '보관'];
 
@@ -48,7 +55,7 @@ const MedicationWrite = () => {
             />
           </div>
           <LabelInput label="증상" placeholder="예) 발열, 감기" />
-          <ImageUpload />
+          <ImageUpload onChange={setImage} />
         </div>
         <AreaDivider />
         <div className="py-8 space-y-5 px-9">

@@ -1,7 +1,11 @@
 import {useState, ChangeEvent} from 'react';
 import Icon from '@/assets/icons/pic_line.svg?react';
 
-const ImageUpload = () => {
+interface ImageUploadProps {
+  onChange: (image: string) => void;
+}
+
+const ImageUpload = ({onChange}: ImageUploadProps) => {
   const [image, setImage] = useState<string | null>(null);
 
   const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -9,7 +13,9 @@ const ImageUpload = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string);
+        const result = reader.result as string;
+        setImage(result);
+        onChange(result);
       };
       reader.readAsDataURL(file);
     }
