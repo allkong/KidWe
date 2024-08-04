@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import AuthorItem from './AuthorItem';
+import AuthorItem from '@/components/molecules/Item/AuthorItem';
 
 const meta: Meta<typeof AuthorItem> = {
   component: AuthorItem,
