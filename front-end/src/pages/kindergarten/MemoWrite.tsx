@@ -4,6 +4,7 @@ import MemoTimeSelect from '@/components/organisms/Memo/MemoTimeSelect';
 import MemoTagSelect from '@/components/organisms/Memo/MemoTagSelect';
 import KindergartenInfomationSelect from '@/components/organisms/Memo/KindergartenInfomationSelect';
 import Header from '@/components/organisms/Navigation/Header';
+import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
 import {writeMemo} from '@/apis/memo/writeMemo';
 import {useMutation} from '@tanstack/react-query';
@@ -37,6 +38,7 @@ const MemoWrite = () => {
       <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
         <Button label="메모 작성하기" onClick={handleClick} size="large" />
       </div>
+      <NavigationBar />
     </div>
   );
 };

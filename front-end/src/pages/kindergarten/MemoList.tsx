@@ -8,6 +8,7 @@ import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
+import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const MemoList = memo(() => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,12 +33,13 @@ const MemoList = memo(() => {
       <div
         className={`${containerNavigatorClass} flex flex-col h-screen items-center bg-[#F8F8F8]`}
       >
-        <Header title={'메모'} buttonType="back" />
+        <Header title="관찰 메모" buttonType="back" />
         <DateNavigator title="7.16 (화)" />
         <div className="mt-10">
           <MemoListItem onClick={handleModalOpen} />
         </div>
         <WriteButton onClick={() => navigate('/kindergarten/memo/write')} />
+        <NavigationBar />
       </div>
       <ModalPortal>
         <Modal isOpen={isModalOpen}>

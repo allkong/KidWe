@@ -1,5 +1,4 @@
 import {Routes, Route} from 'react-router-dom';
-import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import MemoList from '@/pages/kindergarten/MemoList';
 import MemoWrite from '@/pages/kindergarten/MemoWrite';
 import FoodInfo from '@/pages/kindergarten/FoodInfo';
@@ -16,7 +15,6 @@ const KindergartenManagement = () => {
         <Route path="/food/write" element={<FoodInfoWrite />}></Route>
         <Route path="/schedule" element={<KindergartenSchedule />}></Route>
       </Routes>
-      <NavigationBar />
     </div>
   );
 };
