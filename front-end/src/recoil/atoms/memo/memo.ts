@@ -18,7 +18,7 @@ export interface Memo {
 export const memoState = atom<Memo>({
   key: 'memo',
   default: {
-    updatedTime: dayjs().toString(),
+    updatedTime: dayjs().format('HH:mm'),
     lesson: '',
     kids: [],
     tagRequestDtos: [],
