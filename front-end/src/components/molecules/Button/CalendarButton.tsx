@@ -49,7 +49,7 @@ const CalendarButton = ({
         <>
           <div className="absolute w-0 h-0 border-b-8 border-l-8 border-r-8 border-white shadow-lg top-10 border-r-transparent border-l-transparent"></div>
           <div
-            className={`absolute px-2 py-2 bg-white rounded-lg ${positionClass} top-[36px] w-72 shadow-lg`}
+            className={`absolute z-10 px-2 py-2 bg-white rounded-lg ${positionClass} top-[36px] w-72 shadow-lg`}
           >
             <CustomCalendar onChange={handleChange} {...props} />
           </div>
