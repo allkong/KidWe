@@ -11,7 +11,7 @@ interface AnnounceTitleProps {
   content: string;
   date: Date;
   onClick: () => void;
-  isReply: boolean;
+  isReply?: boolean;
 }
 
 const CommentItem = ({
@@ -24,18 +24,18 @@ const CommentItem = ({
 }: AnnounceTitleProps) => {
   const today = dayjs(date).format('MM.DD HH:mm');
   return (
-    <div className="w-full flex justify-between items-center pr-2 mt-10">
+    <div className="w-full flex justify-between items-center pr-2 mt-10 text-xs">
       <div>{isReply && <ReplyIcon width={68} height={68} />}</div>
-      <div className="w-full space-y-5">
+      <div className="w-full space-y-2">
         <div className="flex justify-between items-center space-x-5 ">
           <div className="flex items-center space-x-5">
-            <p className="text-xl">{writer}</p>
-            <p>{classname}</p>
+            <p className="text-lg">{writer}</p>
+            <p className="text-xs">{classname}</p>
           </div>
           <MoreButton />
         </div>
         <p>{content}</p>
-        <div className="flex space-x-5 items-center">
+        <div className=" flex space-x-5 items-center">
           <Button
             size="small"
             label="답글"
