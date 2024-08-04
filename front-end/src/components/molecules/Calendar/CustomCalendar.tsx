@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import "@/components/molecules/Calendar/calendar.css"
 import {Value} from 'react-calendar/dist/cjs/shared/types';
 
 interface CustomCalendarProps {
