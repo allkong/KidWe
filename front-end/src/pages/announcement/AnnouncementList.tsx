@@ -7,18 +7,20 @@ const AnnouncementList = () => {
   const date = new Date();
   return (
     <div>
-      <AnnounceItem date={date} title="안녕" writer="나" />
+      <AnnounceItem date={date} title="안녕" writer="나" classname="전체" />
       <AnnounceItem
         date={date}
         title="집보내줘"
         writer="원장"
         tagbgcolor="red"
+        classname="치타반"
       />
       <AnnounceItem
         date={date}
         title="아이가안와요"
         writer="옆반선생님"
         tagbgcolor="#d3d3d3"
+        classname="안"
       />
       <WriteButton onClick={() => navigate('/announcement/write')} />
     </div>

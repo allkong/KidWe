@@ -7,6 +7,7 @@ interface AnnounceItemProps {
   writer: string;
   date: Date;
   src?: string;
+  classname: string;
   tagbgcolor?: string;
 }
 
@@ -15,6 +16,7 @@ const AnnounceItem = ({
   writer,
   date,
   src,
+  classname,
   tagbgcolor = '#FFF1A7',
 }: AnnounceItemProps) => {
   const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
@@ -23,7 +25,7 @@ const AnnounceItem = ({
       <div className="col-span-9">
         <div className="flex flex-row space-x-2">
           <h3 className="text-lg font-bold">{title}</h3>
-          <Tag text="반이름" backgroundColor={tagbgcolor} />
+          <Tag text={classname} backgroundColor={tagbgcolor} />
         </div>
         <div className="flex flex-row items-center mt-10">
           <p>{writer}</p>
