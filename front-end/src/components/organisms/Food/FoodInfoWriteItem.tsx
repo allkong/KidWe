@@ -55,7 +55,7 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
             >
               {datas.map((data, idx) =>
                 data.isChecked ? (
-                  <Tag key={idx} text={data.value} height="1.25rem" />
+                  <Tag key={idx} text={data.value} size="small" />
                 ) : null
               )}
             </div>
