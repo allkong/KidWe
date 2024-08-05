@@ -3,15 +3,16 @@ import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
-import {signupFormState} from '@/pages//sign-up/SignupState';
+import {Signup} from '@/recoil/atoms/signup/Signup';
 
 const RegisterInfo = () => {
   const [isShort, setIsShort] = useState(true);
-  const [signupregister, setSignupRegister] = useRecoilState(signupFormState);
+  const [signupregister, setSignupRegister] = useRecoilState(Signup);
   const [username, setUsername] = useState('');
   const [useremail, setUseremail] = useState('');
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
+  const [usertel, setUsertel] = useState('');
   const navigate = useNavigate();
   const handleRegisterButtonClick = () => {
     if (userpassword === userpassword2) {
@@ -20,10 +21,13 @@ const RegisterInfo = () => {
         member: {
           ...prevState.member,
           name: username,
+          tel: usertel,
           email: useremail,
           password: userpassword,
         },
       }));
+    } else {
+      console.log('비밀번호 다시해!');
     }
 
     if (signupregister.member.role === 'ROLE_DIRECTOR') {
@@ -88,6 +92,12 @@ const RegisterInfo = () => {
               onChange={e => setUserpassword2(e.target.value)}
             />
           </div>
+          <LabelInput
+            label="전화번호"
+            value={usertel}
+            placeholder="전화번호를 적어주세요"
+            onChange={e => setUsertel(e.target.value)}
+          />
         </div>
       </div>
       <div
