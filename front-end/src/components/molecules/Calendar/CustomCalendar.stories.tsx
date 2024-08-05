@@ -16,7 +16,7 @@ export const Default: Story = {
 
 export const Controlled: Story = {
   render: function () {
-    const [date, onChange] = useState(dayjs().toDate());
+    const [date, onChange] = useState(dayjs());
     return (
       <>
         <CustomCalendar defaultDate={date} onChange={onChange}></CustomCalendar>

@@ -2,6 +2,7 @@ import Dropdown from '@/components/atoms/Dropdown/Dropdown';
 import SelectButton from '@/components/atoms/Button/SelectButton';
 import Option, {OptionProps} from '@/components/atoms/Option/Option';
 import React, {isValidElement, useEffect, useRef, useState} from 'react';
+import {useClickOutside} from '@/hooks/useClickOutside';
 
 export interface SelectProps {
   label?: string;
@@ -46,12 +47,11 @@ const SelectMain = ({
   children,
 }: SelectProps) => {
   const selectRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useClickOutside(selectRef);
 
   const [selectedOption, setSelectedOption] = useState<string | undefined>(
     undefined
   );
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleButtonClick = () => {
     setIsOpen(!isOpen);
@@ -68,17 +68,6 @@ const SelectMain = ({
     children,
     handleOptionClick
   );
-
-  useEffect(() => {
-    const handleOutside = (e: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener('mousedown', handleOutside);
-    return () => window.removeEventListener('mousedown', handleOutside);
-  }, [selectRef]);
 
   useEffect(() => {
     setSelectedOption(undefined);
