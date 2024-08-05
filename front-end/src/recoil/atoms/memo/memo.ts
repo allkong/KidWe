@@ -1,24 +1,6 @@
 import {atom} from 'recoil';
 import dayjs from 'dayjs';
-
-export interface Kid {
-  id: number;
-  name: string;
-}
-
-export interface Tag {
-  id: string;
-  teacherId: number;
-  content: string;
-}
-
-export interface Memo {
-  updatedTime: string;
-  lesson: string;
-  kids: Kid[];
-  tagRequestDtos: Tag[];
-  content: string;
-}
+import {Memo} from '@/types/memo/Memo';
 
 export const memoState = atom<Memo>({
   key: 'memo',

@@ -1,5 +1,5 @@
 import axiosInstance from '@/apis/noSqlInstance';
-import {Tag} from '@/types/memo/Tag';
+import type {Tag} from '@/types/memo/Tag';
 
 export const getTags = async (teacherId: number): Promise<Tag[]> => {
   try {
