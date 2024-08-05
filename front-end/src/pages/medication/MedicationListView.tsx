@@ -1,7 +1,9 @@
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
-import {getToday} from '@/utils/dayjsPlugin';
 import {groupByDate} from '@/utils/groupByDate';
+import {useMedicationList} from '@/hooks/medication/useMedicationList';
+import type {MedicationItem} from '@/types/medication/MedicationList';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -11,39 +13,25 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
-interface MedicationItem {
-  medicationId: number;
-  kidName: string;
-  banName: string;
-  kidDate: string;
-}
-
 const MedicationListView = () => {
-  // 프로필 추가 예정
-  const monthOfMedication: MedicationItem[] = [
-    {
-      medicationId: 1,
-      kidName: '정다빈',
-      banName: '콜라반',
-      kidDate: '2024-07-29',
-    },
-    {
-      medicationId: 2,
-      kidName: '변지환',
-      banName: '펩시반',
-      kidDate: '2024-07-29',
-    },
-    {
-      medicationId: 3,
-      kidName: '서지민',
-      banName: '사이다반',
-      kidDate: '2024-07-30',
-    },
-  ];
-
-  const groupedData = groupByDate(monthOfMedication);
-
+  const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
+
+  const {data, error, isLoading} = useMedicationList(
+    1,
+    currentMonth.year(),
+    currentMonth.month() + 1,
+    'ROLE_DIRECTOR'
+  );
+
+  const handleLeftClick = () => {
+    setCurrentMonth(prev => prev.subtract(1, 'month').startOf('month'));
+  };
+
+  const handleRightClick = () => {
+    setCurrentMonth(prev => prev.add(1, 'month').startOf('month'));
+  };
+
   const handleUserItemClick = (medicationId: number, item: MedicationItem) => {
     navigate(`/medication/${medicationId}`, {
       state: {
@@ -57,12 +45,26 @@ const MedicationListView = () => {
     navigate('/medication/write');
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  const groupedData = groupByDate(data ?? []);
+
   return (
     <div className="flex flex-col h-screen">
       <Header title={'투약의뢰서'} buttonType="close" />
-      <DateNavigator title={getToday('M월')} />
+      <DateNavigator
+        title={currentMonth.format('YY년 M월')}
+        onClickLeft={handleLeftClick}
+        onClickRight={handleRightClick}
+      />
       <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
-        {monthOfMedication.length === 0 ? (
+        {data && data.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <NoResult text="등록된 의뢰서가 없어요" />
           </div>
@@ -76,7 +78,7 @@ const MedicationListView = () => {
                   onClick={() => handleUserItemClick(item.medicationId, item)}
                 >
                   <UserCardItem
-                    profile=""
+                    profile={item.profileImage || ''}
                     userName={item.kidName}
                     banName={item.banName}
                     cardType="basic"
