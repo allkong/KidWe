@@ -3,6 +3,7 @@ import React from 'react';
 import CheckWhiteIcon from '@/assets/icons/check-fill-white.svg';
 
 interface RoleSelectorProps {
+  label?: string;
   isSelected: boolean;
   onClick: () => void;
   value: string;
@@ -10,6 +11,7 @@ interface RoleSelectorProps {
 }
 
 const RoleSelector: React.FC<RoleSelectorProps> = ({
+  label,
   isSelected,
   onClick,
   value,
@@ -24,7 +26,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
         onClick={onClick}
       >
         <div className="flex flex-col items-start justify-center">
-          <p>{value}</p>
+          <p>{label}</p>
           <p>{explain}</p>
         </div>
         <img src={isSelected ? CheckWhiteIcon : ''} alt="" />
