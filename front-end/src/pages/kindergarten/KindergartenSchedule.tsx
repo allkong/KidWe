@@ -1,7 +1,6 @@
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import ScheduleInfo from '@/components/organisms/Schedule/ScheduleInfo';
 import Select from '@/components/molecules/DropdownButton/Select';
-import Button from '@/components/atoms/Button/Button';
 import CustomCalendar from '@/components/molecules/Calendar/CustomCalendar';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
@@ -9,7 +8,6 @@ import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
 import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import Select from '@/components/molecules/Select/Select';
 
 const kindergartens = ['전체', '햇살반', '꽃잎반'];
 
