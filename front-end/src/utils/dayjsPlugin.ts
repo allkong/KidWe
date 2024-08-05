@@ -29,6 +29,11 @@ export const getDayAfterTomorrow = (format: string = 'M월 D일'): string => {
   return formatDate(dayjs().add(2, 'day'), format);
 };
 
+export const formatDateToMD = (dateString: string): string => {
+  const date = dayjs(dateString, 'YYYY-MM-DD');
+  return date.format('M월 D일');
+};
+
 // 시간 형식 커스텀
 export const getCurrentTimeInTimezone = (
   tz: string,

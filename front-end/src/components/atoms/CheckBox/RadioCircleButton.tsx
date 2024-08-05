@@ -1,3 +1,5 @@
+import {formatDateToMD} from '@/utils/dayjsPlugin';
+
 interface RadioCircleButtonProps {
   options: {label: string; date: string}[];
   selectedOption: string;
@@ -18,7 +20,7 @@ const RadioCircleButton: React.FC<RadioCircleButtonProps> = ({
           onClick={() => onChange(option.date)}
         >
           <p className="text-2xl font-medium">{option.label}</p>
-          <p className="text-sm">{option.date}</p>
+          <p className="text-sm">{formatDateToMD(option.date)}</p>
         </div>
       ))}
     </div>

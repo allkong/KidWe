@@ -1,13 +1,13 @@
-import DashedButton from '@/components/atoms/Button/DashedButton';
-import signatureIcon from '@/assets/icons/signature-fill.svg?react';
+import SignatureModal from '../Modal/SignatureModal';
 
 interface ConsentSection {
   text: string;
   date: string;
   parentName: string;
+  onClick: (imageData: Blob) => void;
 }
 
-const ConsentSection = ({text, date, parentName}: ConsentSection) => {
+const ConsentSection = ({text, date, parentName, onClick}: ConsentSection) => {
   return (
     <div className="flex flex-col items-center space-y-8">
       <div className="flex flex-col items-center space-y-1">
@@ -16,7 +16,7 @@ const ConsentSection = ({text, date, parentName}: ConsentSection) => {
           {date} {parentName}
         </p>
       </div>
-      <DashedButton label="서명하기" Icon={signatureIcon} variant="positive" />
+      <SignatureModal onClick={onClick} />
     </div>
   );
 };
