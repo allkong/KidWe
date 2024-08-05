@@ -54,7 +54,7 @@ const ModalMain = ({children, isOpen}: ModalMainProps) => {
   const modalBackground = getModalBackground(children);
 
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center w-screen h-screen">
+    <div className="fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center w-screen h-screen">
       <div className="box-border z-10 flex flex-col items-center justify-center max-h-screen px-10 py-10 bg-white rounded-lg shadow-md min-w-fit min-h-fit">
         {modalHeader}
         {modalBody}

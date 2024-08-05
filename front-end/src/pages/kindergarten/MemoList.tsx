@@ -1,62 +1,79 @@
 import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import {memo, useRef, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-// import {useHeader} from '@/contexts/header/HeaderContext';
 import Modal from '@/components/organisms/Modal/Modal';
 import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
+import {containerNavigatorClass} from '@/styles/styles';
+import Header from '@/components/organisms/Navigation/Header';
+import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {useQuery} from '@tanstack/react-query';
+import {getTeacherDailyMemos} from '@/apis/memo/getTeacherDailyMemos';
+import dayjs from 'dayjs';
+import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+
+const date = dayjs();
 
 const MemoList = memo(() => {
-  // const {handleHeaderTitle} = useHeader();
-
-  // useEffect(() => {
-  //   handleHeaderTitle('관찰 메모');
-  // }, [handleHeaderTitle]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [modalMemo, setModalMemo] = useState<TeacherDailyMemo>();
+
+  const [memos, setMemos] = useState<TeacherDailyMemo[]>();
+
+  const {data} = useQuery({
+    queryKey: ['memos', 0],
+    queryFn: () =>
+      getTeacherDailyMemos(
+        0,
+        date.format('YYYY'),
+        date.format('MM'),
+        date.format('DD')
+      ),
+  });
+
+  useEffect(() => {
+    setMemos(data);
+  }, [data]);
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const handleModalOpen = () => {
+
+  const handleModalOpen = (memo: TeacherDailyMemo) => {
+    setModalMemo(memo);
     setIsModalOpen(true);
   };
-
-  const dataRef = useRef<{
-    children?: string[];
-    tags?: string[];
-    time?: string;
-    onClick?: React.MouseEventHandler<HTMLDivElement>;
-  }>();
 
   const navigate = useNavigate();
 
   return (
     <>
-      <div className="flex flex-col h-full items-center bg-[#F8F8F8]">
-        <div className="min-w-full mb-10">
-          <DateNavigator title="7.16 (화)" />
+      <div
+        className={`${containerNavigatorClass} flex flex-col h-screen items-center bg-[#F8F8F8]`}
+      >
+        <Header title="관찰 메모" buttonType="back" />
+        <DateNavigator title="7.16 (화)" />
+        <div className="mt-10">
+          {memos &&
+            memos.map(memo => (
+              <MemoListItem
+                key={memo.id}
+                memo={memo}
+                onClick={() => handleModalOpen(memo)}
+              />
+            ))}
         </div>
-        {/* {mockUpDatas.map(data => (
-          <MemoListItem
-            {...data}
-            onClick={() => {
-              // id를 받아서 memoview에 넘김
-              // idRef.current = data.id;
-              dataRef.current = data;
-              handleModalOpen();
-            }}
-          />
-        ))} */}
-        <MemoListItem onClick={handleModalOpen} />
-        <WriteButton onClick={() => navigate('/kindergarten/write')} />
+        <WriteButton onClick={() => navigate('/kindergarten/memo/write')} />
+        <NavigationBar />
       </div>
       <ModalPortal>
         <Modal isOpen={isModalOpen}>
           <Modal.Header title="관찰 메모" />
           <Modal.Body>
-            <MemoView {...dataRef.current} />
+            <MemoView memo={modalMemo} />
           </Modal.Body>
           <Modal.BottomButton
             onClick={handleModalClose}

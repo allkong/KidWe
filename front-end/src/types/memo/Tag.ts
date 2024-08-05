@@ -1,5 +1,5 @@
 export interface Tag {
-  id: string;
+  id?: string;
   teacherId: number;
   content: string;
 }
