@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import Dropdown from '@/components/atoms/Dropdown/Dropdown';
-import SelectButton from '@/components/atoms/Button/SelectButton';
 import InputForm from '@/components/molecules/InputForm/InputForm';
 import NoResult from '@/components/atoms/NoResult';
 import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
-import SelectMain from '@/components/molecules/Select/SelectMain';
-import Select from '@/components/molecules/Select/Select';
+import Select from '@/components/molecules/DropdownButton/Select';
 import {useRecoilState} from 'recoil';
 
 type City = {
@@ -91,17 +88,13 @@ const KindergartenSearch: React.FC = () => {
       <p className="text-lg">원 위치를 검색해주세요</p>
       <div className="flex items-center space-x-8">
         {/* 첫 dropdown은 시 */}
-        <SelectMain
-          size="medium"
-          label={selectedCity}
-          onChange={handleCityChange}
-        >
+        <Select size="medium" label={selectedCity} onChange={handleCityChange}>
           {CityOptions.map(city => (
             <Select.Option key={city.id} text={city.value} id={city.id} />
           ))}
-        </SelectMain>
+        </Select>
         {/* 두 번째 dropdown은 군구 */}
-        <SelectMain
+        <Select
           size="medium"
           label={selectedDistrict}
           onChange={handleDistrictChange}
@@ -113,7 +106,7 @@ const KindergartenSearch: React.FC = () => {
               id={district.id}
             />
           ))}
-        </SelectMain>
+        </Select>
       </div>
       <InputForm
         inputValue={inputValue}
@@ -123,7 +116,7 @@ const KindergartenSearch: React.FC = () => {
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
       ></InputForm>
-      <div className="flex w-full border rounded-lg  min-h-96">
+      <div className="flex w-full border rounded-lg min-h-96">
         {searchResult === '원 검색' || searchResult === '' ? (
           <div className="flex items-center justify-center w-full ">
             <NoResult text="유치원을 검색해주세요" />

@@ -1,5 +1,5 @@
 import Button from '@/components/atoms/Button/Button';
-import Select from '@/components/molecules/Select/Select';
+import Select from '@/components/molecules/DropdownButton/Select';
 import {PostSchedule} from '@/types/schedule/PostSchedule';
 import {useMutation} from '@tanstack/react-query';
 import {useState} from 'react';
