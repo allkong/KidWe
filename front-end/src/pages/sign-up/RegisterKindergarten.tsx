@@ -19,10 +19,10 @@ const RegisterKindergarten: React.FC = () => {
   const [isShort, setIsShort] = useState(true);
   const [addr, setAddr] = useState('');
   const [zipNo, setZipNo] = useState('');
-  const [addrDetail, setAddrDetail] = useState('');
+  const [kindergartenaddrdetail, setkindergartenaddrdetail] = useState('');
   const [inputAble, setInputAble] = useState(false);
-  const [name, setName] = useState('이름을 적어주세요');
-  const [tel, setTel] = useState('전화번호를 적어주세요');
+  const [kindergartenname, setKindergartenName] = useState('');
+  const [kindergartentel, setKindergartenTel] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const RegisterKindergarten: React.FC = () => {
     //   name === '이름을 적어주세요' ||
     //   addr === '' ||
     //   zipNo === '' ||
-    //   addrDetail === '' ||
+    //   kindergartenaddrdetail === '' ||
     //   tel === '' ||
     //   tel === '전화번호를 적어주세요'
     // ) {
@@ -54,7 +54,7 @@ const RegisterKindergarten: React.FC = () => {
         setAddr(data.address);
         setZipNo(data.zonecode);
         setInputAble(true);
-        document.getElementById('addrDetail')?.focus();
+        document.getElementById('kindergartenaddrdetail')?.focus();
       },
     }).open();
   };
@@ -93,7 +93,12 @@ const RegisterKindergarten: React.FC = () => {
           </div>
         </div>
         <div className="w-full space-y-8">
-          <LabelInput label="이름" value={name} />
+          <LabelInput
+            label="이름"
+            value={kindergartenname}
+            placeholder="이름을 적어주세요"
+            onChange={e => setKindergartenName(e.target.value)}
+          />
 
           <div className="space-y-2">
             <div className="grid grid-cols-12 gap-x-2">
@@ -123,15 +128,21 @@ const RegisterKindergarten: React.FC = () => {
                 readOnly
               />
               <LabelInput
-                value={addrDetail}
                 label="상세주소"
+                value={kindergartenaddrdetail}
                 disabled={!inputAble}
+                onChange={e => setkindergartenaddrdetail(e.target.value)}
               />
             </div>
           </div>
 
           <div className="w-full space-y-4"></div>
-          <LabelInput label="원 번호" value="유치원 번호 적어주세요" />
+          <LabelInput
+            label="원 번호"
+            value={kindergartentel}
+            placeholder="원 번호를 적어주세요"
+            onChange={e => setKindergartenTel(e.target.value)}
+          />
         </div>
       </div>
       <div

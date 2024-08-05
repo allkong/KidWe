@@ -1,6 +1,5 @@
 import Icon from '@/assets/icons/more-line.svg';
 import Dropdown from '@/components/atoms/Dropdown/Dropdown';
-import DropdownOption from '@/components/atoms/Dropdown/DropdownOption';
 import {useEffect, useRef, useState} from 'react';
 
 interface MoreButtonProps {
@@ -39,7 +38,7 @@ const MoreButton = ({options}: MoreButtonProps) => {
         <Dropdown isOpen={isOpen}>
           {options &&
             options.map((option, idx) => (
-              <DropdownOption
+              <Dropdown.Option
                 key={idx}
                 text={option}
                 onClick={handleOptionClick}

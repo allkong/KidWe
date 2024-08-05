@@ -6,27 +6,70 @@ import NoResult from '@/components/atoms/NoResult';
 import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
 
+import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
+import Select from '@/components/molecules/DropdownButton/Select';
+
+type City = {
+  id: string;
+  value: string;
+};
+
+type District = {
+  id: string;
+  value: string;
+};
+
 const KindergartenSearch: React.FC = () => {
-  const [isCityDropDown, setIsCityDropDown] = useState(false);
-  const [isDistrictDropDown, setIsDistrictDropDown] = useState(false);
-  const [selectedCity, setSelectedCity] = useState('시/도 선택');
-  const [selectedDistrict, setSelectedDistrict] = useState('구 선택');
+  const [selectedCity, setSelectedCity] = useState<string>('시');
+  const [selectedDistricts, setSelectedDistricts] = useState<District[]>([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('군구');
   const [inputValue, setInputValue] = useState('원 검색');
   const [searchResult, setSearchResult] = useState('');
   const navigate = useNavigate();
 
+  const CityOptions: City[] = [
+    {id: '1', value: '서울특별시'},
+    {id: '2', value: '부산광역시'},
+    {id: '3', value: '인천광역시'},
+  ];
+
+  const DistrictOptions: {[key: string]: District[]} = {
+    '1': [
+      {id: '1-1', value: '강남구'},
+      {id: '1-2', value: '종로구'},
+      {id: '1-3', value: '동대문구'},
+    ],
+    '2': [
+      {id: '2-1', value: '해운대구'},
+      {id: '2-2', value: '수영구'},
+      {id: '2-3', value: '금정구'},
+    ],
+    '3': [
+      {id: '3-1', value: '남동구'},
+      {id: '3-2', value: '부평구'},
+      {id: '3-3', value: '연수구'},
+    ],
+  };
+
   const handleKindergartenSearchButtonClick = () => {
     navigate('/signup/kindergarten/ban');
   };
+  const handleCityChange = (id: string) => {
+    const city = CityOptions.find(city => city.id === id);
+    if (city) {
+      setSelectedCity(city.value);
+      console.log(city.value, 'handle쪽');
+      setSelectedDistrict(''); // 도시 변경 시, 선택된 구 초기화
+      setSelectedDistricts(DistrictOptions[id] || []);
+    }
+  };
+  const handleDistrictChange = (value: string) => {
+    const district = selectedDistricts.find(district => district.id === value);
+    if (district) {
+      setSelectedDistrict(district.value);
+    }
+  };
 
-  const handleCitySelect = (city: string) => {
-    setSelectedCity(city);
-    setIsCityDropDown(false);
-  };
-  const handleDistrictSelect = (district: string) => {
-    setSelectedDistrict(district);
-    setIsDistrictDropDown(false);
-  };
   const handleSearch = () => {
     setSearchResult(inputValue);
   };
@@ -42,63 +85,33 @@ const KindergartenSearch: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen space-y-8 py-6 pt-20 flex flex-col items-center  w-full h-full px-5">
+    <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 pt-20 space-y-8">
       <p className="text-lg">원 위치를 검색해주세요</p>
       <div className="flex items-center space-x-8">
         {/* 첫 dropdown은 시 */}
-        <div>
-          <SelectButton
-            label={selectedCity}
-            onClick={() => setIsCityDropDown(!isCityDropDown)}
-          />
-          {isCityDropDown && (
-            <div className="absolute mt-2 bg-white">
-              <Dropdown isOpen={true}>
-                <Dropdown.Option
-                  text={'option1'}
-                  onClick={() => handleCitySelect('option1')}
-                ></Dropdown.Option>
-                <Dropdown.Divider></Dropdown.Divider>
-                <Dropdown.Option
-                  text={'option2'}
-                  onClick={() => handleCitySelect('option2')}
-                ></Dropdown.Option>
-                <Dropdown.Divider></Dropdown.Divider>
-                <Dropdown.Option
-                  text={'option3'}
-                  onClick={() => handleCitySelect('option3')}
-                ></Dropdown.Option>
-              </Dropdown>
-            </div>
-          )}
-        </div>
+        <SelectMain
+          size="medium"
+          label={selectedCity}
+          onChange={handleCityChange}
+        >
+          {CityOptions.map(city => (
+            <Select.Option key={city.id} text={city.value} id={city.id} />
+          ))}
+        </SelectMain>
         {/* 두 번째 dropdown은 군구 */}
-        <div>
-          <SelectButton
-            label={selectedDistrict}
-            onClick={() => setIsDistrictDropDown(!isDistrictDropDown)}
-          />
-          {isDistrictDropDown && (
-            <div className="absolute mt-2 bg-white">
-              <Dropdown isOpen={true}>
-                <Dropdown.Option
-                  text={'option1'}
-                  onClick={() => handleDistrictSelect('option1')}
-                ></Dropdown.Option>
-                <Dropdown.Divider></Dropdown.Divider>
-                <Dropdown.Option
-                  text={'option2'}
-                  onClick={() => handleDistrictSelect('option2')}
-                ></Dropdown.Option>
-                <Dropdown.Divider></Dropdown.Divider>
-                <Dropdown.Option
-                  text={'option3'}
-                  onClick={() => handleDistrictSelect('option3')}
-                ></Dropdown.Option>
-              </Dropdown>
-            </div>
-          )}
-        </div>
+        <SelectMain
+          size="medium"
+          label={selectedDistrict}
+          onChange={handleDistrictChange}
+        >
+          {selectedDistricts.map(district => (
+            <Select.Option
+              key={district.id}
+              text={district.value}
+              id={district.id}
+            />
+          ))}
+        </SelectMain>
       </div>
       <InputForm
         inputValue={inputValue}
@@ -108,9 +121,9 @@ const KindergartenSearch: React.FC = () => {
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
       ></InputForm>
-      <div className=" w-full min-h-96 flex border rounded-lg ">
+      <div className="flex w-full border rounded-lg  min-h-96">
         {searchResult === '원 검색' || searchResult === '' ? (
-          <div className="w-full flex items-center justify-center  ">
+          <div className="flex items-center justify-center w-full ">
             <NoResult text="유치원을 검색해주세요" />
           </div>
         ) : (

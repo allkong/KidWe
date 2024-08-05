@@ -1,5 +1,16 @@
-import axiosInstance from '@/apis/axios';
-import type {TeacherDailyNote} from '@/types/memo/TeacherDailyMemo';
+import axiosInstance from '@/apis/noSqlInstance';
+import {Tag} from '@/recoil/atoms/memo/memo';
+import {Kid as Child} from '@/recoil/atoms/memo/memo';
+
+export interface TeacherDailyMemo {
+  id: string;
+  teacherId: number;
+  updatedTime: string;
+  lesson: string;
+  kids: Child[];
+  tagResponseDtos: Tag[];
+  content: string;
+}
 
 /**
  *
@@ -11,10 +22,10 @@ import type {TeacherDailyNote} from '@/types/memo/TeacherDailyMemo';
  */
 export const getTeacherDailyMemos = async (
   teacherId: number,
-  year: number,
-  month: number,
-  day: number
-): Promise<TeacherDailyNote> => {
+  year: string,
+  month: string,
+  day: string
+): Promise<TeacherDailyMemo[]> => {
   try {
     const response = await axiosInstance.get(
       `/memo/${teacherId}/${year}/${month}/${day}`

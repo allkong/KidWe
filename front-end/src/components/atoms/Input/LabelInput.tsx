@@ -8,6 +8,7 @@ interface LabelInputProps {
   disabled?: boolean;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
@@ -18,6 +19,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
   disabled = false,
   readOnly = false,
   onChange,
+  type,
   ...props
 }: LabelInputProps) => {
   return (
@@ -31,6 +33,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
         disabled={disabled}
         readOnly={readOnly}
         placeholder={placeholder}
+        type={type}
         {...props}
       />
     </div>
