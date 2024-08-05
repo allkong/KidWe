@@ -1,10 +1,15 @@
 import {atom} from 'recoil';
-import type {Tag} from '@/types/memo/Tag';
 import dayjs from 'dayjs';
 
 export interface Kid {
   id: number;
   name: string;
+}
+
+export interface Tag {
+  id: string;
+  teacherId: number;
+  content: string;
 }
 
 export interface Memo {
