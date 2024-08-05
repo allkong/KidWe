@@ -1,7 +1,7 @@
 import noSqlInstance from '@/apis/noSqlInstance';
-import {Memo} from '@/recoil/atoms/memo/memo';
+import {Memo} from '@/types/memo/Memo';
 
-export const writeMemo = async (
+export const postMemo = async (
   teacherId: number,
   memo: Memo
 ): Promise<unknown> => {
