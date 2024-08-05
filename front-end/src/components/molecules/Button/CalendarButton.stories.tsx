@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
-import MoreButton from '@/components/atoms/Button/MoreButton';
+import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import {useState} from 'storybook/internal/preview-api';
 import dayjs, {Dayjs} from 'dayjs';
 
