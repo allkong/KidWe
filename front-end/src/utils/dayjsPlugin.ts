@@ -13,21 +13,33 @@ dayjs.extend(timezone);
 dayjs.locale('ko');
 
 // 날짜 형식 커스텀
-export const getToday = (): string => {
-  return dayjs().format('YYYY-MM-DD');
+export const formatDate = (date: dayjs.Dayjs, format: string): string => {
+  return date.format(format);
 };
 
-export const toKorYMD = (): string => {
-  return dayjs().format('YYYY년 M월 D일');
+export const getToday = (format: string = 'YYYY년 M월 D일'): string => {
+  return formatDate(dayjs(), format);
 };
 
-export const toKorM = (): string => {
-  return dayjs().format('M월');
+export const getTomorrow = (format: string = 'M월 D일'): string => {
+  return formatDate(dayjs().add(1, 'day'), format);
+};
+
+export const getDayAfterTomorrow = (format: string = 'M월 D일'): string => {
+  return formatDate(dayjs().add(2, 'day'), format);
+};
+
+export const formatDateToMD = (dateString: string): string => {
+  const date = dayjs(dateString, 'YYYY-MM-DD');
+  return date.format('M월 D일');
 };
 
 // 시간 형식 커스텀
-export const getCurrentTimeInTimezone = (tz: string): string => {
-  return dayjs().tz(tz).format();
+export const getCurrentTimeInTimezone = (
+  tz: string,
+  format: string = 'YYYY-MM-DD HH:mm:ss'
+): string => {
+  return dayjs().tz(tz).format(format);
 };
 
 export default dayjs;

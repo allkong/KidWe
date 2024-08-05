@@ -6,8 +6,8 @@ import NoResult from '@/components/atoms/NoResult';
 import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
 
-import SelectMain from '@/components/molecules/Select/SelectMain';
-import Select from '@/components/molecules/Select/Select';
+import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
+import Select from '@/components/molecules/DropdownButton/Select';
 
 type City = {
   id: string;
@@ -85,7 +85,7 @@ const KindergartenSearch: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen space-y-8 py-6 pt-20 flex flex-col items-center  w-full h-full px-5">
+    <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 pt-20 space-y-8">
       <p className="text-lg">원 위치를 검색해주세요</p>
       <div className="flex items-center space-x-8">
         {/* 첫 dropdown은 시 */}
@@ -121,9 +121,9 @@ const KindergartenSearch: React.FC = () => {
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
       ></InputForm>
-      <div className=" w-full min-h-96 flex border rounded-lg ">
+      <div className="flex w-full border rounded-lg  min-h-96">
         {searchResult === '원 검색' || searchResult === '' ? (
-          <div className="w-full flex items-center justify-center  ">
+          <div className="flex items-center justify-center w-full ">
             <NoResult text="유치원을 검색해주세요" />
           </div>
         ) : (
