@@ -14,5 +14,6 @@ export const Basic: Story = {
     writer: '백승우 선생님',
     date: new Date(),
     src: '',
+    classname: '치타반',
   },
 };

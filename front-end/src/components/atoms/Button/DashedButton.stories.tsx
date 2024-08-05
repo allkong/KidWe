@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import DashedButton from '@/components/atoms/Button/DashedButton';
-import medecine from '@/assets/icons/icon-medecines.svg';
+import medecine from '@/assets/icons/icon-medecines.svg?react';
 
 const meta: Meta<typeof DashedButton> = {
   component: DashedButton,
@@ -25,6 +25,6 @@ export const Primary: Story = {
   args: {
     label: '약 추가하기',
     variant: 'positive',
-    src: medecine,
+    Icon: medecine,
   },
 };
