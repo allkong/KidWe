@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
-import SelectMain from '@/components/molecules/Select/SelectMain';
-import Select from '@/components/molecules/Select/Select';
+import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
+import Select from '@/components/molecules/DropdownButton/Select';
 
 const KindergartenBan: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const KindergartenBan: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen space-y-16 py-6 pt-20 flex flex-col items-center  w-full h-full px-5">
+    <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 pt-20 space-y-16">
       <p className="text-lg">
         본인/원아 유치원이 맞는지 확인하고, 반을 선택해주세요.
       </p>

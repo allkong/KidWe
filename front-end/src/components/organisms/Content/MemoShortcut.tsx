@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {toKorYMD} from '@/utils/dayjsPlugin';
+import {getToday} from '@/utils/dayjsPlugin';
 import Button from '@/components/atoms/Button/Button';
 import pencilIcon from '@/assets/menu/pencil.png';
 
@@ -12,7 +12,7 @@ const MemoShortcut = () => {
   return (
     <div className="p-5 space-y-2 bg-white rounded-lg">
       <div>
-        <p className="text-sm text-gray-200">{toKorYMD()}</p>
+        <p className="text-sm text-gray-200">{getToday()}</p>
         <div className="flex items-center space-x-2">
           <p className="font-semibold text-gray-300">
             방금 일어난 일을 바로 기록해 보세요

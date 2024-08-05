@@ -1,34 +1,37 @@
-import React from 'react';
+import {ChangeEvent} from 'react';
 
 interface LabelInputProps {
-  value: string;
+  name?: string;
   label?: string;
+  placeholder?: string;
   readOnly?: boolean;
   disabled?: boolean;
-  placeholder?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const LabelInput: React.FC<LabelInputProps> = ({
-  value,
-  label,
-  disabled,
-  readOnly,
+  name,
   placeholder,
-  type,
+  label,
+  value,
+  disabled = false,
+  readOnly = false,
   onChange,
+  type,
   ...props
 }: LabelInputProps) => {
   return (
     <div className="space-y-2">
-      <p className="text-gray-300">{label}</p>
+      <p>{label}</p>
       <input
-        className="w-full h-10 px-4 border border-gray-200 rounded-lg bg-white  text-gray-200 font-normal text-xs"
-        disabled={disabled}
-        readOnly={readOnly}
+        name={name}
         value={value}
         onChange={onChange}
+        className="w-full h-10 px-4 text-xs font-normal text-gray-200 bg-white border border-gray-200 rounded-lg"
+        disabled={disabled}
+        readOnly={readOnly}
         placeholder={placeholder}
         type={type}
         {...props}
