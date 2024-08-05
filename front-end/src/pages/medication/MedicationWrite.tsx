@@ -1,5 +1,9 @@
-import {useState} from 'react';
+import {useState, ChangeEvent} from 'react';
+import {useRecoilState} from 'recoil';
+import {medicationFormState} from '@/recoil/atoms/medication/medicationFormState';
+import axiosInstance from '@/axiosInstance';
 import {getToday, getTomorrow, getDayAfterTomorrow} from '@/utils/dayjsPlugin';
+import {dataURLToBase64} from '@/utils/convertImageType';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
@@ -12,22 +16,10 @@ import AreaDivider from '@/components/atoms/Divider/AreaDivider';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 
 const MedicationWrite = () => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedStorage, setSelectedStorage] = useState('');
-  const [image, setImage] = useState<string | null>(null);
-
-  const handleDateChange = (option: string) => {
-    setSelectedDate(option);
-  };
-
-  const handleStorageChange = (option: string) => {
-    setSelectedStorage(option);
-  };
-
   const dateOptions = [
-    {label: '오늘', date: getToday('M월 D일')},
-    {label: '내일', date: getTomorrow('M월 D일')},
-    {label: '모레', date: getDayAfterTomorrow('M월 D일')},
+    {label: '오늘', date: getToday('YYYY-MM-DD')},
+    {label: '내일', date: getTomorrow('YYYY-MM-DD')},
+    {label: '모레', date: getDayAfterTomorrow('YYYY-MM-DD')},
   ];
 
   const timeOptions = [
@@ -40,7 +32,52 @@ const MedicationWrite = () => {
 
   const storageOptions = ['실온', '보관'];
 
-  console.log(selectedDate, selectedStorage);
+  const [formState, setFormState] = useRecoilState(medicationFormState);
+
+  const [selectedTimeOption, setSelectedTimeOption] = useState('');
+
+  // 투약일
+  const handleDateChange = (option: string) => {
+    setFormState(prev => ({...prev, medicationExecuteDueDate: option}));
+  };
+
+  // 약 사진
+  const handleImageChange = (image: string) => {
+    setFormState(prev => ({
+      ...prev,
+      medicineUrl: image,
+    }));
+  };
+
+  // 보관방법
+  const handleStorageChange = (option: string) => {
+    setFormState(prev => ({...prev, storageMethod: option}));
+  };
+
+  // 투약시간
+  const handleTimeChange = (option: string) => {
+    setSelectedTimeOption(option);
+    setFormState(prev => ({...prev, medicationExecuteTime: option}));
+  };
+
+  // 서명 이미지
+  const handleSignatureSave = (imageData: string) => {
+    setFormState(prev => ({...prev, signUrl: dataURLToBase64(imageData)}));
+  };
+
+  // 입력 값 변경
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormState(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleFormSubmit = () => {
+    console.log(formState);
+  };
+
   return (
     <div className="h-screen">
       <Header title="투약의뢰서" buttonType="back" />
@@ -50,33 +87,79 @@ const MedicationWrite = () => {
             <p>투약일</p>
             <RadioCircleButton
               options={dateOptions}
-              selectedOption={selectedDate}
+              selectedOption={formState.medicationExecuteDueDate}
               onChange={handleDateChange}
             />
           </div>
-          <LabelInput label="증상" placeholder="예) 발열, 감기" />
-          <ImageUpload onChange={setImage} />
+          <LabelInput
+            label="증상"
+            name="symptom"
+            value={formState.symptom}
+            onChange={handleInputChange}
+            placeholder="예) 발열, 감기"
+          />
+          <ImageUpload onChange={handleImageChange} />
         </div>
         <AreaDivider />
         <div className="py-8 space-y-5 px-9">
-          <LabelInput label="이름" placeholder="예) 처방약" />
-          <LabelInput label="종류" placeholder="예) 물약, 가루약" />
-          <LabelInput label="용량" placeholder="1회분 입력" />
-          <LabelInput label="횟수" placeholder="예) 1일 2회분" />
-          {/* 기타 추가 */}
-          <div className="w-1/2 space-y-2">
+          <LabelInput
+            label="이름"
+            name="medicineName"
+            value={formState.medicineName}
+            onChange={handleInputChange}
+            placeholder="예) 처방약"
+          />
+          <LabelInput
+            label="종류"
+            name="type"
+            value={formState.type}
+            onChange={handleInputChange}
+            placeholder="예) 물약, 가루약"
+          />
+          <LabelInput
+            label="용량"
+            name="capacity"
+            value={formState.capacity}
+            onChange={handleInputChange}
+            placeholder="1회분 입력"
+          />
+          <LabelInput
+            label="횟수"
+            name="numberOfDoses"
+            value={formState.numberOfDoses}
+            onChange={handleInputChange}
+            placeholder="예) 1일 2회분"
+          />
+          <div className="space-y-2">
             <p>시간</p>
-            <Select label="선택" options={timeOptions} />
+            <Select
+              label="선택"
+              options={timeOptions}
+              onChange={handleTimeChange}
+            />
+            {selectedTimeOption === '기타' && (
+              <LabelInput
+                name="medicationExecuteTime"
+                value={formState.medicationExecuteTime}
+                onChange={handleInputChange}
+                placeholder="예) 식후 1시간"
+              />
+            )}
           </div>
           <div className="space-y-2">
             <p>보관</p>
             <RadioCheckBoxButton
               options={storageOptions}
-              selectedOption={selectedStorage}
+              selectedOption={formState.storageMethod}
               onChange={handleStorageChange}
             />
           </div>
-          <LabelInput label="비고" />
+          <LabelInput
+            name="others"
+            value={formState.others}
+            onChange={handleInputChange}
+            label="비고"
+          />
         </div>
         <AreaDivider />
         <div className="py-8 px-9">
@@ -84,10 +167,19 @@ const MedicationWrite = () => {
             text="금일 자녀의 투약을 선생님께 의뢰합니다."
             date="2024년 7월 17일"
             parentName="김부모"
+            onClick={handleSignatureSave}
           />
+          {formState.signUrl && (
+            <div className="flex justify-end">
+              <img
+                src={formState.signUrl}
+                className="mt-4 bg-gray-100 rounded-md w-60"
+              />
+            </div>
+          )}
         </div>
       </div>
-      <ButtonBar label="등록하기" />
+      <ButtonBar label="등록하기" onClick={handleFormSubmit} />
     </div>
   );
 };

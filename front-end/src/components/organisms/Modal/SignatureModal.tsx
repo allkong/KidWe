@@ -2,7 +2,6 @@ import {useState, useRef} from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {dataUrlToBlob} from '@/utils/dataUrlToBlob';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import DashedButton from '@/components/atoms/Button/DashedButton';
@@ -10,7 +9,7 @@ import signatureIcon from '@/assets/icons/signature-fill.svg?react';
 import RefreshIcon from '@/assets/icons/refresh-line.svg?react';
 
 interface SignatureModalProps {
-  onClick: (imageData: Blob) => void;
+  onClick: (imageData: string) => void;
 }
 
 const SignatureModal = ({onClick}: SignatureModalProps) => {
@@ -36,7 +35,7 @@ const SignatureModal = ({onClick}: SignatureModalProps) => {
         toast.error('서명이 비어 있습니다.');
       } else {
         const dataURL = canvas.current.toDataURL('image/png');
-        onClick(dataUrlToBlob(dataURL));
+        onClick(dataURL);
         handleModalClose();
       }
     }

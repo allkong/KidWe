@@ -4,7 +4,7 @@ interface ConsentSection {
   text: string;
   date: string;
   parentName: string;
-  onClick: (imageData: Blob) => void;
+  onClick: (imageData: string) => void;
 }
 
 const ConsentSection = ({text, date, parentName, onClick}: ConsentSection) => {
