@@ -36,7 +36,7 @@ const KindergartenSchedule = () => {
       <Header title="유치원 일정" buttonType="back" />
       <DateNavigator title="7월" />
       <div
-        className={`${containerNavigatorClass} flex flex-col items-center justify-center w-full px-10 gap-2 overflow-y-auto`}
+        className={`${containerNavigatorClass} items-center justify-center w-full px-10 space-y-4 overflow-y-auto`}
       >
         <div className="flex items-center justify-between w-full h-16">
           <div>
@@ -57,7 +57,7 @@ const KindergartenSchedule = () => {
           </div>
         </div>
         <div className="flex items-center justify-center flex-grow w-full">
-          <div className="max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">
+          <div className="flex items-center justify-center max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">
             <CustomCalendar showNavigation={false} />
           </div>
         </div>
