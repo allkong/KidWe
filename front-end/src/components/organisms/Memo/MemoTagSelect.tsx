@@ -4,9 +4,12 @@ import Tag from '@/components/atoms/Tag/Tag';
 import {useQuery} from '@tanstack/react-query';
 import {useEffect, useRef, useState} from 'react';
 import {getTags} from '@/apis/memo/getTags';
-import {Memo, memoState} from '@/recoil/atoms/memo/memo';
+import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
 import type {Tag as MemoTag} from '@/types/memo/Tag';
+import type {Memo} from '@/types/memo/Memo';
+import NoResult from '@/components/atoms/NoResult';
+import Button from '@/components/atoms/Button/Button';
 
 const MemoTagSelect = () => {
   const [tags, setTags] = useState<MemoTag[] | undefined>();
@@ -18,7 +21,7 @@ const MemoTagSelect = () => {
 
   const {data} = useQuery({
     queryKey: ['tags'],
-    queryFn: () => getTags(1),
+    queryFn: () => getTags(0),
   });
 
   useEffect(() => {
@@ -32,7 +35,7 @@ const MemoTagSelect = () => {
     if (input === '') {
       setFilteredTags(tags);
     } else {
-      setFilteredTags(tags?.filter(tag => tag.content === input));
+      setFilteredTags(tags?.filter(tag => tag.content.includes(input)));
     }
   }, [input, tags]);
 
@@ -75,6 +78,19 @@ const MemoTagSelect = () => {
     }
   };
 
+  const handleTagAdd = () => {
+    const find = memo.tagRequestDtos.find(tag => tag.content === input);
+    if (find === undefined) {
+      const newTag: MemoTag = {
+        teacherId: 0,
+        content: input,
+      };
+      setMemo({...memo, tagRequestDtos: [...memo.tagRequestDtos, newTag]});
+    }
+
+    setInput('');
+  };
+
   return (
     <div className="space-y-3 text-gray-300">
       <p className="mb-1 text-2xl font-semibold cursor-default">태그 선택</p>
@@ -88,20 +104,31 @@ const MemoTagSelect = () => {
       />
       <div className="box-border h-40 px-2 py-3 overflow-y-auto border border-gray-200 rounded-md text-wrap">
         {/* tag 받아오는 영역 */}
-        <div className="inline-block m-1">
-          {filteredTags &&
-            filteredTags.map(tag => (
-              <Tag key={tag.id} text={tag.content} onClick={handleTagClick} />
+        {filteredTags && filteredTags.length !== 0 ? (
+          <div className="inline-block m-1">
+            {filteredTags.map((tag, idx) => (
+              <Tag key={idx} text={tag.content} onClick={handleTagClick} />
             ))}
-        </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full">
+            <NoResult text="등록된 태그가 없어요" />
+            <Button
+              label="태그 추가"
+              variant="negative"
+              onClick={() => handleTagAdd()}
+            />
+          </div>
+        )}
       </div>
-      <div className="w-full space-x-1 overflow-x-auto h-fit text-nowrap">
+      <div className="flex flex-wrap w-full gap-2 h-fit">
         {memo &&
-          memo.tagRequestDtos.map(tag => (
+          memo.tagRequestDtos.map((tag, idx) => (
             <Tag
-              key={tag.id}
+              key={idx}
               text={tag.content}
               onClick={handleSelectedTagClick}
+              backgroundColor="#FFDFDF"
             />
           ))}
       </div>
