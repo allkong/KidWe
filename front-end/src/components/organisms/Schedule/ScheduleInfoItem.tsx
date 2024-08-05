@@ -1,17 +1,19 @@
 import Tag from '@/components/atoms/Tag/Tag';
 
 interface ScheduleInfoItem {
-  category?: string;
+  tag: string;
+  text?: string;
+  isShowMore?: boolean;
 }
 
-const ScheduleInfoItem = ({category}: ScheduleInfoItem) => {
+const ScheduleInfoItem = ({tag, text, isShowMore = true}: ScheduleInfoItem) => {
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
-        <Tag text="햇살반" />
-        <p className="text-xs">{category}운동회</p>
+        <Tag text={tag} />
+        <p className="text-xs">{text}</p>
       </div>
-      <p>...</p>
+      {isShowMore ? <p>...</p> : null}
     </div>
   );
 };

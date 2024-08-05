@@ -24,6 +24,6 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0', // 모든 IP 주소에서 접근 가능하게 설정
-    port: 5173, // 포트를 5173으로 설정
+    port: 3030, // 포트를 3030으로 설정
   },
 });

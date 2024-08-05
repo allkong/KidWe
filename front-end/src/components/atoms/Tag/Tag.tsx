@@ -1,8 +1,11 @@
+import React from 'react';
+
 interface TagProps {
   text: string;
   backgroundColor?: string;
   textColor?: 'black' | 'white';
   size?: 'small' | 'medium' | 'large';
+  onClick?: (value: string) => void;
 }
 
 const Tag = ({
@@ -10,6 +13,7 @@ const Tag = ({
   backgroundColor = '#FFF1A7',
   textColor = 'black',
   size = 'medium',
+  onClick,
 }: TagProps) => {
   const colorClass = textColor === 'black' ? 'text-black' : 'text-white';
   // small은 커스텀해서 사용하기
@@ -23,10 +27,15 @@ const Tag = ({
     sizeClass = 'py-2 px-4';
   }
 
+  const handleClick = () => {
+    onClick?.(text);
+  };
+
   return (
     <div
       className={`${colorClass} ${sizeClass} inline-block rounded-full text-center`}
       style={{backgroundColor}}
+      onClick={handleClick}
     >
       <p className="font-medium">{text}</p>
     </div>

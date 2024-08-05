@@ -42,6 +42,7 @@ export const Text: Story = {
         <CalendarButton
           render={() => <p>현재시간 : {date.format('YYYY-MM-DD')}</p>}
           onClick={handleClick}
+          defaultDate={date}
         />
         <p>{date.format('YYYY-MM-DD')}</p>
       </div>
