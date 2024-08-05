@@ -3,6 +3,7 @@ export interface ButtonProps {
   size?: 'small' | 'large';
   variant?: 'positive' | 'negative';
   round?: 'small' | 'full';
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -11,6 +12,7 @@ const Button = ({
   size = 'small',
   variant = 'positive',
   round = 'small',
+  Icon,
   onClick,
 }: ButtonProps) => {
   const baseClass = 'py-2 font-semibold text-white text-large';
@@ -24,6 +26,7 @@ const Button = ({
       className={`${baseClass} ${sizeClass} ${variantClass} ${roundClass}`}
     >
       {label}
+      {Icon && <Icon />}
     </button>
   );
 };

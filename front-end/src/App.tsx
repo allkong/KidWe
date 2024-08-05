@@ -7,9 +7,12 @@ import Home from '@/pages/Home';
 import Schedule from '@/pages/Schedule';
 import MyPage from '@/pages/MyPage';
 import SignUp from '@/pages/SignUp';
+import Announcement from '@/pages/Announcement';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
+import MedicationWrite from '@/pages/medication/MedicationWrite';
+
 import KindergartenManagement from '@/pages/KindergartenManagement';
 import LoginMain from '@/pages/login/LoginMain';
 
@@ -28,14 +31,13 @@ const App: React.FC = () => {
               <Route path="/schedule" element={<Schedule />}></Route>
               <Route path="/mypage" element={<MyPage />}></Route>
 
-              <Route
-                path="/attendance"
-                element={<AttentdanceManagement />}
-              ></Route>
+          <Route path="/attendance" element={<AttentdanceManagement />}></Route>
+          <Route path="/announcement/*" element={<Announcement />}></Route>
 
               <Route path="/medication">
                 <Route path="" element={<MedicationListView />} />
                 <Route path=":medicationId" element={<MedicationDetail />} />
+                <Route path="write" element={<MedicationWrite />} />
               </Route>
 
               <Route path="/signup/*" element={<SignUp />}></Route>

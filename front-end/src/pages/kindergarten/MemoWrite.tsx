@@ -5,7 +5,7 @@ import KindergartenInfomationSelect from '@/components/organisms/Memo/Kindergart
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
-import {writeMemo} from '@/apis/memo/writeMemo';
+import {postMemo} from '@/apis/memo/postMemo';
 import {useMutation} from '@tanstack/react-query';
 import {useRecoilValue} from 'recoil';
 import {memoState} from '@/recoil/atoms/memo/memo';
@@ -16,7 +16,7 @@ const MemoWrite = () => {
 
   const writeMutate = useMutation({
     mutationFn: () => {
-      return writeMemo(teacherId, memo);
+      return postMemo(teacherId, memo);
     },
   });
 
