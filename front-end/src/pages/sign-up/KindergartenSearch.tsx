@@ -5,9 +5,10 @@ import InputForm from '@/components/molecules/InputForm/InputForm';
 import NoResult from '@/components/atoms/NoResult';
 import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
-
+import {signupFormState} from '@/pages//sign-up/SignupState';
 import SelectMain from '@/components/molecules/Select/SelectMain';
 import Select from '@/components/molecules/Select/Select';
+import {useRecoilState} from 'recoil';
 
 type City = {
   id: string;
@@ -25,6 +26,8 @@ const KindergartenSearch: React.FC = () => {
   const [selectedDistrict, setSelectedDistrict] = useState<string>('군구');
   const [inputValue, setInputValue] = useState('원 검색');
   const [searchResult, setSearchResult] = useState('');
+  const [signupkindergarten, setSignupKindergarten] =
+    useRecoilState(signupFormState);
   const navigate = useNavigate();
 
   const CityOptions: City[] = [
