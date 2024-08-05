@@ -1,15 +1,43 @@
 import React, {useEffect, useState} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
-interface RegisterInfoProps {
-  handleNext: () => void;
-}
-const RegisterInfo: React.FC<RegisterInfoProps> = ({handleNext}) => {
+import {useRecoilState} from 'recoil';
+import {useNavigate} from 'react-router-dom';
+import {signupFormState} from '@/pages//sign-up/SignupState';
+
+const RegisterInfo = () => {
   const [isShort, setIsShort] = useState(true);
+  const [signupregister, setSignupRegister] = useRecoilState(signupFormState);
   const [username, setUsername] = useState('');
   const [useremail, setUseremail] = useState('');
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
+  const navigate = useNavigate();
+  const handleRegisterButtonClick = () => {
+    if (userpassword === userpassword2) {
+      setSignupRegister(prevState => ({
+        ...prevState,
+        member: {
+          ...prevState.member,
+          name: username,
+          email: useremail,
+          password: userpassword,
+        },
+      }));
+    }
+
+    if (signupregister.member.role === 'ROLE_DIRECTOR') {
+      navigate('/signup/kindergarten/register');
+    } else if (
+      signupregister.member.role === 'ROLE_TEACHER' ||
+      signupregister.member.role === 'ROLE_GUARDIAN'
+    ) {
+      navigate('/signup/kindergarten/search');
+    } else {
+      console.log('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => {
       const mainContainer = document.querySelector('.main-container');
@@ -65,7 +93,7 @@ const RegisterInfo: React.FC<RegisterInfoProps> = ({handleNext}) => {
       <div
         className={`${isShort ? 'absolute bottom-4' : 'relative mt-4'} w-full flex justify-center px-4`}
       >
-        <Button label="회원 가입" />
+        <Button label="회원 가입" onClick={handleRegisterButtonClick} />
         {/* 이렇게 회원 가입을 한 후 role에 따라 rendering 되는 page가 달라짐 */}
       </div>
     </div>

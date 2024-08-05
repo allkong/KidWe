@@ -3,7 +3,9 @@ import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
-
+import {useRecoilState} from 'recoil';
+import {signupFormState} from '@/pages//sign-up/SignupState';
+import axios from 'axios';
 declare global {
   interface Window {
     daum: any;
@@ -24,9 +26,29 @@ const RegisterKindergarten: React.FC = () => {
   const [kindergartenname, setKindergartenName] = useState('');
   const [kindergartentel, setKindergartenTel] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [signupregisterkindergarten, setSignupRegisterKindergarten] =
+    useRecoilState(signupFormState);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        'http://i11a808.p.ssafy.io:8080/signup',
+        signupFormState,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('response.data', response.data);
+    } catch (error) {
+      console.error('Error during signup:', error);
+    }
+  };
 
   const navigate = useNavigate();
-  const handleRegisterKindergartenButtonClick = () => {
+  const handleRegisterKindergartenButtonClick = prevState => {
     // if (
     //   name === '' ||
     //   name === '이름을 적어주세요' ||
@@ -40,6 +62,20 @@ const RegisterKindergarten: React.FC = () => {
     // } else {
     //   navigate('/register/completed');
     // }
+    setSignupRegisterKindergarten(prevState => ({
+      ...prevState,
+      kindergarten: {
+        ...prevState.kindergarten,
+        name: kindergartenname,
+        address: addr,
+        addressDetail: kindergartenaddrdetail,
+        zipCode: zipNo,
+        tel: kindergartentel,
+      },
+    }));
+    console.log('원장님 가입 완료', signupregisterkindergarten);
+
+    handleSubmit;
     navigate('/signup/complete');
   };
   // 원래 등록 양식이 다 입력되어야만 다음 completed창으로 갈 수 있음

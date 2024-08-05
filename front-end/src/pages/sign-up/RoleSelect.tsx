@@ -2,29 +2,32 @@ import React, {useState} from 'react';
 import RoleSelector from '@/components/atoms/Selector/RoleSelector';
 import Button from '@/components/atoms/Button/Button';
 import Modal from '@/components/organisms/Modal/Modal';
-
+import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
-
-interface RoleSelectProps {
-  handleNext: () => void;
-}
+import {signupFormState} from '@/pages//sign-up/SignupState';
 
 const roleItems = [
-  {value: '학부모', label: '학부모'},
-  {value: '선생님', label: '선생님'},
-  {value: '원장님', label: '원장님'},
+  {label: 'ROLE_GUARDIAN', value: '학부모'},
+  {label: 'ROLE_TEACHER', value: '선생님'},
+  {label: 'ROLE_DIRECTOR', value: '원장님'},
 ];
 
-const RoleSelect: React.FC<RoleSelectProps> = ({handleNext}) => {
+const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [signuprole, setSignupRole] = useRecoilState(signupFormState);
   const navigate = useNavigate();
-
   const handleRegisterButtonClick = () => {
     if (selectedRole === '') {
       setIsModalOpen(true);
     } else {
-      handleNext();
+      setSignupRole(prevState => ({
+        ...prevState,
+        member: {
+          ...prevState.member,
+          role: selectedRole,
+        },
+      }));
       navigate('/signup/info');
     }
   };
@@ -45,8 +48,8 @@ const RoleSelect: React.FC<RoleSelectProps> = ({handleNext}) => {
         {roleItems.map((item, index) => (
           <RoleSelector
             key={index}
-            isSelected={selectedRole === item.value}
-            onClick={() => handleRoleChange(item.value)}
+            isSelected={selectedRole === item.label}
+            onClick={() => handleRoleChange(item.label)}
             value={item.value}
           />
         ))}
