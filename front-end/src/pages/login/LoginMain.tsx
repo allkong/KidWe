@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios';
+import {useMutation} from '@tanstack/react-query';
+import {login} from '@/apis/login/login';
 
 const LoginMain: React.FC = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -14,23 +15,27 @@ const LoginMain: React.FC = () => {
     navigate('/signup/role');
   };
 
-  const handleLoginButtonClick = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    try {
-      const response = await axios.post('/api/login', {
-        username,
-        password,
-      });
-
-      // 응답이 성공적일 경우 홈으로 이동
-      if (response.status === 200) {
+  const loginMutate = useMutation({
+    mutationFn: () => {
+      return login(email, password);
+    },
+    onSuccess: data => {
+      if (data.status === 200) {
+        console.log('로그인 완료');
         navigate('/');
+      } else {
+        console.error('로그인 실패:', data.status);
+        setError('로그인에 실패했습니다. 다시 시도해주세요.');
       }
-    } catch (err) {
-      // 오류 발생 시 오류 메시지 설정
-      setError('아이디 또는 비밀번호가 틀렸습니다.');
-    }
+    },
+    onError: error => {
+      console.error('로그인을 다시 하세요:', error);
+      setError('로그인에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const handleLoginButtonClick = () => {
+    loginMutate.mutate();
   };
 
   return (
@@ -43,9 +48,9 @@ const LoginMain: React.FC = () => {
       <div className="w-full space-y-8">
         <LabelInput
           label="아이디"
-          value={username}
+          value={email}
           placeholder="아이디 적어주세요"
-          onChange={e => setUsername(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
         <LabelInput
           label="비밀번호"
