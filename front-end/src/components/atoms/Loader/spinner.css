@@ -1,0 +1,46 @@
+.spinner {
+  background: conic-gradient(from 90deg, #717680, white 75%);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  position: relative;
+  animation: rotate 1s infinite;
+}
+
+.spinner::after,
+.spinner::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+.spinner::after {
+  top: 8%;
+  right: 8%;
+  bottom: 8%;
+  left: 8%;
+  background-color: white;
+}
+
+.spinner::before {
+  width: 8%;
+  height: 8%;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background-color: #717680;
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
