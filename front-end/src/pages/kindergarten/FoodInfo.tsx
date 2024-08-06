@@ -13,10 +13,11 @@ import {getDailyFood} from '@/apis/food/getDailyFood';
 import {useQuery} from '@tanstack/react-query';
 import {GetFood} from '@/types/food/GetFood';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+// import Spinner from '@/components/atoms/Loader/Spinner';
 
 dayjs.extend(weekOfYear);
 
-const [kindergartenId, year, month, day] = [0, 2024, 8, 5];
+const kindergartenId = 1;
 
 function getWeekOfMonth(date: Dayjs) {
   const startOfMonth = date.startOf('month');
@@ -33,8 +34,19 @@ const FoodInfo = () => {
   const [food, setFood] = useState<GetFood>();
 
   const {data} = useQuery({
-    queryKey: ['food', year, month, day],
-    queryFn: () => getDailyFood(kindergartenId, year, month, day),
+    queryKey: [
+      'food',
+      date.get('year'),
+      date.get('month') + 1,
+      date.get('date'),
+    ],
+    queryFn: () =>
+      getDailyFood(
+        kindergartenId,
+        date.get('year'),
+        date.get('month') + 1,
+        date.get('date')
+      ),
   });
 
   useEffect(() => {
@@ -55,12 +67,13 @@ const FoodInfo = () => {
 
   const moveToWrite = () => {
     navigate('/kindergarten/food/write', {
-      state: {date: date.format('YYYY-MM-DD (ddd)')},
+      state: {date: date.format('YYYY-MM-DD')},
     });
   };
 
   return (
     <>
+      {/* {isLoading && <Spinner />} */}
       <div
         className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-full px-5 overflow-y-auto`}
       >
@@ -77,9 +90,21 @@ const FoodInfo = () => {
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
           {food ? (
             <>
-              <FoodInfomationItem variant="lunch" />
-              <FoodInfomationItem variant="snack" />
-              <FoodInfomationItem variant="dinner" />
+              <FoodInfomationItem
+                variant="lunch"
+                menu={food.lunch}
+                allergies={food.lunchAllergies}
+              />
+              <FoodInfomationItem
+                variant="snack"
+                menu={food.snack}
+                allergies={food.snackAllergies}
+              />
+              <FoodInfomationItem
+                variant="dinner"
+                menu={food.dinner}
+                allergies={food.dinnerAllergies}
+              />
             </>
           ) : (
             <NoResult text="등록된 식단이 없습니다" />
