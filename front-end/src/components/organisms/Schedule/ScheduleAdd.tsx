@@ -27,7 +27,7 @@ const ScheduleController = () => {
         localDate: dayjs().format('YYYY-MM-DD'),
       };
       console.log(body);
-      return postSchedule(0, body);
+      return postSchedule(1, body);
     },
   });
 
