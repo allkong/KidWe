@@ -66,6 +66,7 @@ const KindergartenSchedule = () => {
               defaultDate={date}
               showNavigation={false}
               onChange={onChangeDate}
+              activeStartDate={true}
             />
           </div>
         </div>
