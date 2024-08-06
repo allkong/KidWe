@@ -1,5 +1,5 @@
-import {useLocation} from 'react-router-dom';
-// import dayjs from 'dayjs';
+import {useLocation, useParams} from 'react-router-dom';
+import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -11,34 +11,40 @@ const MedicationDetail = () => {
   const location = useLocation();
   const userInfo = {...location.state};
 
-  const kidOfMedication = {
-    name: '프레나정',
-    symptom: '감기, 발열',
-    type: '가루약',
-    capacity: '1일 2회',
-    numberOfDoses: '5mg',
-    medicationExecuteTime: '식후 30분',
-    storageMethod: '상온',
-    others: '없음',
-    medicineUrl:
-      'https://i.namu.wiki/i/hLA1I08DSb1fH9zY9GGU6Z0MepzJjqoHP9jLKVzQgG4HIq_ngWeblhZyuZ-_fs_X008ONqLkGWSNTaXcgRn2Ww.webp',
-  };
+  const {medicationId} = useParams();
+  console.log(medicationId);
+
+  const {data, error, isLoading} = useMedicationDetail(medicationId ?? '');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading data</div>;
+  }
+
+  if (!data) {
+    return <div>No data available</div>;
+  }
 
   const medicationDetails = [
-    {title: '증상', content: kidOfMedication.symptom, color: '#FFC36A'},
-    {title: '이름', content: kidOfMedication.name, color: '#FFEC9E'},
-    {title: '종류', content: kidOfMedication.type, color: '#FFEC9E'},
-    {title: '용량', content: kidOfMedication.numberOfDoses, color: '#FFEC9E'},
-    {title: '횟수', content: kidOfMedication.capacity, color: '#FFEC9E'},
+    {title: '증상', content: data.symptom, color: '#FFC36A'},
+    {title: '이름', content: data.medicineName, color: '#FFEC9E'},
+    {title: '종류', content: data.type, color: '#FFEC9E'},
+    {title: '용량', content: data.numberOfDoses, color: '#FFEC9E'},
+    {title: '횟수', content: data.capacity, color: '#FFEC9E'},
     {
       title: '시간',
-      content: kidOfMedication.medicationExecuteTime,
+      content: data.medicationExecuteTime,
       color: '#FFEC9E',
     },
-    {title: '보관', content: kidOfMedication.storageMethod, color: '#FFEC9E'},
-    {title: '비고', content: kidOfMedication.others, color: '#FFEC9E'},
-    {title: '사진', imageUrl: kidOfMedication.medicineUrl, color: '#FFEC9E'},
-  ];
+    {title: '보관', content: data.storageMethod, color: '#FFEC9E'},
+    {title: '비고', content: data.others, color: '#FFEC9E'},
+    {title: '사진', imageUrl: data.medicineUrl, color: '#FFEC9E'},
+  ].filter(item => item.content && item.content.trim() !== '');
+
+  console.log(medicationDetails);
 
   return (
     <div className="flex flex-col h-screen">
