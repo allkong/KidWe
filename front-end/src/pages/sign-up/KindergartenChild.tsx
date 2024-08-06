@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import AllergyView from '@/components/organisms/Food/AllergyView';
-import {allergies, Allergy} from '@/constants/allergy';
+import {ALLERGIES, Allergy} from '@/constants/allergy';
 
 const genderItems = [
   {value: 'MALE', label: '남아'},
@@ -17,7 +17,7 @@ const KindergartenChild: React.FC = () => {
   const [childbirth, setChildbirth] = useState('');
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [datas, setDatas] = useState(allergies);
+  const [datas, setDatas] = useState(ALLERGIES);
   const navigate = useNavigate();
 
   const handleGenderChange = (gender: string) => {
@@ -44,7 +44,7 @@ const KindergartenChild: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen space-y-16 flex flex-col w-full h-full px-5">
+    <div className="flex flex-col w-full h-full min-h-screen px-5 space-y-16">
       <div className="flex space-x-2">
         <KindergartenCard kindergartenName={kindergartenName} />
       </div>
@@ -53,18 +53,18 @@ const KindergartenChild: React.FC = () => {
           <input
             type="file"
             onChange={handleImageChange}
-            className="mb-4 hidden"
+            className="hidden mb-4"
             id="fileInput"
           />
           <div
-            className="w-32 h-32 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg cursor-pointer"
+            className="flex items-center justify-center w-32 h-32 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer"
             onClick={() => document.getElementById('fileInput')?.click()}
           >
             {image ? (
               <img
                 src={image as string}
                 alt="프로필 미리보기"
-                className="w-full h-full object-cover rounded-lg "
+                className="object-cover w-full h-full rounded-lg "
               />
             ) : (
               <span className="text-gray-500">이미지 선택</span>

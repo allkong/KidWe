@@ -7,7 +7,6 @@ import AllergyView from '@/components/organisms/Food/AllergyView';
 import {useEffect, useState} from 'react';
 import {ALLERGIES} from '@/constants/allergy';
 import type {Allergy} from '@/constants/allergy';
-import {onChange} from 'react-toastify/dist/core/store';
 
 interface FoodInfoWriteItemProps {
   label?: 'lunch' | 'snack' | 'dinner';
@@ -40,8 +39,15 @@ const FoodInfoWriteItem = ({
   onChange,
 }: FoodInfoWriteItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [datas, setDatas] = useState<Allergy[]>(
-    ALLERGIES.map(allergy => {
+  const [input, setInput] = useState(food);
+
+  const [datas, setDatas] = useState<Allergy[]>(); // 취소 버튼을 눌렀을 경우 사용
+  const [copiedDatas, setCopiedDatas] = useState<Allergy[]>(); // 등록 버튼을 눌렀을 경우 사용
+
+  const [isDataChecked, setIsDataChecked] = useState(false);
+
+  useEffect(() => {
+    const checkedDatas = ALLERGIES.map(allergy => {
       if (allergies === undefined) {
         return {...allergy};
       }
@@ -49,34 +55,38 @@ const FoodInfoWriteItem = ({
         return {...allergy, isChecked: true};
       }
       return {...allergy};
-    })
-  );
-  const [copiedDatas, setCopiedDatas] = useState<Allergy[]>();
-  const [isDataChecked, setIsDataChecked] = useState(false);
-  const [input, setInput] = useState(food);
+    });
+    setDatas(checkedDatas);
+    setCopiedDatas(checkedDatas);
+  }, [allergies]);
 
   useEffect(() => {
-    setIsDataChecked(datas.find(value => value.isChecked) !== undefined);
+    setIsDataChecked(datas?.find(value => value.isChecked) !== undefined);
   }, [datas]);
 
   useEffect(() => {
-    setCopiedDatas(datas);
-  }, [datas]);
+    setInput(food);
+  }, [food]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
-    setCopiedDatas([...datas]);
+    if (datas !== undefined) {
+      setCopiedDatas([...datas]);
+    }
     setIsModalOpen(false);
   };
 
   const handleSubmit = () => {
     if (copiedDatas !== undefined) {
       setDatas([...copiedDatas]);
+      const allergies = copiedDatas
+        .filter(element => element.isChecked)
+        .map(element => element.value);
+      onChange?.(input, allergies, label);
     }
-    // onChange?.(input, datas, label);
     setIsModalOpen(false);
   };
 
@@ -97,11 +107,12 @@ const FoodInfoWriteItem = ({
               className="flex flex-wrap w-full gap-2"
               onClick={handleModalOpen}
             >
-              {datas.map((data, idx) =>
-                data.isChecked ? (
-                  <Tag key={idx} text={data.value} size="small" />
-                ) : null
-              )}
+              {datas &&
+                datas.map((data, idx) =>
+                  data.isChecked ? (
+                    <Tag key={idx} text={data.value} size="small" />
+                  ) : null
+                )}
             </div>
           ) : (
             <DashedButton
