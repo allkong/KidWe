@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
 import {useMedicationList} from '@/hooks/medication/useMedicationList';
-import type {MedicationItem} from '@/types/medication/MedicationList';
+import type {MedicationItem} from '@/types/medication/MedicationItem';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
