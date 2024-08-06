@@ -10,7 +10,7 @@ import {getLessonInfomation} from '@/apis/memo/getLessonInfomation';
 import {useQuery} from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import type {Lesson} from '@/types/memo/Lesson';
-import ScheduleInfoItem from '@/components/organisms/Schedule/ScheduleInfoItem';
+import Tag from '@/components/atoms/Tag/Tag';
 
 interface CheckedLesson {
   lesson: Lesson;
@@ -92,11 +92,9 @@ const MemoLessonSelect = () => {
         className="flex items-center justify-center h-10"
       >
         {memo.lesson ? (
-          <ScheduleInfoItem
-            tag="수업"
-            text="블럭 쌓으세요"
-            isShowMore={false}
-          />
+          <div>
+            <Tag backgroundColor="#FFF1A7" text={memo.lesson} />
+          </div>
         ) : (
           <DashedButton label="+" onClick={handleOpenLessonModal} />
         )}
