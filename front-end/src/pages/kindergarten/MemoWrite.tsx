@@ -6,16 +6,24 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
 import {postMemo} from '@/apis/memo/postMemo';
-import {useMutation} from '@tanstack/react-query';
-import {useRecoilValue} from 'recoil';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useRecoilState} from 'recoil';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {Memo} from '@/types/memo/Memo';
 import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import dayjs from 'dayjs';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Spinner from '@/components/atoms/Loader/Spinner';
 
 const teacherId = 1;
 
 const MemoWrite = () => {
-  const memo = useRecoilValue(memoState);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const [memo, setMemo] = useRecoilState(memoState);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -32,6 +40,22 @@ const MemoWrite = () => {
     mutationFn: ({teacherId, memo}: {teacherId: number; memo: Memo}) => {
       return postMemo(teacherId, memo);
     },
+    onError() {
+      toast.error('오류 발생');
+    },
+    onSuccess() {
+      setMemo({
+        updatedTime: dayjs(),
+        lesson: '',
+        kids: [],
+        tagRequestDtos: [],
+        content: '',
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['memos', 1],
+      });
+      navigate('/kindergarten/memo');
+    },
   });
 
   const handleClick = () => {
@@ -39,24 +63,35 @@ const MemoWrite = () => {
   };
 
   return (
-    <div className={`${containerHeaderClass} flex flex-col h-full bg-white`}>
-      <Header title="관찰 메모 작성" buttonType="back" />
-      <div className="flex-grow px-5 py-5 space-y-8 overflow-y-scroll">
-        <MemoTimeSelect />
-        <MemoTagSelect />
-        <KindergartenInfomationSelect />
+    <>
+      {writeMutate && writeMutate.status === 'pending' ? <Spinner /> : null}
+      <div className={`${containerHeaderClass} flex flex-col h-full bg-white`}>
+        <Header title="관찰 메모 작성" buttonType="back" />
+        <div className="flex-grow px-5 py-5 space-y-8 overflow-y-scroll">
+          <MemoTimeSelect />
+          <MemoTagSelect />
+          <KindergartenInfomationSelect />
+        </div>
+        <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
+          <Button
+            variant={isValid ? 'positive' : 'negative'}
+            disabled={!isValid}
+            label="메모 작성하기"
+            onClick={handleClick}
+            size="large"
+          />
+        </div>
+        <NavigationBar />
       </div>
-      <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
-        <Button
-          variant={isValid ? 'positive' : 'negative'}
-          disabled={!isValid}
-          label="메모 작성하기"
-          onClick={handleClick}
-          size="large"
-        />
-      </div>
-      <NavigationBar />
-    </div>
+      <ToastContainer
+        position="top-center" // 알람 위치 지정
+        autoClose={300} // 자동 off 시간
+        hideProgressBar // 진행시간바 숨김
+        closeOnClick // 클릭으로 알람 닫기
+        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
+        theme="light"
+      />
+    </>
   );
 };
 

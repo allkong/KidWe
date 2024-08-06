@@ -14,7 +14,7 @@ const MemoListItem = ({onClick, memo}: MemoListItemProps) => {
       <div className="relative w-4 h-4 rounded-full -left-2.5 -top-3 bg-primary"></div>
       <div className="flex flex-col">
         <p className="text-lg font-semibold text-gray-300">
-          {dayjs(memo?.updatedTime).format('A HH:MM')}
+          {dayjs(memo?.updatedTime).format('A hh:MM')}
         </p>
         <div
           onClick={onClick}

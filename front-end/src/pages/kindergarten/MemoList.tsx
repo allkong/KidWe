@@ -13,11 +13,14 @@ import {useQuery} from '@tanstack/react-query';
 import {getTeacherDailyMemos} from '@/apis/memo/getTeacherDailyMemos';
 import dayjs from 'dayjs';
 import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import {memoState} from '@/recoil/atoms/memo/memo';
+import {useRecoilState} from 'recoil';
 
 const MemoList = memo(() => {
   const [date, setDate] = useState(dayjs());
+  const [memo, setMemo] = useRecoilState(memoState);
 
-  const [memos, setMemos] = useState<TeacherDailyMemo[]>();
+  const [memoDatas, setMemoDatas] = useState<TeacherDailyMemo[]>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMemo, setModalMemo] = useState<TeacherDailyMemo>();
@@ -28,7 +31,7 @@ const MemoList = memo(() => {
     queryKey: ['memos', 1],
     queryFn: () =>
       getTeacherDailyMemos(
-        0,
+        1,
         date.format('YYYY'),
         date.format('MM'),
         date.format('DD')
@@ -36,10 +39,11 @@ const MemoList = memo(() => {
   });
 
   useEffect(() => {
-    setMemos(data);
+    setMemoDatas(data);
   }, [data]);
 
   useEffect(() => {
+    setMemo({...memo, updatedTime: date});
     refetch();
   }, [date]);
 
@@ -72,14 +76,20 @@ const MemoList = memo(() => {
           onClickRight={handleRightClick}
         />
         <div className="mt-10">
-          {memos &&
-            memos.map(memo => (
-              <MemoListItem
-                key={memo.id}
-                memo={memo}
-                onClick={() => handleModalOpen(memo)}
-              />
-            ))}
+          {memoDatas &&
+            memoDatas
+              .sort((e1, e2) => {
+                return dayjs(e1.updatedTime)
+                  .format('HH:MM')
+                  .localeCompare(dayjs(e2.updatedTime).format('HH:MM'));
+              })
+              .map(memo => (
+                <MemoListItem
+                  key={memo.id}
+                  memo={memo}
+                  onClick={() => handleModalOpen(memo)}
+                />
+              ))}
         </div>
         <WriteButton onClick={() => navigate('/kindergarten/memo/write')} />
         <NavigationBar />

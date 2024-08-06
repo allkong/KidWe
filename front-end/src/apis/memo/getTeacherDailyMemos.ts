@@ -1,6 +1,6 @@
 import axiosInstance from '@/apis/noSqlInstance';
-import {Tag} from '@/recoil/atoms/memo/memo';
-import {Kid as Child} from '@/recoil/atoms/memo/memo';
+import {Tag} from '@/types/memo/Tag';
+import {Kid as Child} from '@/types/memo/Kid';
 
 export interface TeacherDailyMemo {
   id: string;

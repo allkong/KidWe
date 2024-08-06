@@ -5,7 +5,7 @@ import {Memo} from '@/types/memo/Memo';
 export const memoState = atom<Memo>({
   key: 'memo',
   default: {
-    updatedTime: dayjs().format('HH:mm'),
+    updatedTime: dayjs(),
     lesson: '',
     kids: [],
     tagRequestDtos: [],
