@@ -1,7 +1,7 @@
 import axiosInstance from '@/apis/axiosInstance';
-import type {Login} from '@/types/login/login';
+import type {Login} from '@/types/login/Login';
 
-export const login = async (
+export const postLogin = async (
   email: string,
   password: string
 ): Promise<{data: Login; status: number}> => {
