@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import SelectMain from '@/components/molecules/Select/SelectMain';
+import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
 import {useState} from 'storybook/internal/preview-api';
 import Option from '@/components/atoms/Option/Option';
 

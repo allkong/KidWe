@@ -6,7 +6,7 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {Signup} from '@/recoil/atoms/signup/Signup';
 import {useMutation} from '@tanstack/react-query';
-import {SignupInformation} from '@/apis/signup/SignupInformation';
+import {postSignup} from '@/apis/signup/postSignup';
 import {SignupFormState} from '@/types/signup/SignupFormState';
 
 declare global {
@@ -35,7 +35,7 @@ const RegisterKindergarten: React.FC = () => {
 
   const signupMutate = useMutation({
     mutationFn: () => {
-      return SignupInformation(signupregisterkindergarten);
+      return postSignup(signupregisterkindergarten);
     },
   });
 

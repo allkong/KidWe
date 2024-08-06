@@ -1,7 +1,7 @@
 import axiosInstance from '@/apis/axiosInstance';
 import type {SignupFormState} from '@/types/signup/SignupFormState';
 
-export const SignupInformation = async (
+export const postSignup = async (
   data: SignupFormState
 ): Promise<SignupFormState[]> => {
   const postData: Partial<SignupFormState> = {
@@ -21,7 +21,7 @@ export const SignupInformation = async (
     console.log('서버의 응답은!!!:', response);
     return response.data;
   } catch (error) {
-    console.debug(`SignupInformation 전송 Error!!!: ${error}`);
+    console.debug(`postSignup 전송 Error!!!: ${error}`);
     throw error;
   }
 };

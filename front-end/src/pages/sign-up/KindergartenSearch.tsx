@@ -5,17 +5,10 @@ import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
 import Select from '@/components/molecules/DropdownButton/Select';
+import {CityOptions} from '@/constants/city';
+import {DistrictOptions} from '@/constants/district';
+import type {District} from '@/constants/district';
 import {useRecoilState} from 'recoil';
-
-type City = {
-  id: string;
-  value: string;
-};
-
-type District = {
-  id: string;
-  value: string;
-};
 
 const KindergartenSearch: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string>('시');
@@ -26,46 +19,25 @@ const KindergartenSearch: React.FC = () => {
   const [signupkindergarten, setSignupKindergarten] = useRecoilState(Signup);
   const navigate = useNavigate();
 
-  const CityOptions: City[] = [
-    {id: '1', value: '서울특별시'},
-    {id: '2', value: '부산광역시'},
-    {id: '3', value: '인천광역시'},
-  ];
-
-  const DistrictOptions: {[key: string]: District[]} = {
-    '1': [
-      {id: '1-1', value: '강남구'},
-      {id: '1-2', value: '종로구'},
-      {id: '1-3', value: '동대문구'},
-    ],
-    '2': [
-      {id: '2-1', value: '해운대구'},
-      {id: '2-2', value: '수영구'},
-      {id: '2-3', value: '금정구'},
-    ],
-    '3': [
-      {id: '3-1', value: '남동구'},
-      {id: '3-2', value: '부평구'},
-      {id: '3-3', value: '연수구'},
-    ],
-  };
-
   const handleKindergartenSearchButtonClick = () => {
     navigate('/signup/kindergarten/ban');
   };
-  const handleCityChange = (id: string) => {
-    const city = CityOptions.find(city => city.id === id);
+  const handleCityChange = (value: string) => {
+    const city = CityOptions.find(city => city.value === value);
+    console.log(city);
     if (city) {
-      setSelectedCity(city.value);
+      setSelectedCity(city.label);
       console.log(city.value, 'handle쪽');
       setSelectedDistrict(''); // 도시 변경 시, 선택된 구 초기화
-      setSelectedDistricts(DistrictOptions[id] || []);
+      setSelectedDistricts(DistrictOptions[city.value] || []);
     }
   };
   const handleDistrictChange = (value: string) => {
-    const district = selectedDistricts.find(district => district.id === value);
+    const district = selectedDistricts.find(
+      district => district.value === value
+    );
     if (district) {
-      setSelectedDistrict(district.value);
+      setSelectedDistrict(district.label);
     }
   };
 
@@ -90,7 +62,7 @@ const KindergartenSearch: React.FC = () => {
         {/* 첫 dropdown은 시 */}
         <Select size="medium" label={selectedCity} onChange={handleCityChange}>
           {CityOptions.map(city => (
-            <Select.Option key={city.id} text={city.value} id={city.id} />
+            <Select.Option key={city.id} text={city.label} id={city.value} />
           ))}
         </Select>
         {/* 두 번째 dropdown은 군구 */}
@@ -102,8 +74,8 @@ const KindergartenSearch: React.FC = () => {
           {selectedDistricts.map(district => (
             <Select.Option
               key={district.id}
-              text={district.value}
-              id={district.id}
+              text={district.label}
+              id={district.value}
             />
           ))}
         </Select>
