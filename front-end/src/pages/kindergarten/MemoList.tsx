@@ -14,17 +14,18 @@ import {getTeacherDailyMemos} from '@/apis/memo/getTeacherDailyMemos';
 import dayjs from 'dayjs';
 import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
 
-const date = dayjs();
-
 const MemoList = memo(() => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [modalMemo, setModalMemo] = useState<TeacherDailyMemo>();
+  const [date, setDate] = useState(dayjs());
 
   const [memos, setMemos] = useState<TeacherDailyMemo[]>();
 
-  const {data} = useQuery({
-    queryKey: ['memos', 0],
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMemo, setModalMemo] = useState<TeacherDailyMemo>();
+
+  const navigate = useNavigate();
+
+  const {data, refetch} = useQuery({
+    queryKey: ['memos', 1],
     queryFn: () =>
       getTeacherDailyMemos(
         0,
@@ -38,6 +39,18 @@ const MemoList = memo(() => {
     setMemos(data);
   }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, [date]);
+
+  const handleLeftClick = () => {
+    setDate(date.subtract(1, 'day'));
+  };
+
+  const handleRightClick = () => {
+    setDate(date.add(1, 'day'));
+  };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
@@ -47,15 +60,17 @@ const MemoList = memo(() => {
     setIsModalOpen(true);
   };
 
-  const navigate = useNavigate();
-
   return (
     <>
       <div
         className={`${containerNavigatorClass} flex flex-col h-screen items-center bg-[#F8F8F8]`}
       >
-        <Header title="관찰 메모" buttonType="back" />
-        <DateNavigator title="7.16 (화)" />
+        <Header title="관찰 메모" buttonType="close" />
+        <DateNavigator
+          title={date.format('M.D (ddd)')}
+          onClickLeft={handleLeftClick}
+          onClickRight={handleRightClick}
+        />
         <div className="mt-10">
           {memos &&
             memos.map(memo => (

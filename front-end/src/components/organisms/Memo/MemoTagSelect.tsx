@@ -16,6 +16,7 @@ const MemoTagSelect = () => {
   const [filteredTags, setFilteredTags] = useState<MemoTag[] | undefined>();
   const [memo, setMemo] = useRecoilState<Memo>(memoState);
   const [input, setInput] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,8 +35,10 @@ const MemoTagSelect = () => {
   useEffect(() => {
     if (input === '') {
       setFilteredTags(tags);
+      setIsValid(false);
     } else {
       setFilteredTags(tags?.filter(tag => tag.content.includes(input)));
+      setIsValid(true);
     }
   }, [input, tags]);
 
@@ -115,6 +118,7 @@ const MemoTagSelect = () => {
             <NoResult text="등록된 태그가 없어요" />
             <Button
               label="태그 추가"
+              disabled={!isValid}
               variant="negative"
               onClick={() => handleTagAdd()}
             />
