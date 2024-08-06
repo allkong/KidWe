@@ -16,6 +16,9 @@ import dayjs from 'dayjs';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Spinner from '@/components/atoms/Loader/Spinner';
+import {useQueryString} from '@/hooks/useQueryString';
+import {useQuery} from '@tanstack/react-query';
+import {getMemoById} from '@/apis/memo/getMemoById';
 
 const teacherId = 1;
 
@@ -27,14 +30,15 @@ const MemoWrite = () => {
 
   const [isValid, setIsValid] = useState(false);
 
-  useEffect(() => {
-    setIsValid(
-      memo.content !== '' ||
-        memo.kids.length !== 0 ||
-        memo.lesson !== '' ||
-        memo.tagRequestDtos.length !== 0
-    );
-  }, [memo]);
+  const memoId = useQueryString().get('id');
+
+  const {data} = useQuery({
+    queryKey: ['memo', teacherId, memoId],
+    queryFn: () => {
+      return getMemoById(teacherId, memoId!);
+    },
+    enabled: !!memoId,
+  });
 
   const writeMutate = useMutation({
     mutationFn: ({teacherId, memo}: {teacherId: number; memo: Memo}) => {
@@ -57,6 +61,29 @@ const MemoWrite = () => {
       navigate('/kindergarten/memo');
     },
   });
+
+  useEffect(() => {
+    setIsValid(
+      memo.content !== '' ||
+        memo.kids.length !== 0 ||
+        memo.lesson !== '' ||
+        memo.tagRequestDtos.length !== 0
+    );
+  }, [memo]);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setMemo(data);
+    } else {
+      setMemo({
+        updatedTime: dayjs(),
+        lesson: '',
+        kids: [],
+        tagRequestDtos: [],
+        content: '',
+      });
+    }
+  }, [data, setMemo]);
 
   const handleClick = () => {
     writeMutate.mutate({teacherId, memo});

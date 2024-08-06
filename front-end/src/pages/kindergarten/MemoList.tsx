@@ -2,7 +2,7 @@ import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import {memo, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {createSearchParams, useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
@@ -64,6 +64,13 @@ const MemoList = memo(() => {
     setIsModalOpen(true);
   };
 
+  const moveToUpdate = (id: string) => {
+    navigate({
+      pathname: `/kindergarten/memo/write`,
+      search: createSearchParams({id}).toString(),
+    });
+  };
+
   return (
     <>
       <div
@@ -101,7 +108,7 @@ const MemoList = memo(() => {
             <MemoView memo={modalMemo} />
           </Modal.Body>
           <Modal.BottomButton
-            onClick={handleModalClose}
+            onClick={() => moveToUpdate(modalMemo?.id as string)}
             label="수정"
             variant="negative"
             size="large"
