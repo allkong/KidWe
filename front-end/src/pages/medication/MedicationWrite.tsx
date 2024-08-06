@@ -58,7 +58,6 @@ const MedicationWrite = () => {
   };
 
   const handleFormSubmit = () => {
-    console.log(formState);
     const formData = new FormData();
 
     formData.append('medicineDto', JSON.stringify(formState));
@@ -70,9 +69,6 @@ const MedicationWrite = () => {
     if (signImage) {
       formData.append('signImage', signImage);
     }
-
-    console.log(medicineImage);
-    console.log(signImage);
   };
 
   return (
