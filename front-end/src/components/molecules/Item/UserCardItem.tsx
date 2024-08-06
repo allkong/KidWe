@@ -2,13 +2,18 @@ import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import BracketButton from '@/components/atoms/Button/BracketButton';
 
+interface Option {
+  text: string;
+  onClick: () => void;
+}
+
 interface UserCardItemProps {
   profile: string;
   userName: string;
   banName?: string;
   cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  options?: string[];
+  options: Option[];
 }
 
 const UserCardItem = ({
@@ -30,7 +35,17 @@ const UserCardItem = ({
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>
-      {cardType === 'detail' && <MoreButton options={options} />}
+      {cardType === 'detail' && (
+        <MoreButton>
+          {options?.map(option => (
+            <MoreButton.Option
+              key={option.text}
+              text={option.text}
+              onClick={option.onClick}
+            />
+          ))}
+        </MoreButton>
+      )}
       {cardType === 'arrow' && (
         <BracketButton onClick={onClick || (() => {})} direction="right" />
       )}

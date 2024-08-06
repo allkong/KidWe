@@ -1,5 +1,6 @@
-import {useLocation, useParams} from 'react-router-dom';
+import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
+import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -8,11 +9,11 @@ import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignat
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const MedicationDetail = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const userInfo = {...location.state};
-
   const {medicationId} = useParams();
-  console.log(medicationId);
+  const deleteMutation = useDeleteMedication();
 
   const {data, error, isLoading} = useMedicationDetail(medicationId ?? '');
 
@@ -44,7 +45,22 @@ const MedicationDetail = () => {
     {title: '사진', imageUrl: data.medicineUrl, color: '#FFEC9E'},
   ].filter(item => item.content && item.content.trim() !== '');
 
-  console.log(medicationDetails);
+  const handleMedicationDelete = () => {
+    if (medicationId) {
+      deleteMutation.mutate(medicationId, {
+        onSuccess: () => {
+          navigate('/medication');
+        },
+      });
+    }
+  };
+
+  const options = [
+    {
+      text: '삭제하기',
+      onClick: handleMedicationDelete,
+    },
+  ];
 
   return (
     <div className="flex flex-col h-screen">
@@ -55,8 +71,7 @@ const MedicationDetail = () => {
           userName={userInfo.kidName}
           banName={userInfo.banName}
           cardType="detail"
-          onClick={() => {}}
-          options={['삭제하기']}
+          options={options}
         />
         <div className="space-y-5 border-b py-7 px-9">
           {medicationDetails.map((item, index) => (
