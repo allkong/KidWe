@@ -6,15 +6,14 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import {getKindergartenInfo} from '@/apis/kindergarten/getKindergartenInfo';
-import {useQuery} from '@tanstack/react-query';
-import type {Ban} from '@/types/kindergarten/Ban';
+import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
+
+const kindergartenId = 1;
 
 const KindergartenSchedule = () => {
   const [date, setDate] = useState(dayjs());
-  const [banInfo, setBanInfo] = useState<Ban[]>();
 
   const onChangeDate = (value: Dayjs) => {
     setDate(value);
@@ -28,17 +27,7 @@ const KindergartenSchedule = () => {
     setDate(date.add(1, 'month'));
   };
 
-  const {data} = useQuery({
-    queryKey: ['kindergarten', 1],
-    queryFn: () => getKindergartenInfo(1),
-  });
-
-  useEffect(() => {
-    if (data === undefined) {
-      return;
-    }
-    setBanInfo([{id: -1, name: '전체'}, ...data.bans]);
-  }, [data]);
+  const {data} = useGetKindergartenInfo(kindergartenId);
 
   return (
     <>
@@ -53,8 +42,9 @@ const KindergartenSchedule = () => {
       >
         <div className="flex items-center justify-between w-full h-16">
           <Select label="반" size="small">
-            {banInfo &&
-              banInfo.map(ban => (
+            <Select.Option text="전체" />
+            {data &&
+              data.bans.map(ban => (
                 <Select.Option key={ban.id} text={ban.name} />
               ))}
           </Select>
