@@ -43,12 +43,13 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
                 ? info.type !== ScheduleOption.유치원
                 : info.type === ScheduleOption.유치원
             )
-            .map((info, idx) => (
+            .map(schedule => (
               <ScheduleInfoItem
-                key={idx}
-                tag={info.keyWord}
-                text={info.content}
+                key={schedule.scheduleId}
+                schedule={schedule}
                 backgroundColor={isShowBan ? '#FFF1A7' : '#EAEAEA'}
+                date={date}
+                isShowMore={true}
               />
             ))}
       </div>
