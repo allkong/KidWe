@@ -5,11 +5,8 @@ import KindergartenInfomationSelect from '@/components/organisms/Memo/Kindergart
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
-import {postMemo} from '@/apis/memo/postMemo';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useRecoilState} from 'recoil';
 import {memoState} from '@/recoil/atoms/memo/memo';
-import {Memo} from '@/types/memo/Memo';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -17,51 +14,21 @@ import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import {useQueryString} from '@/hooks/useQueryString';
-import {useQuery} from '@tanstack/react-query';
-import {getMemoById} from '@/apis/memo/getMemoById';
+import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
+import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 
 const teacherId = 1;
 
 const MemoWrite = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const [memo, setMemo] = useRecoilState(memoState);
-
-  const [isValid, setIsValid] = useState(false);
-
   const memoId = useQueryString().get('id');
 
-  const {data} = useQuery({
-    queryKey: ['memo', teacherId, memoId],
-    queryFn: () => {
-      return getMemoById(teacherId, memoId!);
-    },
-    enabled: !!memoId,
-  });
+  const {data} = useGetDailyMemoById(teacherId, memoId);
+  const writeMutate = useWriteDailyMemo();
 
-  const writeMutate = useMutation({
-    mutationFn: ({teacherId, memo}: {teacherId: number; memo: Memo}) => {
-      return postMemo(teacherId, memo);
-    },
-    onError() {
-      toast.error('오류 발생');
-    },
-    onSuccess() {
-      setMemo({
-        updatedTime: dayjs(),
-        lesson: '',
-        kids: [],
-        tagRequestDtos: [],
-        content: '',
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['memos', 1],
-      });
-      navigate('/kindergarten/memo');
-    },
-  });
-
+  const [isValid, setIsValid] = useState(false);
   useEffect(() => {
     setIsValid(
       memo.content !== '' ||
@@ -86,7 +53,24 @@ const MemoWrite = () => {
   }, [data, setMemo]);
 
   const handleClick = () => {
-    writeMutate.mutate({teacherId, memo});
+    writeMutate.mutate(
+      {teacherId, memo},
+      {
+        onError: () => {
+          toast.error('오류 발생');
+        },
+        onSuccess: () => {
+          setMemo({
+            updatedTime: dayjs(),
+            lesson: '',
+            kids: [],
+            tagRequestDtos: [],
+            content: '',
+          });
+          navigate('/kindergarten/memo');
+        },
+      }
+    );
   };
 
   return (
@@ -117,6 +101,7 @@ const MemoWrite = () => {
         closeOnClick // 클릭으로 알람 닫기
         pauseOnFocusLoss // 화면을 벗어나면 알람 정지
         theme="light"
+        limit={1}
       />
     </>
   );

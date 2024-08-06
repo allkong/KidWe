@@ -9,38 +9,30 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {useQuery} from '@tanstack/react-query';
-import {getTeacherDailyMemos} from '@/apis/memo/getTeacherDailyMemos';
 import dayjs from 'dayjs';
-import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import type {GetMemo} from '@/types/memo/GetMemo';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
+import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
+
+const teacherId = 1;
 
 const MemoList = memo(() => {
   const [date, setDate] = useState(dayjs());
-  const [memo, setMemo] = useRecoilState(memoState);
 
-  const [memoDatas, setMemoDatas] = useState<TeacherDailyMemo[]>();
+  const [memo, setMemo] = useRecoilState(memoState); // 메모가 작성될 atom
+  const [modalMemo, setModalMemo] = useState<GetMemo>(); // 모달에 띄울 메모
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMemo, setModalMemo] = useState<TeacherDailyMemo>();
 
   const navigate = useNavigate();
 
-  const {data, refetch} = useQuery({
-    queryKey: ['memos', 1],
-    queryFn: () =>
-      getTeacherDailyMemos(
-        1,
-        date.format('YYYY'),
-        date.format('MM'),
-        date.format('DD')
-      ),
-  });
-
-  useEffect(() => {
-    setMemoDatas(data);
-  }, [data]);
+  const {data, refetch} = useGetDailyMemo(
+    teacherId,
+    date.format('YYYY'),
+    date.format('MM'),
+    date.format('DD')
+  );
 
   useEffect(() => {
     setMemo({...memo, updatedTime: date});
@@ -59,7 +51,7 @@ const MemoList = memo(() => {
     setIsModalOpen(false);
   };
 
-  const handleModalOpen = (memo: TeacherDailyMemo) => {
+  const handleModalOpen = (memo: GetMemo) => {
     setModalMemo(memo);
     setIsModalOpen(true);
   };
@@ -83,8 +75,8 @@ const MemoList = memo(() => {
           onClickRight={handleRightClick}
         />
         <div className="mt-10">
-          {memoDatas &&
-            memoDatas
+          {data &&
+            data
               .sort((e1, e2) => {
                 return dayjs(e1.updatedTime)
                   .format('HH:MM')

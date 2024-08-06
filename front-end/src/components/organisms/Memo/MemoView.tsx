@@ -1,10 +1,10 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import chick from '@/assets/icons/chick-1.svg';
-import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import type {GetMemo} from '@/types/memo/GetMemo';
 import dayjs from 'dayjs';
 
 interface MemoViewProps {
-  memo?: TeacherDailyMemo;
+  memo?: GetMemo;
 }
 
 const MemoView = ({memo}: MemoViewProps) => {

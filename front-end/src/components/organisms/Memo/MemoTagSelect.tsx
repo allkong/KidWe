@@ -1,18 +1,18 @@
 import Divider from '@/components/atoms/Divider/Divider';
 import Input from '@/components/atoms/Input/Input';
 import Tag from '@/components/atoms/Tag/Tag';
-import {useQuery} from '@tanstack/react-query';
 import {useEffect, useRef, useState} from 'react';
-import {getTags} from '@/apis/memo/getTags';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
 import type {Tag as MemoTag} from '@/types/memo/Tag';
 import type {Memo} from '@/types/memo/Memo';
 import NoResult from '@/components/atoms/NoResult';
 import Button from '@/components/atoms/Button/Button';
+import {useGetTags} from '@/hooks/memo/useGetTags';
+
+const teacherId = 1;
 
 const MemoTagSelect = () => {
-  const [tags, setTags] = useState<MemoTag[] | undefined>();
   const [filteredTags, setFilteredTags] = useState<MemoTag[] | undefined>();
   const [memo, setMemo] = useRecoilState<Memo>(memoState);
   const [input, setInput] = useState('');
@@ -20,17 +20,13 @@ const MemoTagSelect = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const {data} = useQuery({
-    queryKey: ['tags'],
-    queryFn: () => getTags(0),
-  });
+  const {data: tags} = useGetTags(teacherId);
 
   useEffect(() => {
-    if (data) {
-      setTags(data);
-      setFilteredTags(data);
+    if (tags) {
+      setFilteredTags(tags);
     }
-  }, [data]);
+  }, [tags]);
 
   useEffect(() => {
     if (input === '') {
