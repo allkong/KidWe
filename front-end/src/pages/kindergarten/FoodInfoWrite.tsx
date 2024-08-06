@@ -3,25 +3,109 @@ import FoodInfoWriteItem from '@/components/organisms/Food/FoodInfoWriteItem';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
-import {useLocation} from 'react-router-dom';
+import dayjs from 'dayjs';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {postFood} from '@/apis/food/postFood';
+import {useMutation} from '@tanstack/react-query';
+import {PostFood} from '@/types/food/PostFood';
+import {useQuery} from 'react-query';
+import {getDailyFood} from '@/apis/food/getDailyFood';
+import {useEffect, useState} from 'react';
+
+const kindergartenId = 1;
 
 const FoodInfoWrite = () => {
   const location = useLocation();
-  const {date} = location.state;
+  const date = dayjs(location.state.date);
+  const navigate = useNavigate();
+  const [menu, setMenu] = useState<PostFood>({
+    lunch: '',
+    lunchAllergies: [],
+    snack: '',
+    snackAllergies: [],
+    dinner: '',
+    dinnerAllergies: [],
+    menuDate: '',
+  });
+
+  const {data} = useQuery({
+    queryKey: [
+      'food',
+      date.get('year'),
+      date.get('month') + 1,
+      date.get('date'),
+    ],
+    queryFn: () =>
+      getDailyFood(
+        kindergartenId,
+        date.get('year'),
+        date.get('month') + 1,
+        date.get('date')
+      ),
+    enabled: !!date,
+  });
+
+  const foodMutate = useMutation({
+    mutationFn: ({
+      kindergartenId,
+      menu,
+    }: {
+      kindergartenId: number;
+      menu: PostFood;
+    }) => postFood(kindergartenId, menu),
+    onSuccess() {
+      navigate('/kindergarten/food');
+    },
+  });
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setMenu({...data, menuDate: date.format('YYYY-MM-DD')});
+    }
+  }, [data, date]);
+
+  const handleButtonClick = () => {
+    foodMutate.mutate({
+      kindergartenId: kindergartenId,
+      menu,
+    });
+  };
+
+  const handleChangeData = ({
+    value,
+    allergies,
+    type,
+  }: {
+    value: string;
+    allergies: string[];
+    type: 'lunch' | 'snack' | 'dinner';
+  }) => {};
 
   return (
     <div className={`${containerHeaderClass} flex flex-col h-full`}>
       <Header title="메뉴 정보 등록" buttonType="back" />
       <div className="flex justify-end px-5 py-6 text-xs h-fit min-h-fit min-w-fit">
-        <p>{date}</p>
+        <p>{date.format('YYYY-MM-DD (ddd)')}</p>
       </div>
       <div className="flex-grow px-5 py-5 space-y-6 overflow-y-scroll">
-        <FoodInfoWriteItem label="중식" />
-        <FoodInfoWriteItem label="간식" />
-        <FoodInfoWriteItem label="석식" />
+        <FoodInfoWriteItem
+          label="lunch"
+          food={menu.lunch}
+          allergies={menu.lunchAllergies}
+        />
+        <FoodInfoWriteItem
+          label="snack"
+          food={menu.snack}
+          allergies={menu.snackAllergies}
+        />
+        <FoodInfoWriteItem
+          label="dinner"
+          food={menu.dinner}
+          allergies={menu.dinnerAllergies}
+        />
       </div>
       <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
-        <Button onClick={() => {}} label="작성 완료" size="large" />
+        <Button onClick={handleButtonClick} label="작성 완료" size="large" />
       </div>
       <NavigationBar />
     </div>

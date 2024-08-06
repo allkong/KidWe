@@ -5,21 +5,62 @@ import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import AllergyView from '@/components/organisms/Food/AllergyView';
 import {useEffect, useState} from 'react';
-import {allergies} from '@/constants/allergy';
+import {ALLERGIES} from '@/constants/allergy';
 import type {Allergy} from '@/constants/allergy';
+import {onChange} from 'react-toastify/dist/core/store';
 
 interface FoodInfoWriteItemProps {
-  label?: string;
+  label?: 'lunch' | 'snack' | 'dinner';
+  food?: string;
+  allergies?: string[];
+  onChange?: (
+    value: string,
+    allergies: string[],
+    type: 'lunch' | 'snack' | 'dinner'
+  ) => void;
 }
 
-const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
+const getLabel = (label: string) => {
+  switch (label) {
+    case 'lunch':
+      return '점심';
+    case 'snack':
+      return '간식';
+    case 'dinner':
+      return '저녁';
+    default:
+      return '';
+  }
+};
+
+const FoodInfoWriteItem = ({
+  label = 'lunch',
+  food = '',
+  allergies,
+  onChange,
+}: FoodInfoWriteItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [datas, setDatas] = useState<Allergy[]>(allergies);
-  const [copiedDatas, setCopiedDatas] = useState<Allergy[]>([...datas]);
+  const [datas, setDatas] = useState<Allergy[]>(
+    ALLERGIES.map(allergy => {
+      if (allergies === undefined) {
+        return {...allergy};
+      }
+      if (allergies.includes(allergy.value)) {
+        return {...allergy, isChecked: true};
+      }
+      return {...allergy};
+    })
+  );
+  const [copiedDatas, setCopiedDatas] = useState<Allergy[]>();
   const [isDataChecked, setIsDataChecked] = useState(false);
+  const [input, setInput] = useState(food);
 
   useEffect(() => {
     setIsDataChecked(datas.find(value => value.isChecked) !== undefined);
+  }, [datas]);
+
+  useEffect(() => {
+    setCopiedDatas(datas);
   }, [datas]);
 
   const handleModalOpen = () => {
@@ -32,7 +73,10 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
   };
 
   const handleSubmit = () => {
-    setDatas([...copiedDatas]);
+    if (copiedDatas !== undefined) {
+      setDatas([...copiedDatas]);
+    }
+    // onChange?.(input, datas, label);
     setIsModalOpen(false);
   };
 
@@ -43,9 +87,9 @@ const FoodInfoWriteItem = ({label}: FoodInfoWriteItemProps) => {
   return (
     <>
       <div className="space-y-2 text-gray-300">
-        <p>{label}</p>
+        <p>{getLabel(label)}</p>
         <div className="w-full h-20">
-          <TextArea />
+          <TextArea value={input} onChange={setInput} />
         </div>
         <div className="w-full h-fit min-h-7">
           {isDataChecked ? (

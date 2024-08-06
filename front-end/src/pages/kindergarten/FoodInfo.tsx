@@ -94,16 +94,19 @@ const FoodInfo = () => {
                 variant="lunch"
                 menu={food.lunch}
                 allergies={food.lunchAllergies}
+                onClick={moveToWrite}
               />
               <FoodInfomationItem
                 variant="snack"
                 menu={food.snack}
                 allergies={food.snackAllergies}
+                onClick={moveToWrite}
               />
               <FoodInfomationItem
                 variant="dinner"
                 menu={food.dinner}
                 allergies={food.dinnerAllergies}
+                onClick={moveToWrite}
               />
             </>
           ) : (
