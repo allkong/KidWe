@@ -5,6 +5,7 @@ export interface ButtonProps {
   round?: 'small' | 'full';
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -14,6 +15,7 @@ const Button = ({
   round = 'small',
   Icon,
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   const baseClass = 'py-2 font-semibold text-white text-large';
   const sizeClass = size === 'small' ? 'px-6' : 'w-full';
@@ -23,7 +25,8 @@ const Button = ({
   return (
     <button
       onClick={onClick}
-      className={`${baseClass} ${sizeClass} ${variantClass} ${roundClass}`}
+      className={`${baseClass} ${sizeClass} ${variantClass} ${roundClass} transition-colors`}
+      disabled={disabled}
     >
       {label}
       {Icon && <Icon />}

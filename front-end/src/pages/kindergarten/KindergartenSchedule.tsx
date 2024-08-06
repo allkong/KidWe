@@ -58,7 +58,7 @@ const KindergartenSchedule = () => {
                 <Select.Option key={ban.id} text={ban.name} />
               ))}
           </Select>
-          <ScheduleAdd />
+          <ScheduleAdd defaultDate={date} />
         </div>
         <div className="flex items-center justify-center flex-grow w-full">
           <div className="flex items-start justify-center max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">
