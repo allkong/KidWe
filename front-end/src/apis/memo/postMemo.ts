@@ -5,7 +5,7 @@ export const postMemo = async (teacherId: number, memo: Memo) => {
   try {
     const result = await noSqlInstance.post(`/memo/${teacherId}`, {
       ...memo,
-      updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
+      updatedTime: memo.updatedTime,
     });
     return result.data;
   } catch (error) {
