@@ -1,7 +1,8 @@
 import dayjs, {Dayjs} from 'dayjs';
 import Calendar from 'react-calendar';
-import "@/components/molecules/Calendar/calendar.css"
+import '@/components/molecules/Calendar/calendar.css';
 import {Value} from 'react-calendar/dist/cjs/shared/types';
+import {useEffect} from 'react';
 
 interface CustomCalendarProps {
   onChange?: (date: Dayjs) => void;
@@ -21,8 +22,13 @@ const CustomCalendar = ({
     onChange?.(dayjs(date));
   };
 
+  useEffect(() => {
+    console.log(defaultDate.toDate());
+  }, [defaultDate]);
+
   return (
     <Calendar
+      activeStartDate={defaultDate.toDate()}
       value={defaultDate.toDate()}
       calendarType="gregory"
       onChange={handleChange}
