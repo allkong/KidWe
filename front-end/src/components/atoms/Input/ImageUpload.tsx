@@ -2,22 +2,22 @@ import {useState, ChangeEvent} from 'react';
 import Icon from '@/assets/icons/pic_line.svg?react';
 
 interface ImageUploadProps {
-  onChange: (image: string) => void;
+  onChange: (image: File) => void;
 }
 
 const ImageUpload = ({onChange}: ImageUploadProps) => {
-  const [image, setImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  const previewImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImagePreview = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
-        setImage(result);
-        onChange(result);
+        setPreviewImage(result);
       };
       reader.readAsDataURL(file);
+      onChange(file);
     }
   };
 
@@ -28,10 +28,10 @@ const ImageUpload = ({onChange}: ImageUploadProps) => {
         id="image"
         type="file"
         accept="image/*"
-        onChange={previewImage}
+        onChange={handleImagePreview}
         className="hidden"
       />
-      {!image && (
+      {!previewImage && (
         <label
           htmlFor="image"
           className="box-border flex flex-row items-center justify-center w-full h-10 gap-2 text-gray-200 bg-white border-2 border-dashed rounded-lg"
@@ -40,8 +40,12 @@ const ImageUpload = ({onChange}: ImageUploadProps) => {
           <p className="text-sm">사진 선택</p>
         </label>
       )}
-      {image && (
-        <img src={image} alt="preview" className="object-cover w-full h-64" />
+      {previewImage && (
+        <img
+          src={previewImage}
+          alt="preview"
+          className="object-cover w-full h-64"
+        />
       )}
     </div>
   );

@@ -2,7 +2,6 @@ import {useState, ChangeEvent} from 'react';
 import {useRecoilState} from 'recoil';
 import {medicationFormState} from '@/recoil/atoms/medication/medicationFormState';
 import {formatDateToYMD} from '@/utils/dayjsPlugin';
-import {dataURLToBase64} from '@/utils/convertImageType';
 import {TimeOption, timeOptionValues} from '@/enum/medication/timeOption';
 import {
   DATE_OPTIONS,
@@ -26,8 +25,17 @@ const MedicationWrite = () => {
   const [formState, setFormState] = useRecoilState(medicationFormState);
 
   const [selectedTimeOption, setSelectedTimeOption] = useState('');
-  const [medicineImage, setMedicineImage] = useState<Blob | null>(null);
-  const [signImage, setSignImage] = useState<Blob | null>(null);
+  const [medicineImage, setMedicineImage] = useState<File | null>(null);
+  const [signImage, setSignImage] = useState<File | null>(null);
+
+  // 입력 값 변경
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormState(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   // 투약일
   const handleDateChange = (option: string) => {
@@ -49,22 +57,22 @@ const MedicationWrite = () => {
     }
   };
 
-  // 서명 이미지
-  const handleSignatureSave = (imageData: string) => {
-    setFormState(prev => ({...prev, signUrl: dataURLToBase64(imageData)}));
-  };
-
-  // 입력 값 변경
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setFormState(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleFormSubmit = () => {
     console.log(formState);
+    const formData = new FormData();
+
+    formData.append('medicineDto', JSON.stringify(formState));
+
+    if (medicineImage !== null) {
+      formData.append('medicineImage', medicineImage);
+    }
+
+    if (signImage) {
+      formData.append('signImage', signImage);
+    }
+
+    console.log(medicineImage);
+    console.log(signImage);
   };
 
   return (
@@ -159,14 +167,14 @@ const MedicationWrite = () => {
             parentName="김부모"
             onClick={setSignImage}
           />
-          {formState.signUrl && (
+          {/* {formState.signUrl && (
             <div className="flex justify-end">
               <img
                 src={formState.signUrl}
                 className="mt-4 bg-gray-100 rounded-md w-60"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <ButtonBar label={LABELS.submit} onClick={handleFormSubmit} />
