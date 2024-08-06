@@ -1,8 +1,8 @@
 import Option from '@/components/atoms/Option/Option';
 import MoreButtonMain from '@/components/molecules/DropdownButton/MoreButtonMain';
 
-const Select = Object.assign(MoreButtonMain, {
+const MoreButton = Object.assign(MoreButtonMain, {
   Option: Option,
 });
 
-export default Select;
+export default MoreButton;
