@@ -2,8 +2,8 @@ import {useQuery} from '@tanstack/react-query';
 import {
   getMedicationByTeacher,
   getMedicationByParent,
-} from '@/apis/medication/getMedicationItem';
-import {MedicationItem} from '@/types/medication/MedicationList';
+} from '@/apis/medication/getMedicationList';
+import {MedicationItem} from '@/types/medication/MedicationItem';
 
 export const useMedicationList = (
   banId: number,
