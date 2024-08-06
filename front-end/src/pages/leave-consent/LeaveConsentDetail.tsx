@@ -8,7 +8,7 @@ import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
 import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
-const MedicationDetail = () => {
+const LeaveConsentDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = {...location.state};
@@ -29,22 +29,6 @@ const MedicationDetail = () => {
     return <div>No data available</div>;
   }
 
-  const medicationDetails = [
-    {title: '증상', content: data.symptom, color: '#FFC36A'},
-    {title: '이름', content: data.medicineName, color: '#FFEC9E'},
-    {title: '종류', content: data.type, color: '#FFEC9E'},
-    {title: '용량', content: data.numberOfDoses, color: '#FFEC9E'},
-    {title: '횟수', content: data.capacity, color: '#FFEC9E'},
-    {
-      title: '시간',
-      content: data.medicationExecuteTime,
-      color: '#FFEC9E',
-    },
-    {title: '보관', content: data.storageMethod, color: '#FFEC9E'},
-    {title: '비고', content: data.others, color: '#FFEC9E'},
-    {title: '사진', imageUrl: data.medicineUrl, color: '#FFEC9E'},
-  ].filter(item => item.content && item.content.trim() !== '');
-
   const handleMedicationDelete = () => {
     if (medicationId) {
       deleteMutation.mutate(medicationId, {
@@ -64,7 +48,7 @@ const MedicationDetail = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header title={'투약의뢰서'} buttonType="back" />
+      <Header title="귀가동의서" buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem
           profile=""
@@ -74,15 +58,12 @@ const MedicationDetail = () => {
           options={options}
         />
         <div className="space-y-5 border-b py-7 px-9">
-          {medicationDetails.map((item, index) => (
-            <DetailLabelItem
-              key={index}
-              color={item.color}
-              title={item.title}
-              content={item.content}
-              imageUrl={item.imageUrl}
-            />
-          ))}
+          <DetailLabelItem
+            color={item.color}
+            title={item.title}
+            content={item.content}
+            imageUrl={item.imageUrl}
+          />
         </div>
         {/* 서명 */}
         <ConsentSignatureCard
@@ -97,4 +78,4 @@ const MedicationDetail = () => {
   );
 };
 
-export default MedicationDetail;
+export default LeaveConsentDetail;

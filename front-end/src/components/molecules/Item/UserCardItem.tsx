@@ -13,7 +13,7 @@ interface UserCardItemProps {
   banName?: string;
   cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  options: Option[];
+  options?: Option[];
 }
 
 const UserCardItem = ({

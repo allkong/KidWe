@@ -13,7 +13,7 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
-const MedicationListView = () => {
+const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const MedicationListView = () => {
   };
 
   const handleUserItemClick = (medicationId: number, item: MedicationItem) => {
-    navigate(`/medication/${medicationId}`, {
+    navigate(`/leave-consent/${medicationId}`, {
       state: {
         kidName: item.kidName,
         banName: item.banName,
@@ -42,7 +42,7 @@ const MedicationListView = () => {
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/medication/write');
+    navigate('/leave-consent/write');
   };
 
   if (isLoading) {
@@ -57,7 +57,7 @@ const MedicationListView = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header title="투약의뢰서" buttonType="close" />
+      <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}
         onClickLeft={handleLeftClick}
@@ -66,7 +66,7 @@ const MedicationListView = () => {
       <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
         {data && data.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <NoResult text="등록된 의뢰서가 없어요" />
+            <NoResult text="등록된 동의서가 없어요" />
           </div>
         ) : (
           Object.keys(groupedData).map(date => (
@@ -95,4 +95,4 @@ const MedicationListView = () => {
   );
 };
 
-export default MedicationListView;
+export default LeaveConsentListView;

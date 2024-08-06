@@ -7,7 +7,7 @@ interface MedicationDetailItemProps {
   imageUrl?: string;
 }
 
-const MedicationDetailItem = ({
+const DetailLabelItem = ({
   title,
   content,
   color,
@@ -27,4 +27,4 @@ const MedicationDetailItem = ({
   );
 };
 
-export default MedicationDetailItem;
+export default DetailLabelItem;
