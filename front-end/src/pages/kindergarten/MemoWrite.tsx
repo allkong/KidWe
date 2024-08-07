@@ -26,11 +26,17 @@ const MemoWrite = () => {
 
   const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   const memoId = useQueryString().get('id');
-  const date = useQueryString().get('date');
+  // const date = useQueryString().get('date');
 
   const {data} = useGetDailyMemoById(teacherId, memoId);
   const writeMutate = useWriteDailyMemo();
   const putMutate = usePutDailyMemo();
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setMemo(data);
+    }
+  }, [data, setMemo]);
 
   const [isValid, setIsValid] = useState(false);
   useEffect(() => {
@@ -41,21 +47,6 @@ const MemoWrite = () => {
         memo.tags.length !== 0
     );
   }, [memo]);
-
-  useEffect(() => {
-    if (data !== undefined) {
-      setMemo(data);
-    } else {
-      const updatedDate = date === null ? dayjs() : dayjs(date);
-      setMemo({
-        lesson: '',
-        kids: [],
-        tags: [],
-        content: '',
-        updatedTime: updatedDate.format('YYYY-MM-DD HH:mm'),
-      });
-    }
-  }, [data, setMemo]);
 
   const handleClick = () => {
     if (memoId !== null) {

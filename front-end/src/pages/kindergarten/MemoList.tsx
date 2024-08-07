@@ -11,18 +11,16 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import dayjs from 'dayjs';
 import type {GetMemo} from '@/types/memo/GetMemo';
-import {memoState} from '@/recoil/atoms/memo/memo';
-import {useRecoilState} from 'recoil';
+import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
+import {useSetRecoilState} from 'recoil';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
-import {PostMemo} from '@/types/memo/PostMemo';
 
 const teacherId = 1;
 
 const MemoList = memo(() => {
   const [date, setDate] = useState(dayjs());
-
-  const [memo, setMemo] = useRecoilState<PostMemo>(memoState); // 메모가 작성될 atom
-  const [modalMemo, setModalMemo] = useState<GetMemo>(); // 모달에 띄울 메모
+  const setMemoTime = useSetRecoilState<string>(memoTimeSelector);
+  const [modalMemo, setModalMemo] = useState<GetMemo>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,9 +34,9 @@ const MemoList = memo(() => {
   );
 
   useEffect(() => {
-    setMemo({...memo, updatedTime: date.format('YYYY-MM-DD HH:mm')});
+    setMemoTime(date.format('YYYY-MM-DD HH:MM'));
     refetch();
-  }, [date]);
+  }, [date, setMemoTime, refetch]);
 
   const handleLeftClick = () => {
     setDate(date.subtract(1, 'day'));
@@ -67,7 +65,7 @@ const MemoList = memo(() => {
   const moveToWrite = () => {
     navigate({
       pathname: `/kindergarten/memo/write`,
-      search: createSearchParams({date: date.format('YYYY-MM-DD')}).toString(),
+      // search: createSearchParams({date: date.format('YYYY-MM-DD')}).toString(),
     });
   };
 

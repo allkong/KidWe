@@ -5,10 +5,10 @@ import ModalPortal from '../Modal/ModalPortal';
 import Modal from '../Modal/Modal';
 import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import Input from '@/components/atoms/Input/Input';
-import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
 import type {Kid} from '@/types/memo/Kid';
 import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
+import {memoKidsSelector} from '@/recoil/selectors/memo/memoKids';
 
 interface CheckedKid {
   kid: Kid;
@@ -18,7 +18,7 @@ interface CheckedKid {
 const banId = 1;
 
 const MemoChildSelect = () => {
-  const [memo, setMemo] = useRecoilState(memoState);
+  const [memoKids, setMemoKids] = useRecoilState(memoKidsSelector);
 
   const [children, setChildren] = useState<CheckedKid[]>();
   const [filteredChildren, setFilteredChildren] = useState<CheckedKid[]>();
@@ -70,10 +70,7 @@ const MemoChildSelect = () => {
   const handleSubmitChildrenModal = () => {
     if (children !== undefined) {
       const checkedChild = children?.filter(child => child.isChecked);
-      setMemo({
-        ...memo,
-        kids: checkedChild.map(child => child.kid),
-      });
+      setMemoKids(checkedChild.map(child => child.kid));
       setIsChildrenModalOpen(false);
     }
   };
@@ -97,8 +94,8 @@ const MemoChildSelect = () => {
         onClick={handleOpenChildrenModal}
         className="flex flex-wrap gap-2 overflow-y-auto max-h-10"
       >
-        {memo.kids &&
-          memo.kids.map(kid => <ProfileImage key={kid.id} src={''} />)}
+        {memoKids &&
+          memoKids.map(kid => <ProfileImage key={kid.id} src={''} />)}
         <DashedRoundedButton></DashedRoundedButton>
       </div>
       <ModalPortal>

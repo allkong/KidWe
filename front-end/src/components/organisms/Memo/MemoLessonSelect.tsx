@@ -4,12 +4,13 @@ import ModalPortal from '../Modal/ModalPortal';
 import Modal from '../Modal/Modal';
 import Input from '@/components/atoms/Input/Input';
 import CheckListItem from '../Check/CheckListItem';
-import {memoState} from '@/recoil/atoms/memo/memo';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import type {Lesson} from '@/types/memo/Lesson';
 import Tag from '@/components/atoms/Tag/Tag';
 import {useGetLessonInfomation} from '@/hooks/memo/useGetLessonInfomation';
 import dayjs from 'dayjs';
+import {memoLessonSelector} from '@/recoil/selectors/memo/memoLesson';
+import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
 
 interface CheckedLesson {
   lesson: Lesson;
@@ -19,19 +20,18 @@ interface CheckedLesson {
 const banId = 1;
 
 const MemoLessonSelect = () => {
-  const [memo, setMemo] = useRecoilState(memoState);
-
   const [lessons, setLessons] = useState<CheckedLesson[]>();
-
   const [filteredLessons, setFilteredLessons] = useState<CheckedLesson[]>();
-
   const [input, setInput] = useState('');
+
+  const [memoLesson, setMemoLesson] = useRecoilState(memoLessonSelector);
+  const memoTime = useRecoilValue(memoTimeSelector);
 
   const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
 
   const {data} = useGetLessonInfomation(
     banId,
-    dayjs(memo.updatedTime).format('YYYY-MM-DD')
+    dayjs(memoTime).format('YYYY-MM-DD')
   );
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const MemoLessonSelect = () => {
       setFilteredLessons([...lessons]);
     } else {
       setFilteredLessons(
-        [...lessons].filter(lesson => lesson.lesson.content.includes(input))
+        [...lessons].filter(item => item.lesson.content.includes(input))
       );
     }
   }, [lessons, input, data]);
@@ -70,10 +70,7 @@ const MemoLessonSelect = () => {
   const handleClickItem = (value: string) => {
     const find = lessons?.find(lesson => lesson.lesson.content === value);
     if (find !== undefined) {
-      setMemo({
-        ...memo,
-        lesson: find.lesson.content,
-      });
+      setMemoLesson(find.lesson.content);
     }
     setLessons(
       lessons?.map(lesson =>
@@ -92,9 +89,10 @@ const MemoLessonSelect = () => {
         onClick={handleOpenLessonModal}
         className="flex items-center justify-center h-10"
       >
-        {memo.lesson ? (
-          <div>
-            <Tag backgroundColor="#FFF1A7" text={memo.lesson} />
+        {memoLesson ? (
+          <div className="flex items-center gap-1">
+            <Tag backgroundColor="#FFF1A7" text={'수업'} />
+            <p>{memoLesson}</p>
           </div>
         ) : (
           <DashedButton label="+" onClick={handleOpenLessonModal} />

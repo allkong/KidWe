@@ -2,41 +2,40 @@ import Divider from '@/components/atoms/Divider/Divider';
 import Input from '@/components/atoms/Input/Input';
 import Tag from '@/components/atoms/Tag/Tag';
 import {useEffect, useRef, useState} from 'react';
-import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
 import type {Tag as MemoTag} from '@/types/memo/Tag';
-import type {PostMemo} from '@/types/memo/PostMemo';
 import NoResult from '@/components/atoms/NoResult';
 import Button from '@/components/atoms/Button/Button';
 import {useGetTags} from '@/hooks/memo/useGetTags';
+import {memoTagsSelector} from '@/recoil/selectors/memo/memoTags';
 
 const teacherId = 1;
 
 const MemoTagSelect = () => {
   const [filteredTags, setFilteredTags] = useState<MemoTag[] | undefined>();
-  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
+  const [memoTags, setMemoTags] = useRecoilState<MemoTag[]>(memoTagsSelector);
   const [input, setInput] = useState('');
   const [isValid, setIsValid] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const {data: tags} = useGetTags(teacherId);
+  const {data: tagDatas} = useGetTags(teacherId);
 
   useEffect(() => {
-    if (tags) {
-      setFilteredTags(tags);
+    if (tagDatas) {
+      setFilteredTags(tagDatas);
     }
-  }, [tags]);
+  }, [tagDatas]);
 
   useEffect(() => {
     if (input === '') {
-      setFilteredTags(tags);
+      setFilteredTags(tagDatas);
       setIsValid(false);
     } else {
-      setFilteredTags(tags?.filter(tag => tag.content.includes(input)));
+      setFilteredTags(tagDatas?.filter(tag => tag.content.includes(input)));
       setIsValid(true);
     }
-  }, [input, tags]);
+  }, [input, tagDatas]);
 
   const handleInputClick = () => {
     inputRef.current?.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -47,42 +46,34 @@ const MemoTagSelect = () => {
   };
 
   const handleTagClick = (value: string) => {
-    const isAlreadySelected = memo.tags.find(tag => tag.content === value);
+    const isAlreadySelected = memoTags.find(tag => tag.content === value);
     if (isAlreadySelected === undefined) {
-      const tagRequestDtos = memo.tags;
-      setMemo({
-        ...memo,
-        tags: [
-          ...tagRequestDtos,
-          {
-            id: '',
-            teacherId,
-            content: value,
-          },
-        ],
-      });
+      setMemoTags([
+        ...memoTags,
+        {
+          id: '',
+          teacherId,
+          content: value,
+        },
+      ]);
     }
   };
 
   const handleSelectedTagClick = (value: string) => {
-    const isSelected = memo.tags.find(tag => tag.content === value);
+    const isSelected = memoTags.find(tag => tag.content === value);
     if (isSelected !== undefined) {
-      const tags = memo.tags;
-      setMemo({
-        ...memo,
-        tags: tags.filter(tag => tag.content !== value),
-      });
+      setMemoTags([...memoTags].filter(tag => tag.content !== value));
     }
   };
 
   const handleTagAdd = () => {
-    const find = memo.tags.find(tag => tag.content === input);
+    const find = memoTags.find(tag => tag.content === input);
     if (find === undefined) {
       const newTag: MemoTag = {
         teacherId,
         content: input,
       };
-      setMemo({...memo, tags: [...memo.tags, newTag]});
+      setMemoTags([...memoTags, newTag]);
     }
 
     setInput('');
@@ -120,8 +111,8 @@ const MemoTagSelect = () => {
         )}
       </div>
       <div className="flex flex-wrap w-full gap-2 h-fit">
-        {memo &&
-          memo.tags.map((tag, idx) => (
+        {memoTags &&
+          memoTags.map((tag, idx) => (
             <Tag
               key={idx}
               text={tag.content}
