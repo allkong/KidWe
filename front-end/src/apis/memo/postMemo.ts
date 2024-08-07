@@ -1,15 +1,15 @@
 import noSqlInstance from '@/apis/noSqlInstance';
-import {Memo} from '@/types/memo/Memo';
+import {PostMemo} from '@/types/memo/PostMemo';
 
-export const postMemo = async (
-  teacherId: number,
-  memo: Memo
-): Promise<unknown> => {
+export const postMemo = async (teacherId: number, memo: PostMemo) => {
   try {
-    const result = await noSqlInstance.post(`/memo/${teacherId}`, memo);
+    const result = await noSqlInstance.post(`/memo/${teacherId}`, {
+      ...memo,
+      updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
+    });
     return result.data;
   } catch (error) {
     console.debug(error);
-    return error;
+    throw error;
   }
 };

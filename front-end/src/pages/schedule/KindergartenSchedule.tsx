@@ -8,17 +8,23 @@ import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
 import {useEffect, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import {getKindergartenInfo} from '@/apis/kindergarten/getKindergartenInfo';
-import {useQuery} from '@tanstack/react-query';
-import type {Ban} from '@/types/kindergarten/Ban';
+import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
+import Spinner from '@/components/atoms/Loader/Spinner';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const kindergartenId = 1;
 
 const KindergartenSchedule = () => {
   const [date, setDate] = useState(dayjs());
-  const [banInfo, setBanInfo] = useState<Ban[]>();
 
   const onChangeDate = (value: Dayjs) => {
     setDate(value);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [date]);
 
   const handleBeforeMonth = () => {
     setDate(date.subtract(1, 'month'));
@@ -28,20 +34,18 @@ const KindergartenSchedule = () => {
     setDate(date.add(1, 'month'));
   };
 
-  const {data} = useQuery({
-    queryKey: ['kindergarten', 1],
-    queryFn: () => getKindergartenInfo(1),
-  });
+  const {data, refetch, isLoading, isError} =
+    useGetKindergartenInfo(kindergartenId);
 
   useEffect(() => {
-    if (data === undefined) {
-      return;
+    if (isError) {
+      toast.error('오류 발생');
     }
-    setBanInfo([{id: -1, name: '전체'}, ...data.bans]);
-  }, [data]);
+  }, [isError]);
 
   return (
     <>
+      {isLoading && <Spinner />}
       <Header title="유치원 일정" buttonType="back" />
       <DateNavigator
         title={date.format('YY년 MM월')}
@@ -53,8 +57,9 @@ const KindergartenSchedule = () => {
       >
         <div className="flex items-center justify-between w-full h-16">
           <Select label="반" size="small">
-            {banInfo &&
-              banInfo.map(ban => (
+            <Select.Option text="전체" />
+            {data &&
+              data.bans.map(ban => (
                 <Select.Option key={ban.id} text={ban.name} />
               ))}
           </Select>
@@ -73,6 +78,15 @@ const KindergartenSchedule = () => {
         <ScheduleInfo date={date} />
       </div>
       <NavigationBar />
+      <ToastContainer
+        position="top-center" // 알람 위치 지정
+        autoClose={300} // 자동 off 시간
+        hideProgressBar // 진행시간바 숨김
+        closeOnClick // 클릭으로 알람 닫기
+        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
+        theme="light"
+        limit={1}
+      />
     </>
   );
 };

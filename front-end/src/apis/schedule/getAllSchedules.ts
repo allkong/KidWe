@@ -1,14 +1,13 @@
 import axiosInstance from '@/apis/axiosInstance';
 import {GetSchedule} from '@/types/schedule/GetSchedule';
-import {Dayjs} from 'dayjs';
 
 export const getAllSchedules = async (
   kindergartenId: number,
-  date: Dayjs
+  date: string
 ): Promise<GetSchedule[]> => {
   try {
     const result = await axiosInstance.get(
-      `/schedules/all/${kindergartenId}/${date.format('YYYY-MM-DD')}`
+      `/schedules/all/${kindergartenId}/${date}`
     );
     return result.data;
   } catch (error) {

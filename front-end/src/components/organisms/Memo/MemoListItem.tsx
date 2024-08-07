@@ -1,20 +1,27 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import chick from '@/assets/icons/chick-1.svg';
 import dayjs from 'dayjs';
-import type {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import type {GetMemo} from '@/types/memo/GetMemo';
 
 interface MemoListItemProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
-  memo?: TeacherDailyMemo;
+  memo?: GetMemo;
 }
 
 const MemoListItem = ({onClick, memo}: MemoListItemProps) => {
+  const [H, M] = dayjs(memo?.updatedTime).format('H m').split(' ').map(Number);
+
+  const AMPM = H >= 12 ? '오후' : '오전';
+  let hour = H > 12 ? H - 12 : H;
+  if (hour === 0) hour = 12;
+  const minute = M;
+
   return (
     <div className="flex justify-between text-gray-300 border-l-2 border-gray-200 w-72 min-h-36 h-fit">
       <div className="relative w-4 h-4 rounded-full -left-2.5 -top-3 bg-primary"></div>
       <div className="flex flex-col">
         <p className="text-lg font-semibold text-gray-300">
-          {dayjs(memo?.updatedTime).format('A HH:MM')}
+          {`${AMPM} ${hour}시 ${minute}분`}
         </p>
         <div
           onClick={onClick}
@@ -30,8 +37,8 @@ const MemoListItem = ({onClick, memo}: MemoListItemProps) => {
             </p>
           </div>
           <div className="flex flex-wrap w-full gap-1">
-            {memo?.tagResponseDtos &&
-              memo?.tagResponseDtos.map((tag, idx) => (
+            {memo?.tags &&
+              memo?.tags.map((tag, idx) => (
                 <Tag key={idx} text={tag.content} />
               ))}
           </div>

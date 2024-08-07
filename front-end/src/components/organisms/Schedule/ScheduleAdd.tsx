@@ -1,18 +1,15 @@
 import Button from '@/components/atoms/Button/Button';
 import Select from '@/components/molecules/DropdownButton/Select';
-import {PostSchedule} from '@/types/schedule/PostSchedule';
-import {useMutation} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
 import type {Dayjs} from 'dayjs';
-import {postSchedule} from '@/apis/schedule/postSchedule';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import TextArea from '@/components/atoms/Input/TextArea';
 import Divider from '@/components/atoms/Divider/Divider';
-import {useQueryClient} from '@tanstack/react-query';
 import {ScheduleOption} from '@/enum/kindergarten/schedule';
 import {scheduleOptionKeys} from '@/enum/kindergarten/schedule';
+import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
@@ -22,6 +19,11 @@ function getScheduleOptionValue(category: keyof typeof ScheduleOption) {
   return ScheduleOption[category];
 }
 
+const memberId = 2;
+const kindergartenId = 1;
+
+// 스케줄 작성 시 권한 확인
+// 1 : 원장, 2 : 선생님으로 되어있음
 const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string>();
@@ -41,27 +43,7 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
     );
   }, [selected, keyword, content]);
 
-  const queryClient = useQueryClient();
-
-  const postMutate = useMutation({
-    mutationFn: () => {
-      const body: PostSchedule = {
-        keyword: keyword,
-        content: content,
-        localDate: date.format('YYYY-MM-DD'),
-        type: selected as 'EVENT' | 'CLASS' | 'ALLNOTICE',
-      };
-      return postSchedule(1, body);
-    },
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: ['schedules', 1, date.format('YYMMDD')],
-      });
-      setSelected(undefined);
-      setKeyword('');
-      setContent('');
-    },
-  });
+  const postMutate = useWriteKindergartenSchedule(kindergartenId);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -72,7 +54,22 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
   };
 
   const handleSubmit = () => {
-    postMutate.mutate();
+    postMutate.mutate(
+      {
+        memberId,
+        keyword,
+        content,
+        localDate: date.format('YYYY-MM-DD'),
+        type: selected as 'EVENT' | 'CLASS' | 'ALLNOTICE',
+      },
+      {
+        onSuccess: () => {
+          setSelected(undefined);
+          setKeyword('');
+          setContent('');
+        },
+      }
+    );
     setIsOpen(false);
   };
 
