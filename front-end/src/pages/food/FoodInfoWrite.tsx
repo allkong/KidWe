@@ -5,12 +5,10 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
 import dayjs from 'dayjs';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {postFood} from '@/apis/food/postFood';
-import {useMutation} from '@tanstack/react-query';
 import {PostFood} from '@/types/food/PostFood';
-import {useQuery} from '@tanstack/react-query';
-import {getDailyFood} from '@/apis/food/getDailyFood';
 import {useEffect, useRef, useState} from 'react';
+import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
+import {useWriteDailyFood} from '@/hooks/food/useWriteDailyFood';
 
 const kindergartenId = 1;
 
@@ -28,35 +26,8 @@ const FoodInfoWrite = () => {
     menuDate: '',
   });
 
-  const {data} = useQuery({
-    queryKey: [
-      'food',
-      date.current.get('year'),
-      date.current.get('month') + 1,
-      date.current.get('date'),
-    ],
-    queryFn: () =>
-      getDailyFood(
-        kindergartenId,
-        date.current.get('year'),
-        date.current.get('month') + 1,
-        date.current.get('date')
-      ),
-    enabled: !!date,
-  });
-
-  const foodMutate = useMutation({
-    mutationFn: ({
-      kindergartenId,
-      menu,
-    }: {
-      kindergartenId: number;
-      menu: PostFood;
-    }) => postFood(kindergartenId, menu),
-    onSuccess() {
-      navigate('/kindergarten/food');
-    },
-  });
+  const {data} = useGetDailyFood(kindergartenId, date.current);
+  const foodMutate = useWriteDailyFood();
 
   useEffect(() => {
     if (data !== undefined) {
@@ -65,10 +36,17 @@ const FoodInfoWrite = () => {
   }, [data, date]);
 
   const handleButtonClick = () => {
-    foodMutate.mutate({
-      kindergartenId: kindergartenId,
-      menu,
-    });
+    foodMutate.mutate(
+      {
+        kindergartenId: kindergartenId,
+        menu,
+      },
+      {
+        onSuccess: () => {
+          navigate('/food');
+        },
+      }
+    );
   };
 
   const handleChangeData = (

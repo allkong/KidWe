@@ -7,13 +7,10 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
 import NoResult from '@/components/atoms/NoResult';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-import {getDailyFood} from '@/apis/food/getDailyFood';
-import {useQuery} from '@tanstack/react-query';
-import {GetFood} from '@/types/food/GetFood';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-// import Spinner from '@/components/atoms/Loader/Spinner';
+import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 
 dayjs.extend(weekOfYear);
 
@@ -31,27 +28,7 @@ const FoodInfo = () => {
 
   const [date, setDate] = useState(dayjs());
 
-  const [food, setFood] = useState<GetFood>();
-
-  const {data} = useQuery({
-    queryKey: [
-      'food',
-      date.get('year'),
-      date.get('month') + 1,
-      date.get('date'),
-    ],
-    queryFn: () =>
-      getDailyFood(
-        kindergartenId,
-        date.get('year'),
-        date.get('month') + 1,
-        date.get('date')
-      ),
-  });
-
-  useEffect(() => {
-    setFood(data);
-  }, [data]);
+  const {data: food} = useGetDailyFood(kindergartenId, date);
 
   const handleLeftClick = () => {
     setDate(date.subtract(1, 'week'));
