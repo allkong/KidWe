@@ -7,7 +7,7 @@ interface LabelInputProps {
   readOnly?: boolean;
   disabled?: boolean;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
 }
 
