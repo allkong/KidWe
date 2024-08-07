@@ -17,7 +17,17 @@ const LoginMain: React.FC = () => {
   const loginMutate = useLogin();
 
   const handleLoginButtonClick = () => {
-    loginMutate.mutate({email, password});
+    loginMutate.mutate(
+      {email, password},
+      {
+        onSuccess: () => {
+          // main으로 redirect
+        },
+        onError: () => {
+          // 오류창
+        },
+      }
+    );
   };
 
   return (
