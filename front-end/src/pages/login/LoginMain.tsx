@@ -3,7 +3,7 @@ import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import {useMutation} from '@tanstack/react-query';
-import {login} from '@/apis/login/login';
+import {postLogin} from '@/apis/login/postLogin';
 
 const LoginMain: React.FC = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const LoginMain: React.FC = () => {
 
   const loginMutate = useMutation({
     mutationFn: () => {
-      return login(email, password);
+      return postLogin(email, password);
     },
     onSuccess: data => {
       if (data.status === 200) {

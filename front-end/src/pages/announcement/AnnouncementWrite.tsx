@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import TextEditor from '@/components/organisms/Texteditor/Texteditor';
 
 import TitleInput from '@/components/atoms/Input/TitleInput';
@@ -11,8 +11,11 @@ import VoteIcon from '@/assets/icons/vote.svg?react';
 import Divider from '@/components/atoms/Divider/Divider';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import {useNavigate} from 'react-router-dom';
+import {useMutation} from '@tanstack/react-query';
 import type {VoteInfo} from '@/types/announce/vote';
-
+import type {AnnounncementWrite} from '@/types/announce/AnnouncementWrite';
+import {postAnnouncementWrite} from '@/apis/announcement/postAnnouncementWrite';
+import dayjs from 'dayjs';
 const AnnouncementWrite = () => {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
@@ -21,6 +24,9 @@ const AnnouncementWrite = () => {
   const [votedate, setVoteDate] = useState('');
   const [voteoptions, setVoteOptions] = useState(['', '', '']);
   const [voteInfo, setVoteInfo] = useState<VoteInfo>();
+  const [announcementData, setAnnouncementData] =
+    useState<AnnounncementWrite>();
+  const [isPostAnnouncement, setIsPostAnnouncement] = useState(false);
   const navigate = useNavigate();
 
   const handleModalOpen = () => {
@@ -42,17 +48,50 @@ const AnnouncementWrite = () => {
     setVoteInfo({votetitle, votedate, voteoptions});
     setIsModalOpen(false);
   };
-  const handleAnnouncementSubmit = () => {
+  const handleVoteDelete = () => {
+    setVoteInfo(undefined);
+  };
+
+  const announcementMutate = useMutation({
+    mutationFn: () => {
+      return postAnnouncementWrite(announcementData);
+    },
+  });
+
+  const handleAnnouncementSubmit = async () => {
     // 여기에 데이터를 저장하고 전송하는 로직을 추가합니다.
-    // 예: API 호출
+    setAnnouncementData(() => ({
+      post: {
+        createdDateTime: dayjs().toISOString(), // 현재 시간을 ISO 8601 형식으로 설정합니다.
+        title: title,
+        content: contents,
+        picture: '',
+      },
+    }));
 
     // 저장이 완료되면 /announcement 페이지로 이동합니다.
-    navigate('/announcement');
+    setIsPostAnnouncement(true);
   };
+
+  useEffect(() => {
+    if (isPostAnnouncement) {
+      const postAnnouncement = async () => {
+        try {
+          await announcementMutate.mutate();
+          console.log('작성 완료');
+          navigate('/announcement');
+        } catch (error) {
+          console.error('공지사항 작성 못 보냈어요:', error);
+        }
+      };
+      postAnnouncement();
+      setIsPostAnnouncement(false);
+    }
+  }, [isPostAnnouncement, navigate, announcementMutate]);
 
   return (
     <div>
-      <div className="flex-grow ">
+      <div className="flex-grow">
         <div>
           <TitleInput
             value={title}
@@ -70,14 +109,23 @@ const AnnouncementWrite = () => {
               <VoteIcon width={36} height={36} />
               <p>투표</p>
             </div>
-            <div className="w-full mx-2 px-2 space-y-2 py-2 border rounded-lg">
-              <div className="flex justify-between pl-4">
+            <div className="mx-2 px-2 space-y-2 py-2 max-w-full box-border border rounded-lg">
+              <div className="flex justify-between px-4 ">
                 <p className="text-2xl justify-between">{voteInfo.votetitle}</p>
-                <MoreButton options={['sdfsdf', '삭제']} />
+                <MoreButton>
+                  <MoreButton.Option
+                    text="수정하기"
+                    onClick={handleModalOpen}
+                  />
+                  <MoreButton.Option
+                    text="삭제하기"
+                    onClick={handleVoteDelete}
+                  />
+                </MoreButton>
               </div>
               <ul>
                 {voteInfo.voteoptions.map((option, index) => (
-                  <div key={index} className="px-4">
+                  <div key={index} className=" px-4">
                     <p className="px-2">{option}</p>
                     <Divider />
                   </div>
