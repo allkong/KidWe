@@ -3,11 +3,12 @@ import {Dayjs} from 'dayjs';
 
 interface FoodDateNavigatorProps {
   date: Dayjs;
+  onClick?: (value: Dayjs) => void;
 }
 
 const add = [1, 2, 3, 4, 5];
 
-const FoodDateNavigator = ({date}: FoodDateNavigatorProps) => {
+const FoodDateNavigator = ({date, onClick}: FoodDateNavigatorProps) => {
   const startOfDate = date.startOf('week');
 
   return (
@@ -20,6 +21,7 @@ const FoodDateNavigator = ({date}: FoodDateNavigatorProps) => {
             date.format('YYMMDD') ===
             startOfDate.add(idx + 1, 'day').format('YYMMDD')
           }
+          onClick={() => onClick?.(startOfDate.add(idx + 1, 'day'))}
         />
       ))}
     </div>

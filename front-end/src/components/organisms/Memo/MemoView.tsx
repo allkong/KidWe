@@ -1,19 +1,25 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import chick from '@/assets/icons/chick-1.svg';
-import {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import type {GetMemo} from '@/types/memo/GetMemo';
 import dayjs from 'dayjs';
 
 interface MemoViewProps {
-  memo?: TeacherDailyMemo;
+  memo?: GetMemo;
 }
 
 const MemoView = ({memo}: MemoViewProps) => {
+  const [H, M] = dayjs(memo?.updatedTime).format('H m').split(' ').map(Number);
+
+  const AMPM = H >= 12 ? '오후' : '오전';
+  let hour = H > 12 ? H - 12 : H;
+  if (hour === 0) hour = 12;
+  const minute = M;
   return (
     <div className="flex flex-col items-start justify-center w-full h-full px-3 py-3 space-y-3 text-gray-300">
       <div>
         <div className="flex items-center gap-2">
           <img src={chick} />
-          <p>{dayjs(memo?.updatedTime).format('A HH:MM')}</p>
+          <p>{`${AMPM} ${hour}시 ${minute}분`}</p>
         </div>
         <p className="text-xl font-semibold">{memo?.lesson}</p>
         <div className="flex flex-wrap items-end gap-1">
@@ -26,10 +32,8 @@ const MemoView = ({memo}: MemoViewProps) => {
         </div>
       </div>
       <div className="flex flex-wrap gap-1 overflow-y-auto h-fit max-h-36">
-        {memo?.tagResponseDtos &&
-          memo?.tagResponseDtos.map((tag, idx) => (
-            <Tag key={idx} text={tag.content} />
-          ))}
+        {memo?.tags &&
+          memo?.tags.map((tag, idx) => <Tag key={idx} text={tag.content} />)}
       </div>
       <div className="w-full overflow-y-auto text-sm break-words h-fit max-h-36 text-wrap">
         {memo?.content}

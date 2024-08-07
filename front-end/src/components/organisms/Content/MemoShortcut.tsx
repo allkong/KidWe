@@ -6,7 +6,7 @@ import pencilIcon from '@/assets/menu/pencil.png';
 const MemoShortcut = () => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/memo/write');
   };
 
   return (

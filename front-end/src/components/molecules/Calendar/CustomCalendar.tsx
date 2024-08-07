@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs';
 import Calendar from 'react-calendar';
-import "@/components/molecules/Calendar/calendar.css"
+import '@/components/molecules/Calendar/calendar.css';
 import {Value} from 'react-calendar/dist/cjs/shared/types';
 
 interface CustomCalendarProps {
@@ -8,6 +8,7 @@ interface CustomCalendarProps {
   defaultDate?: Dayjs;
   showNavigation?: boolean;
   showNeighboringMonth?: boolean;
+  activeStartDate?: boolean;
 }
 
 const CustomCalendar = ({
@@ -15,6 +16,7 @@ const CustomCalendar = ({
   onChange,
   showNavigation = true,
   showNeighboringMonth = false,
+  activeStartDate = false,
 }: CustomCalendarProps) => {
   const handleChange = (value: Value) => {
     const date = new Date(value!.toString());
@@ -23,6 +25,7 @@ const CustomCalendar = ({
 
   return (
     <Calendar
+      activeStartDate={activeStartDate ? defaultDate.toDate() : undefined}
       value={defaultDate.toDate()}
       calendarType="gregory"
       onChange={handleChange}

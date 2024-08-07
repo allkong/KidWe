@@ -1,14 +1,14 @@
 import TextArea from '@/components/atoms/Input/TextArea';
 import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
 import MemoLessonSelect from '@/components/organisms/Memo/MemoLessonSelect';
-import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
+import {memoContentSelector} from '@/recoil/selectors/memo/memoContent';
 
 const KindergartenInfomationSelect = () => {
-  const [memo, setMemo] = useRecoilState(memoState);
+  const [memoContent, setMemoContent] = useRecoilState(memoContentSelector);
 
   const handleChange = (value: string) => {
-    setMemo({...memo, content: value});
+    setMemoContent(value);
   };
 
   return (
@@ -18,7 +18,7 @@ const KindergartenInfomationSelect = () => {
         <MemoChildSelect />
         <MemoLessonSelect />
         <div className="h-32">
-          <TextArea value={memo.content} onChange={handleChange} />
+          <TextArea value={memoContent} onChange={handleChange} />
         </div>
       </div>
     </>

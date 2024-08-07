@@ -5,7 +5,7 @@ import Tag from '@/components/atoms/Tag/Tag';
 
 interface FoodInfomationItemProps {
   variant?: 'lunch' | 'snack' | 'dinner';
-  menus?: string[];
+  menu?: string;
   allergies?: string[];
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
@@ -38,7 +38,7 @@ function getColorVariant(variant: string) {
 
 const FoodInfomationItem = ({
   variant = 'lunch',
-  menus,
+  menu,
   allergies,
   onClick,
 }: FoodInfomationItemProps) => {
@@ -60,7 +60,7 @@ const FoodInfomationItem = ({
         />
       </div>
       <div className="flex flex-col justify-center w-56 h-full">
-        <p className="mb-3 text-sm">{menus?.join(', ')}</p>
+        <p className="mb-3 text-sm">{menu}</p>
         {/* <p className="text-xs">{allergies?.join(', ')}</p>*/}
         <div className="flex flex-wrap gap-1">
           {allergies?.map((allergy, idx) => <Tag key={idx} text={allergy} />)}

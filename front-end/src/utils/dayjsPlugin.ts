@@ -34,6 +34,14 @@ export const formatDateToMD = (dateString: string): string => {
   return date.format('M월 D일');
 };
 
+export const formatDateToYMD = (dateString: string): string => {
+  if (!dateString) {
+    return '';
+  }
+  const date = dayjs(dateString, 'YYYY-MM-DD');
+  return date.format('YYYY년 M월 D일');
+};
+
 // 시간 형식 커스텀
 export const getCurrentTimeInTimezone = (
   tz: string,

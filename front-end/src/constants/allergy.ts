@@ -4,7 +4,7 @@ export interface Allergy {
   isChecked: boolean;
 }
 
-export const allergies: Allergy[] = [
+export const ALLERGIES: Allergy[] = [
   {
     id: 1,
     value: '알류',
