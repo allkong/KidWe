@@ -1,4 +1,4 @@
-export const PLACEHOLDERS = {
+export const MEDICATION_PLACEHOLDERS = {
   symptom: '예) 발열, 감기',
   medicineName: '예) 처방약',
   type: '예) 물약, 가루약',

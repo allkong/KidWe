@@ -1,4 +1,4 @@
-export const LABELS = {
+export const MEDICATION_LABELS = {
   medicationExecuteDueDate: '투약일',
   symptom: '증상',
   medicineName: '이름',
