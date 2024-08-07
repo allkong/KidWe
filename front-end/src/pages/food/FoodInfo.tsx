@@ -66,7 +66,7 @@ const FoodInfo = () => {
   };
 
   const moveToWrite = () => {
-    navigate('/kindergarten/food/write', {
+    navigate('write', {
       state: {date: date.format('YYYY-MM-DD')},
     });
   };

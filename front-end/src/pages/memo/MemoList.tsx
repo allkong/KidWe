@@ -57,14 +57,14 @@ const MemoList = memo(() => {
 
   const moveToUpdate = (id: string) => {
     navigate({
-      pathname: `/kindergarten/memo/write`,
+      pathname: `write`,
       search: createSearchParams({id}).toString(),
     });
   };
 
   const moveToWrite = () => {
     navigate({
-      pathname: `/kindergarten/memo/write`,
+      pathname: `write`,
       // search: createSearchParams({date: date.format('YYYY-MM-DD')}).toString(),
     });
   };
