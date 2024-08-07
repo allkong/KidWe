@@ -6,12 +6,17 @@ import MyPage from '@/pages/MyPage';
 import SignUp from '@/pages/SignUp';
 import Announcement from '@/pages/Announcement';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
+
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
 import MedicationWrite from '@/pages/medication/MedicationWrite';
 import MemoList from '@/pages/memo/MemoList';
 
 import MemoWrite from '@/pages/memo/MemoWrite';
+import LeaveConsentListView from '@/pages/leave-consent/LeaveConsentListView';
+import LeaveConsentDetail from '@/pages/leave-consent/LeaveConsentDetail';
+import LeaveConsentWrite from '@/pages/leave-consent/LeaveConsentWrite';
+
 import LoginMain from '@/pages/login/LoginMain';
 
 import FoodInfo from '@/pages/food/FoodInfo';
@@ -36,6 +41,12 @@ const App: React.FC = () => {
           <Route path="" element={<MedicationListView />} />
           <Route path=":medicationId" element={<MedicationDetail />} />
           <Route path="write" element={<MedicationWrite />} />
+        </Route>
+
+        <Route path="/leave-consent">
+          <Route path="" element={<LeaveConsentListView />} />
+          <Route path=":leaveConsentId" element={<LeaveConsentDetail />} />
+          <Route path="write" element={<LeaveConsentWrite />} />
         </Route>
 
         <Route path="/signup/*" element={<SignUp />}></Route>

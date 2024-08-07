@@ -2,17 +2,10 @@ import React from 'react';
 // import commentIcon from '@/assets/icons/message-line.svg';
 import CommentCount from '@/components/atoms/Comment/CommentCount';
 import Tag from '@/components/atoms/Tag/Tag';
-interface AnnounceItemProps {
-  title: string;
-  writer: string;
-  date: Date;
-  src?: string;
-  classname?: string;
-  tagbgcolor?: string;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
-}
+import {AnnounceItemProps} from '@/types/announce/AnnounceItemProps';
 
 const AnnounceItem = ({
+  id,
   title,
   writer,
   date,

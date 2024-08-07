@@ -4,18 +4,18 @@ import Button from '@/components/atoms/Button/Button';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
-import {signupFormState} from '@/pages//sign-up/SignupState';
+import {Signup} from '@/recoil/atoms/signup/Signup';
 
 const roleItems = [
-  {label: 'ROLE_GUARDIAN', value: '학부모'},
-  {label: 'ROLE_TEACHER', value: '선생님'},
-  {label: 'ROLE_DIRECTOR', value: '원장님'},
+  {value: 'ROLE_GUARDIAN', label: '학부모'},
+  {value: 'ROLE_TEACHER', label: '선생님'},
+  {value: 'ROLE_DIRECTOR', label: '원장님'},
 ];
 
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [signuprole, setSignupRole] = useRecoilState(signupFormState);
+  const [signuprole, setSignupRole] = useRecoilState(Signup);
   const navigate = useNavigate();
   const handleRegisterButtonClick = () => {
     if (selectedRole === '') {
@@ -48,9 +48,10 @@ const RoleSelect = () => {
         {roleItems.map((item, index) => (
           <RoleSelector
             key={index}
-            isSelected={selectedRole === item.label}
-            onClick={() => handleRoleChange(item.label)}
+            isSelected={selectedRole === item.value}
+            onClick={() => handleRoleChange(item.value)}
             value={item.value}
+            label={item.label}
           />
         ))}
       </div>

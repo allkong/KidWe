@@ -4,8 +4,11 @@ import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
-import {signupFormState} from '@/pages//sign-up/SignupState';
-import axios from 'axios';
+import {Signup} from '@/recoil/atoms/signup/Signup';
+import {useMutation} from '@tanstack/react-query';
+import {postSignup} from '@/apis/signup/postSignup';
+import {SignupFormState} from '@/types/signup/SignupFormState';
+
 declare global {
   interface Window {
     daum: any;
@@ -26,42 +29,20 @@ const RegisterKindergarten: React.FC = () => {
   const [kindergartenname, setKindergartenName] = useState('');
   const [kindergartentel, setKindergartenTel] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signupregisterkindergarten, setSignupRegisterKindergarten] =
-    useRecoilState(signupFormState);
+    useRecoilState(Signup);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        'http://i11a808.p.ssafy.io:8080/signup',
-        signupFormState,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log('response.data', response.data);
-    } catch (error) {
-      console.error('Error during signup:', error);
-    }
-  };
+  const signupMutate = useMutation({
+    mutationFn: () => {
+      return postSignup(signupregisterkindergarten);
+    },
+  });
 
   const navigate = useNavigate();
-  const handleRegisterKindergartenButtonClick = prevState => {
-    // if (
-    //   name === '' ||
-    //   name === '이름을 적어주세요' ||
-    //   addr === '' ||
-    //   zipNo === '' ||
-    //   kindergartenaddrdetail === '' ||
-    //   tel === '' ||
-    //   tel === '전화번호를 적어주세요'
-    // ) {
-    //   setIsModalOpen(true);
-    // } else {
-    //   navigate('/register/completed');
-    // }
+  const handleRegisterKindergartenButtonClick = async (
+    state: SignupFormState
+  ) => {
     setSignupRegisterKindergarten(prevState => ({
       ...prevState,
       kindergarten: {
@@ -73,12 +54,25 @@ const RegisterKindergarten: React.FC = () => {
         tel: kindergartentel,
       },
     }));
-    console.log('원장님 가입 완료', signupregisterkindergarten);
-
-    handleSubmit;
-    navigate('/signup/complete');
+    setIsStateUpdated(true);
   };
   // 원래 등록 양식이 다 입력되어야만 다음 completed창으로 갈 수 있음
+
+  useEffect(() => {
+    if (isStateUpdated) {
+      const updateKindergarten = async () => {
+        try {
+          await signupMutate.mutate();
+          console.log('원장님 가입 완료');
+          navigate('/signup/complete');
+        } catch (error) {
+          console.error('유치원 정보 못 보냈어요:', error);
+        }
+      };
+      updateKindergarten();
+      setIsStateUpdated(false);
+    }
+  }, [isStateUpdated, navigate, signupMutate, signupregisterkindergarten]);
 
   const closeModal = () => {
     setIsModalOpen(false);

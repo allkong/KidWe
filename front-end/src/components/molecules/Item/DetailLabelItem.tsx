@@ -3,14 +3,14 @@ import Tag from '@/components/atoms/Tag/Tag';
 interface MedicationDetailItemProps {
   title: string;
   content?: string;
-  color: string;
+  color?: string;
   imageUrl?: string;
 }
 
-const MedicationDetailItem = ({
+const DetailLabelItem = ({
   title,
   content,
-  color,
+  color = '#FFEC9E',
   imageUrl,
 }: MedicationDetailItemProps) => {
   return (
@@ -27,4 +27,4 @@ const MedicationDetailItem = ({
   );
 };
 
-export default MedicationDetailItem;
+export default DetailLabelItem;
