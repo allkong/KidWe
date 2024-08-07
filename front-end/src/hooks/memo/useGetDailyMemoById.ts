@@ -13,6 +13,7 @@ export const useGetDailyMemoById = (
       return getMemoById(teacherId, memoId!);
     },
     enabled: !!memoId,
+    retry: 0,
   });
   return result;
 };

@@ -12,6 +12,7 @@ export const useGetDailyMemo = (
   const result = useQuery<GetMemo[]>({
     queryKey: memoKeys.lists(teacherId, year, month, date),
     queryFn: () => getTeacherDailyMemos(teacherId, year, month, date),
+    retry: 0,
   });
   return result;
 };

@@ -13,6 +13,7 @@ export const useGetLessonInfomation = (banId: number, date: string) => {
   const result = useQuery<Lesson[]>({
     queryKey: memoKeys.lessons(banId, date),
     queryFn: () => getLessonInfomation(banId, date),
+    retry: 0,
   });
   return result;
 };
