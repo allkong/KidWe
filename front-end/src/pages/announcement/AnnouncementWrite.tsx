@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import TextEditor from '@/components/organisms/Texteditor/Texteditor';
 
 import TitleInput from '@/components/atoms/Input/TitleInput';
@@ -11,8 +11,11 @@ import VoteIcon from '@/assets/icons/vote.svg?react';
 import Divider from '@/components/atoms/Divider/Divider';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import {useNavigate} from 'react-router-dom';
+import {useMutation} from '@tanstack/react-query';
 import type {VoteInfo} from '@/types/announce/vote';
-
+import type {AnnounncementWrite} from '@/types/announce/AnnouncementWrite';
+import {postAnnouncementWrite} from '@/apis/announcement/postAnnouncementWrite';
+import dayjs from 'dayjs';
 const AnnouncementWrite = () => {
   const [title, setTitle] = useState('');
   const [contents, setContents] = useState('');
@@ -21,6 +24,9 @@ const AnnouncementWrite = () => {
   const [votedate, setVoteDate] = useState('');
   const [voteoptions, setVoteOptions] = useState(['', '', '']);
   const [voteInfo, setVoteInfo] = useState<VoteInfo>();
+  const [announcementData, setAnnouncementData] =
+    useState<AnnounncementWrite>();
+  const [isPostAnnouncement, setIsPostAnnouncement] = useState(false);
   const navigate = useNavigate();
 
   const handleModalOpen = () => {
@@ -42,13 +48,43 @@ const AnnouncementWrite = () => {
     setVoteInfo({votetitle, votedate, voteoptions});
     setIsModalOpen(false);
   };
-  const handleAnnouncementSubmit = () => {
+
+  const announcementMutate = useMutation({
+    mutationFn: () => {
+      return postAnnouncementWrite(announcementData);
+    },
+  });
+
+  const handleAnnouncementSubmit = async () => {
     // 여기에 데이터를 저장하고 전송하는 로직을 추가합니다.
-    // 예: API 호출
+    setAnnouncementData(() => ({
+      post: {
+        createdDateTime: dayjs().toISOString(), // 현재 시간을 ISO 8601 형식으로 설정합니다.
+        title: title,
+        content: contents,
+        picture: '',
+      },
+    }));
 
     // 저장이 완료되면 /announcement 페이지로 이동합니다.
-    navigate('/announcement');
+    setIsPostAnnouncement(true);
   };
+
+  useEffect(() => {
+    if (isPostAnnouncement) {
+      const postAnnouncement = async () => {
+        try {
+          await announcementMutate.mutate();
+          console.log('작성 완료');
+          navigate('/announcement');
+        } catch (error) {
+          console.error('공지사항 작성 못 보냈어요:', error);
+        }
+      };
+      postAnnouncement();
+      setIsPostAnnouncement(false);
+    }
+  }, [isPostAnnouncement, navigate, announcementMutate]);
 
   return (
     <div>
