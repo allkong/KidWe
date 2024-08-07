@@ -21,6 +21,7 @@ const RegisterInfo = () => {
   const navigate = useNavigate();
 
   // 이메일 정규 표현식 패턴
+  // 1글자이상 @ 1글자이상 . 2글자이상
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const signupMutate = useMutation({
