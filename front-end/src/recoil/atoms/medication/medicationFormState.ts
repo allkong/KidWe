@@ -1,7 +1,7 @@
 import {atom} from 'recoil';
 
 export const medicationFormState = atom({
-  key: 'medicationFormState',
+  key: 'medicationForm',
   default: {
     medicineName: '', // 약 이름
     symptom: '', // 증상

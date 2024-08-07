@@ -4,12 +4,12 @@ import {medicationFormState} from '@/recoil/atoms/medication/medicationFormState
 import {formatDateToYMD} from '@/utils/dayjsPlugin';
 import {TimeOption, timeOptionValues} from '@/enum/medication/timeOption';
 import {
-  DATE_OPTIONS,
   STORAGE_OPTIONS,
-  LABELS,
-  PLACEHOLDERS,
-  MESSAGES,
+  MEDICATION_LABELS,
+  MEDICATION_PLACEHOLDERS,
+  MEDICATION_MESSAGES,
 } from '@/constants/medication';
+import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
@@ -85,43 +85,43 @@ const MedicationWrite = () => {
             />
           </div>
           <LabelInput
-            label={LABELS.symptom}
+            label={MEDICATION_LABELS.symptom}
             name="symptom"
             value={formState.symptom}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.symptom}
+            placeholder={MEDICATION_PLACEHOLDERS.symptom}
           />
           <ImageUpload onChange={setMedicineImage} />
         </div>
         <AreaDivider />
         <div className="py-8 space-y-5 px-9">
           <LabelInput
-            label={LABELS.medicineName}
+            label={MEDICATION_LABELS.medicineName}
             name="medicineName"
             value={formState.medicineName}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.medicineName}
+            placeholder={MEDICATION_PLACEHOLDERS.medicineName}
           />
           <LabelInput
-            label={LABELS.type}
+            label={MEDICATION_LABELS.type}
             name="type"
             value={formState.type}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.type}
+            placeholder={MEDICATION_PLACEHOLDERS.type}
           />
           <LabelInput
-            label={LABELS.capacity}
+            label={MEDICATION_LABELS.capacity}
             name="capacity"
             value={formState.capacity}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.capacity}
+            placeholder={MEDICATION_PLACEHOLDERS.capacity}
           />
           <LabelInput
-            label={LABELS.numberOfDoses}
+            label={MEDICATION_LABELS.numberOfDoses}
             name="numberOfDoses"
             value={formState.numberOfDoses}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.numberOfDoses}
+            placeholder={MEDICATION_PLACEHOLDERS.numberOfDoses}
           />
           <div className="space-y-2">
             <p>시간</p>
@@ -135,7 +135,7 @@ const MedicationWrite = () => {
                 name="medicationExecuteTime"
                 value={formState.medicationExecuteTime}
                 onChange={handleInputChange}
-                placeholder={PLACEHOLDERS.etc}
+                placeholder={MEDICATION_PLACEHOLDERS.etc}
               />
             )}
           </div>
@@ -148,17 +148,17 @@ const MedicationWrite = () => {
             />
           </div>
           <LabelInput
-            label={LABELS.others}
+            label={MEDICATION_LABELS.others}
             name="others"
             value={formState.others}
             onChange={handleInputChange}
-            placeholder={PLACEHOLDERS.others}
+            placeholder={MEDICATION_PLACEHOLDERS.others}
           />
         </div>
         <AreaDivider />
         <div className="py-8 px-9">
           <ConsentSection
-            text={MESSAGES.parentConsent}
+            text={MEDICATION_MESSAGES.parentConsent}
             date={formatDateToYMD(formState.medicationExecuteDueDate)}
             parentName="김부모"
             onClick={setSignImage}
@@ -173,7 +173,7 @@ const MedicationWrite = () => {
           )} */}
         </div>
       </div>
-      <ButtonBar label={LABELS.submit} onClick={handleFormSubmit} />
+      <ButtonBar label={MEDICATION_LABELS.submit} onClick={handleFormSubmit} />
     </div>
   );
 };

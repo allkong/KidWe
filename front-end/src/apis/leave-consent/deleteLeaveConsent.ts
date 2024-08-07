@@ -1,7 +1,7 @@
 import axiosInstance from '@/apis/axiosInstance';
 
 export const deleteLeaveConsent = async (
-  leaveConsentId: string
+  leaveConsentId: number
 ): Promise<void> => {
   try {
     const response = await axiosInstance.delete(
