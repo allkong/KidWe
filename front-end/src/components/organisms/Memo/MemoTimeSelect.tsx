@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
 // import {useState} from 'react';
 import CustomTimePicker from '@/components/molecules/InputForm/CustomTimePicker';
 import Divider from '@/components/atoms/Divider/Divider';
@@ -6,15 +6,14 @@ import {useRecoilState} from 'recoil';
 import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
 
 const MemoTimeSelect = () => {
-  const [memoTime, setMemoTime] = useRecoilState<string>(memoTimeSelector);
+  const [memoTime, setMemoTime] = useRecoilState<Dayjs>(memoTimeSelector);
 
   const handleTimeChange = (value: string) => {
     const [hour, minute] = value.split(':').map(Number);
-    const time = dayjs(memoTime);
-    const hourSet = time.hour(hour);
+    const hourSet = memoTime.hour(hour);
     const minuteSet = hourSet.minute(minute);
 
-    setMemoTime(minuteSet.format('YYYY-MM-DD HH:mm'));
+    setMemoTime(minuteSet);
   };
   return (
     <div>

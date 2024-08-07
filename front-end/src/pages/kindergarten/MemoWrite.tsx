@@ -34,7 +34,15 @@ const MemoWrite = () => {
 
   useEffect(() => {
     if (data !== undefined) {
-      setMemo(data);
+      setMemo({...data, updatedTime: dayjs(data.updatedTime)});
+    } else {
+      setMemo({
+        ...memo,
+        lesson: '',
+        kids: [],
+        tags: [],
+        content: '',
+      });
     }
   }, [data, setMemo]);
 
@@ -74,13 +82,6 @@ const MemoWrite = () => {
   };
 
   const handleSuccess = () => {
-    setMemo({
-      updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
-      lesson: '',
-      kids: [],
-      tags: [],
-      content: '',
-    });
     navigate('/kindergarten/memo');
   };
 

@@ -9,7 +9,7 @@ export const putMemo = async (
   try {
     const result = await noSqlInstance.put(`/memo/${teacherId}/${memoId}`, {
       ...memo,
-      updatedTime: memo.updatedTime,
+      updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
     });
     return result.data;
   } catch (error) {

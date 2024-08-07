@@ -5,7 +5,7 @@ import {PostMemo} from '@/types/memo/PostMemo';
 export const memoState = atom<PostMemo>({
   key: 'memo',
   default: {
-    updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
+    updatedTime: dayjs(),
     lesson: '',
     kids: [],
     tags: [],

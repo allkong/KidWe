@@ -9,7 +9,7 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
 import type {GetMemo} from '@/types/memo/GetMemo';
 import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
 import {useSetRecoilState} from 'recoil';
@@ -19,7 +19,7 @@ const teacherId = 1;
 
 const MemoList = memo(() => {
   const [date, setDate] = useState(dayjs());
-  const setMemoTime = useSetRecoilState<string>(memoTimeSelector);
+  const setMemoTime = useSetRecoilState<Dayjs>(memoTimeSelector);
   const [modalMemo, setModalMemo] = useState<GetMemo>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +34,7 @@ const MemoList = memo(() => {
   );
 
   useEffect(() => {
-    setMemoTime(date.format('YYYY-MM-DD HH:MM'));
+    setMemoTime(date);
     refetch();
   }, [date, setMemoTime, refetch]);
 
