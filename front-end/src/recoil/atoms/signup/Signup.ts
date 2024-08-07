@@ -11,25 +11,5 @@ export const Signup = atom<SignupFormState>({
       password: '',
       role: '',
     },
-    kindergarten: {
-      name: '',
-      address: '',
-      addressDetail: '',
-      zipCode: '',
-      tel: '',
-    },
-    kid: {
-      name: '',
-      birthday: '',
-      gender: '',
-      allergies: [],
-      picture: '',
-      kindergartenId: 0,
-      banId: 0,
-    },
-    ban: {
-      kindergartenId: 0,
-      banId: 0,
-    },
   },
 });

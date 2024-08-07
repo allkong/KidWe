@@ -17,7 +17,6 @@ const RoleSelect = () => {
       setIsModalOpen(true);
     } else {
       setSignupRole(prevState => ({
-        ...prevState,
         member: {
           ...prevState.member,
           role: selectedRole,
