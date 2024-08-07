@@ -5,6 +5,7 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
+import kidImage from '/';
 
 const roleItems = [
   {value: 'ROLE_GUARDIAN', label: '학부모'},
@@ -43,7 +44,10 @@ const RoleSelect = () => {
 
   return (
     <div className="flex flex-col min-h-full space-y-8 mt-16 mx-4">
-      <p className="text-xl mb-8">역할을 선택해주세요</p>
+      <div className="flex items-center justify-between">
+        <p className="text-xl mb-8">역할을 선택해주세요</p>
+        <img src="/icons/kid.png" alt="Kid Icon" className="w-1/2" />
+      </div>
       <div className=" w-full items-center justify-center space-y-4 text-lg">
         {roleItems.map((item, index) => (
           <RoleSelector

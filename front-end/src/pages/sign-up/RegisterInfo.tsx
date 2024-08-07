@@ -13,8 +13,36 @@ const RegisterInfo = () => {
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
+  const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
+  const [iswrongemailtype, setIsWrongEmailType] = useState(false);
+  const [ismissingvalue, setIsMissingValue] = useState(false);
   const navigate = useNavigate();
+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // 이메일 정규 표현식 패턴
+
   const handleRegisterButtonClick = () => {
+    // 이름과 전화번호가 빈 칸인지 확인
+    if (
+      !username.trim() ||
+      !useremail.trim() ||
+      !userpassword.trim() ||
+      !userpassword2.trim() ||
+      !usertel.trim()
+    ) {
+      console.log('값을 적어주세요');
+      setIsMissingValue(true);
+      return;
+    }
+
+    if (!emailPattern.test(useremail)) {
+      setIsWrongEmailType(true);
+      console.log('이메일을 다시 입력해주세요');
+      return;
+    } else {
+      setIsWrongEmailType(false);
+    }
+
     if (userpassword === userpassword2) {
       setSignupRegister(prevState => ({
         ...prevState,
@@ -27,6 +55,7 @@ const RegisterInfo = () => {
         },
       }));
     } else {
+      setIsWrongPasswordType(true);
       console.log('비밀번호 다시해!');
     }
 
@@ -60,8 +89,8 @@ const RegisterInfo = () => {
     <div>
       <div className="main-container min-h-screen space-y-8 py-6 flex flex-col items-center w-full h-full px-10">
         <div className="flex items-center justify-center">
-          <div className="w-40 h-40 flex items-center justify-center border rounded-xl">
-            <p>div까지 image</p>
+          <div className="w-40 h-40 flex items-center justify-center ">
+            <img src="/icons/kid.png" alt="Kid Icon" />
           </div>
         </div>
         <div className="w-full space-y-8">
@@ -74,9 +103,12 @@ const RegisterInfo = () => {
           <LabelInput
             label="이메일"
             value={useremail}
-            placeholder="이메일을 적어주세요"
+            placeholder="ex)kidwe@kidwe.com"
             onChange={e => setUseremail(e.target.value)}
           />
+          {iswrongemailtype && (
+            <p className="text-red-600">이메일을 다시 입력해주세요</p>
+          )}
           <div className="w-full space-y-4">
             <LabelInput
               label="비밀번호"
@@ -85,6 +117,9 @@ const RegisterInfo = () => {
               type="password"
               onChange={e => setUserpassword(e.target.value)}
             />
+            {iswrongpasswordtype && (
+              <p className="text-red-600">비밀번호를 다시 입력해주세요</p>
+            )}
             <LabelInput
               value={userpassword2}
               placeholder="비밀번호를 다시 적어주세요"
@@ -98,6 +133,9 @@ const RegisterInfo = () => {
             placeholder="전화번호를 적어주세요"
             onChange={e => setUsertel(e.target.value)}
           />
+          {ismissingvalue && (
+            <p className="text-lg text-red-600">빈 칸을 채워주세요!</p>
+          )}
         </div>
       </div>
       <div
