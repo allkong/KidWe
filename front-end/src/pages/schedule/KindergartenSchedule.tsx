@@ -6,9 +6,12 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
+import Spinner from '@/components/atoms/Loader/Spinner';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const kindergartenId = 1;
 
@@ -19,6 +22,10 @@ const KindergartenSchedule = () => {
     setDate(value);
   };
 
+  useEffect(() => {
+    refetch();
+  }, [date]);
+
   const handleBeforeMonth = () => {
     setDate(date.subtract(1, 'month'));
   };
@@ -27,10 +34,18 @@ const KindergartenSchedule = () => {
     setDate(date.add(1, 'month'));
   };
 
-  const {data} = useGetKindergartenInfo(kindergartenId);
+  const {data, refetch, isLoading, isError} =
+    useGetKindergartenInfo(kindergartenId);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('오류 발생');
+    }
+  }, [isError]);
 
   return (
     <>
+      {isLoading && <Spinner />}
       <Header title="유치원 일정" buttonType="back" />
       <DateNavigator
         title={date.format('YY년 MM월')}
@@ -63,6 +78,15 @@ const KindergartenSchedule = () => {
         <ScheduleInfo date={date} />
       </div>
       <NavigationBar />
+      <ToastContainer
+        position="top-center" // 알람 위치 지정
+        autoClose={300} // 자동 off 시간
+        hideProgressBar // 진행시간바 숨김
+        closeOnClick // 클릭으로 알람 닫기
+        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
+        theme="light"
+        limit={1}
+      />
     </>
   );
 };
