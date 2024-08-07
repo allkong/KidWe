@@ -48,6 +48,9 @@ const AnnouncementWrite = () => {
     setVoteInfo({votetitle, votedate, voteoptions});
     setIsModalOpen(false);
   };
+  const handleVoteDelete = () => {
+    setVoteInfo(undefined);
+  };
 
   const announcementMutate = useMutation({
     mutationFn: () => {
@@ -88,7 +91,7 @@ const AnnouncementWrite = () => {
 
   return (
     <div>
-      <div className="flex-grow ">
+      <div className="flex-grow">
         <div>
           <TitleInput
             value={title}
@@ -106,14 +109,23 @@ const AnnouncementWrite = () => {
               <VoteIcon width={36} height={36} />
               <p>투표</p>
             </div>
-            <div className="w-full mx-2 px-2 space-y-2 py-2 border rounded-lg">
-              <div className="flex justify-between pl-4">
+            <div className="mx-2 px-2 space-y-2 py-2 max-w-full box-border border rounded-lg">
+              <div className="flex justify-between px-4 ">
                 <p className="text-2xl justify-between">{voteInfo.votetitle}</p>
-                <MoreButton options={['sdfsdf', '삭제']} />
+                <MoreButton>
+                  <MoreButton.Option
+                    text="수정하기"
+                    onClick={handleModalOpen}
+                  />
+                  <MoreButton.Option
+                    text="삭제하기"
+                    onClick={handleVoteDelete}
+                  />
+                </MoreButton>
               </div>
               <ul>
                 {voteInfo.voteoptions.map((option, index) => (
-                  <div key={index} className="px-4">
+                  <div key={index} className=" px-4">
                     <p className="px-2">{option}</p>
                     <Divider />
                   </div>
