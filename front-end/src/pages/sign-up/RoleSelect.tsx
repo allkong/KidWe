@@ -5,14 +5,8 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
-import kidImage from '/';
-
-const roleItems = [
-  {value: 'ROLE_GUARDIAN', label: '학부모'},
-  {value: 'ROLE_TEACHER', label: '선생님'},
-  {value: 'ROLE_DIRECTOR', label: '원장님'},
-];
-
+import {RoleItem, RoleItemValues} from '@/enum/signup/roleItem';
+import {RoleItemKeys} from '@/enum/signup/roleItem';
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +43,15 @@ const RoleSelect = () => {
         <img src="/icons/kid.png" alt="Kid Icon" className="w-1/2" />
       </div>
       <div className=" w-full items-center justify-center space-y-4 text-lg">
-        {roleItems.map((item, index) => (
+        {RoleItemKeys.map(key => (
+          <RoleSelector
+            key={key}
+            isSelected={selectedRole === key}
+            onClick={() => handleRoleChange(key)}
+            label={RoleItem[key as keyof typeof RoleItem]}
+          />
+        ))}
+        {/* {RoleItem.map((item, index) => (
           <RoleSelector
             key={index}
             isSelected={selectedRole === item.value}
@@ -57,7 +59,7 @@ const RoleSelect = () => {
             value={item.value}
             label={item.label}
           />
-        ))}
+        ))} */}
       </div>
       <div className="flex items-center justify-center px-4 bottom-8 ">
         <Button label="역할 선택" onClick={handleRegisterButtonClick} />
