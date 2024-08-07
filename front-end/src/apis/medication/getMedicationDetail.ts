@@ -1,9 +1,9 @@
 import axiosInstance from '@/apis/axiosInstance';
-import {kidOfMedication} from '@/types/medication/kidOfMedication';
+import {KidOfMedication} from '@/types/medication/KidOfMedication';
 
 export const getMedicationDetail = async (
   medicationId: string
-): Promise<kidOfMedication> => {
+): Promise<KidOfMedication> => {
   try {
     const response = await axiosInstance.get(`medications/${medicationId}`);
     return response.data;

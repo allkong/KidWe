@@ -66,7 +66,7 @@ const MedicationWrite = () => {
       formData.append('medicineImage', medicineImage);
     }
 
-    if (signImage) {
+    if (signImage !== null) {
       formData.append('signImage', signImage);
     }
   };

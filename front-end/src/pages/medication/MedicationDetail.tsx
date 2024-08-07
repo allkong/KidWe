@@ -4,7 +4,7 @@ import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
-import MedicationDetailItem from '@/components/molecules/Item/MedicationDetailItem';
+import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
 import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
@@ -75,7 +75,7 @@ const MedicationDetail = () => {
         />
         <div className="space-y-5 border-b py-7 px-9">
           {medicationDetails.map((item, index) => (
-            <MedicationDetailItem
+            <DetailLabelItem
               key={index}
               color={item.color}
               title={item.title}

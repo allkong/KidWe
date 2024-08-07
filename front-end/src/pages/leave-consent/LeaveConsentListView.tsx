@@ -2,8 +2,8 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
-import {useMedicationList} from '@/hooks/medication/useMedicationList';
-import type {MedicationItem} from '@/types/medication/MedicationItem';
+import {useLeaveConsentList} from '@/hooks/leave-consent/useLeaveConsentList';
+import type {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -13,11 +13,11 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
-const MedicationListView = () => {
+const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
-  const {data, error, isLoading} = useMedicationList(
+  const {data, error, isLoading} = useLeaveConsentList(
     1,
     currentMonth.year(),
     currentMonth.month() + 1,
@@ -32,8 +32,11 @@ const MedicationListView = () => {
     setCurrentMonth(prev => prev.add(1, 'month').startOf('month'));
   };
 
-  const handleUserItemClick = (medicationId: number, item: MedicationItem) => {
-    navigate(`/medication/${medicationId}`, {
+  const handleUserItemClick = (
+    leaveConsentId: number,
+    item: LeaveConsentItem
+  ) => {
+    navigate(`/leave-consent/${leaveConsentId}`, {
       state: {
         kidName: item.kidName,
         banName: item.banName,
@@ -42,7 +45,7 @@ const MedicationListView = () => {
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/medication/write');
+    navigate('/leave-consent/write');
   };
 
   if (isLoading) {
@@ -57,7 +60,7 @@ const MedicationListView = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Header title="투약의뢰서" buttonType="close" />
+      <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}
         onClickLeft={handleLeftClick}
@@ -66,7 +69,7 @@ const MedicationListView = () => {
       <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
         {data && data.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <NoResult text="등록된 의뢰서가 없어요" />
+            <NoResult text="등록된 동의서가 없어요" />
           </div>
         ) : (
           Object.keys(groupedData).map(date => (
@@ -74,8 +77,8 @@ const MedicationListView = () => {
               <MonthDivider text={`${dayjs(date).date()}일`} color="gray" />
               {groupedData[date].map(item => (
                 <div
-                  key={item.medicationId}
-                  onClick={() => handleUserItemClick(item.medicationId, item)}
+                  key={item.leaveConsentId}
+                  onClick={() => handleUserItemClick(item.leaveConsentId, item)}
                 >
                   <UserCardItem
                     profile={item.profileImage || ''}
@@ -95,4 +98,4 @@ const MedicationListView = () => {
   );
 };
 
-export default MedicationListView;
+export default LeaveConsentListView;
