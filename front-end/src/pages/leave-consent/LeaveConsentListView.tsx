@@ -2,8 +2,8 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
-import {useMedicationList} from '@/hooks/medication/useMedicationList';
-import type {MedicationItem} from '@/types/medication/MedicationItem';
+import {useLeaveConsentList} from '@/hooks/leave-consent/useLeaveConsentList';
+import type {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -17,7 +17,7 @@ const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
-  const {data, error, isLoading} = useMedicationList(
+  const {data, error, isLoading} = useLeaveConsentList(
     1,
     currentMonth.year(),
     currentMonth.month() + 1,
@@ -32,8 +32,11 @@ const LeaveConsentListView = () => {
     setCurrentMonth(prev => prev.add(1, 'month').startOf('month'));
   };
 
-  const handleUserItemClick = (medicationId: number, item: MedicationItem) => {
-    navigate(`/leave-consent/${medicationId}`, {
+  const handleUserItemClick = (
+    leaveConsentId: number,
+    item: LeaveConsentItem
+  ) => {
+    navigate(`/leave-consent/${leaveConsentId}`, {
       state: {
         kidName: item.kidName,
         banName: item.banName,
@@ -74,8 +77,8 @@ const LeaveConsentListView = () => {
               <MonthDivider text={`${dayjs(date).date()}일`} color="gray" />
               {groupedData[date].map(item => (
                 <div
-                  key={item.medicationId}
-                  onClick={() => handleUserItemClick(item.medicationId, item)}
+                  key={item.leaveConsentId}
+                  onClick={() => handleUserItemClick(item.leaveConsentId, item)}
                 >
                   <UserCardItem
                     profile={item.profileImage || ''}

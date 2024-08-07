@@ -6,18 +6,18 @@ import {
 import {MedicationItem} from '@/types/medication/MedicationItem';
 
 export const useMedicationList = (
-  banId: number,
+  id: number,
   year: number,
   month: number,
   role: 'ROLE_DIRECTOR' | 'ROLE_TEACHER' | 'ROLE_GUARDIAN'
 ) => {
   return useQuery<MedicationItem[], Error>({
-    queryKey: ['medicationList', banId, year, month, role],
+    queryKey: ['medicationList', id, year, month, role],
     queryFn: () => {
       if (role === 'ROLE_DIRECTOR' || role === 'ROLE_TEACHER') {
-        return getMedicationByTeacher(banId, year, month);
+        return getMedicationByTeacher(id, year, month);
       } else if (role === 'ROLE_GUARDIAN') {
-        return getMedicationByParent(banId, year, month);
+        return getMedicationByParent(id, year, month);
       } else {
         return [];
       }
