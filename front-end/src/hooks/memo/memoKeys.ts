@@ -5,4 +5,7 @@ export const memoKeys = {
   detail: (teacherId: number, memoId: string | undefined | null) =>
     [...memoKeys.all, teacherId, memoId] as const,
   tags: (teacherId: number) => [...memoKeys.all, 'tags', teacherId] as const,
+  children: (banId: number) => [...memoKeys.all, 'children', banId] as const,
+  lessons: (banId: number, date: string) =>
+    [...memoKeys.all, 'lessons', banId, date] as const,
 };

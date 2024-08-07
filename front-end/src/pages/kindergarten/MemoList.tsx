@@ -75,6 +75,7 @@ const MemoList = memo(() => {
           onClickRight={handleRightClick}
         />
         <div className="mt-10">
+          {/* 메모 리스트를 보여주는 화면 */}
           {data &&
             data
               .sort((e1, e2) => {

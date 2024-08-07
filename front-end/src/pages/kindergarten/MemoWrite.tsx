@@ -25,7 +25,7 @@ const MemoWrite = () => {
   const [memo, setMemo] = useRecoilState(memoState);
   const memoId = useQueryString().get('id');
 
-  const {data} = useGetDailyMemoById(teacherId, memoId);
+  const {data} = useGetDailyMemoById(teacherId, memoId); // CORS 에러 발생
   const writeMutate = useWriteDailyMemo();
 
   const [isValid, setIsValid] = useState(false);

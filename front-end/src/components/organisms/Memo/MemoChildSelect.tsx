@@ -7,20 +7,20 @@ import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import Input from '@/components/atoms/Input/Input';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
-import {useQuery} from '@tanstack/react-query';
-import {getBanInfomation} from '@/apis/memo/getBanInfomation';
 import type {Kid} from '@/types/memo/Kid';
+import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
 
 interface CheckedKid {
   kid: Kid;
   isChecked: boolean;
 }
 
+const banId = 1;
+
 const MemoChildSelect = () => {
   const [memo, setMemo] = useRecoilState(memoState);
 
   const [children, setChildren] = useState<CheckedKid[]>();
-
   const [filteredChildren, setFilteredChildren] = useState<CheckedKid[]>();
 
   const [input, setInput] = useState('');
@@ -29,10 +29,7 @@ const MemoChildSelect = () => {
     setInput(value);
   };
 
-  const {data} = useQuery({
-    queryKey: ['children', 0],
-    queryFn: () => getBanInfomation(1),
-  });
+  const {data} = useGetBanInfomation(banId);
 
   useEffect(() => {
     setChildren(

@@ -6,16 +6,16 @@ import Input from '@/components/atoms/Input/Input';
 import CheckListItem from '../Check/CheckListItem';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
-import {getLessonInfomation} from '@/apis/memo/getLessonInfomation';
-import {useQuery} from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import type {Lesson} from '@/types/memo/Lesson';
 import Tag from '@/components/atoms/Tag/Tag';
+import {useGetLessonInfomation} from '@/hooks/memo/useGetLessonInfomation';
 
 interface CheckedLesson {
   lesson: Lesson;
   isChecked: boolean;
 }
+
+const banId = 1;
 
 const MemoLessonSelect = () => {
   const [memo, setMemo] = useRecoilState(memoState);
@@ -28,10 +28,10 @@ const MemoLessonSelect = () => {
 
   const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
 
-  const {data} = useQuery({
-    queryKey: ['lessons', 0],
-    queryFn: () => getLessonInfomation(1, dayjs('2024-04-10')),
-  });
+  const {data} = useGetLessonInfomation(
+    banId,
+    memo.updatedTime.format('YYYY-MM-DD')
+  );
 
   useEffect(() => {
     setLessons(

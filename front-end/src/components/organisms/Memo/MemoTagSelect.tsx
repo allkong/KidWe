@@ -58,7 +58,7 @@ const MemoTagSelect = () => {
           ...tagRequestDtos,
           {
             id: '',
-            teacherId: 0,
+            teacherId,
             content: value,
           },
         ],
@@ -81,7 +81,7 @@ const MemoTagSelect = () => {
     const find = memo.tagRequestDtos.find(tag => tag.content === input);
     if (find === undefined) {
       const newTag: MemoTag = {
-        teacherId: 0,
+        teacherId,
         content: input,
       };
       setMemo({...memo, tagRequestDtos: [...memo.tagRequestDtos, newTag]});
