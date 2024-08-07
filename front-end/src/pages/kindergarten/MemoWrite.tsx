@@ -16,16 +16,17 @@ import Spinner from '@/components/atoms/Loader/Spinner';
 import {useQueryString} from '@/hooks/useQueryString';
 import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
 import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
+import {PostMemo} from '@/types/memo/PostMemo';
 
 const teacherId = 1;
 
 const MemoWrite = () => {
   const navigate = useNavigate();
 
-  const [memo, setMemo] = useRecoilState(memoState);
+  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   const memoId = useQueryString().get('id');
 
-  const {data} = useGetDailyMemoById(teacherId, memoId); // CORS 에러 발생
+  const {data} = useGetDailyMemoById(teacherId, memoId);
   const writeMutate = useWriteDailyMemo();
 
   const [isValid, setIsValid] = useState(false);
@@ -34,21 +35,13 @@ const MemoWrite = () => {
       memo.content !== '' ||
         memo.kids.length !== 0 ||
         memo.lesson !== '' ||
-        memo.tagRequestDtos.length !== 0
+        memo.tags.length !== 0
     );
   }, [memo]);
 
   useEffect(() => {
     if (data !== undefined) {
       setMemo(data);
-    } else {
-      setMemo({
-        updatedTime: dayjs(),
-        lesson: '',
-        kids: [],
-        tagRequestDtos: [],
-        content: '',
-      });
     }
   }, [data, setMemo]);
 
@@ -56,15 +49,16 @@ const MemoWrite = () => {
     writeMutate.mutate(
       {teacherId, memo},
       {
-        onError: () => {
+        onError: error => {
+          console.error(error);
           toast.error('오류 발생');
         },
         onSuccess: () => {
           setMemo({
-            updatedTime: dayjs(),
+            updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
             lesson: '',
             kids: [],
-            tagRequestDtos: [],
+            tags: [],
             content: '',
           });
           navigate('/kindergarten/memo');

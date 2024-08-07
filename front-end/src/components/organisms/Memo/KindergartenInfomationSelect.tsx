@@ -2,10 +2,11 @@ import TextArea from '@/components/atoms/Input/TextArea';
 import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
 import MemoLessonSelect from '@/components/organisms/Memo/MemoLessonSelect';
 import {memoState} from '@/recoil/atoms/memo/memo';
+import {PostMemo} from '@/types/memo/PostMemo';
 import {useRecoilState} from 'recoil';
 
 const KindergartenInfomationSelect = () => {
-  const [memo, setMemo] = useRecoilState(memoState);
+  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
 
   const handleChange = (value: string) => {
     setMemo({...memo, content: value});

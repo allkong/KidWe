@@ -9,6 +9,7 @@ import {useRecoilState} from 'recoil';
 import type {Lesson} from '@/types/memo/Lesson';
 import Tag from '@/components/atoms/Tag/Tag';
 import {useGetLessonInfomation} from '@/hooks/memo/useGetLessonInfomation';
+import dayjs from 'dayjs';
 
 interface CheckedLesson {
   lesson: Lesson;
@@ -30,7 +31,7 @@ const MemoLessonSelect = () => {
 
   const {data} = useGetLessonInfomation(
     banId,
-    memo.updatedTime.format('YYYY-MM-DD')
+    dayjs(memo.updatedTime).format('YYYY-MM-DD')
   );
 
   useEffect(() => {

@@ -7,6 +7,6 @@ export interface GetMemo {
   updatedTime: string;
   lesson: string;
   kids: Child[];
-  tagResponseDtos: Tag[];
+  tags: Tag[];
   content: string;
 }

@@ -1,10 +1,10 @@
 import axiosInstance from '@/apis/noSqlInstance';
-import {Memo} from '@/types/memo/Memo';
+import {GetMemo} from '@/types/memo/GetMemo';
 
 export const getMemoById = async (
   teacherId: number,
   memoId: string
-): Promise<Memo> => {
+): Promise<GetMemo> => {
   try {
     const result = await axiosInstance.get(`/memo/${teacherId}/${memoId}`);
     return result.data;

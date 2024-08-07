@@ -1,14 +1,14 @@
 import {atom} from 'recoil';
 import dayjs from 'dayjs';
-import {Memo} from '@/types/memo/Memo';
+import {PostMemo} from '@/types/memo/PostMemo';
 
-export const memoState = atom<Memo>({
+export const memoState = atom<PostMemo>({
   key: 'memo',
   default: {
-    updatedTime: dayjs(),
+    updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
     lesson: '',
     kids: [],
-    tagRequestDtos: [],
+    tags: [],
     content: '',
   },
 });

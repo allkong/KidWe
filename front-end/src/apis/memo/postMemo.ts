@@ -1,7 +1,7 @@
 import noSqlInstance from '@/apis/noSqlInstance';
-import {Memo} from '@/types/memo/Memo';
+import {PostMemo} from '@/types/memo/PostMemo';
 
-export const postMemo = async (teacherId: number, memo: Memo) => {
+export const postMemo = async (teacherId: number, memo: PostMemo) => {
   try {
     const result = await noSqlInstance.post(`/memo/${teacherId}`, {
       ...memo,

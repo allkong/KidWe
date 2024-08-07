@@ -14,13 +14,14 @@ import type {GetMemo} from '@/types/memo/GetMemo';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useRecoilState} from 'recoil';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
+import {PostMemo} from '@/types/memo/PostMemo';
 
 const teacherId = 1;
 
 const MemoList = memo(() => {
   const [date, setDate] = useState(dayjs());
 
-  const [memo, setMemo] = useRecoilState(memoState); // 메모가 작성될 atom
+  const [memo, setMemo] = useRecoilState<PostMemo>(memoState); // 메모가 작성될 atom
   const [modalMemo, setModalMemo] = useState<GetMemo>(); // 모달에 띄울 메모
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +36,7 @@ const MemoList = memo(() => {
   );
 
   useEffect(() => {
-    setMemo({...memo, updatedTime: date});
+    setMemo({...memo, updatedTime: date.format('YYYY-MM-DD HH:mm')});
     refetch();
   }, [date]);
 
@@ -61,6 +62,11 @@ const MemoList = memo(() => {
       pathname: `/kindergarten/memo/write`,
       search: createSearchParams({id}).toString(),
     });
+  };
+
+  const moveToWrite = () => {
+    setMemo({...memo, updatedTime: date.format('YYYY-MM-DD HH:mm')});
+    navigate('/kindergarten/memo/write');
   };
 
   return (
@@ -91,7 +97,7 @@ const MemoList = memo(() => {
                 />
               ))}
         </div>
-        <WriteButton onClick={() => navigate('/kindergarten/memo/write')} />
+        <WriteButton onClick={moveToWrite} />
         <NavigationBar />
       </div>
       <ModalPortal>

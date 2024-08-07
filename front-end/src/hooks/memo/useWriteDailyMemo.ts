@@ -1,12 +1,14 @@
 import {postMemo} from '@/apis/memo/postMemo';
-import {Memo} from '@/types/memo/Memo';
+import {PostMemo} from '@/types/memo/PostMemo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {memoKeys} from '@/hooks/memo/memoKeys';
+import dayjs from 'dayjs';
 
 export const useWriteDailyMemo = () => {
   const queryClient = useQueryClient();
   const result = useMutation({
-    mutationFn: ({teacherId, memo}: {teacherId: number; memo: Memo}) => {
+    mutationFn: ({teacherId, memo}: {teacherId: number; memo: PostMemo}) => {
+      console.log(memo);
       return postMemo(teacherId, memo);
     },
     onError(error) {
@@ -17,9 +19,9 @@ export const useWriteDailyMemo = () => {
       queryClient.invalidateQueries({
         queryKey: memoKeys.lists(
           teacherId,
-          updatedTime.format('YYYY'),
-          updatedTime.format('MM'),
-          updatedTime.format('DD')
+          dayjs(updatedTime).format('YYYY'),
+          dayjs(updatedTime).format('MM'),
+          dayjs(updatedTime).format('DD')
         ),
       });
     },

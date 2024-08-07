@@ -26,10 +26,8 @@ const MemoView = ({memo}: MemoViewProps) => {
         </div>
       </div>
       <div className="flex flex-wrap gap-1 overflow-y-auto h-fit max-h-36">
-        {memo?.tagResponseDtos &&
-          memo?.tagResponseDtos.map((tag, idx) => (
-            <Tag key={idx} text={tag.content} />
-          ))}
+        {memo?.tags &&
+          memo?.tags.map((tag, idx) => <Tag key={idx} text={tag.content} />)}
       </div>
       <div className="w-full overflow-y-auto text-sm break-words h-fit max-h-36 text-wrap">
         {memo?.content}

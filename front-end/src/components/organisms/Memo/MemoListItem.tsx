@@ -1,11 +1,11 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import chick from '@/assets/icons/chick-1.svg';
 import dayjs from 'dayjs';
-import type {TeacherDailyMemo} from '@/apis/memo/getTeacherDailyMemos';
+import type {GetMemo} from '@/types/memo/GetMemo';
 
 interface MemoListItemProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
-  memo?: TeacherDailyMemo;
+  memo?: GetMemo;
 }
 
 const MemoListItem = ({onClick, memo}: MemoListItemProps) => {
@@ -30,8 +30,8 @@ const MemoListItem = ({onClick, memo}: MemoListItemProps) => {
             </p>
           </div>
           <div className="flex flex-wrap w-full gap-1">
-            {memo?.tagResponseDtos &&
-              memo?.tagResponseDtos.map((tag, idx) => (
+            {memo?.tags &&
+              memo?.tags.map((tag, idx) => (
                 <Tag key={idx} text={tag.content} />
               ))}
           </div>
