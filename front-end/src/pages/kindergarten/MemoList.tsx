@@ -65,8 +65,10 @@ const MemoList = memo(() => {
   };
 
   const moveToWrite = () => {
-    setMemo({...memo, updatedTime: date.format('YYYY-MM-DD HH:mm')});
-    navigate('/kindergarten/memo/write');
+    navigate({
+      pathname: `/kindergarten/memo/write`,
+      search: createSearchParams({date: date.format('YYYY-MM-DD')}).toString(),
+    });
   };
 
   return (

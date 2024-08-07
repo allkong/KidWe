@@ -17,6 +17,7 @@ import {useQueryString} from '@/hooks/useQueryString';
 import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
 import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
+import {usePutDailyMemo} from '@/hooks/memo/usePutDailyMemo';
 
 const teacherId = 1;
 
@@ -25,9 +26,11 @@ const MemoWrite = () => {
 
   const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   const memoId = useQueryString().get('id');
+  const date = useQueryString().get('date');
 
   const {data} = useGetDailyMemoById(teacherId, memoId);
   const writeMutate = useWriteDailyMemo();
+  const putMutate = usePutDailyMemo();
 
   const [isValid, setIsValid] = useState(false);
   useEffect(() => {
@@ -42,29 +45,52 @@ const MemoWrite = () => {
   useEffect(() => {
     if (data !== undefined) {
       setMemo(data);
+    } else {
+      const updatedDate = date === null ? dayjs() : dayjs(date);
+      setMemo({
+        lesson: '',
+        kids: [],
+        tags: [],
+        content: '',
+        updatedTime: updatedDate.format('YYYY-MM-DD HH:mm'),
+      });
     }
   }, [data, setMemo]);
 
   const handleClick = () => {
-    writeMutate.mutate(
-      {teacherId, memo},
-      {
-        onError: error => {
-          console.error(error);
-          toast.error('오류 발생');
-        },
-        onSuccess: () => {
-          setMemo({
-            updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
-            lesson: '',
-            kids: [],
-            tags: [],
-            content: '',
-          });
-          navigate('/kindergarten/memo');
-        },
-      }
-    );
+    if (memoId !== null) {
+      putMutate.mutate(
+        {teacherId, memoId, memo},
+        {
+          onError: handleError,
+          onSuccess: handleSuccess,
+        }
+      );
+    } else {
+      writeMutate.mutate(
+        {teacherId, memo},
+        {
+          onError: handleError,
+          onSuccess: handleSuccess,
+        }
+      );
+    }
+  };
+
+  const handleError = (error: Error) => {
+    console.error(error);
+    toast.error('오류 발생');
+  };
+
+  const handleSuccess = () => {
+    setMemo({
+      updatedTime: dayjs().format('YYYY-MM-DD HH:mm'),
+      lesson: '',
+      kids: [],
+      tags: [],
+      content: '',
+    });
+    navigate('/kindergarten/memo');
   };
 
   return (
@@ -81,7 +107,7 @@ const MemoWrite = () => {
           <Button
             variant={isValid ? 'positive' : 'negative'}
             disabled={!isValid}
-            label="메모 작성하기"
+            label={memoId ? '메모 수정하기' : '메모 작성하기'}
             onClick={handleClick}
             size="large"
           />
