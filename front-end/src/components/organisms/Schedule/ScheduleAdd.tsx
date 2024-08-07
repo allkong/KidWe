@@ -2,32 +2,64 @@ import Button from '@/components/atoms/Button/Button';
 import Select from '@/components/molecules/DropdownButton/Select';
 import {PostSchedule} from '@/types/schedule/PostSchedule';
 import {useMutation} from '@tanstack/react-query';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
-import dayjs from 'dayjs';
+import type {Dayjs} from 'dayjs';
 import {postSchedule} from '@/apis/schedule/postSchedule';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import TextArea from '@/components/atoms/Input/TextArea';
 import Divider from '@/components/atoms/Divider/Divider';
+import {useQueryClient} from '@tanstack/react-query';
+import {ScheduleOption} from '@/enum/kindergarten/schedule';
+import {scheduleOptionKeys} from '@/enum/kindergarten/schedule';
 
-const categories = ['행사', '수업', '유치원'];
+interface ScheduleAddProps {
+  defaultDate: Dayjs;
+}
 
-const ScheduleController = () => {
+function getScheduleOptionValue(category: keyof typeof ScheduleOption) {
+  return ScheduleOption[category];
+}
+
+const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string>('');
-  const [textValue, setTextValue] = useState('');
-  const [date, onChangeDate] = useState(dayjs());
+  const [selected, setSelected] = useState<string>();
+  const [keyword, setKeyword] = useState('');
+  const [content, setContent] = useState('');
+  const [date, onChangeDate] = useState(defaultDate);
+
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    onChangeDate(defaultDate);
+  }, [defaultDate]);
+
+  useEffect(() => {
+    setIsValid(
+      selected !== undefined && keyword.length !== 0 && content.length !== 0
+    );
+  }, [selected, keyword, content]);
+
+  const queryClient = useQueryClient();
 
   const postMutate = useMutation({
     mutationFn: () => {
       const body: PostSchedule = {
-        content: textValue,
-        keyword: selected,
-        localDate: dayjs().format('YYYY-MM-DD'),
+        keyword: keyword,
+        content: content,
+        localDate: date.format('YYYY-MM-DD'),
+        type: selected as 'EVENT' | 'CLASS' | 'ALLNOTICE',
       };
-      console.log(body);
-      return postSchedule(0, body);
+      return postSchedule(1, body);
+    },
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ['schedules', 1, date.format('YYMMDD')],
+      });
+      setSelected(undefined);
+      setKeyword('');
+      setContent('');
     },
   });
 
@@ -71,21 +103,38 @@ const ScheduleController = () => {
                 <Divider />
               </div>
               <Select label="카테고리" size="medium" onChange={setSelected}>
-                {categories &&
-                  categories.map((category, idx) => (
-                    <Select.Option key={idx} text={category} />
+                {scheduleOptionKeys &&
+                  scheduleOptionKeys.map((category, idx) => (
+                    <Select.Option
+                      key={idx}
+                      id={getScheduleOptionValue(
+                        category as keyof typeof ScheduleOption
+                      )}
+                      text={category}
+                    />
                   ))}
               </Select>
-              <div className="w-full h-20">
-                <TextArea
-                  placeholder="일정 내용"
-                  value={textValue}
-                  onChange={setTextValue}
-                />
+              <div className="space-y-2">
+                <div className="w-full h-11">
+                  <TextArea
+                    placeholder="키워드"
+                    value={keyword}
+                    onChange={setKeyword}
+                  />
+                </div>
+                <div className="w-full h-20">
+                  <TextArea
+                    placeholder="일정 내용"
+                    value={content}
+                    onChange={setContent}
+                  />
+                </div>
               </div>
             </div>
           </Modal.Body>
           <Modal.BottomButton
+            variant={isValid ? 'positive' : 'negative'}
+            disabled={!isValid}
             label="일정 등록"
             size="large"
             onClick={handleSubmit}
@@ -97,4 +146,4 @@ const ScheduleController = () => {
   );
 };
 
-export default ScheduleController;
+export default ScheduleAdd;

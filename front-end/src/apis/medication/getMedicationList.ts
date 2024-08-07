@@ -1,5 +1,5 @@
 import axiosInstance from '@/apis/axiosInstance';
-import {MedicationItem} from '@/types/medication/MedicationList';
+import {MedicationItem} from '@/types/medication/MedicationItem';
 
 export const getMedicationByTeacher = async (
   banId: number,

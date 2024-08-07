@@ -2,8 +2,8 @@ import {useQuery} from '@tanstack/react-query';
 import {
   getMedicationByTeacher,
   getMedicationByParent,
-} from '@/apis/medication/getMedicationItem';
-import {MedicationItem} from '@/types/medication/MedicationList';
+} from '@/apis/medication/getMedicationList';
+import {MedicationItem} from '@/types/medication/MedicationItem';
 
 export const useMedicationList = (
   banId: number,
@@ -12,7 +12,7 @@ export const useMedicationList = (
   role: 'ROLE_DIRECTOR' | 'ROLE_TEACHER' | 'ROLE_GUARDIAN'
 ) => {
   return useQuery<MedicationItem[], Error>({
-    queryKey: ['medications', banId, year, month, role],
+    queryKey: ['medicationList', banId, year, month, role],
     queryFn: () => {
       if (role === 'ROLE_DIRECTOR' || role === 'ROLE_TEACHER') {
         return getMedicationByTeacher(banId, year, month);

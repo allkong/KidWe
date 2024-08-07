@@ -49,6 +49,16 @@ const FoodInfo = () => {
     setDate(date.add(1, 'week'));
   };
 
+  const handleDateChange = (value: Dayjs) => {
+    setDate(value);
+  };
+
+  const moveToWrite = () => {
+    navigate('/kindergarten/food/write', {
+      state: {date: date.format('YYYY-MM-DD (ddd)')},
+    });
+  };
+
   return (
     <>
       <div
@@ -62,7 +72,7 @@ const FoodInfo = () => {
         />
 
         <div className="flex justify-center gap-2 mb-16">
-          <FoodDateNavigator date={date} />
+          <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
           {food ? (
@@ -77,7 +87,7 @@ const FoodInfo = () => {
         </div>
         <NavigationBar />
       </div>
-      <WriteButton onClick={() => navigate('/kindergarten/food/write')} />
+      <WriteButton onClick={() => moveToWrite()} />
     </>
   );
 };

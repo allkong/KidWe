@@ -6,13 +6,15 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
-
-const kindergartens = ['전체', '햇살반', '꽃잎반'];
+import {getKindergartenInfo} from '@/apis/kindergarten/getKindergartenInfo';
+import {useQuery} from '@tanstack/react-query';
+import type {Ban} from '@/types/kindergarten/Ban';
 
 const KindergartenSchedule = () => {
   const [date, setDate] = useState(dayjs());
+  const [banInfo, setBanInfo] = useState<Ban[]>();
 
   const onChangeDate = (value: Dayjs) => {
     setDate(value);
@@ -25,6 +27,18 @@ const KindergartenSchedule = () => {
   const handleAfterMonth = () => {
     setDate(date.add(1, 'month'));
   };
+
+  const {data} = useQuery({
+    queryKey: ['kindergarten', 1],
+    queryFn: () => getKindergartenInfo(1),
+  });
+
+  useEffect(() => {
+    if (data === undefined) {
+      return;
+    }
+    setBanInfo([{id: -1, name: '전체'}, ...data.bans]);
+  }, [data]);
 
   return (
     <>
@@ -39,12 +53,12 @@ const KindergartenSchedule = () => {
       >
         <div className="flex items-center justify-between w-full h-16">
           <Select label="반" size="small">
-            {kindergartens &&
-              kindergartens.map((data, idx) => (
-                <Select.Option key={idx} text={data} />
+            {banInfo &&
+              banInfo.map(ban => (
+                <Select.Option key={ban.id} text={ban.name} />
               ))}
           </Select>
-          <ScheduleAdd />
+          <ScheduleAdd defaultDate={date} />
         </div>
         <div className="flex items-center justify-center flex-grow w-full">
           <div className="flex items-start justify-center max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">
@@ -52,6 +66,7 @@ const KindergartenSchedule = () => {
               defaultDate={date}
               showNavigation={false}
               onChange={onChangeDate}
+              activeStartDate={true}
             />
           </div>
         </div>
