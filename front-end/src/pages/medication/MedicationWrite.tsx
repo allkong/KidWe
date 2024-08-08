@@ -1,5 +1,7 @@
-import {useState, ChangeEvent} from 'react';
-import {useRecoilState} from 'recoil';
+import {useEffect, useState, ChangeEvent} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useRecoilState, useResetRecoilState} from 'recoil';
+import {usePostMedication} from '@/hooks/medication/usePostMedication';
 import {medicationFormState} from '@/recoil/atoms/medication/medicationFormState';
 import {formatDateToYMD} from '@/utils/dayjsPlugin';
 import {TimeOption, timeOptionValues} from '@/enum/medication/timeOption';
@@ -11,6 +13,8 @@ import {
 } from '@/constants/medication';
 import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
+import {toast, ToastContainer} from 'react-toastify';
+import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
 import LabelInput from '@/components/atoms/Input/LabelInput';
@@ -22,11 +26,37 @@ import AreaDivider from '@/components/atoms/Divider/AreaDivider';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 
 const MedicationWrite = () => {
+  const navigate = useNavigate();
+  const {mutate, isPending, isError} = usePostMedication();
   const [formState, setFormState] = useRecoilState(medicationFormState);
-
+  const resetFormState = useResetRecoilState(medicationFormState);
   const [selectedTimeOption, setSelectedTimeOption] = useState('');
   const [medicineImage, setMedicineImage] = useState<File | null>(null);
   const [signImage, setSignImage] = useState<File | null>(null);
+  const [isValid, setIsValid] = useState(false);
+
+  // 에러 발생 시 토스트 메시지 표시
+  useEffect(() => {
+    if (isError) {
+      toast.error('작성 실패');
+    }
+  }, [isError]);
+
+  // 모든 필드가 채워졌는지 검사하여 유효성 업데이트
+  useEffect(() => {
+    const allFieldsFilled =
+      Object.values(formState).every(value => value.trim() !== '') &&
+      signImage !== null;
+    setIsValid(allFieldsFilled);
+  }, [formState, signImage]);
+
+  // 컴포넌트가 언마운트될 때 상태 초기화
+  useEffect(() => {
+    return () => {
+      resetFormState();
+      setSignImage(null);
+    };
+  }, [resetFormState]);
 
   // 입력 값 변경
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,24 +90,37 @@ const MedicationWrite = () => {
   const handleFormSubmit = () => {
     const formData = new FormData();
 
-    formData.append('medicineDto', JSON.stringify(formState));
+    formData.append(
+      'dto',
+      new Blob([JSON.stringify(formState)], {type: 'application/json'})
+    );
 
     if (medicineImage !== null) {
-      formData.append('medicineImage', medicineImage);
+      formData.append('medicine', medicineImage);
     }
 
     if (signImage !== null) {
-      formData.append('signImage', signImage);
+      formData.append('sign', signImage);
     }
+
+    mutate({kidId: 1, formData, memberId: 1});
+    navigate('/medication');
   };
 
   return (
     <div className="h-screen">
+      {isPending && <Spinner />}
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        limit={1}
+      />
       <Header title="투약의뢰서" buttonType="back" />
       <div className={`${containerHeaderClass}`}>
         <div className="py-8 space-y-5 px-9">
           <div className="space-y-2">
-            <p>투약일</p>
+            <p>{MEDICATION_LABELS.medicationExecuteDueDate}</p>
             <RadioCircleButton
               options={DATE_OPTIONS}
               selectedOption={formState.medicationExecuteDueDate}
@@ -163,17 +206,14 @@ const MedicationWrite = () => {
             parentName="김부모"
             onClick={setSignImage}
           />
-          {/* {formState.signUrl && (
-            <div className="flex justify-end">
-              <img
-                src={formState.signUrl}
-                className="mt-4 bg-gray-100 rounded-md w-60"
-              />
-            </div>
-          )} */}
         </div>
       </div>
-      <ButtonBar label={MEDICATION_LABELS.submit} onClick={handleFormSubmit} />
+      <ButtonBar
+        label={MEDICATION_LABELS.submit}
+        variant={isValid ? 'positive' : 'negative'}
+        disabled={!isValid}
+        onClick={handleFormSubmit}
+      />
     </div>
   );
 };

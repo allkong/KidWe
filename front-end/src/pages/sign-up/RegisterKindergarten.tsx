@@ -6,7 +6,7 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {Signup} from '@/recoil/atoms/signup/Signup';
 import {useMutation} from '@tanstack/react-query';
-import {postSignup} from '@/apis/signup/postSignup';
+// import {postSignup} from '@/apis/signup/postSignup';
 import {SignupFormState} from '@/types/signup/SignupFormState';
 
 declare global {
@@ -40,9 +40,8 @@ const RegisterKindergarten: React.FC = () => {
   });
 
   const navigate = useNavigate();
-  const handleRegisterKindergartenButtonClick = async (
-    state: SignupFormState
-  ) => {
+
+  const handleRegisterKindergartenButtonClick = async () => {
     setSignupRegisterKindergarten(prevState => ({
       ...prevState,
       kindergarten: {
@@ -83,6 +82,7 @@ const RegisterKindergarten: React.FC = () => {
       oncomplete: function (data: IAddr) {
         setAddr(data.address);
         setZipNo(data.zonecode);
+        setkindergartenaddrdetail(''); // 이미 적혀있던 상세주소 초기화
         setInputAble(true);
         document.getElementById('kindergartenaddrdetail')?.focus();
       },
@@ -118,15 +118,13 @@ const RegisterKindergarten: React.FC = () => {
       <div className="flex flex-col items-center w-full h-full px-10 py-6 space-y-8 main-container">
         <div className="flex items-center justify-center text-lg">
           <p>유치원을 등록해주세요</p>
-          <div className="flex items-center justify-center w-40 h-40 border rounded-xl">
-            <p>div까지 image</p>
-          </div>
+          <img src="/icons/kid.png" alt="Kid Icon" className="w-5/12" />
         </div>
         <div className="w-full space-y-8">
           <LabelInput
             label="이름"
             value={kindergartenname}
-            placeholder="이름을 적어주세요"
+            placeholder="유치원 이름을 적어주세요"
             onChange={e => setKindergartenName(e.target.value)}
           />
 
@@ -135,7 +133,8 @@ const RegisterKindergarten: React.FC = () => {
               <div className="col-span-8 ">
                 <LabelInput
                   label="주소"
-                  value="클릭하여 주소를 입력해주세요"
+                  placeholder="클릭하여 주소를 입력해주세요"
+                  value={addr}
                   onClick={onClickAddr}
                 />
               </div>
@@ -151,12 +150,12 @@ const RegisterKindergarten: React.FC = () => {
                 disabled={true}
                 readOnly
               />
-              <LabelInput
+              {/* <LabelInput
                 value={addr}
                 label="도로명주소"
                 disabled={true}
                 readOnly
-              />
+              /> */}
               <LabelInput
                 label="상세주소"
                 value={kindergartenaddrdetail}

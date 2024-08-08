@@ -1,10 +1,12 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
 import {useLeaveConsentList} from '@/hooks/leave-consent/useLeaveConsentList';
 import type {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {containerNavigatorClass} from '@/styles/styles';
+import {toast, ToastContainer} from 'react-toastify';
+import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import NoResult from '@/components/atoms/NoResult';
@@ -17,7 +19,7 @@ const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
-  const {data, error, isLoading} = useLeaveConsentList(
+  const {data, isError, isLoading} = useLeaveConsentList(
     1,
     currentMonth.year(),
     currentMonth.month() + 1,
@@ -48,18 +50,24 @@ const LeaveConsentListView = () => {
     navigate('/leave-consent/write');
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading data</div>;
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error('데이터 로딩 실패');
+    }
+  }, [isError]);
 
   const groupedData = groupByDate(data ?? []);
 
   return (
     <div className="flex flex-col h-screen">
+      {isLoading && <Spinner />}
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        pauseOnFocusLoss
+        limit={1}
+      />
       <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}

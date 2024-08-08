@@ -1,5 +1,5 @@
 export const MENU_ITEMS = [
-  {id: 1, img: 'sketchBook', text: '알림장', to: ''},
+  {id: 1, img: 'sketchBook', text: '알림장', to: '/daily-note'},
   {id: 2, img: 'megaphone', text: '공지사항', to: '/announcement'},
   {id: 3, img: 'attendance', text: '출석부', to: '/attendance'},
   {id: 4, img: 'book', text: '메모', to: '/memo'},

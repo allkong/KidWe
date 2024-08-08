@@ -2,7 +2,7 @@ import axiosInstance from '@/apis/axiosInstance';
 import {KidOfLeaveConsent} from '@/types/leave-consent/KidOfLeaveConsent';
 
 export const getLeaveConsentDetail = async (
-  leaveConsentId: number
+  leaveConsentId: string
 ): Promise<KidOfLeaveConsent> => {
   try {
     const response = await axiosInstance.get(`leaveconsents/${leaveConsentId}`);

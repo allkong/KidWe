@@ -31,12 +31,13 @@ const Home = () => {
         <div className="">
           <KindergartenCard kindergartenName={userInfo.kindergartenName} />
         </div>
-        <UserCardItem
-          profile={userInfo.profile}
-          userName={`${userInfo.userName} ${userInfo.role}`}
-          cardType="arrow"
-          onClick={handleUserCardItemClick}
-        />
+        <div onClick={handleUserCardItemClick}>
+          <UserCardItem
+            profile={userInfo.profile}
+            userName={`${userInfo.userName} ${userInfo.role}`}
+            cardType="arrow"
+          />
+        </div>
         <HomeMenu />
         <MemoShortcut />
       </div>

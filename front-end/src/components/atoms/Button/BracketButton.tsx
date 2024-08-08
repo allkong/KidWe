@@ -2,7 +2,7 @@ import Icon from '@/assets/icons/left-line.svg';
 
 interface BracketButtonProps {
   direction: 'left' | 'right';
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const BracketButton = ({direction, onClick}: BracketButtonProps) => {

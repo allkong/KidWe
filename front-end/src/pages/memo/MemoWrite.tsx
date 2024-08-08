@@ -1,9 +1,8 @@
-import Button from '@/components/atoms/Button/Button';
 import MemoTimeSelect from '@/components/organisms/Memo/MemoTimeSelect';
 import MemoTagSelect from '@/components/organisms/Memo/MemoTagSelect';
 import KindergartenInfomationSelect from '@/components/organisms/Memo/KindergartenInfomationSelect';
 import Header from '@/components/organisms/Navigation/Header';
-import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 import {containerHeaderClass} from '@/styles/styles';
 import {useRecoilState} from 'recoil';
 import {memoState} from '@/recoil/atoms/memo/memo';
@@ -95,16 +94,12 @@ const MemoWrite = () => {
           <MemoTagSelect />
           <KindergartenInfomationSelect />
         </div>
-        <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
-          <Button
-            variant={isValid ? 'positive' : 'negative'}
-            disabled={!isValid}
-            label={memoId ? '메모 수정하기' : '메모 작성하기'}
-            onClick={handleClick}
-            size="large"
-          />
-        </div>
-        <NavigationBar />
+        <ButtonBar
+          label={memoId ? '메모 수정하기' : '메모 작성하기'}
+          variant={isValid ? 'positive' : 'negative'}
+          disabled={!isValid}
+          onClick={handleClick}
+        />
       </div>
       <ToastContainer
         position="top-center" // 알람 위치 지정

@@ -20,7 +20,7 @@ const MemoTimeSelect = () => {
       <div className="flex items-center justify-between text-gray-300">
         <p className="mb-1 text-2xl font-semibold cursor-default">시간 선택</p>
         <div className="flex items-center">
-          <p className="">{dayjs(memoTime).format('M월 D일')}</p>
+          <p>{dayjs(memoTime).format('M월 D일')}</p>
           <CustomTimePicker
             value={dayjs(memoTime).format('HH:mm')}
             onChange={handleTimeChange}

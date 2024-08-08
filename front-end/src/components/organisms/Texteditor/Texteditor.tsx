@@ -7,24 +7,24 @@ import 'react-quill/dist/quill.core.css';
 const TextEditor = ({value, onChange}) => {
   const QuillRef = useRef<ReactQuill>();
 
-  // 이미지를 업로드 하기 위한 함수
-  const imageHandler = () => {
-    // 파일을 업로드 하기 위한 input 태그 생성
-    const input = document.createElement('input');
-    const formData = new FormData();
+  // // 이미지를 업로드 하기 위한 함수
+  // const imageHandler = () => {
+  //   // 파일을 업로드 하기 위한 input 태그 생성
+  //   const input = document.createElement('input');
+  //   const formData = new FormData();
 
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
+  //   input.setAttribute('type', 'file');
+  //   input.setAttribute('accept', 'image/*');
+  //   input.click();
 
-    // 파일이 input 태그에 담기면 실행 될 함수
-    input.onchange = async () => {
-      const file = input.files;
-      if (file !== null) {
-        formData.append('image', file[0]);
-      }
-    };
-  };
+  //   // 파일이 input 태그에 담기면 실행 될 함수
+  //   input.onchange = async () => {
+  //     const file = input.files;
+  //     if (file !== null) {
+  //       formData.append('image', file[0]);
+  //     }
+  //   };
+  // };
 
   // 툴바에 title 속성을 추가하여 한글 설명을 달아줍니다.
   const toolbarOptions = [
@@ -34,7 +34,6 @@ const TextEditor = ({value, onChange}) => {
       {color: [], title: '글자 색'},
       {background: [], title: '배경 색'},
       {align: [], title: '정렬'},
-      'image',
     ],
   ];
 
@@ -67,9 +66,9 @@ const TextEditor = ({value, onChange}) => {
     () => ({
       toolbar: {
         container: toolbarOptions,
-        handlers: {
-          image: imageHandler,
-        },
+        // handlers: {
+        //   image: imageHandler,
+        // },
       },
     }),
     []
