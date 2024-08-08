@@ -19,7 +19,7 @@ const ScheduledUserCard = ({
   const scheduledClass = sendTime ? 'bg-[#F7F7F7]' : 'bg-white';
   return (
     <div
-      className={`flex justify-between items-center py-5 px-8 bg-white ${scheduledClass}`}
+      className={`flex justify-between items-center py-5 px-8 ${scheduledClass}`}
     >
       <div className="flex items-center space-x-4">
         {writer === RoleItem.Guardian ? (
