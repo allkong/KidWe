@@ -22,7 +22,7 @@ const UserCardItem = ({
 }: UserCardItemProps) => {
   return (
     <div
-      className={`flex justify-between items-center py-5 px-8 bg-white border-b`}
+      className={`flex justify-between w-full items-center py-5 px-8 bg-white border-b`}
     >
       <div className="flex items-center space-x-3">
         <ProfileImage src={profile} size="2.9rem" />
