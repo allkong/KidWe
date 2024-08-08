@@ -1,7 +1,8 @@
 import {login} from '@/apis/login/login';
 import {useMutation} from '@tanstack/react-query';
-import {jwtToken} from '@/utils/jwtToken';
 import {LoginResponse} from '@/types/login/LoginResponse';
+import {setToken} from '@/utils/userToken';
+import {setUserData} from '@/utils/userData';
 
 /**
  *
@@ -10,15 +11,15 @@ import {LoginResponse} from '@/types/login/LoginResponse';
  * @returns 성공적으로 요청을 하면 cookie에 refresh token을, body에 access token을 담아서 응답한다.
  */
 export const useLogin = () => {
-  const {setToken} = jwtToken();
-
   const result = useMutation({
     mutationFn: ({email, password}: {email: string; password: string}) => {
       return login(email, password);
     },
     onSuccess: (data: LoginResponse) => {
-      const {accessToken} = data;
+      const {accessToken, ...userData} = data;
+
       setToken(accessToken);
+      setUserData(userData);
     },
   });
   return result;

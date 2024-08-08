@@ -3,10 +3,9 @@ import axios, {
   InternalAxiosRequestConfig,
   isAxiosError,
 } from 'axios';
-import {jwtToken} from '@/utils/jwtToken';
 import {getAccessToken} from '@/apis/login/getAccessToken';
-
-const {getToken, setToken} = jwtToken();
+import {getToken, setToken} from '@/utils/userToken';
+import {setUserData} from '@/utils/userData';
 
 const axiosInstance = axios.create({
   baseURL: 'http://i11a808.p.ssafy.io:8080/',
@@ -44,8 +43,9 @@ axiosInstance.interceptors.response.use(
       try {
         console.log('Access Token 재발급 시작');
 
-        const {accessToken} = await getAccessToken(axiosInstance);
+        const {accessToken, ...userData} = await getAccessToken(axiosInstance);
         setToken(accessToken);
+        setUserData(userData);
 
         console.log('Access Token 재발급 완료');
         return axiosInstance(error.config);
