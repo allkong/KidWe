@@ -1,0 +1,5 @@
+export enum RoleItem {
+  GUARDIAN = 'ROLE_GUARDIAN',
+  TEACHER = 'ROLE_TEACHER',
+  DIRECTOR = 'ROLE_DIRECTOR',
+}
