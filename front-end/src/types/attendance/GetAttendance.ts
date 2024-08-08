@@ -1,7 +1,7 @@
 /**
  * date : YYYY-MM-DD
  */
-export interface Attendance {
+export interface GetAttendance {
   attendanceId: number;
   banId: number;
   banName: string;

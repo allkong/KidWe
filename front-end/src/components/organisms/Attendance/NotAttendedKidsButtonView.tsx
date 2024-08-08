@@ -5,15 +5,15 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import TextArea from '@/components/atoms/Input/TextArea';
 import Select from '@/components/molecules/DropdownButton/Select';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import type {Attendance} from '@/types/attendance/Attendance';
+import type {GetAttendance} from '@/types/attendance/GetAttendance';
 
 interface AttendedKidsButtonViewProps {
-  value?: Attendance[];
+  attendances?: GetAttendance[];
   onClickSelect?: () => void;
 }
 
 const AttendedKidsButtonView = ({
-  value,
+  attendances,
   onClickSelect,
 }: AttendedKidsButtonViewProps) => {
   const [isPositiveModalOpen, setIsPositiveModalOpen] = useState(false);
@@ -65,10 +65,11 @@ const AttendedKidsButtonView = ({
         />
       </div>
       <div className="flex flex-col items-center justify-center w-screen h-fit">
-        {value?.map(() => (
+        {attendances?.map(attendance => (
           <UserCardItemWithButton
+            key={attendance.attendanceId}
             profile=""
-            userName="test1"
+            userName={attendance.kidName}
             negativeLabel="결석"
             onClickNegative={handleOpenNegativeModal}
             positiveLabel="출석"

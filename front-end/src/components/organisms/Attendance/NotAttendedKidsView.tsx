@@ -36,12 +36,12 @@ const AttendedKidsView = ({date}: AttendedKidsViewProps) => {
     <div>
       {isShowSelect ? (
         <AttendedKidsSelectView
-          value={data}
+          attendances={data}
           onClickButton={handleClickButtonButton}
         />
       ) : (
         <AttendedKidsButtonView
-          value={data}
+          attendances={data}
           onClickSelect={handleClickSelectButton}
         />
       )}

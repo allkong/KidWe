@@ -1,12 +1,12 @@
 import axiosInstance from '@/apis/axiosInstance';
-import type {Attendance} from '@/types/attendance/Attendance';
+import type {GetAttendance} from '@/types/attendance/GetAttendance';
 
 export const getAttendanceInfo = async (
   banId: number,
   year: number,
   month: number,
   day: number
-): Promise<Attendance[]> => {
+): Promise<GetAttendance[]> => {
   try {
     const result = await axiosInstance.get(
       `/attendances/${banId}/${year}/${month}/${day}`

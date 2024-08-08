@@ -1,5 +1,5 @@
 import {getAttendanceInfo} from '@/apis/attendance/getAttendanceInfo';
-import {Attendance} from '@/types/attendance/Attendance';
+import {GetAttendance} from '@/types/attendance/GetAttendance';
 import {useQuery} from '@tanstack/react-query';
 import {attendanceKeys} from '@/hooks/attendance/attendanceKeys';
 
@@ -9,7 +9,7 @@ export const useGetAttendanceInfo = (
   month: number,
   date: number
 ) => {
-  const result = useQuery<Attendance[]>({
+  const result = useQuery<GetAttendance[]>({
     queryKey: attendanceKeys.lists(banId, year, month, date),
     queryFn: () => getAttendanceInfo(banId, year, month, date),
   });

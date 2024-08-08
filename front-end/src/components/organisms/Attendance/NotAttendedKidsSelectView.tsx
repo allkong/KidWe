@@ -3,15 +3,15 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useState} from 'react';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import type {Attendance} from '@/types/attendance/Attendance';
+import type {GetAttendance} from '@/types/attendance/GetAttendance';
 
 interface AttendedKidsSelectViewProps {
-  value?: Attendance[];
+  attendances?: GetAttendance[];
   onClickButton?: () => void;
 }
 
 const AttendedKidsSelectView = ({
-  value,
+  attendances,
   onClickButton,
 }: AttendedKidsSelectViewProps) => {
   const [isNegativeModalOpen, setIsNegativeModalOpen] = useState(false);
@@ -59,7 +59,9 @@ const AttendedKidsSelectView = ({
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-screen h-fit">
-        {value?.map(() => <CheckListItem src="sd" />)}
+        {attendances?.map(attendance => (
+          <CheckListItem key={attendance.attendanceId} src="sd" />
+        ))}
       </div>
       <ModalPortal>
         <Modal isOpen={isNegativeModalOpen}>
