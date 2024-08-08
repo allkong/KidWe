@@ -1,6 +1,6 @@
-let accessToken: string | null = null;
+export const {getToken, setToken, deleteToken} = (() => {
+  let accessToken: string | null = null;
 
-export const jwtToken = () => {
   const getToken = () => accessToken;
   const setToken = (value: string) => (accessToken = value);
   const deleteToken = () => (accessToken = null);
@@ -10,4 +10,4 @@ export const jwtToken = () => {
     setToken,
     deleteToken,
   };
-};
+})();

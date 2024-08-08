@@ -1,10 +1,10 @@
-import {Token} from '@/types/login/Token';
 import {AxiosInstance} from 'axios';
 import {getCookie} from '@/utils/getCookie';
+import {LoginResponse} from '@/types/login/LoginResponse';
 
 export const getAccessToken = async (
   instance: AxiosInstance
-): Promise<Token> => {
+): Promise<LoginResponse> => {
   const refreshToken = `Bearer ${getCookie('refreshToken')}`;
 
   const result = await instance.post(
