@@ -2,7 +2,7 @@ import axiosInstance from '@/apis/axiosInstance';
 import {KidOfMedication} from '@/types/medication/KidOfMedication';
 
 export const getMedicationDetail = async (
-  medicationId: number
+  medicationId: string
 ): Promise<KidOfMedication> => {
   try {
     const response = await axiosInstance.get(`medications/${medicationId}`);
