@@ -9,6 +9,6 @@ export const leaveConsentFormState = atom({
     guardianRelationship: '', // 보호자 관계
     guardianContact: '', // 보호자 전화번호
     emergencyRelationship: '', // 비상연락처 관계
-    emergencyCotact: '', // 비상연락처 전화번호
+    emergencyContact: '', // 비상연락처 전화번호
   },
 });

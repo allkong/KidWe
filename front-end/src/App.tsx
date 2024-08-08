@@ -4,6 +4,9 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from '@/pages/Home';
 import MyPage from '@/pages/MyPage';
 import SignUp from '@/pages/SignUp';
+
+import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
+
 import Announcement from '@/pages/Announcement';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 
@@ -33,6 +36,10 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />}></Route>
         <Route path="/schedule" element={<KindergartenSchedule />}></Route>
         <Route path="/mypage" element={<MyPage />}></Route>
+
+        <Route path="/daily-note">
+          <Route path="" element={<DailyNoteListView />} />
+        </Route>
 
         <Route path="/attendance" element={<AttentdanceManagement />}></Route>
         <Route path="/announcement/*" element={<Announcement />}></Route>
