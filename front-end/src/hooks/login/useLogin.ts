@@ -1,6 +1,7 @@
 import {login} from '@/apis/login/login';
 import {useMutation} from '@tanstack/react-query';
 import {jwtToken} from '@/utils/jwtToken';
+import {LoginResponse} from '@/types/login/LoginResponse';
 
 /**
  *
@@ -15,7 +16,7 @@ export const useLogin = () => {
     mutationFn: ({email, password}: {email: string; password: string}) => {
       return login(email, password);
     },
-    onSuccess: ({data}) => {
+    onSuccess: (data: LoginResponse) => {
       const {accessToken} = data;
       setToken(accessToken);
     },
