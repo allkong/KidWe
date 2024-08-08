@@ -11,8 +11,7 @@ interface UserCardItemProps {
   profile: string;
   userName: string;
   banName?: string;
-  cardType: 'basic' | 'detail' | 'status' | 'check' | 'arrow';
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  cardType: 'basic' | 'detail' | 'arrow';
   options?: Option[];
 }
 
@@ -21,7 +20,6 @@ const UserCardItem = ({
   userName,
   banName,
   cardType,
-  onClick,
   options,
 }: UserCardItemProps) => {
   const arrowClass = cardType === 'arrow' ? 'rounded-lg' : 'border-b';
@@ -46,9 +44,7 @@ const UserCardItem = ({
           ))}
         </MoreButton>
       )}
-      {cardType === 'arrow' && (
-        <BracketButton onClick={onClick || (() => {})} direction="right" />
-      )}
+      {cardType === 'arrow' && <BracketButton direction="right" />}
     </div>
   );
 };
