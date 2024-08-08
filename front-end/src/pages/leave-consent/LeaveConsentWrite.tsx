@@ -1,6 +1,6 @@
 import {useEffect, useState, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useResetRecoilState} from 'recoil';
 import {usePostLeaveConsent} from '@/hooks/leave-consent/usePostLeaveConsent';
 import {leaveConsentFormState} from '@/recoil/atoms/leave-consent/leaveConsentFormState';
 import {formatDateToYMD} from '@/utils/dayjsPlugin';
@@ -25,13 +25,32 @@ const LeaveConsentnWrite = () => {
   const navigate = useNavigate();
   const {mutate, isPending, isError} = usePostLeaveConsent();
   const [formState, setFormState] = useRecoilState(leaveConsentFormState);
+  const resetFormState = useResetRecoilState(leaveConsentFormState);
   const [signImage, setSignImage] = useState<File | null>(null);
+  const [isValid, setIsValid] = useState(false);
 
+  // 에러 발생 시 토스트 메시지 표시
   useEffect(() => {
     if (isError) {
       toast.error('작성 실패');
     }
   }, [isError]);
+
+  // 모든 필드가 채워졌는지 검사하여 유효성 업데이트
+  useEffect(() => {
+    const allFieldsFilled =
+      Object.values(formState).every(value => value.trim() !== '') &&
+      signImage !== null;
+    setIsValid(allFieldsFilled);
+  }, [formState, signImage]);
+
+  // 컴포넌트가 언마운트될 때 상태 초기화
+  useEffect(() => {
+    return () => {
+      resetFormState();
+      setSignImage(null);
+    };
+  }, [resetFormState]);
 
   // 입력 값 변경
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -150,6 +169,8 @@ const LeaveConsentnWrite = () => {
       </div>
       <ButtonBar
         label={LEAVECONSENT_LABELS.submit}
+        variant={isValid ? 'positive' : 'negative'}
+        disabled={!isValid}
         onClick={handleFormSubmit}
       />
     </div>
