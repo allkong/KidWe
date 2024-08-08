@@ -1,13 +1,13 @@
 import axiosInstance from '@/apis/axiosInstance';
 
-export const postLeaveConsent = async (
+export const postMedication = async (
   kidId: number,
   formData: FormData,
   memberId: number
 ): Promise<void> => {
   try {
     const response = await axiosInstance.post(
-      `leaveconsents/${kidId}?memberId=${memberId}`,
+      `medications/${kidId}?memberId=${memberId}`,
       formData,
       {
         headers: {

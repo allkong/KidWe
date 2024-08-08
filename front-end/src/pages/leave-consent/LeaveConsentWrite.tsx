@@ -84,7 +84,7 @@ const LeaveConsentnWrite = () => {
       formData.append('sign', signImage);
     }
 
-    mutate({leaveConsentId: 1, formData, memberId: 1});
+    mutate({kidId: 1, formData, memberId: 1});
     navigate('/leave-consent');
   };
 
