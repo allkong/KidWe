@@ -1,13 +1,13 @@
-export const jwtToken = () => {
-  let accessToken: string | null = null;
+let accessToken: string | null = null;
 
-  const getAccessToken = () => accessToken;
-  const setAccessToken = (value: string) => (accessToken = value);
-  const deleteAccessToken = () => (accessToken = null);
+export const jwtToken = () => {
+  const getToken = () => accessToken;
+  const setToken = (value: string) => (accessToken = value);
+  const deleteToken = () => (accessToken = null);
 
   return {
-    getToken: getAccessToken,
-    setToken: setAccessToken,
-    deleteToken: deleteAccessToken,
+    getToken,
+    setToken,
+    deleteToken,
   };
 };
