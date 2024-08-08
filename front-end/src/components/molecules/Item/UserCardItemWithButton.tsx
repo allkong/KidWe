@@ -1,12 +1,12 @@
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
-import Button from '@/components/atoms/Button/Button';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
 
 interface UserCardItemProps {
   profile: string;
   userName: string;
   banName?: string;
-  onClickNegative?: React.MouseEventHandler<HTMLButtonElement>;
-  onClickPositive?: React.MouseEventHandler<HTMLButtonElement>;
+  onClickNegative?: () => void;
+  onClickPositive?: () => void;
   negativeLabel?: string;
   positiveLabel?: string;
 }
@@ -31,19 +31,15 @@ const UserCardItem = ({
       </div>
       <div className="flex items-center gap-3">
         {negativeLabel && (
-          <Button
-            size="small"
+          <XSmallButton
             variant="negative"
-            round="full"
             label={negativeLabel}
             onClick={onClickNegative}
           />
         )}
         {positiveLabel && (
-          <Button
-            size="small"
+          <XSmallButton
             variant="positive"
-            round="full"
             label={positiveLabel}
             onClick={onClickPositive}
           />

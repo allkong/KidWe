@@ -4,10 +4,11 @@ import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import TextArea from '@/components/atoms/Input/TextArea';
 import Select from '@/components/molecules/DropdownButton/Select';
-import Button from '@/components/atoms/Button/Button';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import type {Attendance} from '@/types/attendance/Attendance';
 
 interface AttendedKidsButtonViewProps {
-  value?: string[];
+  value?: Attendance[];
   onClickSelect?: () => void;
 }
 
@@ -49,19 +50,17 @@ const AttendedKidsButtonView = ({
 
   return (
     <>
-      <div className="flex items-center justify-between px-8 py-2 border-b border-gray-200">
+      <div className="flex items-center justify-between px-8 py-2 border-b border-gray-200 min-h-14">
         <div>
           <Select label="반 이름" size="small">
             <Select.Option text="장미반" />
           </Select>
         </div>
-        <Button
+        <XSmallButton
           label="선택"
           onClick={() => {
             onClickSelect?.();
           }}
-          size="small"
-          round="full"
           variant="negative"
         />
       </div>

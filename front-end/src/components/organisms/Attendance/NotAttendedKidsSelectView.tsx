@@ -2,10 +2,11 @@ import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useState} from 'react';
-import Button from '@/components/atoms/Button/Button';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import type {Attendance} from '@/types/attendance/Attendance';
 
 interface AttendedKidsSelectViewProps {
-  value?: string[];
+  value?: Attendance[];
   onClickButton?: () => void;
 }
 
@@ -30,25 +31,29 @@ const AttendedKidsSelectView = ({
 
   return (
     <>
-      <div className="flex items-center justify-between px-8 py-2 border-b border-gray-200">
-        <div>전체</div>
+      <div className="flex items-center justify-between px-8 py-2 border-b border-gray-200 min-h-14">
+        <div>
+          <XSmallButton
+            label="전체선택"
+            onClick={() => {
+              onClickButton?.();
+            }}
+            variant="negative"
+          />
+        </div>
         <div className="space-x-2">
-          <Button
+          <XSmallButton
             label="취소"
             onClick={() => {
               onClickButton?.();
             }}
-            size="small"
-            round="full"
             variant="negative"
           />
-          <Button
+          <XSmallButton
             label="출석"
             onClick={() => {
               onClickButton?.();
             }}
-            size="small"
-            round="full"
             variant="positive"
           />
         </div>

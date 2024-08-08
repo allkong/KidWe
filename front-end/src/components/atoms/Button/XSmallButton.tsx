@@ -14,7 +14,7 @@ const XSmallButton = ({
   return (
     <button
       onClick={onClick}
-      className={`${colorClass} rounded-full text-white text-xs px-1 py-1 min-w-11`}
+      className={`${colorClass} rounded-full text-white text-xs px-2 py-1 min-w-11`}
     >
       {label}
     </button>
