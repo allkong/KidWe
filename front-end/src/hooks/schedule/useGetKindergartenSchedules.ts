@@ -16,7 +16,6 @@ export const useGetKindergartenSchedules = (
   const result = useQuery<GetSchedule[]>({
     queryKey: scheduleKeys.schedules(kindergartenId, date),
     queryFn: () => getAllSchedules(kindergartenId, date),
-    retry: 0,
   });
   return result;
 };

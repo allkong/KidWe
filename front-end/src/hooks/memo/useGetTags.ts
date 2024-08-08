@@ -7,7 +7,6 @@ export const useGetTags = (teacherId: number) => {
   const result = useQuery<Tag[]>({
     queryKey: memoKeys.tags(teacherId),
     queryFn: () => getTags(teacherId),
-    retry: 0,
   });
   return result;
 };

@@ -14,7 +14,6 @@ export const useGetDailyFood = (kindergartenId: number, date: Dayjs) => {
         date.get('date')
       ),
     enabled: !!date,
-    retry: 0,
   });
   return result;
 };

@@ -1,7 +1,7 @@
 export const MENU_ITEMS = [
   {id: 1, img: 'sketchBook', text: '알림장', to: '/daily-note'},
   {id: 2, img: 'megaphone', text: '공지사항', to: '/announcement'},
-  {id: 3, img: 'attendance', text: '출석부', to: ''},
+  {id: 3, img: 'attendance', text: '출석부', to: '/attendance'},
   {id: 4, img: 'book', text: '메모', to: '/memo'},
   {id: 5, img: 'riceBowl', text: '식단', to: '/food'},
   {id: 6, img: 'medication', text: '투약의뢰서', to: '/medication'},
