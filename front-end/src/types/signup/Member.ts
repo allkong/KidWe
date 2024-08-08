@@ -3,5 +3,6 @@ export interface Member {
   tel: string;
   email: string;
   password: string;
+  picture: string | ArrayBuffer;
   role: string;
 }

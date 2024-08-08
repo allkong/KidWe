@@ -6,7 +6,6 @@ interface RoleSelectorProps {
   label?: string;
   isSelected: boolean;
   onClick: () => void;
-  value: string;
   explain?: string;
 }
 
@@ -14,7 +13,6 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
   label,
   isSelected,
   onClick,
-  value,
   explain,
 }) => {
   return (

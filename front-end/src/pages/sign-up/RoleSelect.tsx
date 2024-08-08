@@ -1,35 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RoleSelector from '@/components/atoms/Selector/RoleSelector';
 import Button from '@/components/atoms/Button/Button';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
-
-const roleItems = [
-  {value: 'ROLE_GUARDIAN', label: '학부모'},
-  {value: 'ROLE_TEACHER', label: '선생님'},
-  {value: 'ROLE_DIRECTOR', label: '원장님'},
-];
-
+import {RoleItem, RoleItemValues} from '@/enum/signup/roleItem';
+import {RoleItemKeys} from '@/enum/signup/roleItem';
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signuprole, setSignupRole] = useRecoilState(Signup);
   const navigate = useNavigate();
   const handleRegisterButtonClick = () => {
-    if (selectedRole === '') {
-      setIsModalOpen(true);
-    } else {
-      setSignupRole(prevState => ({
-        ...prevState,
-        member: {
-          ...prevState.member,
-          role: selectedRole,
-        },
-      }));
-      navigate('/signup/info');
-    }
+    setSignupRole(prevState => ({
+      ...prevState,
+      role: selectedRole,
+    }));
+    setIsStateUpdated(true);
   };
 
   const closeModal = () => {
@@ -41,11 +30,32 @@ const RoleSelect = () => {
     // 선택된 역할을 부모 컴포넌트에 전달하는 로직 추가하기
   };
 
+  useEffect(() => {
+    // 혹시 새로고침하여서 role이 없는 경우 redirect
+    if (!isStateUpdated) {
+      closeModal();
+    } else {
+      console.log(signuprole, 'useEffect');
+      navigate('/signup/info');
+    }
+  }, [isStateUpdated, navigate, signuprole]);
+
   return (
     <div className="flex flex-col min-h-full space-y-8 mt-16 mx-4">
-      <p className="text-xl mb-8">역할을 선택해주세요</p>
+      <div className="flex items-center justify-between">
+        <p className="text-xl mb-8">역할을 선택해주세요</p>
+        <img src="/icons/kid.png" alt="Kid Icon" className="w-1/2" />
+      </div>
       <div className=" w-full items-center justify-center space-y-4 text-lg">
-        {roleItems.map((item, index) => (
+        {RoleItemKeys.map(key => (
+          <RoleSelector
+            key={key}
+            isSelected={selectedRole === key}
+            onClick={() => handleRoleChange(key)}
+            label={RoleItem[key as keyof typeof RoleItem]}
+          />
+        ))}
+        {/* {RoleItem.map((item, index) => (
           <RoleSelector
             key={index}
             isSelected={selectedRole === item.value}
@@ -53,7 +63,7 @@ const RoleSelect = () => {
             value={item.value}
             label={item.label}
           />
-        ))}
+        ))} */}
       </div>
       <div className="flex items-center justify-center px-4 bottom-8 ">
         <Button label="역할 선택" onClick={handleRegisterButtonClick} />
