@@ -7,7 +7,6 @@ export const useGetBanInfomation = (banId: number) => {
   const result = useQuery<BanInfomation>({
     queryKey: memoKeys.children(banId),
     queryFn: () => getBanInfomation(banId),
-    retry: 0,
   });
   return result;
 };

@@ -12,6 +12,7 @@ export const useGetAttendanceInfo = (
   const result = useQuery<GetAttendance[]>({
     queryKey: attendanceKeys.lists(banId, year, month, date),
     queryFn: () => getAttendanceInfo(banId, year, month, date),
+    retry: 0,
   });
   return result;
 };

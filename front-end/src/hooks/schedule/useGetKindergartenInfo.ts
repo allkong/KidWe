@@ -7,7 +7,6 @@ export const useGetKindergartenInfo = (kindergartenId: number) => {
   const query = useQuery<GetKindergarten>({
     queryKey: scheduleKeys.kindergartenInfo(kindergartenId),
     queryFn: () => getKindergartenInfo(kindergartenId),
-    retry: 0,
   });
   return query;
 };
