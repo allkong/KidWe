@@ -5,8 +5,8 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
-import {RoleItem, RoleItemValues} from '@/enum/signup/roleItem';
-import {RoleItemKeys} from '@/enum/signup/roleItem';
+import {RoleItem, RoleItemValues} from '@/enum/roleItem';
+import {RoleItemKeys} from '@/enum/roleItem';
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,12 +41,12 @@ const RoleSelect = () => {
   }, [isStateUpdated, navigate, signuprole]);
 
   return (
-    <div className="flex flex-col min-h-full space-y-8 mt-16 mx-4">
+    <div className="flex flex-col min-h-full mx-4 mt-16 space-y-8">
       <div className="flex items-center justify-between">
-        <p className="text-xl mb-8">역할을 선택해주세요</p>
+        <p className="mb-8 text-xl">역할을 선택해주세요</p>
         <img src="/icons/kid.png" alt="Kid Icon" className="w-1/2" />
       </div>
-      <div className=" w-full items-center justify-center space-y-4 text-lg">
+      <div className="items-center justify-center w-full space-y-4 text-lg ">
         {RoleItemKeys.map(key => (
           <RoleSelector
             key={key}
