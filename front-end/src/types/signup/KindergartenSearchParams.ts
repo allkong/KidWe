@@ -1,5 +1,5 @@
 export interface KindergartenSearchParams {
-  sido?: string;
-  sigungu?: string;
+  sido?: string | null;
+  sigungu?: string | null;
   search: string;
 }

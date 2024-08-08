@@ -3,7 +3,7 @@ import {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
 import type {KindergartenSearchParams} from '@/types/signup/KindergartenSearchParams';
 export const getKindergartenSearch = async (
   kindergartenSearch: KindergartenSearchParams
-): Promise<GetKindergarten> => {
+): Promise<GetKindergarten[]> => {
   console.log('kindergartenSearch', kindergartenSearch);
   try {
     const response = await axiosInstance.get(`/kindergartens`, {

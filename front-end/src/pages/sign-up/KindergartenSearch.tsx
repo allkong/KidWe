@@ -21,7 +21,7 @@ const KindergartenSearch: React.FC = () => {
   const [searchResult, setSearchResult] = useState('');
   const [data, setData] = useState<GetKindergarten[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [isNoResult, setIsNoResult] = useState(true);
   const navigate = useNavigate();
 
@@ -31,10 +31,8 @@ const KindergartenSearch: React.FC = () => {
   };
   const handleCityChange = (value: string) => {
     const city = CityOptions.find(city => city.value === value);
-    console.log(city);
     if (city) {
       setSelectedCity(city.label);
-      console.log(city.value, 'handle쪽');
       setSelectedDistrict(''); // 도시 변경 시, 선택된 구 초기화
       setSelectedDistricts(DistrictOptions[city.value] || []);
     }
@@ -60,9 +58,6 @@ const KindergartenSearch: React.FC = () => {
         search: inputValue,
       });
       setData(response);
-      if (data) {
-        console.log(data);
-      }
     } catch (error) {
       setError(error.message);
     } finally {
