@@ -6,31 +6,29 @@ import TextArea from '@/components/atoms/Input/TextArea';
 import Select from '@/components/molecules/DropdownButton/Select';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import type {GetAttendance} from '@/types/attendance/GetAttendance';
+import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
+import {Dayjs} from 'dayjs';
+import {PutAttendance} from '@/types/attendance/PutAttendance';
+import {usePutAttendanceReason} from '@/hooks/attendance/usePutAttendanceReason';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
   onClickSelect?: () => void;
+  date: Dayjs;
 }
+
+const banId = 1;
 
 const AttendedKidsButtonView = ({
   attendances,
   onClickSelect,
+  date,
 }: AttendedKidsButtonViewProps) => {
-  const [isPositiveModalOpen, setIsPositiveModalOpen] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const kidRef = useRef<GetAttendance>();
 
-  const handleOpenPositiveModal = () => {
-    setIsPositiveModalOpen(true);
-  };
-
-  const handleClosePositiveModal = () => {
-    setIsPositiveModalOpen(false);
-  };
-
-  const handleSubmitPositiveModal = () => {
-    // 로직 처리
-    setIsPositiveModalOpen(false);
-  };
+  const attendanceMutate = usePutAttendanceInfo(banId);
+  const reasonMutate = usePutAttendanceReason(banId);
 
   const [isNegativeModalOpen, setIsNegativeModalOpen] = useState(false);
 
@@ -42,10 +40,38 @@ const AttendedKidsButtonView = ({
     setIsNegativeModalOpen(false);
   };
 
-  const handleSubmitNegativeModal = () => {
+  const handleSubmitNegativeModal = async () => {
     // 로직 처리
-    window.alert(inputRef.current?.value);
-    setIsNegativeModalOpen(false);
+    if (kidRef.current !== undefined) {
+      const {current} = kidRef;
+      const {date: currentDate, kidId} = current;
+      const [year, month, date] = currentDate.split('-').map(Number);
+      await attendanceMutate.mutateAsync({
+        year,
+        month,
+        day: date,
+        kidIds: [kidId],
+        attendedToday: 'ABSENCE',
+      });
+      await reasonMutate.mutateAsync({
+        year,
+        month,
+        day: date,
+        kidId,
+        reason: inputRef.current ? inputRef.current.value : '',
+      });
+      setIsNegativeModalOpen(false);
+    }
+  };
+
+  const submitAttend = ({
+    year,
+    month,
+    day,
+    kidIds,
+    attendedToday,
+  }: PutAttendance) => {
+    attendanceMutate.mutate({year, month, day, kidIds, attendedToday});
   };
 
   return (
@@ -65,45 +91,31 @@ const AttendedKidsButtonView = ({
         />
       </div>
       <div className="flex flex-col items-center justify-center w-screen h-fit">
-        {attendances?.map(attendance => (
-          <UserCardItemWithButton
-            key={attendance.attendanceId}
-            profile=""
-            userName={attendance.kidName}
-            negativeLabel="결석"
-            onClickNegative={handleOpenNegativeModal}
-            positiveLabel="출석"
-            onClickPositive={handleOpenPositiveModal}
-          />
-        ))}
+        {attendances &&
+          attendances.map(attendance => (
+            <UserCardItemWithButton
+              key={attendance.attendanceId}
+              profile=""
+              userName={attendance.kidName}
+              negativeLabel="결석"
+              onClickNegative={() => {
+                kidRef.current = attendance;
+                handleOpenNegativeModal();
+              }}
+              positiveLabel="출석"
+              onClickPositive={() =>
+                submitAttend({
+                  year: date.get('year'),
+                  month: date.get('month'),
+                  day: date.get('date'),
+                  attendedToday: 'ATTENDANCE',
+                  kidIds: [attendance.kidId],
+                })
+              }
+            />
+          ))}
       </div>
       <ModalPortal>
-        <Modal isOpen={isPositiveModalOpen}>
-          <Modal.Header title="알림" />
-          <Modal.Body>
-            <div className="flex flex-col items-center justify-center py-10">
-              <p>체크한 원생들에 대해</p>
-              <p>출석 처리를 하시겠습니까?</p>
-            </div>
-          </Modal.Body>
-          <Modal.BottomButton
-            label="취소"
-            onClick={handleClosePositiveModal}
-            round="full"
-            size="large"
-            variant="negative"
-          ></Modal.BottomButton>
-          <Modal.BottomButton
-            label="확인"
-            onClick={handleSubmitPositiveModal}
-            round="full"
-            size="large"
-            variant="positive"
-          ></Modal.BottomButton>
-          <Modal.Background
-            onClick={handleClosePositiveModal}
-          ></Modal.Background>
-        </Modal>
         <Modal isOpen={isNegativeModalOpen}>
           <Modal.Header title="출결내용 작성" />
           <Modal.Body>

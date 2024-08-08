@@ -71,7 +71,7 @@ const SelectMain = ({
 
   useEffect(() => {
     setSelectedOption(undefined);
-    console.log(label);
+    // console.log(label);
   }, [label]);
 
   return (

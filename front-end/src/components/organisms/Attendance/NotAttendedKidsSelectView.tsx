@@ -1,32 +1,95 @@
 import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import type {GetAttendance} from '@/types/attendance/GetAttendance';
+import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
+import {Dayjs} from 'dayjs';
+
+const banId = 1;
 
 interface AttendedKidsSelectViewProps {
-  attendances?: GetAttendance[];
+  attendances: GetAttendance[];
   onClickButton?: () => void;
+  date: Dayjs;
+}
+
+interface CheckedGetAttendance extends GetAttendance {
+  isChecked: boolean;
 }
 
 const AttendedKidsSelectView = ({
   attendances,
-  onClickButton,
+  onClickButton: onClickTabChangeButton,
 }: AttendedKidsSelectViewProps) => {
-  const [isNegativeModalOpen, setIsNegativeModalOpen] = useState(false);
+  // checked attendances
+  const [checkedAttendances, setCheckedAttendances] =
+    useState<CheckedGetAttendance[]>();
+  useEffect(() => {
+    if (attendances !== undefined) {
+      setCheckedAttendances(
+        attendances.map(val => {
+          return {...val, isChecked: false};
+        })
+      );
+    }
+  }, [attendances]);
 
-  const handleCloseNegativeModal = () => {
-    setIsNegativeModalOpen(false);
+  const handleAttendancesCheck = (id: number) => {
+    setCheckedAttendances(
+      checkedAttendances?.map(val =>
+        val.attendanceId === id ? {...val, isChecked: !val.isChecked} : {...val}
+      )
+    );
   };
 
-  // const handleOpenNegativeModal = () => {
-  //   setIsNegativeModalOpen(true);
-  // };
+  const handleAllCheck = () => {
+    setCheckedAttendances(
+      checkedAttendances?.map(val => {
+        return {...val, isChecked: true};
+      })
+    );
+  };
 
-  const handleSubmitNegativeModal = () => {
-    // 로직 처리
-    setIsNegativeModalOpen(false);
+  const [isPositiveModalOpen, setIsPositiveModalOpen] = useState(false);
+
+  const handleClosePositiveModal = () => {
+    setIsPositiveModalOpen(false);
+  };
+
+  const handleOpenPositiveModal = () => {
+    setIsPositiveModalOpen(true);
+  };
+
+  const submitMutate = usePutAttendanceInfo(banId);
+  const submitCheckedList = () => {
+    if (attendances[0] !== undefined && checkedAttendances !== undefined) {
+      const [year, month, date] = attendances[0].date.split('-').map(Number);
+      const selectedList: number[] = checkedAttendances
+        ?.filter(value => value.isChecked)
+        .map(value => value.kidId);
+
+      // 로직 처리 성공시
+      submitMutate.mutate(
+        {
+          year,
+          month,
+          day: date,
+          attendedToday: 'ATTENDANCE',
+          kidIds: selectedList,
+        },
+        {
+          onSuccess: () => {
+            setIsPositiveModalOpen(false);
+            onClickTabChangeButton?.();
+          },
+          onError: () => {
+            // error handling
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -35,9 +98,7 @@ const AttendedKidsSelectView = ({
         <div>
           <XSmallButton
             label="전체선택"
-            onClick={() => {
-              onClickButton?.();
-            }}
+            onClick={() => handleAllCheck()}
             variant="negative"
           />
         </div>
@@ -45,26 +106,31 @@ const AttendedKidsSelectView = ({
           <XSmallButton
             label="취소"
             onClick={() => {
-              onClickButton?.();
+              onClickTabChangeButton?.();
             }}
             variant="negative"
           />
           <XSmallButton
             label="출석"
-            onClick={() => {
-              onClickButton?.();
-            }}
+            onClick={() => handleOpenPositiveModal()}
             variant="positive"
           />
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-screen h-fit">
-        {attendances?.map(attendance => (
-          <CheckListItem key={attendance.attendanceId} src="sd" />
-        ))}
+        {checkedAttendances &&
+          checkedAttendances.map(attendance => (
+            <CheckListItem
+              key={attendance.attendanceId}
+              src="sd"
+              text={attendance.kidName}
+              isChecked={attendance.isChecked}
+              onClick={() => handleAttendancesCheck(attendance.attendanceId)}
+            />
+          ))}
       </div>
       <ModalPortal>
-        <Modal isOpen={isNegativeModalOpen}>
+        <Modal isOpen={isPositiveModalOpen}>
           <Modal.Header title="출결내용 작성" />
           <Modal.Body>
             <div className="flex flex-col items-center justify-center py-10">
@@ -74,20 +140,20 @@ const AttendedKidsSelectView = ({
           </Modal.Body>
           <Modal.BottomButton
             label="취소"
-            onClick={handleCloseNegativeModal}
+            onClick={handleClosePositiveModal}
             round="full"
             size="large"
             variant="negative"
           ></Modal.BottomButton>
           <Modal.BottomButton
             label="확인"
-            onClick={handleSubmitNegativeModal}
+            onClick={submitCheckedList}
             round="full"
             size="large"
             variant="positive"
           ></Modal.BottomButton>
           <Modal.Background
-            onClick={handleCloseNegativeModal}
+            onClick={handleClosePositiveModal}
           ></Modal.Background>
         </Modal>
       </ModalPortal>

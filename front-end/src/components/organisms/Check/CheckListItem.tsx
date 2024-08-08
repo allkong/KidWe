@@ -43,7 +43,7 @@ const CheckListItem = forwardRef(
         className={`flex items-center justify-between w-full px-8 py-5 text-gray-300 ${colorClass} border-b border-gray-100`}
         onClick={() => setIsChecked(!isChecked)}
       >
-        <div className="flex items-center justify-center gap-4 w-fit h-fit">
+        <div className="flex items-center justify-center gap-3 w-fit h-fit">
           {src && <ProfileImage src={src} size={imgSize} />}
           <p className={`${fontSize} font-semibold`}>{text}</p>
         </div>
