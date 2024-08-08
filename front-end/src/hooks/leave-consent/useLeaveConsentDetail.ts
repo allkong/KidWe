@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {getLeaveConsentDetail} from '@/apis/leave-consent/getLeaveConsentDetail';
 import {KidOfLeaveConsent} from '@/types/leave-consent/KidOfLeaveConsent';
 
-export const useLeaveConsentDetail = (leaveConsentId: number) => {
+export const useLeaveConsentDetail = (leaveConsentId: string) => {
   return useQuery<KidOfLeaveConsent, Error>({
     queryKey: ['leaveConsentDatail', leaveConsentId],
     queryFn: () => {
