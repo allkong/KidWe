@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import RoleSelector from '@/components/atoms/Selector/RoleSelector';
 import Button from '@/components/atoms/Button/Button';
 import Modal from '@/components/organisms/Modal/Modal';
@@ -10,20 +10,15 @@ import {RoleItemKeys} from '@/enum/signup/roleItem';
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signuprole, setSignupRole] = useRecoilState(Signup);
   const navigate = useNavigate();
   const handleRegisterButtonClick = () => {
-    if (selectedRole === '') {
-      setIsModalOpen(true);
-    } else {
-      setSignupRole(prevState => ({
-        member: {
-          ...prevState.member,
-          role: selectedRole,
-        },
-      }));
-      navigate('/signup/info');
-    }
+    setSignupRole(prevState => ({
+      ...prevState,
+      role: selectedRole,
+    }));
+    setIsStateUpdated(true);
   };
 
   const closeModal = () => {
@@ -34,6 +29,16 @@ const RoleSelect = () => {
     setSelectedRole(role);
     // 선택된 역할을 부모 컴포넌트에 전달하는 로직 추가하기
   };
+
+  useEffect(() => {
+    // 혹시 새로고침하여서 role이 없는 경우 redirect
+    if (!isStateUpdated) {
+      closeModal();
+    } else {
+      console.log(signuprole, 'useEffect');
+      navigate('/signup/info');
+    }
+  }, [isStateUpdated, navigate, signuprole]);
 
   return (
     <div className="flex flex-col min-h-full space-y-8 mt-16 mx-4">

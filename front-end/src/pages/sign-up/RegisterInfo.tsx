@@ -15,6 +15,7 @@ const RegisterInfo = () => {
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
+  const [userpicture, setPicture] = useState<string | ArrayBuffer | null>(null);
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
   const [ismissingvalue, setIsMissingValue] = useState(false);
@@ -25,8 +26,20 @@ const RegisterInfo = () => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const signupMutate = useMutation({
-    mutationFn: () => {
+    mutationFn: async () => {
       return postSignup(signupregister);
+    },
+    onSuccess: data => {
+      if (data === '성공') {
+        navigate('/login');
+      } else if (data === '실패') {
+        toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
+      } else {
+        toast.error(data);
+      }
+    },
+    onError: error => {
+      toast.error(`회원가입에 실패했습니다: ${error.message}`);
     },
   });
 
@@ -55,6 +68,7 @@ const RegisterInfo = () => {
       } else {
         setIsWrongEmailType(false);
       }
+
       if (userpassword !== userpassword2) {
         setIsWrongPasswordType(true);
         console.log('비밀번호 확인이 틀립니다.');
@@ -65,35 +79,38 @@ const RegisterInfo = () => {
     }
 
     setSignupRegister(prevState => ({
-      member: {
-        ...prevState.member,
-        name: username,
-        tel: usertel,
-        email: useremail,
-        password: userpassword,
-      },
+      ...prevState,
+      name: username,
+      tel: usertel,
+      email: useremail,
+      password: userpassword,
+      picture: userpicture,
     }));
     setIsStateUpdated(true);
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      // reader.onloadend = () => {
+      //   setPicture(reader.result);
+      // };
+      reader.readAsDataURL(file);
+      console.log('file', file);
+      console.log('reader', reader);
+    }
+  };
+
   useEffect(() => {
     // 혹시 새로고침하여서 role이 없는 경우 redirect
-    if (!signupregister.member.role) {
+    if (!signupregister.role) {
       toast.error('역할부터 정해주세요', {
         onClose: () => navigate('/signup/role'),
       });
     }
     if (isStateUpdated) {
-      const postSignup = async () => {
-        try {
-          signupMutate.mutate();
-          console.log('회원가입 완료');
-          navigate('/login');
-        } catch (error) {
-          console.error('회원가입에 실패했습니다', error);
-        }
-      };
-      postSignup();
+      signupMutate.mutate();
       setIsStateUpdated(false);
     }
   }, [isStateUpdated, navigate, signupMutate, signupregister]);
@@ -109,8 +126,30 @@ const RegisterInfo = () => {
       />
       <div className="main-container min-h-screen space-y-8 py-6 flex flex-col items-center w-full h-full px-10">
         <div className="flex items-center justify-center">
-          <div className="w-40 h-40 flex items-center justify-center ">
-            <img src="/icons/kid.png" alt="Kid Icon" />
+          <div className="flex items-center justify-center ">
+            <img src="/icons/kidwe.png" alt="Kidwe Icon" />
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <input
+            type="file"
+            onChange={handleImageChange}
+            className="hidden mb-4"
+            id="fileInput"
+          />
+          <div
+            className="flex items-center justify-center w-24 h-24 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer"
+            onClick={() => document.getElementById('fileInput')?.click()}
+          >
+            {userpicture ? (
+              <img
+                src={userpicture as string}
+                alt="프로필 미리보기"
+                className="object-cover w-full h-full rounded-lg "
+              />
+            ) : (
+              <span className="text-gray-500">이미지 선택</span>
+            )}
           </div>
         </div>
         <div className="w-full space-y-8">

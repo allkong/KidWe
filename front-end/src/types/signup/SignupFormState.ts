@@ -1,5 +1,8 @@
-import {Member} from '@/types/signup/Member';
-
 export interface SignupFormState {
-  member: Member;
+  name: string;
+  tel: string;
+  email: string;
+  password: string;
+  picture: string | ArrayBuffer | null;
+  role: string;
 }
