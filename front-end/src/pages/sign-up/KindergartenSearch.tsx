@@ -27,6 +27,7 @@ const KindergartenSearch: React.FC = () => {
 
   const handleKindergartenSearchButtonClick = () => {
     // 버튼 누를 때의 유치원 정보를 recoil에 담아주기!
+    // recoil에는 kindergartenId, banId만 넘겨주면 됨
     navigate('/signup/kindergarten/ban');
   };
   const handleCityChange = (value: string) => {
