@@ -5,8 +5,8 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
-import {RoleItem, RoleItemValues} from '@/enum/roleItem';
-import {RoleItemKeys} from '@/enum/roleItem';
+import {RoleItem} from '@/enum/roleItem';
+import {ROLE_NAMES} from '@/constants/roleNames';
 const RoleSelect = () => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,12 +47,12 @@ const RoleSelect = () => {
         <img src="/icons/kid.png" alt="Kid Icon" className="w-1/2" />
       </div>
       <div className="items-center justify-center w-full space-y-4 text-lg ">
-        {RoleItemKeys.map(key => (
+        {Object.values(RoleItem).map(key => (
           <RoleSelector
             key={key}
             isSelected={selectedRole === key}
             onClick={() => handleRoleChange(key)}
-            label={RoleItem[key as keyof typeof RoleItem]}
+            label={ROLE_NAMES[key]}
           />
         ))}
         {/* {RoleItem.map((item, index) => (
