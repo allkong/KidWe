@@ -1,4 +1,5 @@
 import {useState, ChangeEvent} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useRecoilState} from 'recoil';
 import {usePostLeaveConsent} from '@/hooks/leave-consent/usePostLeaveConsent';
 import {leaveConsentFormState} from '@/recoil/atoms/leave-consent/leaveConsentFormState';
@@ -18,6 +19,7 @@ import AreaDivider from '@/components/atoms/Divider/AreaDivider';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 
 const LeaveConsentnWrite = () => {
+  const navigate = useNavigate();
   const {mutate, isLoading, error} = usePostLeaveConsent();
   const [formState, setFormState] = useRecoilState(leaveConsentFormState);
   const [signImage, setSignImage] = useState<File | null>(null);
@@ -39,13 +41,17 @@ const LeaveConsentnWrite = () => {
   const handleFormSubmit = () => {
     const formData = new FormData();
 
-    formData.append('dto', JSON.stringify(formState));
+    formData.append(
+      'dto',
+      new Blob([JSON.stringify(formState)], {type: 'application/json'})
+    );
 
     if (signImage !== null) {
       formData.append('sign', signImage);
     }
 
     mutate({leaveConsentId: 1, formData});
+    navigate('/leave-consent');
   };
 
   return (
@@ -79,7 +85,7 @@ const LeaveConsentnWrite = () => {
         <div className="py-8 space-y-5 px-9">
           <div>
             <LabelInput
-              label={LEAVECONSENT_PLACEHOLDERS.relationship}
+              label={LEAVECONSENT_LABELS.guardian}
               name="guardianRelationship"
               value={formState.guardianRelationship}
               onChange={handleInputChange}
@@ -94,15 +100,15 @@ const LeaveConsentnWrite = () => {
           </div>
           <div>
             <LabelInput
-              label={LEAVECONSENT_PLACEHOLDERS.relationship}
+              label={LEAVECONSENT_LABELS.emergency}
               name="emergencyRelationship"
               value={formState.emergencyRelationship}
               onChange={handleInputChange}
               placeholder={LEAVECONSENT_PLACEHOLDERS.relationship}
             />
             <LabelInput
-              name="emergencyCotact"
-              value={formState.emergencyCotact}
+              name="emergencyContact"
+              value={formState.emergencyContact}
               onChange={handleInputChange}
               placeholder={LEAVECONSENT_PLACEHOLDERS.contact}
             />
