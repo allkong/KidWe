@@ -10,7 +10,7 @@ import {Dayjs} from 'dayjs';
 const banId = 1;
 
 interface AttendedKidsSelectViewProps {
-  attendances: GetAttendance[];
+  attendances?: GetAttendance[];
   onClickButton?: () => void;
   date: Dayjs;
 }
@@ -64,7 +64,7 @@ const AttendedKidsSelectView = ({
 
   const submitMutate = usePutAttendanceInfo(banId);
   const submitCheckedList = () => {
-    if (attendances[0] !== undefined && checkedAttendances !== undefined) {
+    if (attendances !== undefined && checkedAttendances !== undefined) {
       const [year, month, date] = attendances[0].date.split('-').map(Number);
       const selectedList: number[] = checkedAttendances
         ?.filter(value => value.isChecked)
