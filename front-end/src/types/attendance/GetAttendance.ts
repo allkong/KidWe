@@ -8,6 +8,6 @@ export interface GetAttendance {
   kidId: number;
   kidName: string;
   reason: string;
-  attendedToday: string;
+  attendedToday: 'NOTHING' | 'ATTENDANCE' | 'ABSENCE';
   date: string;
 }
