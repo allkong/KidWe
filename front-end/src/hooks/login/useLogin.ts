@@ -18,6 +18,8 @@ export const useLogin = () => {
     onSuccess: (data: LoginResponse) => {
       const {accessToken, ...userData} = data;
 
+      console.log(document.cookie);
+
       setToken(accessToken);
       setUserData(userData);
     },
