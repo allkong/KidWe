@@ -8,7 +8,7 @@ import {getToken, setToken} from '@/utils/userToken';
 import {setUserData} from '@/utils/userData';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://i11a808.p.ssafy.io:8080/',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

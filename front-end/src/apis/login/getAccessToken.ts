@@ -6,7 +6,7 @@ export const getAccessToken = async (): Promise<LoginResponse> => {
   const refreshToken = `Bearer ${getCookie('refreshToken')}`;
 
   const result = await axios.post(
-    `http://i11a808.p.ssafy.io:8080/refresh`,
+    `${import.meta.env.VITE_API_URL}/refresh`,
     {},
     {
       headers: {
