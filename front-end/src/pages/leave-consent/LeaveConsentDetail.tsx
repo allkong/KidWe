@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useLeaveConsentDetail} from '@/hooks/leave-consent/useLeaveConsentDetail';
 import {useDeleteLeaveConsent} from '@/hooks/leave-consent/useDeleteLeaveConsent';
@@ -18,21 +19,23 @@ const LeaveConsentDetail = () => {
   const {leaveConsentId} = useParams();
   const deleteMutation = useDeleteLeaveConsent();
 
-  // const {data, error, isLoading} = useLeaveConsentDetail(leaveConsentId ?? '');
+  const {data, isError, isLoading} = useLeaveConsentDetail(
+    leaveConsentId ?? ''
+  );
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error('데이터 로딩 실패');
-  //   }
-  // }, [isError]);
+  useEffect(() => {
+    if (isError) {
+      toast.error('데이터 로딩 실패');
+    }
+  }, [isError]);
 
-  // useEffect(() => {
-  //   if (!isLoading && !data) {
-  //     setTimeout(() => {
-  //       navigate(-1);
-  //     }, 1000);
-  //   }
-  // }, [isLoading, data, navigate]);
+  useEffect(() => {
+    if (!isLoading && !data) {
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
+    }
+  }, [isLoading, data, navigate]);
 
   const handleLeaveConsentDelete = () => {
     if (leaveConsentId) {
@@ -53,13 +56,13 @@ const LeaveConsentDetail = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* {isLoading && <Spinner />}
+      {isLoading && <Spinner />}
       <ToastContainer
         position="top-center"
         autoClose={1000}
         hideProgressBar
         limit={1}
-      /> */}
+      />
       <Header title="귀가동의서" buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem
@@ -72,31 +75,31 @@ const LeaveConsentDetail = () => {
         <div className="space-y-5 border-b py-7 px-9">
           <DetailLabelItem
             title="날짜"
-            content="7월 29일 월요일"
+            content={data?.leaveDate}
             color="#FFC36A"
           />
-          <DetailLabelItem title="시간" content="14:00" />
+          <DetailLabelItem title="시간" content={data?.leaveTime} />
           <DetailMultilineLabelItem
             title="귀가 방법"
-            content="오늘 일이 있어서 일찍 데리러 갈게요. 제가 직접 데리러 가겠습니다. 감사합니다."
+            content={data?.leaveMethod}
           />
           <DetailMultilineLabelItem
             title="보호자"
-            content="아버지"
-            contact="010-1111-2222"
+            content={data?.guardianRelationship}
+            contact={data?.guardianContact}
           />
           <DetailMultilineLabelItem
             title="보호자"
-            content="어머니"
-            contact="010-2222-3333"
+            content={data?.emergencyRelationship}
+            contact={data?.emergencyContanct}
           />
         </div>
         {/* 서명 */}
         <ConsentSignatureCard
           text="원아의 귀가를 위 보호자에게 인도해 주세요.\n변동이 있다면 사전에 반드시 연락을 취하겠습니다."
-          date="2024년 7월 11일"
-          parentName="신형만"
-          signatureUrl="https://habitual-sawfish-65b.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F552f5903-0ff8-4755-a27c-4324d9d2fb6a%2F67a96011-c560-4598-ba77-45845356442b%2FUntitled.png?table=block&id=e317e6e8-c9d3-477f-8bfa-036af6ecf325&spaceId=552f5903-0ff8-4755-a27c-4324d9d2fb6a&width=2000&userId=&cache=v2"
+          date={data?.signDate || ''}
+          parentName={data?.parentName || ''}
+          signatureUrl={data?.signUrl || ''}
         />
       </div>
       <NavigationBar />
