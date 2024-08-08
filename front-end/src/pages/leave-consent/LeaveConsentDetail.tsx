@@ -89,9 +89,9 @@ const LeaveConsentDetail = () => {
             contact={data?.guardianContact}
           />
           <DetailMultilineLabelItem
-            title="보호자"
+            title="비상연락처"
             content={data?.emergencyRelationship}
-            contact={data?.emergencyContanct}
+            contact={data?.emergencyContact}
           />
         </div>
         {/* 서명 */}
