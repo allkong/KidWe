@@ -23,11 +23,15 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
+  console.log('config', config);
+
   return config;
 });
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
+    console.log('server', response);
+
     return response;
   },
   async error => {
@@ -35,19 +39,22 @@ axiosInstance.interceptors.response.use(
     // Refresh token을 통해 Access token 발급 후 기존 api 재요청
     if (
       error.response?.status === 401 &&
-      error.response?.data.message === 'UNAUTHENTICATED_EXPIRED_TOKEN'
+      error.response?.data === 'UNAUTHENTICATED_EXPIRED_TOKEN'
     ) {
       try {
+        console.log('Access Token 재발급 시작');
+
         const {accessToken} = await getAccessToken(axiosInstance);
         setToken(accessToken);
+
+        console.log('Access Token 재발급 완료');
         return axiosInstance(error.config);
       } catch (error) {
         if (
-          isAxiosError<{message: string}>(error) &&
+          isAxiosError(error) &&
           error.response &&
           error.status === 401 &&
-          error.response.data.message ===
-            'UNAUTHENTICATED_EXPIRED_REFRESH_TOKEN'
+          error.response.data === 'UNAUTHENTICATED_EXPIRED_REFRESH_TOKEN'
         ) {
           // Refresh token 또한 만료된 경우
           // window.location.href = '/login';
