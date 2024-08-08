@@ -4,14 +4,15 @@ import {postLeaveConsent} from '@/apis/leave-consent/postLeaveConsent';
 interface PostLeaveConsentData {
   leaveConsentId: number;
   formData: FormData;
+  memberId: number;
 }
 
 export const usePostLeaveConsent = () => {
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, PostLeaveConsentData>({
-    mutationFn: ({leaveConsentId, formData}) =>
-      postLeaveConsent(leaveConsentId, formData),
+    mutationFn: ({leaveConsentId, formData, memberId}) =>
+      postLeaveConsent(leaveConsentId, formData, memberId),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['leaveConsentList']});
     },
