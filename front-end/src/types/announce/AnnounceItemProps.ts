@@ -1,10 +1,9 @@
 export interface AnnounceItemProps {
-  id?: number;
   title: string;
   writer: string;
-  date: Date;
+  date: string;
   src?: string;
-  classname?: string;
+  banName?: string;
   tagbgcolor?: string;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }
