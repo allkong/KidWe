@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://i11a808.p.ssafy.io:8081/',
+  baseURL: import.meta.env.VITE_MEMO_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

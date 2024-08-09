@@ -8,7 +8,7 @@ import {getToken, setToken} from '@/utils/userToken';
 import {setUserData} from '@/utils/userData';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://i11a808.p.ssafy.io:8080/',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -36,26 +36,24 @@ axiosInstance.interceptors.response.use(
   async error => {
     // Access token이 만료된 경우
     // Refresh token을 통해 Access token 발급 후 기존 api 재요청
+    const {config} = error;
     if (
       error.response?.status === 401 &&
-      error.response?.data === 'UNAUTHENTICATED_EXPIRED_TOKEN'
+      error.response?.data === 'Auth Error' &&
+      !config._retry
     ) {
       try {
         console.log('Access Token 재발급 시작');
 
-        const {accessToken, ...userData} = await getAccessToken(axiosInstance);
+        config._retry = true;
+        const {accessToken, ...userData} = await getAccessToken();
         setToken(accessToken);
         setUserData(userData);
 
         console.log('Access Token 재발급 완료');
         return axiosInstance(error.config);
       } catch (error) {
-        if (
-          isAxiosError(error) &&
-          error.response &&
-          error.status === 401 &&
-          error.response.data === 'UNAUTHENTICATED_EXPIRED_REFRESH_TOKEN'
-        ) {
+        if (isAxiosError(error) && error.response && error.status === 401) {
           // Refresh token 또한 만료된 경우
           // window.location.href = '/login';
           // return new Promise(() => {});
