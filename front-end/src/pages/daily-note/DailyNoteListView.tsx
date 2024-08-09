@@ -14,9 +14,9 @@ import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {RoleItem} from '@/enum/roleItem';
 
-// const DailyNoteListView = () => {
-//   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
-//   const navigate = useNavigate();
+const DailyNoteListView = () => {
+  const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
+  const navigate = useNavigate();
 
   const {data, isError, isLoading} = useDailyNoteList(
     1,
@@ -26,21 +26,21 @@ import {RoleItem} from '@/enum/roleItem';
     RoleItem.Teacher
   );
 
-//   const handleLeftClick = () => {
-//     setCurrentMonth(prev => prev.subtract(1, 'month').startOf('month'));
-//   };
+  const handleLeftClick = () => {
+    setCurrentMonth(prev => prev.subtract(1, 'month').startOf('month'));
+  };
 
-//   const handleRightClick = () => {
-//     setCurrentMonth(prev => prev.add(1, 'month').startOf('month'));
-//   };
+  const handleRightClick = () => {
+    setCurrentMonth(prev => prev.add(1, 'month').startOf('month'));
+  };
 
   const handleUserItemClick = (dailyNoteId: number) => {
     navigate(`/daily-note/${dailyNoteId}`);
   };
 
-//   const handleWriteButtonClick = () => {
-//     navigate('/medication/write');
-//   };
+  const handleWriteButtonClick = () => {
+    navigate('/daily-note/write');
+  };
 
   useEffect(() => {
     if (isError) {
@@ -105,4 +105,4 @@ import {RoleItem} from '@/enum/roleItem';
   );
 };
 
-// export default DailyNoteListView;
+export default DailyNoteListView;
