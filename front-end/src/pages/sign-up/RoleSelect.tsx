@@ -51,7 +51,7 @@ const RoleSelect = () => {
             key={key}
             isSelected={selectedRole === key}
             onClick={() => handleRoleChange(key)}
-            label={ROLE_NAMES[key as keyof typeof ROLE_NAMES]}
+            label={ROLE_NAMES[key]}
           />
         ))}
         {/* {RoleItem.map((item, index) => (
