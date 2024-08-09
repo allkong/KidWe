@@ -7,8 +7,15 @@ import {PutAttendance} from '@/types/attendance/PutAttendance';
 export const usePutAttendanceInfo = (banId: number) => {
   const queryClient = useQueryClient();
   const result = useMutation({
-    mutationFn: ({year, month, day, kidIds, attendedToday}: PutAttendance) =>
-      putAttendanceInfo(year, month, day, kidIds, attendedToday),
+    mutationFn: ({
+      year,
+      month,
+      day,
+      kidIds,
+      attendedToday,
+      reason,
+    }: PutAttendance) =>
+      putAttendanceInfo(year, month, day, kidIds, attendedToday, reason),
     onSuccess: (_, {year, month, day}) => {
       queryClient.invalidateQueries({
         queryKey: attendanceKeys.lists(banId, year, month, day),
