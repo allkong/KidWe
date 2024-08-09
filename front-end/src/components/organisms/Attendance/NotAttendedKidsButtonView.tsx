@@ -120,8 +120,8 @@ const AttendedKidsButtonView = ({
         <Modal isOpen={isNegativeModalOpen}>
           <Modal.Header title="출결내용 작성" />
           <Modal.Body>
-            <div className="flex flex-col items-center justify-center py-10">
-              <TextArea ref={inputRef} />
+            <div className="flex flex-col items-center justify-center py-10 h-44">
+              <TextArea ref={inputRef} placeholder="출결내용 작성" />
             </div>
           </Modal.Body>
           <Modal.BottomButton
