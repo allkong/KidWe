@@ -10,9 +10,8 @@ import {useMutation} from '@tanstack/react-query';
 import {SignupGuardianState} from '@/recoil/atoms/signup/signupGuardian';
 import {postGuardian} from '@/apis/signup/postGuardian';
 import {toast, ToastContainer} from 'react-toastify';
-import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
-import CustomCalendar from '@/components/molecules/Calendar/CustomCalendar';
 import {Gender} from '@/enum/gender';
 const genderItems = [
   {value: 'MALE', label: '남아'},
@@ -22,7 +21,6 @@ const genderItems = [
 const KindergartenChild: React.FC = () => {
   const [childname, setChildname] = useState('');
   const [childbirth, setChildbirth] = useState(dayjs());
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
@@ -87,13 +85,8 @@ const KindergartenChild: React.FC = () => {
     setDatas(updatedDatas);
   };
 
-  const handleBirthChange = () => {
-    setIsCalendarOpen(true);
-  };
-
-  const handleDateChange = date => {
+  const handleDateChange = (date: Dayjs) => {
     setChildbirth(date);
-    setIsCalendarOpen(false);
   };
 
   useEffect(() => {
@@ -118,7 +111,7 @@ const KindergartenChild: React.FC = () => {
         limit={1}
       />
       <div className="flex space-x-2">
-        <KindergartenCard kindergartenName={signupGuardian.banName} />
+        <KindergartenCard kindergartenName={signupGuardian.banName || ''} />
       </div>
       <div className="flex items-center justify-center space-x-2">
         <div className="flex flex-col items-center">
@@ -164,7 +157,7 @@ const KindergartenChild: React.FC = () => {
               <LabelInput
                 value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
                 placeholder="클릭하여 생일을 입력해주세요"
-                onChange={handleBirthChange}
+                onChange={() => {}}
               />
             )}
             defaultDate={childbirth}
@@ -179,7 +172,7 @@ const KindergartenChild: React.FC = () => {
                   selectedGender === item.value ? 'positive' : 'negative'
                 }
                 label={item.label}
-                onClick={() => handleGenderChange(item.value)}
+                onClick={() => handleGenderChange(item.value as Gender)}
                 size="small"
               />
             ))}
