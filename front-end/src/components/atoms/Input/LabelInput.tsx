@@ -1,4 +1,4 @@
-import {ChangeEvent} from 'react';
+import {ChangeEvent, KeyboardEvent} from 'react';
 
 interface LabelInputProps {
   name?: string;
@@ -8,6 +8,7 @@ interface LabelInputProps {
   disabled?: boolean;
   value: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   type?: string;
 }
 
@@ -19,6 +20,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
   disabled = false,
   readOnly = false,
   onChange,
+  onKeyDown,
   type,
   ...props
 }: LabelInputProps) => {
@@ -34,6 +36,7 @@ const LabelInput: React.FC<LabelInputProps> = ({
         readOnly={readOnly}
         placeholder={placeholder}
         type={type}
+        onKeyDown={onKeyDown}
         {...props}
       />
     </div>
