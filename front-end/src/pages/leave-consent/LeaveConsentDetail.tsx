@@ -3,7 +3,7 @@ import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useLeaveConsentDetail} from '@/hooks/leave-consent/useLeaveConsentDetail';
 import {useDeleteLeaveConsent} from '@/hooks/leave-consent/useDeleteLeaveConsent';
 import {containerHeaderClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -57,12 +57,6 @@ const LeaveConsentDetail = () => {
   return (
     <div className="flex flex-col h-screen">
       {isLoading && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        limit={1}
-      />
       <Header title="귀가동의서" buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem

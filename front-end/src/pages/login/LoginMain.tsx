@@ -4,8 +4,7 @@ import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import KidWe from '@/assets/kid-we.svg';
 import {useLogin} from '@/hooks/login/useLogin';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 const LoginMain: React.FC = () => {
   const navigate = useNavigate();
@@ -84,15 +83,6 @@ const LoginMain: React.FC = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={300}
-        hideProgressBar
-        closeOnClick
-        pauseOnFocusLoss
-        theme="light"
-        limit={1}
-      />
     </>
   );
 };

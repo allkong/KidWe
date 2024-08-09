@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import {Signup} from '@/recoil/atoms/signup/Signup';
 import {useMutation} from '@tanstack/react-query';
 import {postSignup} from '@/apis/signup/postSignup';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 const RegisterInfo = () => {
   const [signupregister, setSignupRegister] = useRecoilState(Signup);
   const [isStateUpdated, setIsStateUpdated] = useState(false);
@@ -117,13 +117,6 @@ const RegisterInfo = () => {
 
   return (
     <div>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        pauseOnFocusLoss
-        limit={1}
-      />
       <div className="main-container min-h-screen space-y-8 py-6 flex flex-col items-center w-full h-full px-10">
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center ">

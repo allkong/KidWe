@@ -1,5 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-// import {HeaderProvider} from './contexts/header/HeaderContext';
+
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Home from '@/pages/Home';
 import MyPage from '@/pages/MyPage';
@@ -31,47 +33,58 @@ import NotFound from '@/pages/NotFound';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/schedule" element={<KindergartenSchedule />}></Route>
-        <Route path="/mypage" element={<MyPage />}></Route>
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={300}
+        hideProgressBar
+        closeOnClick
+        pauseOnFocusLoss
+        theme="light"
+        limit={1}
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/schedule" element={<KindergartenSchedule />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
 
-        <Route path="/daily-note">
-          <Route path="" element={<DailyNoteListView />} />
-        </Route>
+          <Route path="/daily-note">
+            <Route path="" element={<DailyNoteListView />} />
+          </Route>
 
-        <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-        <Route path="/announcement/*" element={<Announcement />}></Route>
+          <Route path="/attendance" element={<AttentdanceManagement />}></Route>
+          <Route path="/announcement/*" element={<Announcement />}></Route>
 
-        <Route path="/medication">
-          <Route path="" element={<MedicationListView />} />
-          <Route path=":medicationId" element={<MedicationDetail />} />
-          <Route path="write" element={<MedicationWrite />} />
-        </Route>
+          <Route path="/medication">
+            <Route path="" element={<MedicationListView />} />
+            <Route path=":medicationId" element={<MedicationDetail />} />
+            <Route path="write" element={<MedicationWrite />} />
+          </Route>
 
-        <Route path="/leave-consent">
-          <Route path="" element={<LeaveConsentListView />} />
-          <Route path=":leaveConsentId" element={<LeaveConsentDetail />} />
-          <Route path="write" element={<LeaveConsentWrite />} />
-        </Route>
+          <Route path="/leave-consent">
+            <Route path="" element={<LeaveConsentListView />} />
+            <Route path=":leaveConsentId" element={<LeaveConsentDetail />} />
+            <Route path="write" element={<LeaveConsentWrite />} />
+          </Route>
 
-        <Route path="/signup/*" element={<SignUp />}></Route>
-        <Route path="/login" element={<LoginMain />}></Route>
+          <Route path="/signup/*" element={<SignUp />}></Route>
+          <Route path="/login" element={<LoginMain />}></Route>
 
-        <Route path="/memo">
-          <Route path="" element={<MemoList />}></Route>
-          <Route path="write" element={<MemoWrite />} />
-        </Route>
+          <Route path="/memo">
+            <Route path="" element={<MemoList />}></Route>
+            <Route path="write" element={<MemoWrite />} />
+          </Route>
 
-        <Route path="/food">
-          <Route path="" element={<FoodInfo />}></Route>
-          <Route path="write" element={<FoodInfoWrite />}></Route>
-        </Route>
+          <Route path="/food">
+            <Route path="" element={<FoodInfo />}></Route>
+            <Route path="write" element={<FoodInfoWrite />}></Route>
+          </Route>
 
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 

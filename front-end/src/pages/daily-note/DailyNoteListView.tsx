@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {useDailyNoteList} from '@/hooks/daily-note/useDailyNoteList';
 import {containerNavigatorClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -51,13 +51,6 @@ const DailyNoteListView = () => {
   return (
     <div className="flex flex-col h-screen">
       {isLoading && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        pauseOnFocusLoss
-        limit={1}
-      />
       <Header title="알림장" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}

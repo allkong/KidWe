@@ -1,7 +1,6 @@
 import {useState, useRef} from 'react';
 import SignatureCanvas from 'react-signature-canvas';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import DashedButton from '@/components/atoms/Button/DashedButton';
@@ -43,13 +42,6 @@ const SignatureModal = ({onClick}: SignatureModalProps) => {
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={true}
-        pauseOnFocusLoss
-        limit={1}
-      />
       <DashedButton
         label="서명하기"
         Icon={signatureIcon}

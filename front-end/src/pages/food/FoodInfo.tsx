@@ -12,8 +12,7 @@ import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import Spinner from '@/components/atoms/Loader/Spinner';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 dayjs.extend(weekOfYear);
 
@@ -106,15 +105,6 @@ const FoodInfo = () => {
         <NavigationBar />
       </div>
       <WriteButton onClick={() => moveToWrite()} />
-      <ToastContainer
-        position="top-center" // 알람 위치 지정
-        autoClose={300} // 자동 off 시간
-        hideProgressBar // 진행시간바 숨김
-        closeOnClick // 클릭으로 알람 닫기
-        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
-        theme="light"
-        limit={1}
-      />
     </>
   );
 };

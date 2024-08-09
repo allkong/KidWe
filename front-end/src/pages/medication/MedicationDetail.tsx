@@ -3,7 +3,7 @@ import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
 import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -72,12 +72,6 @@ const MedicationDetail = () => {
   return (
     <div className="flex flex-col h-screen">
       {isLoading && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        limit={1}
-      />
       <Header title={'투약의뢰서'} buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem

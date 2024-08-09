@@ -13,7 +13,7 @@ import {
 } from '@/constants/medication';
 import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
@@ -110,12 +110,6 @@ const MedicationWrite = () => {
   return (
     <div className="h-screen">
       {isPending && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        limit={1}
-      />
       <Header title="투약의뢰서" buttonType="back" />
       <div className={`${containerHeaderClass}`}>
         <div className="py-8 space-y-5 px-9">

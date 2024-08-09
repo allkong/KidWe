@@ -9,8 +9,7 @@ import {memoState} from '@/recoil/atoms/memo/memo';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import {useQueryString} from '@/hooks/useQueryString';
 import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
@@ -101,15 +100,6 @@ const MemoWrite = () => {
           onClick={handleClick}
         />
       </div>
-      <ToastContainer
-        position="top-center" // 알람 위치 지정
-        autoClose={300} // 자동 off 시간
-        hideProgressBar // 진행시간바 숨김
-        closeOnClick // 클릭으로 알람 닫기
-        pauseOnFocusLoss // 화면을 벗어나면 알람 정지
-        theme="light"
-        limit={1}
-      />
     </>
   );
 };

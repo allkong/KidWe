@@ -6,7 +6,7 @@ import {useMedicationList} from '@/hooks/medication/useMedicationList';
 import type {MedicationItem} from '@/types/medication/MedicationItem';
 import {RoleItem} from '@/enum/roleItem';
 import {containerNavigatorClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -59,13 +59,6 @@ const MedicationListView = () => {
   return (
     <div className="flex flex-col h-screen">
       {isLoading && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        pauseOnFocusLoss
-        limit={1}
-      />
       <Header title="투약의뢰서" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}

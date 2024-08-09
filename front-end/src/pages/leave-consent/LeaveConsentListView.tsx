@@ -6,7 +6,7 @@ import {useLeaveConsentList} from '@/hooks/leave-consent/useLeaveConsentList';
 import type {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {RoleItem} from '@/enum/roleItem';
 import {containerNavigatorClass} from '@/styles/styles';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -62,13 +62,6 @@ const LeaveConsentListView = () => {
   return (
     <div className="flex flex-col h-screen">
       {isLoading && <Spinner />}
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar
-        pauseOnFocusLoss
-        limit={1}
-      />
       <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}
