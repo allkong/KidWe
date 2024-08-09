@@ -25,7 +25,7 @@ const MoreButton = ({
   const alignClass = align === 'horizontal' ? '' : 'rotate-90';
 
   return (
-    <div ref={selectRef} className="relative w-fit h-fit">
+    <div ref={selectRef} className="relative flex items-center w-fit h-fit">
       <button onClick={handleButtonClick}>
         <img className={`${alignClass}`} src={Icon} alt="icon" />
       </button>

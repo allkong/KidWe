@@ -11,6 +11,6 @@ type Story = StoryObj<typeof AuthorItem>;
 export const Basic: Story = {
   args: {
     writer: '백승우 선생님',
-    date: new Date(),
+    date: '2024-08-09 15:13',
   },
 };
