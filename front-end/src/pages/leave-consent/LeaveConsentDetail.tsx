@@ -3,7 +3,6 @@ import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useLeaveConsentDetail} from '@/hooks/leave-consent/useLeaveConsentDetail';
 import {useDeleteLeaveConsent} from '@/hooks/leave-consent/useDeleteLeaveConsent';
 import {containerHeaderClass} from '@/styles/styles';
-import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -19,15 +18,7 @@ const LeaveConsentDetail = () => {
   const {leaveConsentId} = useParams();
   const deleteMutation = useDeleteLeaveConsent();
 
-  const {data, isError, isLoading} = useLeaveConsentDetail(
-    leaveConsentId ?? ''
-  );
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('데이터 로딩 실패');
-    }
-  }, [isError]);
+  const {data, isLoading} = useLeaveConsentDetail(leaveConsentId ?? '');
 
   useEffect(() => {
     if (!isLoading && !data) {

@@ -11,7 +11,6 @@ import {
 } from '@/constants/leave-consent';
 import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
-import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
@@ -23,18 +22,11 @@ import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 
 const LeaveConsentnWrite = () => {
   const navigate = useNavigate();
-  const {mutate, isPending, isError} = usePostLeaveConsent();
+  const {mutate, isPending} = usePostLeaveConsent();
   const [formState, setFormState] = useRecoilState(leaveConsentFormState);
   const resetFormState = useResetRecoilState(leaveConsentFormState);
   const [signImage, setSignImage] = useState<File | null>(null);
   const [isValid, setIsValid] = useState(false);
-
-  // 에러 발생 시 토스트 메시지 표시
-  useEffect(() => {
-    if (isError) {
-      toast.error('작성 실패');
-    }
-  }, [isError]);
 
   // 모든 필드가 채워졌는지 검사하여 유효성 업데이트
   useEffect(() => {

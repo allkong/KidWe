@@ -10,7 +10,6 @@ import {useEffect, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
 import Spinner from '@/components/atoms/Loader/Spinner';
-import {toast} from 'react-toastify';
 
 const kindergartenId = 1;
 
@@ -33,14 +32,7 @@ const KindergartenSchedule = () => {
     setDate(date.add(1, 'month'));
   };
 
-  const {data, refetch, isLoading, isError} =
-    useGetKindergartenInfo(kindergartenId);
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('오류 발생');
-    }
-  }, [isError]);
+  const {data, refetch, isLoading} = useGetKindergartenInfo(kindergartenId);
 
   return (
     <>

@@ -30,8 +30,31 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
 
 import NotFound from '@/pages/NotFound';
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import useApiHandler from '@/hooks/useApiHandler';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
 const App: React.FC = () => {
+  const {errorHandler} = useApiHandler();
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 0,
+      },
+      mutations: {
+        onError: errorHandler,
+      },
+    },
+    queryCache: new QueryCache({
+      onError: errorHandler,
+    }),
+  });
+
   return (
     <>
       <ToastContainer
@@ -43,47 +66,53 @@ const App: React.FC = () => {
         theme="light"
         limit={1}
       />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/schedule" element={<KindergartenSchedule />}></Route>
-          <Route path="/mypage" element={<MyPage />}></Route>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/schedule" element={<KindergartenSchedule />}></Route>
+            <Route path="/mypage" element={<MyPage />}></Route>
 
-          <Route path="/daily-note">
-            <Route path="" element={<DailyNoteListView />} />
-          </Route>
+            <Route path="/daily-note">
+              <Route path="" element={<DailyNoteListView />} />
+            </Route>
 
-          <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-          <Route path="/announcement/*" element={<Announcement />}></Route>
+            <Route
+              path="/attendance"
+              element={<AttentdanceManagement />}
+            ></Route>
+            <Route path="/announcement/*" element={<Announcement />}></Route>
 
-          <Route path="/medication">
-            <Route path="" element={<MedicationListView />} />
-            <Route path=":medicationId" element={<MedicationDetail />} />
-            <Route path="write" element={<MedicationWrite />} />
-          </Route>
+            <Route path="/medication">
+              <Route path="" element={<MedicationListView />} />
+              <Route path=":medicationId" element={<MedicationDetail />} />
+              <Route path="write" element={<MedicationWrite />} />
+            </Route>
 
-          <Route path="/leave-consent">
-            <Route path="" element={<LeaveConsentListView />} />
-            <Route path=":leaveConsentId" element={<LeaveConsentDetail />} />
-            <Route path="write" element={<LeaveConsentWrite />} />
-          </Route>
+            <Route path="/leave-consent">
+              <Route path="" element={<LeaveConsentListView />} />
+              <Route path=":leaveConsentId" element={<LeaveConsentDetail />} />
+              <Route path="write" element={<LeaveConsentWrite />} />
+            </Route>
 
-          <Route path="/signup/*" element={<SignUp />}></Route>
-          <Route path="/login" element={<LoginMain />}></Route>
+            <Route path="/signup/*" element={<SignUp />}></Route>
+            <Route path="/login" element={<LoginMain />}></Route>
 
-          <Route path="/memo">
-            <Route path="" element={<MemoList />}></Route>
-            <Route path="write" element={<MemoWrite />} />
-          </Route>
+            <Route path="/memo">
+              <Route path="" element={<MemoList />}></Route>
+              <Route path="write" element={<MemoWrite />} />
+            </Route>
 
-          <Route path="/food">
-            <Route path="" element={<FoodInfo />}></Route>
-            <Route path="write" element={<FoodInfoWrite />}></Route>
-          </Route>
+            <Route path="/food">
+              <Route path="" element={<FoodInfo />}></Route>
+              <Route path="write" element={<FoodInfoWrite />}></Route>
+            </Route>
 
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   );
 };

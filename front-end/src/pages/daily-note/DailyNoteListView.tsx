@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {useDailyNoteList} from '@/hooks/daily-note/useDailyNoteList';
 import {containerNavigatorClass} from '@/styles/styles';
-import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -18,7 +17,7 @@ const DailyNoteListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
-  const {data, isError, isLoading} = useDailyNoteList(
+  const {data, isLoading} = useDailyNoteList(
     1,
     4,
     currentMonth.year(),
@@ -41,12 +40,6 @@ const DailyNoteListView = () => {
   const handleWriteButtonClick = () => {
     navigate('/daily-note/write');
   };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('데이터 로딩 실패');
-    }
-  }, [isError]);
 
   return (
     <div className="flex flex-col h-screen">

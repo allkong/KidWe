@@ -9,7 +9,6 @@ import {memoState} from '@/recoil/atoms/memo/memo';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
-import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import {useQueryString} from '@/hooks/useQueryString';
 import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
@@ -59,7 +58,6 @@ const MemoWrite = () => {
       putMutate.mutate(
         {teacherId, memoId, memo},
         {
-          onError: handleError,
           onSuccess: handleSuccess,
         }
       );
@@ -67,16 +65,10 @@ const MemoWrite = () => {
       writeMutate.mutate(
         {teacherId, memo},
         {
-          onError: handleError,
           onSuccess: handleSuccess,
         }
       );
     }
-  };
-
-  const handleError = (error: Error) => {
-    console.error(error);
-    toast.error('오류 발생');
   };
 
   const handleSuccess = () => {

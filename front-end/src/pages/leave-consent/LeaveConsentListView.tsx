@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
@@ -6,7 +6,6 @@ import {useLeaveConsentList} from '@/hooks/leave-consent/useLeaveConsentList';
 import type {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {RoleItem} from '@/enum/roleItem';
 import {containerNavigatorClass} from '@/styles/styles';
-import {toast} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -20,7 +19,7 @@ const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
-  const {data, isError, isLoading} = useLeaveConsentList(
+  const {data, isLoading} = useLeaveConsentList(
     1,
     currentMonth.year(),
     currentMonth.month() + 1,
@@ -50,12 +49,6 @@ const LeaveConsentListView = () => {
   const handleWriteButtonClick = () => {
     navigate('/leave-consent/write');
   };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('데이터 로딩 실패');
-    }
-  }, [isError]);
 
   const groupedData = groupByDate(data ?? []);
 

@@ -7,12 +7,11 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
 import NoResult from '@/components/atoms/NoResult';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import Spinner from '@/components/atoms/Loader/Spinner';
-import {toast} from 'react-toastify';
 
 dayjs.extend(weekOfYear);
 
@@ -30,11 +29,7 @@ const FoodInfo = () => {
 
   const [date, setDate] = useState(dayjs());
 
-  const {
-    data: food,
-    isLoading,
-    isError,
-  } = useGetDailyFood(kindergartenId, date);
+  const {data: food, isLoading} = useGetDailyFood(kindergartenId, date);
 
   const handleLeftClick = () => {
     setDate(date.subtract(1, 'week'));
@@ -53,12 +48,6 @@ const FoodInfo = () => {
       state: {date: date.format('YYYY-MM-DD')},
     });
   };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('오류 발생');
-    }
-  }, [isError]);
 
   return (
     <>
