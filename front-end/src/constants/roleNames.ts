@@ -1,7 +1,7 @@
 import {RoleItem} from '@/enum/roleItem';
 
 export const ROLE_NAMES = {
-  [RoleItem.Guardian]: '학부모',
-  [RoleItem.Teacher]: '선생님',
-  [RoleItem.Director]: '원장님',
+  [RoleItem.GUARDIAN]: '학부모',
+  [RoleItem.TEACHER]: '선생님',
+  [RoleItem.DIRECTOR]: '원장님',
 };

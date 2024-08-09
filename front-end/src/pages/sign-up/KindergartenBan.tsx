@@ -3,6 +3,7 @@ import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
 import Select from '@/components/molecules/DropdownButton/Select';
+import {useMutation} from '@tanstack/react-query';
 import {useRecoilState} from 'recoil';
 import {SignupTeacherState} from '@/recoil/atoms/signup/signupTeacher';
 import {SignupGuardianState} from '@/recoil/atoms/signup/signupGuardian';
@@ -10,25 +11,44 @@ import {getKindergartenBan} from '@/apis/signup/getKindergartenBan';
 import {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
 import {getMemberRole} from '@/utils/userData';
 import {toast, ToastContainer} from 'react-toastify';
+import {postTeacher} from '@/apis/signup/postTeacher';
 const KindergartenBan: React.FC = () => {
   const [signupTeacher, setSignupTeacher] = useRecoilState(SignupTeacherState);
   const [signupGuardian, setSignupGuardian] =
     useRecoilState(SignupGuardianState);
-  const [role, setrole] = useState(getMemberRole());
+  const [role, setRole] = useState<string | null>(getMemberRole());
   const [isRendering, setIsRendering] = useState(true);
   const [selectedBanId, setSelectedBanId] = useState<number | null>(null);
   const [selectedBanName, setSelectedBanName] = useState<string>('');
   const navigate = useNavigate();
+  const [isTeacherUpdated, setIsTeacherUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [kindergartenData, setKindergartenData] = useState<
     Partial<
       Pick<GetKindergarten, 'name' | 'address' | 'addressDetail' | 'bans'>
     >
   >({});
+
   const kindergartenId =
     role === 'ROLE_TEACHER'
       ? signupTeacher.kindergartenId
       : signupGuardian.kindergartenId;
+
+  const signupTeacherMutate = useMutation({
+    mutationFn: async () => {
+      console.log();
+      return postTeacher(signupTeacher);
+    },
+    onSuccess: data => {
+      if (data === '성공') {
+        navigate('/signup/complete');
+      } else if (data === '실패') {
+        toast.error('회원가입에 실패하였습니다.');
+      } else {
+        toast.error(data);
+      }
+    },
+  });
 
   const handleCompletedButtonClick = () => {
     if (selectedBanId !== null) {
@@ -43,17 +63,12 @@ const KindergartenBan: React.FC = () => {
 
         navigate('/signup/kindergarten/child');
       } else if (role === 'ROLE_TEACHER') {
+        console.log('선생님일 때 signupteacher update');
         setSignupTeacher(prevState => ({
           ...prevState,
           banId: selectedBanId,
-          banName: selectedBanName,
         }));
-        try {
-          // 이제 여기다가 선생님은 api 데이터 전송을 해야해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-          navigate('/signup/complete');
-        } catch (error) {
-          console.error('서버에 데이터를 전송하는 데 실패했습니다:', error);
-        }
+        setIsTeacherUpdated(true);
       }
     } else {
       toast.error('반을 선택해주세요');
@@ -84,6 +99,10 @@ const KindergartenBan: React.FC = () => {
   };
 
   useEffect(() => {
+    if (isTeacherUpdated) {
+      signupTeacherMutate.mutate();
+      setIsTeacherUpdated(false);
+    }
     if (isRendering) {
       const fetchBans = async () => {
         try {
@@ -103,7 +122,14 @@ const KindergartenBan: React.FC = () => {
       fetchBans();
       setIsRendering(false);
     }
-  }, [isRendering, navigate, kindergartenId]);
+  }, [
+    isRendering,
+    navigate,
+    kindergartenId,
+    role,
+    isTeacherUpdated,
+    signupTeacherMutate,
+  ]);
 
   return (
     <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 pt-20 space-y-16">

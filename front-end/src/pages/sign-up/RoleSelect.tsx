@@ -27,7 +27,6 @@ const RoleSelect = () => {
 
   const handleRoleChange = (role: string) => {
     setSelectedRole(role);
-    // 선택된 역할을 부모 컴포넌트에 전달하는 로직 추가하기
   };
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const RoleSelect = () => {
             key={key}
             isSelected={selectedRole === key}
             onClick={() => handleRoleChange(key)}
-            label={ROLE_NAMES[key]}
+            label={ROLE_NAMES[key as keyof typeof ROLE_NAMES]}
           />
         ))}
         {/* {RoleItem.map((item, index) => (
