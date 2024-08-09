@@ -78,6 +78,7 @@ const AttendedKidsSelectView = ({
           day: date,
           attendedToday: 'ATTENDANCE',
           kidIds: selectedList,
+          reason: '',
         },
         {
           onSuccess: () => {

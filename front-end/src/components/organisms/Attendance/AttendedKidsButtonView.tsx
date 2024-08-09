@@ -28,6 +28,7 @@ const AttendedKidsButtonView = ({
         month: date.get('month'),
         day: date.get('date'),
         attendedToday: 'NOTHING',
+        reason: '',
       });
     }
   };
