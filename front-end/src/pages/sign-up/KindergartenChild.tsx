@@ -25,7 +25,7 @@ const KindergartenChild: React.FC = () => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [datas, setDatas] = useState(ALLERGIES);
+  const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
   const navigate = useNavigate();
   const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signupGuardian, setSignupGuardian] =
@@ -68,13 +68,17 @@ const KindergartenChild: React.FC = () => {
 
   const handleCompletedButtonClick = () => {
     const formattedBirthday = childbirth.format('YYYY-MM-DD');
+    const checkedAllergies = datas
+      .filter(allergy => allergy.isChecked)
+      .map(allergy => allergy.value);
+    console.log(checkedAllergies);
     setSignupGuardian(prevState => ({
       ...prevState,
       kidName: childname,
       birthday: formattedBirthday,
       gender: selectedGender as Gender,
       picture: typeof image === 'string' ? image : '',
-      allergies: [''],
+      allergies: checkedAllergies,
     }));
     setIsStateUpdated(true);
   };
