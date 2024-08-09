@@ -4,19 +4,20 @@ import {
   getLeaveConsentByParent,
 } from '@/apis/leave-consent/getLeaveConsentList';
 import {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
+import {RoleItem} from '@/enum/roleItem';
 
 export const useLeaveConsentList = (
   id: number,
   year: number,
   month: number,
-  role: 'ROLE_DIRECTOR' | 'ROLE_TEACHER' | 'ROLE_GUARDIAN'
+  role: RoleItem
 ) => {
   return useQuery<LeaveConsentItem[], Error>({
     queryKey: ['leaveConsentList', id, year, month, role],
     queryFn: () => {
-      if (role === 'ROLE_DIRECTOR' || role === 'ROLE_TEACHER') {
+      if (role === RoleItem.Director || role === RoleItem.Teacher) {
         return getLeaveConsentByTeacher(id, year, month);
-      } else if (role === 'ROLE_GUARDIAN') {
+      } else if (role === RoleItem.Guardian) {
         return getLeaveConsentByParent(id, year, month);
       } else {
         return [];

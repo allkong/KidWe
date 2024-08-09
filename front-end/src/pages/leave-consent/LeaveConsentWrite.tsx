@@ -68,7 +68,6 @@ const LeaveConsentnWrite = () => {
 
   // 귀가 시간
   const handleTimeChange = (value: string) => {
-    console.log(value);
     setFormState(prev => ({...prev, leaveTime: value}));
   };
 

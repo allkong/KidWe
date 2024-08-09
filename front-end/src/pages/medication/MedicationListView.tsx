@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
 import {useMedicationList} from '@/hooks/medication/useMedicationList';
 import type {MedicationItem} from '@/types/medication/MedicationItem';
+import {RoleItem} from '@/enum/roleItem';
 import {containerNavigatorClass} from '@/styles/styles';
 import {toast, ToastContainer} from 'react-toastify';
 import Spinner from '@/components/atoms/Loader/Spinner';
@@ -23,7 +24,7 @@ const MedicationListView = () => {
     1,
     currentMonth.year(),
     currentMonth.month() + 1,
-    'ROLE_DIRECTOR'
+    RoleItem.Director
   );
 
   const handleLeftClick = () => {
