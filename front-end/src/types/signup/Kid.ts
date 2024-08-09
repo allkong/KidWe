@@ -1,9 +1,7 @@
 export interface Kid {
-  name: string;
+  kidName: string;
   birthday: string;
   gender: string;
   allergies: string[];
   picture: string;
-  kindergartenId: number;
-  banId: number;
 }
