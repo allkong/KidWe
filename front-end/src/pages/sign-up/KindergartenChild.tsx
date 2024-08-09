@@ -1,26 +1,34 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import AllergyView from '@/components/organisms/Food/AllergyView';
 import {ALLERGIES, Allergy} from '@/constants/allergy';
-
+import {useRecoilState} from 'recoil';
+import {useMutation} from '@tanstack/react-query';
+import {SignupGuardianState} from '@/recoil/atoms/signup/signupGuardian';
+import {postGuardian} from '@/apis/signup/postGuardian';
+import {toast, ToastContainer} from 'react-toastify';
+import dayjs, {Dayjs} from 'dayjs';
+import CalendarButton from '@/components/molecules/Button/CalendarButton';
+import {Gender} from '@/enum/gender';
 const genderItems = [
   {value: 'MALE', label: '남아'},
   {value: 'FEMALE', label: '여아'},
 ];
 
 const KindergartenChild: React.FC = () => {
-  const kindergartenName = '상태관리-유치원';
   const [childname, setChildname] = useState('');
-  const [childbirth, setChildbirth] = useState('');
+  const [childbirth, setChildbirth] = useState(dayjs());
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
-  const [datas, setDatas] = useState(ALLERGIES);
+  const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
   const navigate = useNavigate();
-
-  const handleGenderChange = (gender: string) => {
+  const [isStateUpdated, setIsStateUpdated] = useState(false);
+  const [signupGuardian, setSignupGuardian] =
+    useRecoilState(SignupGuardianState);
+  const handleGenderChange = (gender: Gender) => {
     setSelectedGender(gender);
   };
 
@@ -35,18 +43,75 @@ const KindergartenChild: React.FC = () => {
     }
   };
 
+  const signupChildMutate = useMutation({
+    mutationFn: async () => {
+      const {banName, ...postsignupGuardian} = signupGuardian;
+      console.log(postsignupGuardian);
+      console.log(banName);
+      return postGuardian(postsignupGuardian);
+    },
+    onSuccess: data => {
+      if (data === '성공') {
+        navigate('/login');
+      } else if (data === '실패') {
+        toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
+      } else {
+        toast.error(data);
+      }
+    },
+    onError: error => {
+      toast.error(`회원가입에 실패했습니다: ${error.message}`);
+    },
+  });
+
   const handleCompletedButtonClick = () => {
-    navigate('/signup/complete');
+    const formattedBirthday = childbirth.format('YYYY-MM-DD');
+    const checkedAllergies = datas
+      .filter(allergy => allergy.isChecked)
+      .map(allergy => allergy.value);
+    console.log(checkedAllergies);
+    setSignupGuardian(prevState => ({
+      ...prevState,
+      kidName: childname,
+      birthday: formattedBirthday,
+      gender: selectedGender as Gender,
+      picture: typeof image === 'string' ? image : '',
+      allergies: checkedAllergies,
+    }));
+    setIsStateUpdated(true);
   };
 
   const handleAllergyChange = (updatedDatas: Allergy[]) => {
     setDatas(updatedDatas);
   };
 
+  const handleDateChange = (date: Dayjs) => {
+    setChildbirth(date);
+  };
+
+  useEffect(() => {
+    if (signupGuardian.banId == 0 || signupGuardian.kindergartenId == 0) {
+      toast.error('잘못 들어오셨습니다!', {
+        onClose: () => navigate('/signup/kindergarten/search'),
+      });
+    }
+
+    if (isStateUpdated) {
+      signupChildMutate.mutate();
+      setIsStateUpdated(false);
+    }
+  }, [navigate, isStateUpdated, signupGuardian, signupChildMutate]);
   return (
     <div className="flex flex-col w-full h-full min-h-screen px-5 space-y-16">
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        pauseOnFocusLoss
+        limit={1}
+      />
       <div className="flex space-x-2">
-        <KindergartenCard kindergartenName={kindergartenName} />
+        <KindergartenCard kindergartenName={signupGuardian.banName || ''} />
       </div>
       <div className="flex items-center justify-center space-x-2">
         <div className="flex flex-col items-center">
@@ -77,11 +142,28 @@ const KindergartenChild: React.FC = () => {
             placeholder="이름을 적어주세요"
             onChange={e => setChildname(e.target.value)}
           />
-          <LabelInput
-            value={childbirth}
+          {/* <LabelInput
+            value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
             placeholder="클릭하여 생일을 입력해주세요"
-            onChange={e => setChildbirth(e.target.value)}
+            onChange={handleBirthChange}
+          /> */}
+          {/* <CustomCalendar
+            defaultDate={childbirth}
+            onChange={handleDateChange}
+            activeStartDate={false}
+          /> */}
+          <CalendarButton
+            render={() => (
+              <LabelInput
+                value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
+                placeholder="클릭하여 생일을 입력해주세요"
+                onChange={() => {}}
+              />
+            )}
+            defaultDate={childbirth}
+            onClick={handleDateChange}
           />
+
           <div className="flex justify-center space-x-2">
             {genderItems.map((item, index) => (
               <Button
@@ -90,7 +172,7 @@ const KindergartenChild: React.FC = () => {
                   selectedGender === item.value ? 'positive' : 'negative'
                 }
                 label={item.label}
-                onClick={() => handleGenderChange(item.value)}
+                onClick={() => handleGenderChange(item.value as Gender)}
                 size="small"
               />
             ))}
