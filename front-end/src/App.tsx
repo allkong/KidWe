@@ -7,7 +7,8 @@ import Home from '@/pages/Home';
 import MyPage from '@/pages/MyPage';
 import SignUp from '@/pages/SignUp';
 
-import DailyNoteListView from './pages/daily-note/DailyNoteListView';
+import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
+import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
 
 import Announcement from '@/pages/Announcement';
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
@@ -73,9 +74,10 @@ const App: React.FC = () => {
             <Route path="/schedule" element={<KindergartenSchedule />}></Route>
             <Route path="/mypage" element={<MyPage />}></Route>
 
-            <Route path="/daily-note">
-              <Route path="" element={<DailyNoteListView />} />
-            </Route>
+        <Route path="/daily-note">
+          <Route path="" element={<DailyNoteListView />} />
+          <Route path=":dailyNoteId" element={<DailyNoteDetail />} />
+        </Route>
 
             <Route
               path="/attendance"

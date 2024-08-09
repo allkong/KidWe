@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import TextEditor from '@/components/organisms/Texteditor/Texteditor';
+// import TextEditor from '@/components/organisms/Texteditor/Texteditor';
 
 import TitleInput from '@/components/atoms/Input/TitleInput';
 import LabelInput from '@/components/atoms/Input/LabelInput';
@@ -54,7 +54,7 @@ const AnnouncementWrite = () => {
 
   const announcementMutate = useMutation({
     mutationFn: () => {
-      return postAnnouncementWrite(announcementData);
+      return postAnnouncementWrite(announcementData!);
     },
   });
 
@@ -100,7 +100,7 @@ const AnnouncementWrite = () => {
           />
         </div>
         <div className="h-96">
-          <TextEditor value={contents} onChange={setContents} />
+          {/* <TextEditor value={contents} onChange={setContents} /> */}
         </div>
 
         {voteInfo ? (
@@ -109,9 +109,9 @@ const AnnouncementWrite = () => {
               <VoteIcon width={36} height={36} />
               <p>투표</p>
             </div>
-            <div className="mx-2 px-2 space-y-2 py-2 max-w-full box-border border rounded-lg">
+            <div className="box-border max-w-full px-2 py-2 mx-2 space-y-2 border rounded-lg">
               <div className="flex justify-between px-4 ">
-                <p className="text-2xl justify-between">{voteInfo.votetitle}</p>
+                <p className="justify-between text-2xl">{voteInfo.votetitle}</p>
                 <MoreButton>
                   <MoreButton.Option
                     text="수정하기"
@@ -125,7 +125,7 @@ const AnnouncementWrite = () => {
               </div>
               <ul>
                 {voteInfo.voteoptions.map((option, index) => (
-                  <div key={index} className=" px-4">
+                  <div key={index} className="px-4 ">
                     <p className="px-2">{option}</p>
                     <Divider />
                   </div>
