@@ -5,6 +5,7 @@ import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
 import {useMutation} from '@tanstack/react-query';
 import {Signup} from '@/recoil/atoms/signup/Signup';
+import {useRecoilState} from 'recoil';
 // import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
 import Select from '@/components/molecules/DropdownButton/Select';
 import {CityOptions} from '@/constants/city';
@@ -13,7 +14,16 @@ import type {District} from '@/constants/district';
 import {getKindergartenSearch} from '@/apis/signup/getKindergartenSearch';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import type {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
+import {SignupTeacherState} from '@/recoil/atoms/signup/signupTeacher';
+import {SignupGuardianState} from '@/recoil/atoms/signup/signupGuardian';
+import {getMemberRole} from '@/utils/userData';
+import {toast, ToastContainer} from 'react-toastify';
+
 const KindergartenSearch: React.FC = () => {
+  const navigate = useNavigate();
+  const [signupTeacher, setSignupTeacher] = useRecoilState(SignupTeacherState);
+  const [signupGuardian, setSignupGuardian] =
+    useRecoilState(SignupGuardianState);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedDistricts, setSelectedDistricts] = useState<District[]>([]);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
@@ -22,12 +32,25 @@ const KindergartenSearch: React.FC = () => {
   const [data, setData] = useState<GetKindergarten[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null | unknown>(null);
+  // const [role, setrole] = useState('ROLE_GUARDIAN');
+  const [role, setrole] = useState(getMemberRole());
   const [isNoResult, setIsNoResult] = useState(true);
-  const navigate = useNavigate();
 
-  const handleKindergartenSearchButtonClick = () => {
+  const handleKindergartenSearchButtonClick = (kindergartenId: number) => {
     // 버튼 누를 때의 유치원 정보를 recoil에 담아주기!
     // recoil에는 kindergartenId, banId만 넘겨주면 됨
+    if (role === 'ROLE_TEACHER') {
+      setSignupTeacher(prevState => ({
+        ...prevState,
+        kindergartenId,
+      }));
+    } else if (role === 'ROLE_GUARDIAN') {
+      setSignupGuardian(prevState => ({
+        ...prevState,
+        kindergartenId,
+      }));
+    }
+
     navigate('/signup/kindergarten/ban');
   };
   const handleCityChange = (value: string) => {
@@ -76,8 +99,23 @@ const KindergartenSearch: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (role !== 'ROLE_TEACHER' && role !== 'ROLE_GUARDIAN') {
+      toast.error('당신은 원장님입니다.', {onClose: () => navigate('/')});
+      // navigate('/');
+    }
+    console.log('지금 role', role);
+  }, [role, navigate]);
+
   return (
-    <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 pt-20 space-y-8">
+    <div className="flex flex-col items-center w-full h-full min-h-screen px-5 py-6 space-y-8">
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        pauseOnFocusLoss
+        limit={1}
+      />
       <p className="text-lg">원 위치를 검색해주세요</p>
       <div className="flex items-center space-x-8">
         {/* 첫 dropdown은 시 */}
@@ -106,28 +144,28 @@ const KindergartenSearch: React.FC = () => {
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
       ></InputForm>
-      <div className="flex w-full border rounded-lg min-h-96">
+      <div className="flex w-full border rounded-lg h-[472px]">
         {isNoResult ? (
           <div className="flex items-center justify-center w-full ">
             <NoResult text="유치원을 검색해주세요" />
           </div>
         ) : (
-          <div className="flex items-center justify-center w-full ">
+          <div className="flex items-center justify-center w-full max-h-96 mx-4 mt-8">
             {isLoading && <Spinner />}
             {error && <p>에러 발생: {error}</p>}
             {data.length !== 0 ? (
-              <div>
+              <div className="w-full overflow-y-scroll h-[400px]">
                 {data.map(item => (
                   <KindergartenItem
                     key={item.id}
                     name={item.name}
                     address={item.address}
-                    onClick={handleKindergartenSearchButtonClick}
+                    onClick={() => handleKindergartenSearchButtonClick(item.id)}
                   />
                 ))}
               </div>
             ) : (
-              <NoResult text="유치원을 검색 결과가 없습니다." />
+              <NoResult text="유치원 검색 결과가 없습니다." />
             )}
           </div>
         )}
