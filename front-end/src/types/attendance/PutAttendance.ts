@@ -4,4 +4,5 @@ export interface PutAttendance {
   day: number;
   kidIds: number[];
   attendedToday: 'NOTHING' | 'ATTENDANCE' | 'ABSENCE';
+  reason: string;
 }
