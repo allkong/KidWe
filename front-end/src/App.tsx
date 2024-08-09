@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Home from '@/pages/Home';
 import MyPage from '@/pages/MyPage';
+import MyPageUpdate from '@/pages/my-page/MyPageUpdate';
+import KidUpdate from '@/pages/my-page/KidUpdate';
 import SignUp from '@/pages/SignUp';
 
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
@@ -72,12 +74,17 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/schedule" element={<KindergartenSchedule />}></Route>
-            <Route path="/mypage" element={<MyPage />}></Route>
 
-        <Route path="/daily-note">
-          <Route path="" element={<DailyNoteListView />} />
-          <Route path=":dailyNoteId" element={<DailyNoteDetail />} />
-        </Route>
+            <Route path="/mypage">
+              <Route path="" element={<MyPage />} />
+              <Route path="update/user" element={<MyPageUpdate />}></Route>
+              <Route path="update/kid" element={<KidUpdate />}></Route>
+            </Route>
+
+            <Route path="/daily-note">
+              <Route path="" element={<DailyNoteListView />} />
+              <Route path=":dailyNoteId" element={<DailyNoteDetail />} />
+            </Route>
 
             <Route
               path="/attendance"
