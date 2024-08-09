@@ -6,8 +6,8 @@ import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
 import {Signup} from '@/recoil/atoms/signup/Signup';
 import {useMutation} from '@tanstack/react-query';
-// import {postSignup} from '@/apis/signup/postSignup';
-import {SignupFormState} from '@/types/signup/SignupFormState';
+import {postSignup} from '@/apis/signup/postSignup';
+// import {SignupFormState} from '@/types/signup/SignupFormState';
 
 declare global {
   interface Window {
@@ -45,7 +45,7 @@ const RegisterKindergarten: React.FC = () => {
     setSignupRegisterKindergarten(prevState => ({
       ...prevState,
       kindergarten: {
-        ...prevState.kindergarten,
+        ...prevState,
         name: kindergartenname,
         address: addr,
         addressDetail: kindergartenaddrdetail,
@@ -135,7 +135,7 @@ const RegisterKindergarten: React.FC = () => {
                   label="주소"
                   placeholder="클릭하여 주소를 입력해주세요"
                   value={addr}
-                  onClick={onClickAddr}
+                  onChange={onClickAddr}
                 />
               </div>
               <div className="flex items-end col-span-4">

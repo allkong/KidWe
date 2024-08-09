@@ -5,16 +5,15 @@ import Tag from '@/components/atoms/Tag/Tag';
 import {AnnounceItemProps} from '@/types/announce/AnnounceItemProps';
 
 const AnnounceItem = ({
-  id,
   title,
   writer,
   date,
   src,
-  classname = '',
+  banName = '',
   tagbgcolor = '#FFF1A7',
   onClick,
 }: AnnounceItemProps) => {
-  const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
+  // const formattedDate = `${date.getFullYear().toString().slice(-2)}.${date.getMonth() + 1}.${date.getDate()}`;
   return (
     <div
       className="grid items-center grid-cols-12 p-4 m-2 border-b border-gray-200 "
@@ -23,12 +22,12 @@ const AnnounceItem = ({
       <div className="col-span-9">
         <div className="flex flex-row space-x-2">
           <h3 className="text-lg font-bold">{title}</h3>
-          <Tag text={classname} backgroundColor={tagbgcolor} />
+          <Tag text={banName} backgroundColor={tagbgcolor} />
         </div>
         <div className="flex flex-row items-center mt-10">
           <p>{writer}</p>
           <span className="mx-2">|</span>
-          <p>{formattedDate}</p>
+          <p>{date}</p>
           <span className="mx-2">|</span>
           <CommentCount count={10} />
         </div>

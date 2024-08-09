@@ -9,7 +9,6 @@ import type {GetAttendance} from '@/types/attendance/GetAttendance';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {Dayjs} from 'dayjs';
 import {PutAttendance} from '@/types/attendance/PutAttendance';
-import {usePutAttendanceReason} from '@/hooks/attendance/usePutAttendanceReason';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
@@ -28,7 +27,6 @@ const AttendedKidsButtonView = ({
   const kidRef = useRef<GetAttendance>();
 
   const attendanceMutate = usePutAttendanceInfo(banId);
-  const reasonMutate = usePutAttendanceReason(banId);
 
   const [isNegativeModalOpen, setIsNegativeModalOpen] = useState(false);
 
@@ -52,12 +50,6 @@ const AttendedKidsButtonView = ({
         day: date,
         kidIds: [kidId],
         attendedToday: 'ABSENCE',
-      });
-      await reasonMutate.mutateAsync({
-        year,
-        month,
-        day: date,
-        kidId,
         reason: inputRef.current ? inputRef.current.value : '',
       });
       setIsNegativeModalOpen(false);
@@ -70,8 +62,16 @@ const AttendedKidsButtonView = ({
     day,
     kidIds,
     attendedToday,
+    reason,
   }: PutAttendance) => {
-    attendanceMutate.mutate({year, month, day, kidIds, attendedToday});
+    attendanceMutate.mutate({
+      year,
+      month,
+      day,
+      kidIds,
+      attendedToday,
+      reason,
+    });
   };
 
   return (
@@ -110,6 +110,7 @@ const AttendedKidsButtonView = ({
                   day: date.get('date'),
                   attendedToday: 'ATTENDANCE',
                   kidIds: [attendance.kidId],
+                  reason: '',
                 })
               }
             />
@@ -119,8 +120,8 @@ const AttendedKidsButtonView = ({
         <Modal isOpen={isNegativeModalOpen}>
           <Modal.Header title="출결내용 작성" />
           <Modal.Body>
-            <div className="flex flex-col items-center justify-center py-10">
-              <TextArea ref={inputRef} />
+            <div className="flex flex-col items-center justify-center py-10 h-44">
+              <TextArea ref={inputRef} placeholder="출결내용 작성" />
             </div>
           </Modal.Body>
           <Modal.BottomButton

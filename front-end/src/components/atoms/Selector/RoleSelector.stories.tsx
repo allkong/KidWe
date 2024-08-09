@@ -10,7 +10,6 @@ type Story = StoryObj<typeof RoleSelector>;
 
 export const Function: Story = {
   args: {
-    value: '학부모',
     explain: '내가 바로 학부모',
   },
 };

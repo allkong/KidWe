@@ -14,6 +14,6 @@ export const Default: Story = {
     title: '여기가',
     writer: '치타반 선생님',
     classname: '치타반',
-    date: new Date(),
+    date: '',
   },
 };

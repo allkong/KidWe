@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, {KeyboardEvent, useState} from 'react';
 import LabelInput from '@/components/atoms/Input/LabelInput';
 import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import KidWe from '@/assets/kid-we.svg';
 import {useLogin} from '@/hooks/login/useLogin';
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 const LoginMain: React.FC = () => {
   const navigate = useNavigate();
@@ -14,6 +13,12 @@ const LoginMain: React.FC = () => {
 
   const handleSignUpButtonClick = () => {
     navigate('/signup/role');
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleLoginButtonClick();
+    }
   };
 
   const loginMutate = useLogin();
@@ -44,6 +49,7 @@ const LoginMain: React.FC = () => {
             value={email}
             placeholder="이메일을 입력해주세요"
             onChange={e => setEmail(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <LabelInput
             label="비밀번호"
@@ -51,6 +57,7 @@ const LoginMain: React.FC = () => {
             placeholder="비밀번호를 입력해주세요"
             type="password"
             onChange={e => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="flex flex-col items-center justify-center w-full px-6 space-y-2">
@@ -76,15 +83,6 @@ const LoginMain: React.FC = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={300}
-        hideProgressBar
-        closeOnClick
-        pauseOnFocusLoss
-        theme="light"
-        limit={1}
-      />
     </>
   );
 };

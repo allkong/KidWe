@@ -1,28 +1,30 @@
-import CheckListItem from '@/components/organisms/Check/CheckListItem';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import {GetAttendance} from '@/types/attendance/GetAttendance';
+import {Dayjs} from 'dayjs';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useEffect, useState} from 'react';
-import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import type {GetAttendance} from '@/types/attendance/GetAttendance';
+import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
-import {Dayjs} from 'dayjs';
-
-const banId = 1;
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
   onClickButton?: () => void;
-  date: Dayjs;
+  date?: Dayjs;
 }
 
 interface CheckedGetAttendance extends GetAttendance {
   isChecked: boolean;
 }
 
+const banId = 1;
+
 const AttendedKidsSelectView = ({
   attendances,
-  onClickButton: onClickTabChangeButton,
+  onClickButton,
+  date,
 }: AttendedKidsSelectViewProps) => {
+  date;
   // checked attendances
   const [checkedAttendances, setCheckedAttendances] =
     useState<CheckedGetAttendance[]>();
@@ -52,44 +54,40 @@ const AttendedKidsSelectView = ({
     );
   };
 
-  const [isPositiveModalOpen, setIsPositiveModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClosePositiveModal = () => {
-    setIsPositiveModalOpen(false);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
-  const handleOpenPositiveModal = () => {
-    setIsPositiveModalOpen(true);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
-  const submitMutate = usePutAttendanceInfo(banId);
-  const submitCheckedList = () => {
-    if (attendances !== undefined && checkedAttendances !== undefined) {
-      const [year, month, date] = attendances[0].date.split('-').map(Number);
-      const selectedList: number[] = checkedAttendances
+  const putMutate = usePutAttendanceInfo(banId);
+
+  const handleSubmit = () => {
+    if (date !== undefined) {
+      const selectedKids = checkedAttendances
         ?.filter(value => value.isChecked)
         .map(value => value.kidId);
-
-      // 로직 처리 성공시
-      submitMutate.mutate(
-        {
-          year,
-          month,
-          day: date,
-          attendedToday: 'ATTENDANCE',
-          kidIds: selectedList,
-          reason: '',
-        },
-        {
-          onSuccess: () => {
-            setIsPositiveModalOpen(false);
-            onClickTabChangeButton?.();
+      if (selectedKids !== undefined) {
+        putMutate.mutate(
+          {
+            kidIds: selectedKids,
+            year: date.get('year'),
+            month: date.get('month'),
+            day: date.get('date'),
+            attendedToday: 'NOTHING',
+            reason: '',
           },
-          onError: () => {
-            // error handling
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              onClickButton?.();
+            },
+          }
+        );
+      }
     }
   };
 
@@ -99,22 +97,20 @@ const AttendedKidsSelectView = ({
         <div>
           <XSmallButton
             label="전체선택"
-            onClick={() => handleAllCheck()}
             variant="negative"
+            onClick={handleAllCheck}
           />
         </div>
         <div className="space-x-2">
           <XSmallButton
             label="취소"
-            onClick={() => {
-              onClickTabChangeButton?.();
-            }}
             variant="negative"
+            onClick={onClickButton}
           />
           <XSmallButton
-            label="출석"
-            onClick={() => handleOpenPositiveModal()}
+            label="출석취소"
             variant="positive"
+            onClick={handleOpenModal}
           />
         </div>
       </div>
@@ -131,31 +127,29 @@ const AttendedKidsSelectView = ({
           ))}
       </div>
       <ModalPortal>
-        <Modal isOpen={isPositiveModalOpen}>
+        <Modal isOpen={isModalOpen}>
           <Modal.Header title="출결내용 작성" />
           <Modal.Body>
             <div className="flex flex-col items-center justify-center py-10">
               <p>체크한 원생들에 대해</p>
-              <p>출석 처리를 하시겠습니까?</p>
+              <p>출석 처리를 취소하시겠습니까?</p>
             </div>
           </Modal.Body>
           <Modal.BottomButton
             label="취소"
-            onClick={handleClosePositiveModal}
+            onClick={handleCloseModal}
             round="full"
             size="large"
             variant="negative"
           ></Modal.BottomButton>
           <Modal.BottomButton
             label="확인"
-            onClick={submitCheckedList}
+            onClick={handleSubmit}
             round="full"
             size="large"
             variant="positive"
           ></Modal.BottomButton>
-          <Modal.Background
-            onClick={handleClosePositiveModal}
-          ></Modal.Background>
+          <Modal.Background onClick={handleCloseModal}></Modal.Background>
         </Modal>
       </ModalPortal>
     </>

@@ -1,6 +1,7 @@
 import axiosInstance from '@/apis/axiosInstance';
+import {AnnouncementItem} from '@/types/announce/AnnouncementItem';
 
-export const getAnnouncementList = async () => {
+export const getAnnouncementList = async (): Promise<AnnouncementItem[]> => {
   try {
     const response = await axiosInstance.get('/announcements/list/1', {});
     console.log('서버의 응답은!!!:', response);
