@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import InputForm from '@/components/molecules/InputForm/InputForm';
 import NoResult from '@/components/atoms/NoResult';
 import KindergartenItem from '@/components/molecules/Item/KindergartenItem';
 import {useNavigate} from 'react-router-dom';
-import {useMutation} from '@tanstack/react-query';
-import {Signup} from '@/recoil/atoms/signup/Signup';
+// import {useMutation} from '@tanstack/react-query';
+// import {Signup} from '@/recoil/atoms/signup/Signup';
 // import SelectMain from '@/components/molecules/DropdownButton/SelectMain';
 import Select from '@/components/molecules/DropdownButton/Select';
 import {CityOptions} from '@/constants/city';
@@ -50,8 +50,10 @@ const KindergartenSearch: React.FC = () => {
   const handleSearch = async () => {
     setIsNoResult(false);
     setSearchResult(inputValue);
+    console.log(searchResult);
     setIsLoading(true);
     setError(null);
+    console.log(error);
     try {
       const response = await getKindergartenSearch({
         sido: selectedCity,
@@ -60,7 +62,7 @@ const KindergartenSearch: React.FC = () => {
       });
       setData(response);
     } catch (error) {
-      setError(error.message);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -114,7 +116,6 @@ const KindergartenSearch: React.FC = () => {
         ) : (
           <div className="flex items-center justify-center w-full ">
             {isLoading && <Spinner />}
-            {error && <p>에러 발생: {error}</p>}
             {data.length !== 0 ? (
               <div>
                 {data.map(item => (

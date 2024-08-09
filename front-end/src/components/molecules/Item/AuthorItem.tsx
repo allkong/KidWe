@@ -1,21 +1,24 @@
-import React from 'react';
-// import commentIcon from '@/assets/icons/message-line.svg';
-import dayjs from 'dayjs';
-import CommentCount from '@/components/atoms/Comment/CommentCount';
-interface AnnounceTitleProps {
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
+
+interface AuthorItemProps {
+  profile?: string;
   writer: string;
-  date: Date;
+  date: string;
 }
 
-const AuthorItem = ({writer, date}: AnnounceTitleProps) => {
-  const today = dayjs(date).format('YYYY-MM-DD HH:mm');
+const AuthorItem = ({profile, writer, date}: AuthorItemProps) => {
   return (
-    <div className="w-full flex justify-between items-center pr-2 mt-10">
-      <div className="flex justify-between items-center space-x-5 ">
-        <p className="text-xl">{writer}</p>
-        <p className="text-sm text-gray-200">{today}</p>
+    <div className="flex items-center justify-between w-full px-8 py-5 border-b">
+      <div className="flex items-center justify-between space-x-5 ">
+        <ProfileImage src={profile || ''} size="2rem" />
+        <div className="flex flex-row items-end space-x-3">
+          <p className="text-tiny">{writer}</p>
+          <p className="text-gray-200 text-2xs">{date}</p>
+        </div>
       </div>
-      <CommentCount count={10} />
+      {/* 본인 글에만 떠야 함 */}
+      <MoreButton align="vertical" />
     </div>
   );
 };

@@ -12,8 +12,8 @@ export const Basic: Story = {
   args: {
     title: '배고파요',
     writer: '백승우 선생님',
-    date: new Date(),
+    date: '',
     src: '',
-    classname: '치타반',
+    banName: '치타반',
   },
 };

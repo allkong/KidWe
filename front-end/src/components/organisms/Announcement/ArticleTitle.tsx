@@ -6,7 +6,7 @@ import AuthorItem from '@/components/molecules/Item/AuthorItem';
 interface AnnounceTitleProps {
   title: string;
   writer: string;
-  date: Date;
+  date: string;
   classname?: string;
   tagbgcolor?: string;
 }

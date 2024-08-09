@@ -11,7 +11,6 @@ type Story = StoryObj<typeof RadioCheckBoxButton>;
 export const Default: Story = {
   args: {
     options: ['실온', '냉장'],
-    selectedValue: '실온',
     onChange: () => {},
   },
 };
