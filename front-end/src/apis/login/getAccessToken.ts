@@ -1,16 +1,15 @@
-import {getCookie} from '@/utils/getCookie';
-import {LoginResponse} from '@/types/login/LoginResponse';
 import axios from 'axios';
+import {getCookie} from '@/utils/getCookie';
 
-export const getAccessToken = async (): Promise<LoginResponse> => {
-  const refreshToken = `Bearer ${getCookie('refreshToken')}`;
+export const getAccessToken = async (): Promise<{accessToken: string}> => {
+  console.log(document.cookie);
 
   const result = await axios.post(
     `${import.meta.env.VITE_API_URL}/refresh`,
     {},
     {
       headers: {
-        Authorization: refreshToken,
+        refreshToken: `${getCookie('refreshToken')}`,
       },
     }
   );
