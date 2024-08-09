@@ -27,12 +27,14 @@ const AllergyView = ({datas, onChangeData}: AllergyViewProps) => {
 
   const filterDatas = useCallback(
     (value: string) => {
-      if (value === '') {
-        setFilteredDatas([...datas!]);
-      } else {
-        setFilteredDatas(
-          [...datas!].filter(data => data.value?.includes(value))
-        );
+      if (datas !== undefined) {
+        if (value === '') {
+          setFilteredDatas([...datas!]);
+        } else {
+          setFilteredDatas(
+            [...datas!].filter(data => data.value?.includes(value))
+          );
+        }
       }
     },
     [datas]
