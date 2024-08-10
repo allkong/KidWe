@@ -41,16 +41,21 @@ import {
 import useApiHandler from '@/hooks/useApiHandler';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
+import {loadingState} from '@/recoil/atoms/axios/loading';
+import {useRecoilValue} from 'recoil';
+import Spinner from '@/components/atoms/Loader/Spinner';
+
 const App: React.FC = () => {
   const {errorHandler} = useApiHandler();
 
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 0,
+        retry: 1,
       },
       mutations: {
         onError: errorHandler,
+        retry: 0,
       },
     },
     queryCache: new QueryCache({
@@ -58,8 +63,11 @@ const App: React.FC = () => {
     }),
   });
 
+  const isLoading = useRecoilValue(loadingState);
+
   return (
     <>
+      {isLoading && <Spinner />}
       <ToastContainer
         position="top-center"
         autoClose={300}

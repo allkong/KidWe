@@ -6,7 +6,7 @@ import {ALLERGIES} from '@/constants/allergy';
 
 const KidUpdateView = () => {
   return (
-    <div className="flex-col w-full py-10 space-y-5 text-gray-300">
+    <div className="flex-col items-end w-full pt-10 space-y-5 text-gray-300">
       <LabelInput label="자녀 이름" value="" placeholder="자녀 이름" />
       <div className="flex items-end justify-between gap-9 h-fit">
         <div className="flex-grow">
