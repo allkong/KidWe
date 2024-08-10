@@ -9,7 +9,7 @@ import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
 import {useEffect, useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
-import Spinner from '@/components/atoms/Loader/Spinner';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const kindergartenId = 1;
 
@@ -33,10 +33,10 @@ const KindergartenSchedule = () => {
   };
 
   const {data, refetch, isLoading} = useGetKindergartenInfo(kindergartenId);
+  useLoading(isLoading);
 
   return (
     <>
-      {isLoading && <Spinner />}
       <Header title="유치원 일정" buttonType="back" />
       <DateNavigator
         title={date.format('YY년 MM월')}

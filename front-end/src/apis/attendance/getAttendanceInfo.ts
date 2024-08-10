@@ -7,13 +7,8 @@ export const getAttendanceInfo = async (
   month: number,
   day: number
 ): Promise<GetAttendance[]> => {
-  try {
-    const result = await axiosInstance.get(
-      `/attendances/${banId}/${year}/${month}/${day}`
-    );
-    return result.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const result = await axiosInstance.get(
+    `/attendances/${banId}/${year}/${month}/${day}`
+  );
+  return result.data;
 };

@@ -9,19 +9,14 @@ export const putAttendanceInfo = async (
   attendedToday: 'NOTHING' | 'ATTENDANCE' | 'ABSENCE',
   reason: string
 ) => {
-  try {
-    const body: PutAttendance = {
-      year,
-      month,
-      day,
-      kidIds,
-      attendedToday,
-      reason,
-    };
-    const result = await axiosInstance.put(`/attendance`, body);
-    return result.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const body: PutAttendance = {
+    year,
+    month,
+    day,
+    kidIds,
+    attendedToday,
+    reason,
+  };
+  const result = await axiosInstance.put(`/attendance`, body);
+  return result.data;
 };
