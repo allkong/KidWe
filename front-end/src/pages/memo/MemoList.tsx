@@ -14,6 +14,7 @@ import type {GetMemo} from '@/types/memo/GetMemo';
 import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
 import {useSetRecoilState} from 'recoil';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const teacherId = 1;
 
@@ -26,12 +27,13 @@ const MemoList = memo(() => {
 
   const navigate = useNavigate();
 
-  const {data, refetch} = useGetDailyMemo(
+  const {data, refetch, isLoading} = useGetDailyMemo(
     teacherId,
     date.format('YYYY'),
     date.format('MM'),
     date.format('DD')
   );
+  useLoading(isLoading);
 
   useEffect(() => {
     setMemoTime(date);
