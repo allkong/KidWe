@@ -1,10 +1,17 @@
 import type {PatchUserInfo} from '@/types/user/PatchUserInfo';
 import {patchUserInfo} from '@/apis/user/patchUserInfo';
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {userKeys} from './userKeys';
 
-export const usePatchUserInfo = () => {
+export const usePatchUserInfo = (userId: number) => {
+  const queryClient = useQueryClient();
   const userInfoMutation = useMutation({
     mutationFn: (body: PatchUserInfo) => patchUserInfo(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: userKeys.user(userId),
+      });
+    },
   });
   return userInfoMutation;
 };
