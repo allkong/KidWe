@@ -4,44 +4,39 @@ import KindergartenInfomationSelect from '@/components/organisms/Memo/Kindergart
 import Header from '@/components/organisms/Navigation/Header';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 import {containerHeaderClass} from '@/styles/styles';
-import {useRecoilState} from 'recoil';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import dayjs from 'dayjs';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import Spinner from '@/components/atoms/Loader/Spinner';
-import {useQueryString} from '@/hooks/useQueryString';
-import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
 import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
-import {usePutDailyMemo} from '@/hooks/memo/usePutDailyMemo';
+import {useRecoilState} from 'recoil';
+import dayjs from 'dayjs';
 
 const teacherId = 1;
 
 const MemoWrite = () => {
   const navigate = useNavigate();
 
+  const [serachParams] = useSearchParams();
+  const paramDate = `${serachParams.get('date')}`; // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
+  let currentDate = dayjs().format('YYYY-MM-DD HH:mm');
+  if (paramDate !== undefined) {
+    currentDate = dayjs(`${paramDate} ${dayjs().format('HH:mm')}`).format(
+      'YYYY-MM-DD HH:mm'
+    );
+  }
+
   const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
-  const memoId = useQueryString().get('id');
-  // const date = useQueryString().get('date');
-
-  const {data} = useGetDailyMemoById(teacherId, memoId);
-  const writeMutate = useWriteDailyMemo();
-  const putMutate = usePutDailyMemo();
-
   useEffect(() => {
-    if (data !== undefined) {
-      setMemo({...data, updatedTime: dayjs(data.updatedTime)});
-    } else {
-      setMemo({
-        ...memo,
-        lesson: '',
-        kids: [],
-        tags: [],
-        content: '',
-      });
-    }
-  }, [data, setMemo]);
+    setMemo({
+      content: '',
+      kids: [],
+      lesson: '',
+      tags: [],
+      updatedTime: dayjs(currentDate),
+    });
+  }, [currentDate, setMemo]);
 
   const [isValid, setIsValid] = useState(false);
   useEffect(() => {
@@ -53,26 +48,16 @@ const MemoWrite = () => {
     );
   }, [memo]);
 
+  const writeMutate = useWriteDailyMemo();
   const handleClick = () => {
-    if (memoId !== null) {
-      putMutate.mutate(
-        {teacherId, memoId, memo},
-        {
-          onSuccess: handleSuccess,
-        }
-      );
-    } else {
-      writeMutate.mutate(
-        {teacherId, memo},
-        {
-          onSuccess: handleSuccess,
-        }
-      );
-    }
-  };
-
-  const handleSuccess = () => {
-    navigate('/memo');
+    console.log(memo);
+    
+    writeMutate.mutateAsync(
+      {teacherId, memo},
+      {
+        onSuccess: () => navigate('/memo'),
+      }
+    );
   };
 
   return (
@@ -86,7 +71,7 @@ const MemoWrite = () => {
           <KindergartenInfomationSelect />
         </div>
         <ButtonBar
-          label={memoId ? '메모 수정하기' : '메모 작성하기'}
+          label="메모 작성하기"
           variant={isValid ? 'positive' : 'negative'}
           disabled={!isValid}
           onClick={handleClick}
