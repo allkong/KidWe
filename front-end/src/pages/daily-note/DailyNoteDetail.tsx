@@ -1,7 +1,7 @@
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import AuthorItem from '@/components/molecules/Item/AuthorItem';
-import PostContent from '@/components/atoms/post/PostContent';
+import PostContent from '@/components/molecules/post/PostContent';
 import InputBar from '@/components/organisms/Navigation/InputBar';
 
 const DailyNoteDetail = () => {

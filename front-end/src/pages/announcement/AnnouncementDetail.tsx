@@ -1,38 +1,27 @@
-import ArticleTitle from '@/components/organisms/Announcement/ArticleTitle';
-import CommentItem from '@/components/molecules/Item/CommentItem';
+import {containerHeaderClass} from '@/styles/styles';
+import Header from '@/components/organisms/Navigation/Header';
+import AuthorItem from '@/components/molecules/Item/AuthorItem';
+import PostContent from '@/components/molecules/post/PostContent';
+import InputBar from '@/components/organisms/Navigation/InputBar';
+import ArticleTitle from '@/components/molecules/post/ArticleTitle';
 
-const AnnouncementDetail = () => {
+const DailyNoteDetail = () => {
   return (
-    <div className="w-full h-screen">
-      <div className="flex items-center justify-between">
-        <ArticleTitle title="안녕하세요" writer="어디 원장님" date={'8/16'} />
-      </div>
-      <div className="pb-16 m-6 text-left border-b-2 border-gray-100 ">
-        <p>
-          Lorem Ipsum has been the industry's standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book.
-        </p>
-      </div>
-      <div className="m-6">
-        <CommentItem
-          classname="개나리반"
-          content="저도 피곤해요"
-          date={new Date()}
-          writer="지서"
-          onClick={() => {}}
+    <div className="flex flex-col h-screen">
+      <Header title="공지사항" buttonType="back" />
+      <div className={containerHeaderClass}>
+        <AuthorItem
+          profile=""
+          writer="햄스터반 선생님"
+          date="2024-08-09 15:13"
+          isEdit
         />
-        <CommentItem
-          classname="개나리반"
-          content="저도 피곤해요"
-          date={new Date()}
-          isReply={true}
-          writer="백승우"
-          onClick={() => {}}
-        />
+        <ArticleTitle title="여름이라 많이 덥네요~" />
+        <PostContent content="<b>안녕하세요오옹</b></br><p>반갑습니당ㅎㅎㅎ</p>" />
       </div>
+      <InputBar />
     </div>
   );
 };
 
-export default AnnouncementDetail;
+export default DailyNoteDetail;

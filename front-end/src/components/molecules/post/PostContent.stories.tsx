@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import PostContent from '@/components/atoms/post/PostContent';
+import PostContent from '@/components/molecules/post/PostContent';
 
 const meta: Meta<typeof PostContent> = {
   component: PostContent,

@@ -34,7 +34,7 @@ const PostContent = ({content}: PostContentProps) => {
   const safeContent = DOMPurify.sanitize(content, domPurifyConfig) as string;
 
   return (
-    <div className="p-6 bg-white border-b">
+    <div className="px-6 pt-3 pb-6 bg-white border-b">
       <div className="mb-5" dangerouslySetInnerHTML={{__html: safeContent}} />
       <PostImageList images={[]} />
     </div>

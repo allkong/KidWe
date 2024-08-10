@@ -15,7 +15,7 @@ const AuthorItem = ({
   isEdit = false,
 }: AuthorItemProps) => {
   return (
-    <div className="flex items-center justify-between w-full px-8 py-4 ">
+    <div className="flex items-center justify-between w-full px-6 py-4">
       <div className="flex items-center justify-between space-x-5 ">
         <ProfileImage src={profile || ''} size="2rem" />
         <div className="flex flex-row items-end space-x-3">
