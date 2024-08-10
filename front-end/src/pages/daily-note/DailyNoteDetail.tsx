@@ -1,6 +1,7 @@
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import AuthorItem from '@/components/molecules/Item/AuthorItem';
+import PostContent from '@/components/atoms/post/PostContent';
 import InputBar from '@/components/organisms/Navigation/InputBar';
 
 const DailyNoteDetail = () => {
@@ -14,6 +15,7 @@ const DailyNoteDetail = () => {
           date="2024-08-09 15:13"
           isEdit
         />
+        <PostContent content="<b>안녕하세요오옹</b></br><p>반갑습니당ㅎㅎㅎ</p>" />
       </div>
       <InputBar />
     </div>

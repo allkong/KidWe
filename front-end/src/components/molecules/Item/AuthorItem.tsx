@@ -15,7 +15,7 @@ const AuthorItem = ({
   isEdit = false,
 }: AuthorItemProps) => {
   return (
-    <div className="flex items-center justify-between w-full px-8 py-4 border-b">
+    <div className="flex items-center justify-between w-full px-8 py-4 ">
       <div className="flex items-center justify-between space-x-5 ">
         <ProfileImage src={profile || ''} size="2rem" />
         <div className="flex flex-row items-end space-x-3">
@@ -24,7 +24,12 @@ const AuthorItem = ({
         </div>
       </div>
       {/* 본인 글에만 떠야 함 */}
-      {isEdit && <MoreButton align="vertical" />}
+      {isEdit && (
+        <MoreButton align="vertical">
+          <MoreButton.Option text="수정하기" />
+          <MoreButton.Option text="삭제하기" />
+        </MoreButton>
+      )}
     </div>
   );
 };
