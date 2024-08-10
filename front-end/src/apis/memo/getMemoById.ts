@@ -5,6 +5,6 @@ export const getMemoById = async (
   teacherId: number,
   memoId: string
 ): Promise<GetMemo> => {
-  const result = await axiosInstance.get(`/memo/${teacherId}/${memoId}`);
+  const result = await axiosInstance.get(`/memos/${teacherId}/${memoId}`);
   return result.data;
 };

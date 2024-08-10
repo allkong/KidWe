@@ -16,7 +16,7 @@ export const getTeacherDailyMemos = async (
   date: string
 ): Promise<GetMemo[]> => {
   const response = await axiosInstance.get(
-    `/memo/${teacherId}/${year}/${month}/${date}`
+    `/memos/${teacherId}/${year}/${month}/${date}`
   );
   return response.data;
 };

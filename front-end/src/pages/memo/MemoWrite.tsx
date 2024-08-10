@@ -72,7 +72,7 @@ const MemoWrite = () => {
   };
 
   const handleSuccess = () => {
-    navigate('/kindergarten/memo');
+    navigate('/memo');
   };
 
   return (
