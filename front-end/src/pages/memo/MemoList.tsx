@@ -14,6 +14,7 @@ import type {GetMemo} from '@/types/memo/GetMemo';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
+import {toast} from 'react-toastify';
 
 const teacherId = 1;
 
@@ -60,9 +61,11 @@ const MemoList = memo(() => {
   const deleteMutate = useDeleteMemo();
 
   const moveToUpdate = (id: string | undefined) => {
-    if(id!==undefined) {
+    if (id !== undefined) {
+      const date = dayjs(modalMemo?.updatedTime);
       navigate({
         pathname: `update/${id}`,
+        search: `date=${date.format('YYYY-MM-DD')}`,
       });
     }
   };
@@ -76,8 +79,17 @@ const MemoList = memo(() => {
 
   const handleDeleteClick = (memoId: string | undefined) => {
     if (memoId !== undefined) {
-      deleteMutate.mutate({teacherId, memoId});
+      deleteMutate.mutate(
+        {teacherId, memoId},
+        {
+          onSuccess: () => {
+            refetch();
+            toast.info('삭제 완료');
+          },
+        }
+      );
     }
+    setIsModalOpen(false);
   };
 
   return (
@@ -118,22 +130,20 @@ const MemoList = memo(() => {
             <MemoView memo={modalMemo} />
           </Modal.Body>
           <Modal.BottomButton
+            onClick={() => moveToUpdate(modalMemo?.id)}
+            label="수정"
+            variant="positive"
+            size="large"
+            round="full"
+          ></Modal.BottomButton>
+          <Modal.BottomButton
             onClick={() => handleDeleteClick(modalMemo?.id)}
             label="삭제"
             variant="negative"
             size="large"
             round="full"
           ></Modal.BottomButton>
-          <Modal.BottomButton
-            onClick={handleModalClose}
-            label="수정"
-            variant="positive"
-            size="large"
-            round="full"
-          ></Modal.BottomButton>
-          <Modal.Background
-            onClick={() => moveToUpdate(modalMemo?.id)}
-          ></Modal.Background>
+          <Modal.Background onClick={handleModalClose}></Modal.Background>
         </Modal>
       </ModalPortal>
     </>
