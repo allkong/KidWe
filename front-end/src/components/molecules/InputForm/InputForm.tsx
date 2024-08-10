@@ -39,7 +39,7 @@ const InputForm = forwardRef(
           <Input ref={ref} value={value} onChange={handleValue} {...props} />
         </div>
         <div className="flex-shrink-0">
-          <Button label={label} onClick={onClick} />
+          <Button label={label} round="full" onClick={onClick} />
         </div>
       </div>
     );

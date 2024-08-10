@@ -19,7 +19,7 @@ const AnnounceItem = ({
   const tagColor = banName === '전체' ? '#FFC7C7' : '#FFF1A7';
 
   return (
-    <div className="items-center px-5 py-4 border-b space-y-7">
+    <div className="items-center px-5 py-4 bg-white border-b space-y-7">
       <div className="flex flex-row space-x-3">
         <h3 className="text-xl font-medium">{title}</h3>
         <Tag text={banName} backgroundColor={tagColor} size="small" />

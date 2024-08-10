@@ -1,6 +1,7 @@
+import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import AuthorItem from '@/components/molecules/Item/AuthorItem';
-import {containerHeaderClass} from '@/styles/styles';
+import InputBar from '@/components/organisms/Navigation/InputBar';
 
 const DailyNoteDetail = () => {
   return (
@@ -11,8 +12,10 @@ const DailyNoteDetail = () => {
           profile=""
           writer="햄스터반 선생님"
           date="2024-08-09 15:13"
+          isEdit
         />
       </div>
+      <InputBar />
     </div>
   );
 };
