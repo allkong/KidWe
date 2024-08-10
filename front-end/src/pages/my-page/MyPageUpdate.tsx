@@ -2,6 +2,7 @@ import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import Button from '@/components/atoms/Button/Button';
 import MyPageUpdateView from '@/components/organisms/MyPage/MyPageUpdateView';
+import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 // import KidWe from '@/assets/kid-we.svg';
 
 const MyPageUpdate = () => {
@@ -24,6 +25,7 @@ const MyPageUpdate = () => {
           onClick={() => {}}
         />
       </div>
+      <NavigationBar />
     </div>
   );
 };
