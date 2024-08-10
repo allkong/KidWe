@@ -5,9 +5,9 @@ interface CommentIconProps {
   count: number;
 }
 
-const CommentCount: React.FC<CommentIconProps> = ({count}) => {
+const CommentCount = ({count}: CommentIconProps) => {
   return (
-    <div className="flex flex-row items-center gap-x-2">
+    <div className="flex flex-row items-center gap-x-1">
       <img src={commentIcon} />
       <p>{count}</p>
     </div>

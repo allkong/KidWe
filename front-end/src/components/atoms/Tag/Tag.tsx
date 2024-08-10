@@ -33,7 +33,7 @@ const Tag = ({
 
   return (
     <div
-      className={`${colorClass} ${sizeClass} inline-block rounded-full text-center`}
+      className={`${colorClass} ${sizeClass} rounded-full text-center items-center flex`}
       style={{backgroundColor}}
       onClick={handleClick}
     >

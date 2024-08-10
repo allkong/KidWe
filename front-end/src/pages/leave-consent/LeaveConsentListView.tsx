@@ -62,7 +62,7 @@ const LeaveConsentListView = () => {
         onClickRight={handleRightClick}
       />
       <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
-        {data && data.length === 0 ? (
+        {data?.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <NoResult text="등록된 동의서가 없어요" />
           </div>

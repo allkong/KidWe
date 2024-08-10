@@ -1,5 +1,56 @@
+import {useNavigate} from 'react-router-dom';
+import {useAnnouncementList} from '@/hooks/announcement/useAnnouncementList';
+import {containerHeaderClass} from '@/styles/styles';
+import Spinner from '@/components/atoms/Loader/Spinner';
+import Header from '@/components/organisms/Navigation/Header';
+import NoResult from '@/components/atoms/NoResult';
+import AnnounceItem from '@/components/molecules/Item/AnnounceItem';
+import WriteButton from '@/components/atoms/Button/WriteButton';
+import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+
 const AnnouncementListView = () => {
-  return <div>목록</div>;
+  const navigate = useNavigate();
+
+  const {data, isLoading} = useAnnouncementList(4);
+
+  const handleUserItemClick = (announcementId: number) => {
+    navigate(`/announcement/${announcementId}`);
+  };
+
+  const handleWriteButtonClick = () => {
+    navigate('/announcement/write');
+  };
+
+  return (
+    <div className="flex flex-col h-screen">
+      {isLoading && <Spinner />}
+      <Header title="공지사항" buttonType="close" />
+      <div className={`${containerHeaderClass}`}>
+        {data?.length === 0 ? (
+          <div className="flex items-center justify-center h-full">
+            <NoResult text="등록된 글이 없어요" />
+          </div>
+        ) : (
+          data?.map(item => (
+            <div
+              key={item.announcementId}
+              onClick={() => handleUserItemClick(item.announcementId)}
+            >
+              <AnnounceItem
+                title="제목"
+                banName="전체"
+                writer="햄스터반 선생님"
+                date="24.7.6"
+                commentCount={8}
+              />
+            </div>
+          ))
+        )}
+      </div>
+      <WriteButton onClick={handleWriteButtonClick} />
+      <NavigationBar />
+    </div>
+  );
 };
 
 export default AnnouncementListView;

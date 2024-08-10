@@ -1,4 +1,5 @@
 export interface AnnouncementItem {
+  announcementId: number;
   title: string;
   memberName: string;
   memberBan: string;
