@@ -18,10 +18,12 @@ import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
 import MedicationWrite from '@/pages/medication/MedicationWrite';
-import MemoList from '@/pages/memo/MemoList';
 
+import MemoList from '@/pages/memo/MemoList';
 import MemoWrite from '@/pages/memo/MemoWrite';
 import MemoUpdate from '@/pages/memo/MemoUpdate';
+import MemoView from '@/pages/memo/MemoView';
+
 import LeaveConsentListView from '@/pages/leave-consent/LeaveConsentListView';
 import LeaveConsentDetail from '@/pages/leave-consent/LeaveConsentDetail';
 import LeaveConsentWrite from '@/pages/leave-consent/LeaveConsentWrite';
@@ -112,7 +114,7 @@ const App: React.FC = () => {
           <Route path="/signup/*" element={<SignUp />}></Route>
           <Route path="/login" element={<LoginMain />}></Route>
 
-          <Route path="/memo">
+          <Route path="/memo/*" element={<MemoView />}>
             <Route path="" element={<MemoList />}></Route>
             <Route path="write" element={<MemoWrite />} />
             <Route path="update/:memoId" element={<MemoUpdate />} />

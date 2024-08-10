@@ -62,10 +62,8 @@ const MemoList = memo(() => {
 
   const moveToUpdate = (id: string | undefined) => {
     if (id !== undefined) {
-      const date = dayjs(modalMemo?.updatedTime);
       navigate({
         pathname: `update/${id}`,
-        search: `date=${date.format('YYYY-MM-DD')}`,
       });
     }
   };
