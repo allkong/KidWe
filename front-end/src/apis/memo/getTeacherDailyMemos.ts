@@ -15,13 +15,8 @@ export const getTeacherDailyMemos = async (
   month: string,
   date: string
 ): Promise<GetMemo[]> => {
-  try {
-    const response = await axiosInstance.get(
-      `/memo/${teacherId}/${year}/${month}/${date}`
-    );
-    return response.data;
-  } catch (error) {
-    console.debug(`error fetching getTeacherDailyMemos: ${error}`);
-    throw error;
-  }
+  const response = await axiosInstance.get(
+    `/memo/${teacherId}/${year}/${month}/${date}`
+  );
+  return response.data;
 };

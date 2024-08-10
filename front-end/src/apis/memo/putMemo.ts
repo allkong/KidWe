@@ -6,14 +6,9 @@ export const putMemo = async (
   memoId: string,
   memo: PostMemo
 ) => {
-  try {
-    const result = await noSqlInstance.put(`/memo/${teacherId}/${memoId}`, {
-      ...memo,
-      updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
-    });
-    return result.data;
-  } catch (error) {
-    console.debug(error);
-    throw error;
-  }
+  const result = await noSqlInstance.put(`/memo/${teacherId}/${memoId}`, {
+    ...memo,
+    updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
+  });
+  return result.data;
 };
