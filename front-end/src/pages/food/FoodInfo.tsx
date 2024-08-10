@@ -11,7 +11,7 @@ import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
-import Spinner from '@/components/atoms/Loader/Spinner';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 dayjs.extend(weekOfYear);
 
@@ -30,6 +30,7 @@ const FoodInfo = () => {
   const [date, setDate] = useState(dayjs());
 
   const {data: food, isLoading} = useGetDailyFood(kindergartenId, date);
+  useLoading(isLoading);
 
   const handleLeftClick = () => {
     setDate(date.subtract(1, 'week'));
@@ -51,7 +52,6 @@ const FoodInfo = () => {
 
   return (
     <>
-      {isLoading && <Spinner />}
       <div
         className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-full px-5 overflow-y-auto`}
       >
