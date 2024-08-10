@@ -64,5 +64,31 @@ class UserDataSessionImplements implements UserDataInterface {
   };
 }
 
-export const userDataSessionImplements =
-  UserDataSessionImplements.getInstance();
+const userDataSessionImplements = UserDataSessionImplements.getInstance();
+
+export const setUserData = userDataSessionImplements.setUserData.bind(
+  userDataSessionImplements
+);
+export const getUserData = userDataSessionImplements.getUserData.bind(
+  userDataSessionImplements
+);
+export const getMemberId = userDataSessionImplements.getMemberId.bind(
+  userDataSessionImplements
+);
+export const getMemberEmail = userDataSessionImplements.getMemberEmail.bind(
+  userDataSessionImplements
+);
+export const getMemberRole = userDataSessionImplements.getMemberRole.bind(
+  userDataSessionImplements
+);
+export const getMemberStatus = userDataSessionImplements.getMemberStatus.bind(
+  userDataSessionImplements
+);
+export const getKindergartenId =
+  userDataSessionImplements.getKindergartenId.bind(userDataSessionImplements);
+export const getBanId = userDataSessionImplements.getBanId.bind(
+  userDataSessionImplements
+);
+export const getKidIds = userDataSessionImplements.getKidIds.bind(
+  userDataSessionImplements
+);
