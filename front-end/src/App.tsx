@@ -21,6 +21,7 @@ import MedicationWrite from '@/pages/medication/MedicationWrite';
 import MemoList from '@/pages/memo/MemoList';
 
 import MemoWrite from '@/pages/memo/MemoWrite';
+import MemoUpdate from '@/pages/memo/MemoUpdate';
 import LeaveConsentListView from '@/pages/leave-consent/LeaveConsentListView';
 import LeaveConsentDetail from '@/pages/leave-consent/LeaveConsentDetail';
 import LeaveConsentWrite from '@/pages/leave-consent/LeaveConsentWrite';
@@ -114,6 +115,7 @@ const App: React.FC = () => {
           <Route path="/memo">
             <Route path="" element={<MemoList />}></Route>
             <Route path="write" element={<MemoWrite />} />
+            <Route path="update/:memoId" element={<MemoUpdate />} />
           </Route>
 
           <Route path="/food">

@@ -1,7 +1,6 @@
 import {PostMemo} from '@/types/memo/PostMemo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {memoKeys} from '@/hooks/memo/memoKeys';
-import dayjs from 'dayjs';
 import {putMemo} from '@/apis/memo/putMemo';
 
 export const usePutDailyMemo = () => {
@@ -21,15 +20,9 @@ export const usePutDailyMemo = () => {
     onError(error) {
       throw error;
     },
-    onSuccess(_, {teacherId, memo}) {
-      const {updatedTime} = memo;
+    onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: memoKeys.lists(
-          teacherId,
-          dayjs(updatedTime).format('YYYY'),
-          dayjs(updatedTime).format('MM'),
-          dayjs(updatedTime).format('DD')
-        ),
+        queryKey: memoKeys.all,
       });
     },
   });
