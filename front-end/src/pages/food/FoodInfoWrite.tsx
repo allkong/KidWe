@@ -63,11 +63,16 @@ const FoodInfoWrite = () => {
     setMenu({...menu, [type]: value});
   };
 
+  const dateShow = dayjs(date);
+  if (!dateShow.isValid()) {
+    throw new Error('invalid date format');
+  }
+
   return (
     <div className={`${containerHeaderClass} flex flex-col h-full`}>
       <Header title="메뉴 정보 등록" buttonType="back" />
       <div className="flex justify-end px-5 py-6 text-xs h-fit min-h-fit min-w-fit">
-        <p>{dayjs(date).format('YYYY-MM-DD (ddd)')}</p>
+        <p>{dateShow.format('YYYY-MM-DD (ddd)')}</p>
       </div>
       <div className="flex-grow px-5 py-5 space-y-6 overflow-y-scroll">
         <FoodInfoWriteItem
