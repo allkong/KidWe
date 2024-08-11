@@ -1,4 +1,4 @@
-import type {AnnounncementWrite} from '@/types/announce/AnnouncementWrite';
+import type {AnnounncementWrite} from '@/types/announcement/AnnouncementWrite';
 import axiosInstance from '@/apis/axiosInstance';
 
 export const postAnnouncementWrite = async (

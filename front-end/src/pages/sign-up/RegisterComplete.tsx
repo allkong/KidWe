@@ -12,8 +12,8 @@ const RegisterComplete: React.FC = () => {
     navigate('/login');
   };
 
-  const rolename =
-    ROLE_NAMES[role] === '학부모' ? '학부모님' : ROLE_NAMES[role];
+  // const rolename =
+  //   ROLE_NAMES[role] === '학부모' ? '학부모님' : ROLE_NAMES[role];
 
   return (
     <div className="flex flex-col items-center w-full h-full min-h-screen px-10 py-6 space-y-8">
@@ -23,7 +23,7 @@ const RegisterComplete: React.FC = () => {
         </div>
       </div>
       <div className="text-lg font-medium">
-        <p>{rolename} 키위에 가입해주셔서 감사합니다!</p>
+        {/* <p>{rolename} 키위에 가입해주셔서 감사합니다!</p> */}
         <p>좋은 서비스로 보답하겠습니다!</p>
       </div>
 

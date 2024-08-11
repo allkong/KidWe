@@ -13,7 +13,6 @@ export const Basic: Story = {
     title: '배고파요',
     writer: '백승우 선생님',
     date: '',
-    src: '',
     banName: '치타반',
   },
 };

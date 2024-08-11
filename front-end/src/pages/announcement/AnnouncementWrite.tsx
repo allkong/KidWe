@@ -12,8 +12,8 @@ import Divider from '@/components/atoms/Divider/Divider';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import {useNavigate} from 'react-router-dom';
 import {useMutation} from '@tanstack/react-query';
-import type {VoteInfo} from '@/types/announce/vote';
-import type {AnnounncementWrite} from '@/types/announce/AnnouncementWrite';
+import type {VoteInfo} from '@/types/announcement/vote';
+import type {AnnounncementWrite} from '@/types/announcement/AnnouncementWrite';
 import {postAnnouncementWrite} from '@/apis/announcement/postAnnouncementWrite';
 import dayjs from 'dayjs';
 const AnnouncementWrite = () => {
