@@ -53,7 +53,7 @@ const FoodInfo = () => {
   return (
     <>
       <div
-        className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-full px-5 overflow-y-auto`}
+        className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
       >
         <Header title="급식 정보" buttonType="back" />
         <DateNavigator
@@ -62,7 +62,7 @@ const FoodInfo = () => {
           onClickRight={handleRightClick}
         />
 
-        <div className="flex justify-center gap-2 mb-4">
+        <div className="flex justify-center gap-2 mb-4 w-fit h-fit">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
