@@ -5,10 +5,13 @@ export const kidInfoAllergies = selector({
   key: 'kidInfoAllergies',
   get: ({get}) => {
     const data = get(patchKidInfoState);
-    return data.allergies;
+    return data.dto.allergies;
   },
   set: ({get, set}, newValue) => {
     const data = get(patchKidInfoState);
-    set(patchKidInfoState, {...data, allergies: newValue as string[]});
+    set(patchKidInfoState, {
+      ...data,
+      dto: {...data.dto, allergies: newValue as string[]},
+    });
   },
 });

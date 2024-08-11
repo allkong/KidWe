@@ -1,17 +1,17 @@
 import {patchKidInfoState} from '@/recoil/atoms/my-page/kidInfo';
 import {selector} from 'recoil';
 
-export const kidInfoBirthday = selector({
-  key: 'kidInfoBirthday',
+export const kidInfoPicture = selector({
+  key: 'kidInfoProfile',
   get: ({get}) => {
     const data = get(patchKidInfoState);
-    return data.dto.birthday;
+    return data.picture;
   },
   set: ({get, set}, newValue) => {
     const data = get(patchKidInfoState);
     set(patchKidInfoState, {
       ...data,
-      dto: {...data.dto, birthday: newValue as string},
+      picture: newValue as string,
     });
   },
 });

@@ -5,10 +5,13 @@ export const kidInfoGender = selector({
   key: 'kidInfoGender',
   get: ({get}) => {
     const data = get(patchKidInfoState);
-    return data.gender;
+    return data.dto.gender;
   },
   set: ({get, set}, newValue) => {
     const data = get(patchKidInfoState);
-    set(patchKidInfoState, {...data, gender: newValue as 'MALE' | 'FEMALE'});
+    set(patchKidInfoState, {
+      ...data,
+      dto: {...data.dto, gender: newValue as 'MALE' | 'FEMALE'},
+    });
   },
 });

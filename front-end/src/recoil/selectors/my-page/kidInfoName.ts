@@ -5,10 +5,13 @@ export const kidInfoName = selector({
   key: 'kidInfoName',
   get: ({get}) => {
     const data = get(patchKidInfoState);
-    return data.name;
+    return data.dto.name;
   },
   set: ({get, set}, newValue) => {
     const data = get(patchKidInfoState);
-    set(patchKidInfoState, {...data, name: newValue as string});
+    set(patchKidInfoState, {
+      ...data,
+      dto: {...data.dto, name: newValue as string},
+    });
   },
 });
