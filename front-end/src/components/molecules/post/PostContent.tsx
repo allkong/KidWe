@@ -1,11 +1,12 @@
 import DOMPurify, {Config} from 'dompurify';
-import PostImageList from '@/components/molecules/List/PostImageList';
+import ArticleImage from '@/components/organisms/Article/ArticleImage';
 
 interface PostContentProps {
   content: string;
+  images: string[];
 }
 
-const PostContent = ({content}: PostContentProps) => {
+const PostContent = ({content, images}: PostContentProps) => {
   // React Quill 설정 이후에 다시 커스텀하기
   const domPurifyConfig: Config = {
     ALLOWED_TAGS: [
@@ -36,7 +37,7 @@ const PostContent = ({content}: PostContentProps) => {
   return (
     <div className="px-6 pt-3 pb-6 bg-white border-b">
       <div className="mb-5" dangerouslySetInnerHTML={{__html: safeContent}} />
-      <PostImageList images={[]} />
+      <ArticleImage images={images} />
     </div>
   );
 };

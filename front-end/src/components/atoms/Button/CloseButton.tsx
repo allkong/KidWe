@@ -1,15 +1,14 @@
-import {useNavigate} from 'react-router-dom';
-import Icon from '@/assets/icons/close-line.svg';
+import Icon from '@/assets/icons/close-line.svg?react';
 
-const CloseButton = () => {
-  const navigate = useNavigate();
-  const handleGoHome = () => {
-    navigate('/');
-  };
+interface closeButtonProps {
+  color?: 'black' | 'white';
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
 
+const CloseButton = ({color = 'black', onClick}: closeButtonProps) => {
   return (
-    <button onClick={handleGoHome}>
-      <img src={Icon} alt="icon" />
+    <button onClick={onClick}>
+      <Icon fill={color} width={24} height={24} />
     </button>
   );
 };
