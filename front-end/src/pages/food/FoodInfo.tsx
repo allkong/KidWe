@@ -62,7 +62,7 @@ const FoodInfo = () => {
           onClickRight={handleRightClick}
         />
 
-        <div className="flex justify-center gap-2 mb-16">
+        <div className="flex justify-center gap-2 mb-4">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
@@ -72,18 +72,21 @@ const FoodInfo = () => {
                 variant="lunch"
                 menu={food.lunch}
                 allergies={food.lunchAllergies}
+                kidAllergies={food.kidAllergyListOfLunch}
                 onClick={moveToWrite}
               />
               <FoodInfomationItem
                 variant="snack"
                 menu={food.snack}
                 allergies={food.snackAllergies}
+                kidAllergies={food.kidAllergyListOfSnack}
                 onClick={moveToWrite}
               />
               <FoodInfomationItem
                 variant="dinner"
                 menu={food.dinner}
                 allergies={food.dinnerAllergies}
+                kidAllergies={food.kidAllergyListOfDinner}
                 onClick={moveToWrite}
               />
             </>

@@ -2,11 +2,15 @@ import sun from '@/assets/icons/sun-with-face.svg';
 import moon from '@/assets/icons/full-moon-face.svg';
 import hotDog from '@/assets/icons/hot-dog.svg';
 import Tag from '@/components/atoms/Tag/Tag';
+import {KidAllergy} from '@/types/food/KidAllergy';
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import NoImage from '@/assets/no-profile.png';
 
 interface FoodInfomationItemProps {
   variant?: 'lunch' | 'snack' | 'dinner';
   menu?: string;
   allergies?: string[];
+  kidAllergies?: KidAllergy[];
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -40,6 +44,7 @@ const FoodInfomationItem = ({
   variant = 'lunch',
   menu,
   allergies,
+  kidAllergies,
   onClick,
 }: FoodInfomationItemProps) => {
   const {color, src, title} = getVariant(variant);
@@ -60,11 +65,32 @@ const FoodInfomationItem = ({
         />
       </div>
       <div className="flex flex-col justify-center w-56 h-full">
-        <p className="mb-3 text-sm">{menu}</p>
-        {/* <p className="text-xs">{allergies?.join(', ')}</p>*/}
-        <div className="flex flex-wrap gap-1">
-          {allergies?.map((allergy, idx) => <Tag key={idx} text={allergy} />)}
-        </div>
+        <p className="text-xs">식단</p>
+        <p className="mb-3 text-md">{menu}</p>
+        {allergies && (
+          <>
+            <p className="text-xs">알러지</p>
+            <div className="flex flex-wrap gap-1 mb-3">
+              {allergies?.map((allergy, idx) => (
+                <Tag key={idx} text={allergy} />
+              ))}
+            </div>
+          </>
+        )}
+        {kidAllergies && (
+          <>
+            <p className="text-xs">주의 학생</p>
+            <div className="flex flex-wrap gap-1 mb-3">
+              {kidAllergies?.map(kid => (
+                <ProfileImage
+                  src={kid.kidImageUrl || NoImage}
+                  key={kid.kidName}
+                  size="1rem"
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
