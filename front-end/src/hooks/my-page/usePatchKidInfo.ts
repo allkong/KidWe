@@ -1,4 +1,4 @@
-import {patchKidInfo} from '@/apis/user/patchKidInfo';
+import {patchKidInfo} from '@/apis/my-page/patchKidInfo';
 import {PatchKidInfo} from '@/types/user/PatchKidInfo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {userKeys} from './userKeys';

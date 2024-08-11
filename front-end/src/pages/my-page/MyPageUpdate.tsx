@@ -3,7 +3,7 @@ import Header from '@/components/organisms/Navigation/Header';
 import Button from '@/components/atoms/Button/Button';
 import MyPageUpdateView from '@/components/organisms/MyPage/MyPageUpdateView';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {usePatchUserInfo} from '@/hooks/user/usePatchUserInfo';
+import {usePatchUserInfo} from '@/hooks/my-page/usePatchUserInfo';
 import type {PatchUserInfo} from '@/types/user/PatchUserInfo';
 import {patchUserInfoState} from '@/recoil/atoms/my-page/userInfo';
 import {useRecoilValue} from 'recoil';

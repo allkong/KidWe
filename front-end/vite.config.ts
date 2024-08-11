@@ -13,7 +13,7 @@ export default defineConfig({
         icon: true,
       },
     }),
-    basicSsl(),
+    // basicSsl(),
   ],
   resolve: {
     alias: [

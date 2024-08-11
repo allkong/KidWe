@@ -1,5 +1,5 @@
 import type {PatchUserInfo} from '@/types/user/PatchUserInfo';
-import {patchUserInfo} from '@/apis/user/patchUserInfo';
+import {patchUserInfo} from '@/apis/my-page/patchUserInfo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {userKeys} from './userKeys';
 

@@ -4,4 +4,5 @@ export interface PatchUserInfo {
   tel: string;
   email: string;
   picture: string;
+  password: string;
 }
