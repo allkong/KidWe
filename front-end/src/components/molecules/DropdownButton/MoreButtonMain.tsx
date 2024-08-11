@@ -26,10 +26,10 @@ const MoreButton = ({
 
   return (
     <div ref={selectRef} className="relative flex items-center w-fit h-fit">
-      <button onClick={handleButtonClick}>
+      <button onClick={handleButtonClick} className="relative z-10">
         <img className={`${alignClass}`} src={Icon} alt="icon" />
       </button>
-      <div className={`${positionClass} absolute w-full top-10 min-w-fit`}>
+      <div className={`${positionClass} absolute w-full top-10 min-w-fit z-20`}>
         <Dropdown isOpen={isOpen}>{children}</Dropdown>
       </div>
     </div>
