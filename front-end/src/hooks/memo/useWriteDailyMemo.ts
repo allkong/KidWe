@@ -8,7 +8,6 @@ export const useWriteDailyMemo = () => {
   const queryClient = useQueryClient();
   const result = useMutation({
     mutationFn: ({teacherId, memo}: {teacherId: number; memo: PostMemo}) => {
-      console.log(memo);
       return postMemo(teacherId, memo);
     },
     onError(error) {

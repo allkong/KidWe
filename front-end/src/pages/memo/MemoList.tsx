@@ -2,31 +2,35 @@ import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import {memo, useEffect, useState} from 'react';
-import {createSearchParams, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import dayjs, {Dayjs} from 'dayjs';
+import dayjs from 'dayjs';
 import type {GetMemo} from '@/types/memo/GetMemo';
-import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
-import {useSetRecoilState} from 'recoil';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
+import {toast} from 'react-toastify';
 
 const teacherId = 1;
 
 const MemoList = memo(() => {
+  // 현재 시간
   const [date, setDate] = useState(dayjs());
-  const setMemoTime = useSetRecoilState<Dayjs>(memoTimeSelector);
-  const [modalMemo, setModalMemo] = useState<GetMemo>();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleLeftClick = () => {
+    setDate(date.subtract(1, 'day'));
+  };
 
-  const navigate = useNavigate();
+  const handleRightClick = () => {
+    setDate(date.add(1, 'day'));
+  };
 
+  // data fetch
   const {data, refetch, isLoading} = useGetDailyMemo(
     teacherId,
     date.format('YYYY'),
@@ -36,17 +40,12 @@ const MemoList = memo(() => {
   useLoading(isLoading);
 
   useEffect(() => {
-    setMemoTime(date);
     refetch();
-  }, [date, setMemoTime, refetch]);
+  }, [date, refetch]);
 
-  const handleLeftClick = () => {
-    setDate(date.subtract(1, 'day'));
-  };
-
-  const handleRightClick = () => {
-    setDate(date.add(1, 'day'));
-  };
+  // modal
+  const [modalMemo, setModalMemo] = useState<GetMemo>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -57,18 +56,38 @@ const MemoList = memo(() => {
     setIsModalOpen(true);
   };
 
-  const moveToUpdate = (id: string) => {
-    navigate({
-      pathname: `write`,
-      search: createSearchParams({id}).toString(),
-    });
+  // Button
+  const navigate = useNavigate();
+  const deleteMutate = useDeleteMemo();
+
+  const moveToUpdate = (id: string | undefined) => {
+    if (id !== undefined) {
+      navigate({
+        pathname: `update/${id}`,
+      });
+    }
   };
 
   const moveToWrite = () => {
     navigate({
       pathname: `write`,
-      // search: createSearchParams({date: date.format('YYYY-MM-DD')}).toString(),
+      search: `date=${date.format('YYYY-MM-DD')}`,
     });
+  };
+
+  const handleDeleteClick = (memoId: string | undefined) => {
+    if (memoId !== undefined) {
+      deleteMutate.mutate(
+        {teacherId, memoId},
+        {
+          onSuccess: () => {
+            refetch();
+            toast.info('삭제 완료');
+          },
+        }
+      );
+    }
+    setIsModalOpen(false);
   };
 
   return (
@@ -109,16 +128,16 @@ const MemoList = memo(() => {
             <MemoView memo={modalMemo} />
           </Modal.Body>
           <Modal.BottomButton
-            onClick={() => moveToUpdate(modalMemo?.id as string)}
+            onClick={() => moveToUpdate(modalMemo?.id)}
             label="수정"
-            variant="negative"
+            variant="positive"
             size="large"
             round="full"
           ></Modal.BottomButton>
           <Modal.BottomButton
-            onClick={handleModalClose}
-            label="확인"
-            variant="positive"
+            onClick={() => handleDeleteClick(modalMemo?.id)}
+            label="삭제"
+            variant="negative"
             size="large"
             round="full"
           ></Modal.BottomButton>

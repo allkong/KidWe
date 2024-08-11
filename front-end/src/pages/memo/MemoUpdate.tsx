@@ -6,36 +6,34 @@ import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 import {containerHeaderClass} from '@/styles/styles';
 import {memoState} from '@/recoil/atoms/memo/memo';
 import {useEffect, useState} from 'react';
-import {useNavigate, useSearchParams} from 'react-router-dom';
-import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
+import {useNavigate} from 'react-router-dom';
 import {PostMemo} from '@/types/memo/PostMemo';
 import {useRecoilState} from 'recoil';
 import dayjs from 'dayjs';
+import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
+import {usePutDailyMemo} from '@/hooks/memo/usePutDailyMemo';
+import {useParams} from 'react-router-dom';
 
 const teacherId = 1;
 
 const MemoWrite = () => {
   const navigate = useNavigate();
 
-  const [serachParams] = useSearchParams();
-  const paramDate = serachParams.get('date'); // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
-  let currentDate = dayjs().format('YYYY-MM-DD HH:mm');
-  if (paramDate !== undefined) {
-    currentDate = dayjs(`${paramDate} ${dayjs().format('HH:mm')}`).format(
-      'YYYY-MM-DD HH:mm'
-    );
-  }
+  const paramMemoId = useParams().memoId;
+  const {data} = useGetDailyMemoById(teacherId, paramMemoId);
 
   const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   useEffect(() => {
-    setMemo({
-      content: '',
-      kids: [],
-      lesson: '',
-      tags: [],
-      updatedTime: dayjs(currentDate),
-    });
-  }, [currentDate, setMemo]);
+    if (data) {
+      setMemo({
+        content: data.content,
+        kids: data.kids,
+        lesson: data.lesson,
+        tags: data.tags,
+        updatedTime: dayjs(data.updatedTime),
+      });
+    }
+  }, [setMemo, data]);
 
   const [isValid, setIsValid] = useState(false);
   useEffect(() => {
@@ -47,16 +45,18 @@ const MemoWrite = () => {
     );
   }, [memo]);
 
-  const writeMutate = useWriteDailyMemo();
+  const putMutate = usePutDailyMemo();
   const handleClick = () => {
-    console.log(memo);
-
-    writeMutate.mutateAsync(
-      {teacherId, memo},
-      {
-        onSuccess: () => navigate('/memo'),
-      }
-    );
+    if (paramMemoId) {
+      putMutate.mutateAsync(
+        {memo, memoId: paramMemoId, teacherId},
+        {
+          onSuccess: () => {
+            navigate('/memo');
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -69,7 +69,7 @@ const MemoWrite = () => {
           <KindergartenInfomationSelect />
         </div>
         <ButtonBar
-          label="메모 작성하기"
+          label="메모 수정하기"
           variant={isValid ? 'positive' : 'negative'}
           disabled={!isValid}
           onClick={handleClick}

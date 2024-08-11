@@ -45,15 +45,17 @@ const MemoTagSelect = () => {
     setInput(value);
   };
 
-  const handleTagClick = (value: string) => {
-    const isAlreadySelected = memoTags.find(tag => tag.content === value);
+  const handleTagClick = (value: MemoTag) => {
+    const isAlreadySelected = memoTags.find(
+      tag => tag.content === value.content
+    );
     if (isAlreadySelected === undefined) {
       setMemoTags([
         ...memoTags,
         {
-          id: '',
+          id: value.id,
           teacherId,
-          content: value,
+          content: value.content,
         },
       ]);
     }
@@ -95,7 +97,11 @@ const MemoTagSelect = () => {
         {filteredTags && filteredTags.length !== 0 ? (
           <div className="inline-block m-1">
             {filteredTags.map((tag, idx) => (
-              <Tag key={idx} text={tag.content} onClick={handleTagClick} />
+              <Tag
+                key={idx}
+                text={tag.content}
+                onClick={() => handleTagClick(tag)}
+              />
             ))}
           </div>
         ) : (
