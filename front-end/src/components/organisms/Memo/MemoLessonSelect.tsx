@@ -90,7 +90,7 @@ const MemoLessonSelect = () => {
         className="flex items-center justify-center h-10"
       >
         {memoLesson ? (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center justify-start w-full gap-3">
             <Tag backgroundColor="#FFF1A7" text={'수업'} />
             <p>{memoLesson}</p>
           </div>

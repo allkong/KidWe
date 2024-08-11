@@ -1,8 +1,8 @@
 import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import {memo, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {memo, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
@@ -12,36 +12,41 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import dayjs from 'dayjs';
 import type {GetMemo} from '@/types/memo/GetMemo';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
-import {useLoading} from '@/hooks/loading/useLoading';
 import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
 import {toast} from 'react-toastify';
 
 const teacherId = 1;
 
 const MemoList = memo(() => {
-  // 현재 시간
-  const [date, setDate] = useState(dayjs());
+  const [serachParams] = useSearchParams();
+  const paramDate = serachParams.get('date');
+  let date = dayjs(paramDate);
+  if (!date.isValid()) {
+    date = dayjs();
+  }
 
+  // 현재 시간
   const handleLeftClick = () => {
-    setDate(date.subtract(1, 'day'));
+    navigate({
+      pathname: '/memo',
+      search: `?date=${date.subtract(1, 'day').format('YYYY-MM-DD')}`,
+    });
   };
 
   const handleRightClick = () => {
-    setDate(date.add(1, 'day'));
+    navigate({
+      pathname: '/memo',
+      search: `?date=${date.add(1, 'day').format('YYYY-MM-DD')}`,
+    });
   };
 
   // data fetch
-  const {data, refetch, isLoading} = useGetDailyMemo(
+  const {data, refetch} = useGetDailyMemo(
     teacherId,
     date.format('YYYY'),
     date.format('MM'),
     date.format('DD')
   );
-  useLoading(isLoading);
-
-  useEffect(() => {
-    refetch();
-  }, [date, refetch]);
 
   // modal
   const [modalMemo, setModalMemo] = useState<GetMemo>();

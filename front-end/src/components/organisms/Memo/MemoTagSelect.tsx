@@ -32,7 +32,7 @@ const MemoTagSelect = () => {
       setFilteredTags(tagDatas);
       setIsValid(false);
     } else {
-      setFilteredTags(tagDatas?.filter(tag => tag.content.includes(input)));
+      setFilteredTags(tagDatas?.filter(tag => tag.content === input));
       setIsValid(true);
     }
   }, [input, tagDatas]);
