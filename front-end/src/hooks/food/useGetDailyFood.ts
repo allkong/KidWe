@@ -2,9 +2,10 @@ import {getDailyFood} from '@/apis/food/getDailyFood';
 import {useQuery} from '@tanstack/react-query';
 import {Dayjs} from 'dayjs';
 import {foodKeys} from '@/hooks/food/foodKeys';
+import {GetFood} from '@/types/food/GetFood';
 
 export const useGetDailyFood = (kindergartenId: number, date: Dayjs) => {
-  const result = useQuery({
+  const result = useQuery<GetFood>({
     queryKey: foodKeys.detail(kindergartenId, date),
     queryFn: () =>
       getDailyFood(
