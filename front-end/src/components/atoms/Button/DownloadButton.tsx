@@ -9,14 +9,9 @@ interface DownloadButtonProps {
 const DownloadButton = ({imageUrl}: DownloadButtonProps) => {
   const handleDownload = async () => {
     try {
-      // const response = await fetch(imageUrl);
-      const response = await fetch(imageUrl, {
-        method: 'OPTIONS',
-        headers: {
-          'Access-Control-Request-Method': 'GET',
-          'Access-Control-Request-Headers': 'Content-Type',
-          Origin: window.location.origin,
-        },
+      const response = await fetch(`${imageUrl}?not-from-cache-please`, {
+        method: 'GET',
+        mode: 'cors',
       });
       const blob = await response.blob();
       saveAs(blob, `KidWe_${Date.now()}.png`);

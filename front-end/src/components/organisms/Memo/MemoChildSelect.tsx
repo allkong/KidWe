@@ -17,7 +17,11 @@ interface CheckedKid {
 
 const banId = 1;
 
-const MemoChildSelect = () => {
+interface MemoChildSelectProps {
+  isMultipleSelect?: boolean;
+}
+
+const MemoChildSelect = ({isMultipleSelect = false}: MemoChildSelectProps) => {
   const [memoKids, setMemoKids] = useRecoilState(memoKidsSelector);
 
   const [children, setChildren] = useState<CheckedKid[]>();
@@ -77,13 +81,25 @@ const MemoChildSelect = () => {
 
   const handleItemClick = (id: number) => {
     if (children !== undefined) {
-      setChildren(
-        [...children].map(child =>
-          child.kid.id === id
-            ? {...child, isChecked: !child.isChecked}
-            : {...child}
-        )
-      );
+      if (isMultipleSelect) {
+        // 다중 선택 모드
+        setChildren(
+          [...children].map(child =>
+            child.kid.id === id
+              ? {...child, isChecked: !child.isChecked}
+              : {...child}
+          )
+        );
+      } else {
+        // 단일 선택 모드
+        setChildren(
+          [...children].map(child =>
+            child.kid.id === id
+              ? {...child, isChecked: true}
+              : {...child, isChecked: false}
+          )
+        );
+      }
     }
   };
 
