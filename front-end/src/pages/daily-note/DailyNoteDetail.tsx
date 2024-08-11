@@ -24,10 +24,7 @@ const DailyNoteDetail = () => {
           date="2024-08-09 15:13"
           isEdit
         />
-        <ArticleContent
-          content="<b>안녕하세요오옹</b></br><p>반갑습니당ㅎㅎㅎ</p>"
-          images={imagesTest}
-        />
+        <ArticleContent content="<p>헤헤</p>" images={imagesTest} />
       </div>
       <InputBar />
     </div>
