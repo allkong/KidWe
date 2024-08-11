@@ -25,6 +25,16 @@ const DailyNoteListView = () => {
     RoleItem.Teacher
   );
 
+  const sortedData =
+    data &&
+    Object.keys(data.dailyNoteListItemResponseDtos)
+      .map(key => Number(key))
+      .sort((a, b) => b - a)
+      .map(key => ({
+        day: key,
+        items: data.dailyNoteListItemResponseDtos[key.toString()],
+      }));
+
   const handleLeftClick = () => {
     setCurrentMonth(prev => prev.subtract(1, 'month').startOf('month'));
   };
@@ -57,11 +67,11 @@ const DailyNoteListView = () => {
             <NoResult text="등록된 알림장이 없어요" />
           </div>
         ) : (
-          data &&
-          Object.keys(data.dailyNoteListItemResponseDtos).map(dateKey => (
-            <div key={dateKey}>
-              <MonthDivider text={`${dateKey}일`} color="gray" />
-              {data.dailyNoteListItemResponseDtos[dateKey].map(item => {
+          sortedData &&
+          sortedData.map(({day, items}) => (
+            <div key={day}>
+              <MonthDivider text={`${day}일`} color="gray" />
+              {items.map(item => {
                 const isFutureTime = dayjs(item.stringSendTime).isAfter(
                   dayjs()
                 );
