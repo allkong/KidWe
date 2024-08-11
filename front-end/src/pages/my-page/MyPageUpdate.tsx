@@ -31,6 +31,8 @@ const MyPageUpdate = () => {
   }, [data, setPatchUserInfo]);
 
   const handleClickButton = () => {
+    console.log(patchUserInfo);
+    
     userMutation.mutate(patchUserInfo, {
       onSuccess: () => navigate('/mypage'),
     });
