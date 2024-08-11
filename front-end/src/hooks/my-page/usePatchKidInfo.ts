@@ -6,7 +6,25 @@ import {userKeys} from './userKeys';
 export const usePatchKidInfo = (kidId: number) => {
   const queryClient = useQueryClient();
   const kidMutation = useMutation({
-    mutationFn: (body: PatchKidInfo) => patchKidInfo(body),
+    mutationFn: ({
+      info,
+      picture,
+    }: {
+      info: PatchKidInfo;
+      picture: File | null;
+    }) => {
+      const formData = new FormData();
+      const {picture: _, ...infos} = info;
+      formData.append(
+        'dto',
+        new Blob([JSON.stringify(infos)], {type: 'application/json'})
+      );
+      if (picture !== null) {
+        formData.append('picture', picture);
+      }
+
+      return patchKidInfo(formData);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: userKeys.kid(kidId),

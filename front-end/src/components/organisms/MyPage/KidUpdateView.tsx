@@ -1,38 +1,53 @@
-import LabelInput from '@/components/atoms/Input/LabelInput';
-import CheckBoxButton from '@/components/atoms/CheckBox/CheckBoxButton';
-import CalendarButton from '@/components/molecules/Button/CalendarButton';
-import AllergyView from '@/components/organisms/Food/AllergyView';
-import {ALLERGIES} from '@/constants/allergy';
-// import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
-import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
+import {patchKidInfoState} from '@/recoil/atoms/my-page/kidInfo';
+import {useSetRecoilState} from 'recoil';
+import {useEffect} from 'react';
+import KidNameUpdateView from '@/components/organisms/MyPage/KidNameUpdateView';
+import KidBirthdayUpdateView from '@/components/organisms/MyPage/KidBirthdayUpdateView';
+import KidGenderUpdateView from '@/components/organisms/MyPage/KidGenderUpdateView';
+import KidAllergyUpdateView from '@/components/organisms/MyPage/KidAllergyUpdateView';
+import KidProfileUpdateView from '@/components/organisms/MyPage/KidProfileUpdateView';
+
+const kidId = 1;
+const kindergartenId = 1;
 
 const KidUpdateView = () => {
+  const {data} = useGetKidInfo(kidId);
+  const setKidInfo = useSetRecoilState(patchKidInfoState);
+
+  useEffect(() => {
+    if (data !== undefined) {
+      const {id, name, birthday, gender, allergies, picture, banId} = data;
+      setKidInfo({
+        dto: {
+          id,
+          name,
+          birthday,
+          gender,
+          allergies,
+          banId,
+          kindergartenId: kindergartenId,
+        },
+        picture,
+      });
+    }
+  }, [data, setKidInfo]);
+
   return (
     <div className="flex-col items-end w-full pt-10 text-gray-300">
       <div className="flex flex-col items-center justify-center w-full gap-3 py-3">
-        {/* <ImageUploadButton userPicture="" onChangePicture={() => {}} /> */}
-        <div className="w-fit">
-          <XSmallButton label="삭제" />
-        </div>
+        <KidProfileUpdateView />
       </div>
-      <LabelInput label="자녀 이름" value="" placeholder="자녀 이름" />
+      <KidNameUpdateView />
       <div className="flex items-end justify-between my-4 gap-9 h-fit">
         <div className="flex-grow">
-          <CalendarButton
-            position="right"
-            render={() => <LabelInput value="" label="생년월일" />}
-          />
+          <KidBirthdayUpdateView />
         </div>
         <div>
-          <p className="mb-4">성별</p>
-          <div className="flex flex-row items-start gap-2">
-            <CheckBoxButton label="남" />
-            <CheckBoxButton label="여" />
-          </div>
+          <KidGenderUpdateView />
         </div>
       </div>
-      <p>알레르기 정보</p>
-      <AllergyView datas={ALLERGIES} />
+      <KidAllergyUpdateView />
     </div>
   );
 };

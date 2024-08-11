@@ -1,6 +1,6 @@
 import {atom} from 'recoil';
 
-export const patchKidPictureState = atom<File | undefined>({
+export const patchKidPictureState = atom<File | null>({
   key: 'patchKidPictureState',
-  default: undefined,
+  default: null,
 });
