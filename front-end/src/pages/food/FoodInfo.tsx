@@ -12,6 +12,7 @@ import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
+// import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 
 dayjs.extend(weekOfYear);
 
@@ -45,8 +46,9 @@ const FoodInfo = () => {
   };
 
   const moveToWrite = () => {
-    navigate('write', {
-      state: {date: date.format('YYYY-MM-DD')},
+    navigate({
+      pathname: 'write',
+      search: `date=${date.format('YYYY-MM-DD')}`,
     });
   };
 
@@ -68,6 +70,12 @@ const FoodInfo = () => {
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
           {food ? (
             <>
+              {/* <div className="flex justify-end w-full">
+                <MoreButton align="vertical">
+                  <MoreButton.Option text="수정" />
+                  <MoreButton.Option text="삭제" />
+                </MoreButton>
+              </div> */}
               <FoodInfomationItem
                 variant="lunch"
                 menu={food.lunch}

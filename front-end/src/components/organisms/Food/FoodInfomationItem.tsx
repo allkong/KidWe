@@ -72,7 +72,7 @@ const FoodInfomationItem = ({
             <p className="text-xs">알러지</p>
             <div className="flex flex-wrap gap-1 mb-3">
               {allergies?.map((allergy, idx) => (
-                <Tag key={idx} text={allergy} />
+                <Tag key={idx} text={allergy} size="small" />
               ))}
             </div>
           </>
