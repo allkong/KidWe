@@ -7,13 +7,8 @@ export const getDailyFood = async (
   month: number,
   day: number
 ): Promise<GetFood> => {
-  try {
-    const result = await axiosInstance.get(
-      `/menus/${kindergartenId}/${year}/${month}/${day}`
-    );
-    return result.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const result = await axiosInstance.get(
+    `/menus/${kindergartenId}/${year}/${month}/${day}`
+  );
+  return result.data;
 };

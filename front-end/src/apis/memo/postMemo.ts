@@ -2,14 +2,9 @@ import noSqlInstance from '@/apis/noSqlInstance';
 import {PostMemo} from '@/types/memo/PostMemo';
 
 export const postMemo = async (teacherId: number, memo: PostMemo) => {
-  try {
-    const result = await noSqlInstance.post(`/memo/${teacherId}`, {
-      ...memo,
-      updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
-    });
-    return result.data;
-  } catch (error) {
-    console.debug(error);
-    throw error;
-  }
+  const result = await noSqlInstance.post(`/memos/${teacherId}`, {
+    ...memo,
+    updatedTime: memo.updatedTime.format('YYYY-MM-DD HH:mm'),
+  });
+  return result.data;
 };

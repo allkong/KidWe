@@ -11,11 +11,6 @@ export const getLessonInfomation = async (
   banId: number,
   date: string
 ): Promise<Lesson[]> => {
-  try {
-    const result = await axiosInstance.get(`/schedules/ban/${banId}/${date}`);
-    return result.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const result = await axiosInstance.get(`/schedules/ban/${banId}/${date}`);
+  return result.data;
 };

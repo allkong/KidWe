@@ -4,7 +4,9 @@ import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import KidWe from '@/assets/kid-we.svg';
 import {useLogin} from '@/hooks/login/useLogin';
-import {toast} from 'react-toastify';
+import {useLoading} from '@/hooks/loading/useLoading';
+import {useSetRecoilState} from 'recoil';
+import {loadingState} from '@/recoil/atoms/axios/loading';
 
 const LoginMain: React.FC = () => {
   const navigate = useNavigate();
@@ -21,21 +23,21 @@ const LoginMain: React.FC = () => {
     }
   };
 
+  const setisLoaded = useSetRecoilState(loadingState);
   const loginMutate = useLogin();
 
   const handleLoginButtonClick = () => {
-    loginMutate.mutate(
+    loginMutate.mutateAsync(
       {email, password},
       {
         onSuccess: () => {
           navigate('/');
         },
-        onError: () => {
-          toast.error('아이디와 비밀번호를 확인해주세요');
-        },
+        onSettled: () => setisLoaded(false),
       }
     );
   };
+  useLoading(loginMutate.isPending);
 
   return (
     <>

@@ -4,11 +4,17 @@ import {containerHeaderClass} from '@/styles/styles';
 import UserInfo from '@/components/organisms/MyPage/UserInfo';
 import MyPageItem from '@/components/organisms/MyPage/MyPageItem';
 import {useNavigate} from 'react-router-dom';
+import {deleteToken} from '@/utils/userToken';
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleLogoutClick = () => {
+    deleteToken();
     navigate('/login');
   };
 
@@ -35,6 +41,7 @@ const Home = () => {
         </div>
         <div>
           <MyPageItem label="로그인" onClick={handleLoginClick} />
+          <MyPageItem label="로그아웃" onClick={handleLogoutClick} />
         </div>
       </div>
       <NavigationBar />

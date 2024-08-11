@@ -7,16 +7,16 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('');
+    navigate('/');
   };
 
   return (
-    <div className="h-screen max-w-screen flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center h-screen max-w-screen">
       <div className="flex flex-col items-center justify-center mb-4">
         <img src={kidWeCharacter} />
         <img src={error} />
       </div>
-      <div className="flex flex-col items-center justify-center text-gray-200 mb-10 text-sm">
+      <div className="flex flex-col items-center justify-center mb-10 text-sm text-gray-200">
         <p>오류가 발생했어요</p>
         <p>잠시후 다시 이용해주세요</p>
       </div>
