@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
     // Refresh token을 통해 Access token 발급 후 기존 api 재요청
     console.log('server error', error);
 
-    const {code, status}: ErrorCode = error.response.data;
+    const {code, status}: ErrorCode = error.response?.data || {};
     if (status === 401 && code === 'UNAUTHENTICATED_ACCESS_TOKEN') {
       console.log('Access Token 재발급 시작');
 

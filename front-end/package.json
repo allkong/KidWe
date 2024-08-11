@@ -21,6 +21,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.51.21",
     "@tanstack/react-query-devtools": "^5.51.21",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "axios": "^1.7.3",
     "dayjs": "^1.11.12",
     "dompurify": "^3.1.6",
