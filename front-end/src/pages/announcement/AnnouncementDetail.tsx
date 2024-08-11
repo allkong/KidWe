@@ -1,9 +1,9 @@
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
 import AuthorItem from '@/components/molecules/Item/AuthorItem';
-import PostContent from '@/components/molecules/Post/PostContent';
+import ArticleContent from '@/components/molecules/Article/ArticleContent';
 import InputBar from '@/components/organisms/Navigation/InputBar';
-import ArticleTitle from '@/components/molecules/Post/ArticleTitle';
+import ArticleTitle from '@/components/molecules/Article/ArticleTitle';
 
 const DailyNoteDetail = () => {
   const imagesTest = [
@@ -27,7 +27,7 @@ const DailyNoteDetail = () => {
           isEdit
         />
         <ArticleTitle title="여름이라 많이 덥네요~" />
-        <PostContent
+        <ArticleContent
           content="<b>안녕하세요오옹</b></br><p>반갑습니당ㅎㅎㅎ</p>"
           images={imagesTest}
         />{' '}

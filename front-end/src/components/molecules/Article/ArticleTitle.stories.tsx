@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import AnnounceTitle from '@/components/molecules/Post/ArticleTitle';
+import AnnounceTitle from '@/components/molecules/Article/ArticleTitle';
 
 const meta: Meta<typeof AnnounceTitle> = {
   component: AnnounceTitle,
