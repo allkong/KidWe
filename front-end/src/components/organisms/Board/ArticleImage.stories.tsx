@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import ArticleImage from '@/components/organisms/Article/ArticleImage';
+import ArticleImage from '@/components/organisms/Board/ArticleImage';
 
 const meta: Meta<typeof ArticleImage> = {
   component: ArticleImage,

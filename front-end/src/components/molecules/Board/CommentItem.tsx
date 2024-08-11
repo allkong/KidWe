@@ -1,27 +1,25 @@
-import React from 'react';
-// import commentIcon from '@/assets/icons/message-line.svg';
 import dayjs from 'dayjs';
 import Button from '@/components/atoms/Button/Button';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import ReplyIcon from '@/assets/icons/reply-enter.svg?react';
 
-interface AnnounceTitleProps {
+interface CommentItemProps {
   writer: string;
-  classname: string;
+  banName?: string;
   content: string;
-  date: Date;
+  date: string;
   onClick: () => void;
   isReply?: boolean;
 }
 
 const CommentItem = ({
   writer,
-  classname,
+  banName,
   content,
   date,
   onClick,
   isReply = false,
-}: AnnounceTitleProps) => {
+}: CommentItemProps) => {
   const today = dayjs(date).format('MM.DD HH:mm');
   return (
     <div className="flex items-center justify-between w-full pr-2 mt-10 text-xs">
@@ -30,7 +28,7 @@ const CommentItem = ({
         <div className="flex items-center justify-between space-x-5 ">
           <div className="flex items-center space-x-5">
             <p className="text-lg">{writer}</p>
-            <p className="text-xs">{classname}</p>
+            <p className="text-xs">{banName}</p>
           </div>
           <MoreButton />
         </div>

@@ -1,12 +1,12 @@
 import DOMPurify, {Config} from 'dompurify';
-import ArticleImage from '@/components/organisms/Article/ArticleImage';
+import ArticleImage from '@/components/organisms/Board/ArticleImage';
 
-interface PostContentProps {
+interface ArticleSectionProps {
   content: string;
   images: string[];
 }
 
-const PostContent = ({content, images}: PostContentProps) => {
+const ArticleSection = ({content, images}: ArticleSectionProps) => {
   // React Quill 설정 이후에 다시 커스텀하기
   const domPurifyConfig: Config = {
     ALLOWED_TAGS: [
@@ -42,4 +42,4 @@ const PostContent = ({content, images}: PostContentProps) => {
   );
 };
 
-export default PostContent;
+export default ArticleSection;
