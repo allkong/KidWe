@@ -92,30 +92,30 @@ const MemoTagSelect = () => {
         value={input}
         onChange={handleInputChange}
       />
-      <div className="box-border h-40 px-2 py-3 overflow-y-auto border border-gray-200 rounded-md text-wrap">
-        {/* tag 받아오는 영역 */}
-        {filteredTags && filteredTags.length !== 0 ? (
-          <div className="inline-block m-1">
-            {filteredTags.map((tag, idx) => (
+      <div className="box-border h-40 px-3 py-3 overflow-y-auto border border-gray-200 rounded-md text-wrap">
+        <div className="flex flex-wrap w-full gap-2 h-fit">
+          {filteredTags && filteredTags.length !== 0 ? (
+            filteredTags.map((tag, idx) => (
               <Tag
                 key={idx}
                 text={tag.content}
                 onClick={() => handleTagClick(tag)}
               />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full">
-            <NoResult text="등록된 태그가 없어요" />
-            <Button
-              label="태그 추가"
-              disabled={!isValid}
-              variant="negative"
-              onClick={() => handleTagAdd()}
-            />
-          </div>
-        )}
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full">
+              <NoResult text="등록된 태그가 없어요" />
+              <Button
+                label="태그 추가"
+                disabled={!isValid}
+                variant="negative"
+                onClick={() => handleTagAdd()}
+              />
+            </div>
+          )}
+        </div>
       </div>
+
       <div className="flex flex-wrap w-full gap-2 h-fit">
         {memoTags &&
           memoTags.map((tag, idx) => (
