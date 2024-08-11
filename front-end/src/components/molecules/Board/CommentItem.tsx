@@ -1,9 +1,10 @@
-import dayjs from 'dayjs';
-import Button from '@/components/atoms/Button/Button';
-import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import ReplyIcon from '@/assets/icons/reply-enter.svg?react';
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
+import Tag from '@/components/atoms/Tag/Tag';
 
 interface CommentItemProps {
+  profile: string;
   writer: string;
   banName?: string;
   content: string;
@@ -13,6 +14,7 @@ interface CommentItemProps {
 }
 
 const CommentItem = ({
+  profile,
   writer,
   banName,
   content,
@@ -20,29 +22,39 @@ const CommentItem = ({
   onClick,
   isReply = false,
 }: CommentItemProps) => {
-  const today = dayjs(date).format('MM.DD HH:mm');
+  // const backgroundColor;
+
   return (
-    <div className="flex items-center justify-between w-full pr-2 mt-10 text-xs">
-      <div>{isReply && <ReplyIcon width={68} height={68} />}</div>
-      <div className="w-full space-y-2">
-        <div className="flex items-center justify-between space-x-5 ">
-          <div className="flex items-center space-x-5">
-            <p className="text-lg">{writer}</p>
-            <p className="text-xs">{banName}</p>
+    <div className="flex flex-row justify-between bg-white">
+      <div className="flex flex-row gap-3">
+        {isReply && (
+          <div>
+            <ReplyIcon width={30} height={30} />
           </div>
-          <MoreButton />
-        </div>
-        <p>{content}</p>
-        <div className="flex items-center space-x-5 ">
-          <Button
-            size="small"
-            label="답글"
-            variant="negative"
-            onClick={onClick}
-          />
-          <p className="text-sm text-gray-200">{today}</p>
+        )}
+        <ProfileImage src={profile} size="2rem" />
+        <div className="flex flex-col">
+          <div className="flex flex-row items-end gap-2 mb-0.5">
+            <p className="text-sm font-semibold">{writer}</p>
+            <p className="text-2xs">{banName}</p>
+          </div>
+          <p className="mb-2 text-sm">{content}</p>
+          <div className="flex flex-row items-center gap-3">
+            {/* <Button label="답글" size="small" round="full" variant="negative" /> */}
+            <Tag
+              text="답글"
+              size="small"
+              backgroundColor="#EAEAEA"
+              onClick={onClick}
+            />
+            <p className="text-2xs">{date}</p>
+          </div>
         </div>
       </div>
+      <MoreButton align="vertical">
+        <MoreButton.Option text="수정하기" />
+        <MoreButton.Option text="삭제하기" />
+      </MoreButton>
     </div>
   );
 };
