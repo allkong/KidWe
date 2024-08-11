@@ -43,10 +43,10 @@ const MyPageUpdate = () => {
 
   return (
     <div
-      className={`${containerHeaderClass} h-screen bg-white flex flex-col px-10`}
+      className={`${containerHeaderClass} justify-center h-screen bg-white flex flex-col px-10`}
     >
       <Header title="정보 변경" buttonType="back" />
-      <div className="flex-grow overflow-auto">
+      <div className="flex items-center flex-grow overflow-auto">
         <MyPageUpdateView onChangeValid={handleIsValid} />
       </div>
       <div className="box-border w-full px-3 py-5 h-fit">

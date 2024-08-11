@@ -37,7 +37,19 @@ const Home = () => {
           <MyPageItem label="이름" content="루피" />
           <MyPageItem label="이메일" content="808@kidwe.com" />
           <MyPageItem label="개인정보 변경" onClick={handleUpdateInfoClick} />
-          <MyPageItem label="자녀정보 변경" onClick={handleKidUpdateClick} />
+        </div>
+        <div className="mb-2">
+          <MyPageItem
+            label="현재 자녀 정보 변경"
+            content="행식이"
+            onClick={handleKidUpdateClick}
+          />
+          <MyPageItem
+            label="현재 자녀 유치원 이동"
+            content="춘식이"
+            onClick={() => {}}
+          />
+          <MyPageItem label="자녀 추가" onClick={() => {}} />
         </div>
         <div>
           <MyPageItem label="로그인" onClick={handleLoginClick} />
