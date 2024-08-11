@@ -7,6 +7,7 @@ import ArticleTitle from '@/components/molecules/Post/ArticleTitle';
 
 const DailyNoteDetail = () => {
   const imagesTest = [
+    'https://common-kidwe-image.s3.ap-northeast-2.amazonaws.com/001b5fb1-9ea7-46a7-82b6-9a0f9aa7d31f.png',
     'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F552f5903-0ff8-4755-a27c-4324d9d2fb6a%2Fb3216850-8080-4322-8948-bb940a6abd8c%2Fimage.png?table=block&id=c2eaca91-e453-4a55-8186-f244d96576d1&spaceId=552f5903-0ff8-4755-a27c-4324d9d2fb6a&width=1540&userId=174f1594-3085-42b6-85f6-846b8e6727d3&cache=v2',
     'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F552f5903-0ff8-4755-a27c-4324d9d2fb6a%2F8905ff3c-2293-4d2d-bef0-74bbf3ba5318%2Fimage.png?table=block&id=9fa3d076-10d6-47ee-be98-aed373dc8b4b&spaceId=552f5903-0ff8-4755-a27c-4324d9d2fb6a&width=1540&userId=174f1594-3085-42b6-85f6-846b8e6727d3&cache=v2',
     'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F552f5903-0ff8-4755-a27c-4324d9d2fb6a%2Fe8d31622-e105-45b7-838a-54a2a6f6220a%2Fimage.png?table=block&id=036a96e5-56e3-49d5-8fc0-3278a30d94dc&spaceId=552f5903-0ff8-4755-a27c-4324d9d2fb6a&width=1540&userId=174f1594-3085-42b6-85f6-846b8e6727d3&cache=v2',

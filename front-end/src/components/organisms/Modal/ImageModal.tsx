@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import CloseButton from '@/components/atoms/Button/CloseButton';
-import DownloadIcon from '@/assets/icons/download-line.svg?react';
+import DownloadButton from '@/components/atoms/Button/DownloadButton';
 
 interface ImageModalProps {
   images: string[];
@@ -13,10 +13,6 @@ interface ImageModalProps {
 const ImageModal = ({images, selectedImage, onClose}: ImageModalProps) => {
   const [currentIndex, setCurrentIndex] = useState(selectedImage);
 
-  const handleDownload = () => {
-    console.log('다운');
-  };
-
   return (
     <div className="fixed inset-0 z-20 flex items-center justify-center bg-black">
       <div className="absolute top-0 z-20 flex items-center justify-between w-full px-5 py-3 bg-black bg-opacity-50">
@@ -24,9 +20,7 @@ const ImageModal = ({images, selectedImage, onClose}: ImageModalProps) => {
         <span className="text-xl text-white">
           {currentIndex + 1}/{images.length}
         </span>
-        <button onClick={handleDownload} className="text-2xl">
-          <DownloadIcon />
-        </button>
+        <DownloadButton imageUrl={images[currentIndex]} />
       </div>
       <div className="absolute inset-0 w-full h-full">
         <Swiper
