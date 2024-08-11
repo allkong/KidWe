@@ -1,4 +1,3 @@
-import Button from '@/components/atoms/Button/Button';
 import Select from '@/components/molecules/DropdownButton/Select';
 import {useEffect, useState} from 'react';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
@@ -10,6 +9,7 @@ import Divider from '@/components/atoms/Divider/Divider';
 import {ScheduleOption} from '@/enum/kindergarten/schedule';
 import {scheduleOptionKeys} from '@/enum/kindergarten/schedule';
 import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
@@ -75,12 +75,7 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
 
   return (
     <>
-      <Button
-        label="일정 등록"
-        round="full"
-        size="small"
-        onClick={handleOpen}
-      />
+      <XSmallButton variant="positive" label="일정 등록" onClick={handleOpen} />
       <ModalPortal>
         <Modal isOpen={isOpen}>
           <Modal.Header title="일정 등록" />
