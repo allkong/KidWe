@@ -7,6 +7,7 @@ export const useGetUserInfo = (userId: number) => {
   const result = useQuery<GetUserInfo>({
     queryKey: userKeys.user(userId),
     queryFn: getUserInfo,
+    enabled: !!userId,
   });
   return result;
 };

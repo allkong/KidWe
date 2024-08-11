@@ -1,15 +1,17 @@
 import LabelInput from '@/components/atoms/Input/LabelInput';
+import {patchUserPasswordSelector} from '@/recoil/selectors/my-page/userInfoPassword';
 import {patchUserTelSelector} from '@/recoil/selectors/my-page/userInfoTel';
 import {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
 
-const MyPageUpdateView = () => {
-  const [userTel, setUserTel] = useRecoilState(patchUserTelSelector);
-  const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserTel(e.target.value);
-  };
+interface MyPageUpdateViewProps {
+  onChangeValid: (value: boolean) => void;
+}
 
-  const [newPassword, setNewPassword] = useState('');
+const MyPageUpdateView = ({onChangeValid}: MyPageUpdateViewProps) => {
+  const [newPassword, setNewPassword] = useRecoilState(
+    patchUserPasswordSelector
+  );
   const [newPasswordConfig, setNewPasswordConfig] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -26,6 +28,21 @@ const MyPageUpdateView = () => {
   useEffect(() => {
     setIsPasswordValid(newPassword === newPasswordConfig);
   }, [newPassword, newPasswordConfig]);
+
+  const [userTel, setUserTel] = useRecoilState(patchUserTelSelector);
+  const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserTel(e.target.value);
+  };
+  const [isTelValid, setIsTelValid] = useState(false);
+
+  useEffect(() => {
+    const telReg = new RegExp(/^0\d{1,2}(-|\))\d{3,4}-\d{4}$/);
+    setIsTelValid(telReg.test(userTel));
+  }, [userTel]);
+
+  useEffect(() => {
+    onChangeValid(isPasswordValid && isTelValid);
+  }, [isPasswordValid, isTelValid, onChangeValid]);
 
   return (
     <div className="w-full py-10 space-y-5">
@@ -56,9 +73,14 @@ const MyPageUpdateView = () => {
         <LabelInput
           label="전화번호"
           value={userTel}
-          placeholder="전화번호"
+          placeholder="ex) 010-1234-5678"
           onChange={handleTelChange}
         />
+        {!isTelValid && (
+          <p className="text-sm text-red-400">
+            올바른 전화번호 형식이 아닙니다.
+          </p>
+        )}
       </div>
     </div>
   );
