@@ -11,8 +11,12 @@ import SignUp from '@/pages/SignUp';
 
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
 import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
+import DailyNoteWirte from '@/pages/daily-note/DailyNoteWirte';
 
-import Announcement from '@/pages/Announcement';
+import AnnouncementListView from '@/pages/announcement/AnnouncementListView';
+import AnnouncementDetail from '@/pages/announcement/AnnouncementDetail';
+import AnnouncementWrite from '@/pages/announcement/AnnouncementWrite';
+
 import AttentdanceManagement from '@/pages/attendance/AttendanceManagement';
 
 import MedicationListView from '@/pages/medication/MedicationListView';
@@ -94,10 +98,16 @@ const App: React.FC = () => {
           <Route path="/daily-note">
             <Route path="" element={<DailyNoteListView />} />
             <Route path=":dailyNoteId" element={<DailyNoteDetail />} />
+            <Route path="write" element={<DailyNoteWirte />} />
+          </Route>
+
+          <Route path="/announcement">
+            <Route path="" element={<AnnouncementListView />} />
+            <Route path=":announcementId" element={<AnnouncementDetail />} />
+            <Route path="write" element={<AnnouncementWrite />} />
           </Route>
 
           <Route path="/attendance" element={<AttentdanceManagement />}></Route>
-          <Route path="/announcement/*" element={<Announcement />}></Route>
 
           <Route path="/medication">
             <Route path="" element={<MedicationListView />} />

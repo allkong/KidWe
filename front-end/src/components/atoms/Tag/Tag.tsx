@@ -20,7 +20,7 @@ const Tag = ({
   let sizeClass: string = '';
 
   if (size === 'small') {
-    sizeClass = 'text-xs py-1 px-3';
+    sizeClass = 'text-xs px-3 py-1 h-6';
   } else if (size === 'medium') {
     sizeClass = 'py-1 px-3';
   } else if (size === 'large') {
@@ -33,7 +33,7 @@ const Tag = ({
 
   return (
     <div
-      className={`${colorClass} ${sizeClass} inline-block rounded-full text-center`}
+      className={`${colorClass} ${sizeClass} rounded-full text-center items-center flex`}
       style={{backgroundColor}}
       onClick={handleClick}
     >

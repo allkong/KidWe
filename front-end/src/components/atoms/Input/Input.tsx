@@ -21,7 +21,7 @@ const Input = forwardRef(
 
     return (
       <input
-        className="w-full px-2 py-2 text-xs font-normal text-gray-300 transition-shadow bg-gray-100 border-none rounded-lg focus:outline-none focus:border focus:border-color-300 focus:shadow-sm focus:shadow-gray-100"
+        className="w-full px-3 py-2 text-sm font-normal text-gray-300 transition-shadow border-none rounded-sm bg-[#F5F5F5] focus:outline-none focus:border focus:border-color-300 focus:shadow-sm focus:shadow-gray-100"
         onChange={handleChange}
         onKeyDown={keyDownHandle}
         {...props}
