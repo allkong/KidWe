@@ -67,7 +67,7 @@ const FoodInfomationItem = ({
       <div className="flex flex-col justify-center w-56 h-full">
         <p className="text-xs">식단</p>
         <p className="mb-3 text-md">{menu}</p>
-        {allergies && (
+        {allergies?.length !== 0 && (
           <>
             <p className="text-xs">알러지</p>
             <div className="flex flex-wrap gap-1 mb-3">

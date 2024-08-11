@@ -37,7 +37,10 @@ const FoodInfoWrite = () => {
       },
       {
         onSuccess: () => {
-          navigate('/food');
+          navigate({
+            pathname: '/food',
+            search: `?date=${date}`,
+          });
         },
       }
     );

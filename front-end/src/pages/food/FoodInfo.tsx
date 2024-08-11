@@ -4,15 +4,13 @@ import FoodInfomationItem from '@/components/organisms/Food/FoodInfomationItem';
 import FoodDateNavigator from '@/components/organisms/Food/FoodDateNavigator';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
 import NoResult from '@/components/atoms/NoResult';
-import {useState} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
-// import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 
 dayjs.extend(weekOfYear);
 
@@ -28,21 +26,35 @@ function getWeekOfMonth(date: Dayjs) {
 const FoodInfo = () => {
   const navigate = useNavigate();
 
-  const [date, setDate] = useState(dayjs());
+  const [serachParams] = useSearchParams();
+  const paramDate = serachParams.get('date');
+  let date = dayjs(paramDate);
+  if (!date.isValid()) {
+    date = dayjs();
+  }
 
   const {data: food, isLoading} = useGetDailyFood(kindergartenId, date);
   useLoading(isLoading);
 
   const handleLeftClick = () => {
-    setDate(date.subtract(1, 'week'));
+    navigate({
+      pathname: '/food',
+      search: `?date=${date.subtract(1, 'week').format('YYYY-MM-DD')}`,
+    });
   };
 
   const handleRightClick = () => {
-    setDate(date.add(1, 'week'));
+    navigate({
+      pathname: '/food',
+      search: `?date=${date.add(1, 'week').format('YYYY-MM-DD')}`,
+    });
   };
 
   const handleDateChange = (value: Dayjs) => {
-    setDate(value);
+    navigate({
+      pathname: '/food',
+      search: `?date=${value.format('YYYY-MM-DD')}`,
+    });
   };
 
   const moveToWrite = () => {
@@ -57,7 +69,7 @@ const FoodInfo = () => {
       <div
         className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
       >
-        <Header title="급식 정보" buttonType="back" />
+        <Header title="급식 정보" buttonType="close" />
         <DateNavigator
           title={`${date.format('M월')} ${getWeekOfMonth(date)}주차`}
           onClickLeft={handleLeftClick}
@@ -70,12 +82,6 @@ const FoodInfo = () => {
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
           {food ? (
             <>
-              {/* <div className="flex justify-end w-full">
-                <MoreButton align="vertical">
-                  <MoreButton.Option text="수정" />
-                  <MoreButton.Option text="삭제" />
-                </MoreButton>
-              </div> */}
               <FoodInfomationItem
                 variant="lunch"
                 menu={food.lunch}
