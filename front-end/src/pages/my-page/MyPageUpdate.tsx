@@ -8,8 +8,10 @@ import type {PatchUserInfo} from '@/types/user/PatchUserInfo';
 import {patchUserInfoState} from '@/recoil/atoms/my-page/userInfo';
 import {useRecoilValue} from 'recoil';
 
+const userId = 1;
+
 const MyPageUpdate = () => {
-  const userMutation = usePatchUserInfo();
+  const userMutation = usePatchUserInfo(userId);
 
   // 페이지 불러올 때 추가로 data fetch한 후 set 필요
   const patchUserInfo = useRecoilValue<PatchUserInfo>(patchUserInfoState);
