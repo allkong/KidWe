@@ -14,8 +14,7 @@ import type {GetMemo} from '@/types/memo/GetMemo';
 import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
 import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
 import {toast} from 'react-toastify';
-
-const teacherId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const MemoList = memo(() => {
   const [serachParams] = useSearchParams();
@@ -42,7 +41,7 @@ const MemoList = memo(() => {
 
   // data fetch
   const {data, refetch} = useGetDailyMemo(
-    teacherId,
+    getMemberId()!,
     date.format('YYYY'),
     date.format('MM'),
     date.format('DD')
@@ -83,7 +82,7 @@ const MemoList = memo(() => {
   const handleDeleteClick = (memoId: string | undefined) => {
     if (memoId !== undefined) {
       deleteMutate.mutate(
-        {teacherId, memoId},
+        {teacherId: getMemberId()!, memoId},
         {
           onSuccess: () => {
             refetch();

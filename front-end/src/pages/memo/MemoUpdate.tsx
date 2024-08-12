@@ -13,14 +13,13 @@ import dayjs from 'dayjs';
 import {useGetDailyMemoById} from '@/hooks/memo/useGetDailyMemoById';
 import {usePutDailyMemo} from '@/hooks/memo/usePutDailyMemo';
 import {useParams} from 'react-router-dom';
-
-const teacherId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const MemoWrite = () => {
   const navigate = useNavigate();
 
   const paramMemoId = useParams().memoId;
-  const {data} = useGetDailyMemoById(teacherId, paramMemoId);
+  const {data} = useGetDailyMemoById(getMemberId()!, paramMemoId);
 
   const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   useEffect(() => {
@@ -49,7 +48,7 @@ const MemoWrite = () => {
   const handleClick = () => {
     if (paramMemoId) {
       putMutate.mutateAsync(
-        {memo, memoId: paramMemoId, teacherId},
+        {memo, memoId: paramMemoId, teacherId: getMemberId()!},
         {
           onSuccess: () => {
             navigate({

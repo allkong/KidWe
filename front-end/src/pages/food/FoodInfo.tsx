@@ -11,10 +11,9 @@ import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {getKindergartenId, getMemberRole} from '@/utils/userData';
 
 dayjs.extend(weekOfYear);
-
-const kindergartenId = 1;
 
 function getWeekOfMonth(date: Dayjs) {
   const startOfMonth = date.startOf('month');
@@ -33,7 +32,7 @@ const FoodInfo = () => {
     date = dayjs();
   }
 
-  const {data: food, isLoading} = useGetDailyFood(kindergartenId, date);
+  const {data: food, isLoading} = useGetDailyFood(getKindergartenId()!, date);
   useLoading(isLoading);
 
   const handleLeftClick = () => {
@@ -110,7 +109,9 @@ const FoodInfo = () => {
         </div>
         <NavigationBar />
       </div>
-      <WriteButton onClick={() => moveToWrite()} />
+      {getMemberRole() !== 'ROLE_GUARDIAN' && (
+        <WriteButton onClick={() => moveToWrite()} />
+      )}
     </>
   );
 };

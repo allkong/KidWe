@@ -8,8 +8,7 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import {PostFood} from '@/types/food/PostFood';
 import {useState} from 'react';
 import {useWriteDailyFood} from '@/hooks/food/useWriteDailyFood';
-
-const kindergartenId = 1;
+import {getKindergartenId} from '@/utils/userData';
 
 const FoodInfoWrite = () => {
   const [serachParams] = useSearchParams();
@@ -32,7 +31,7 @@ const FoodInfoWrite = () => {
   const handleButtonClick = () => {
     foodMutate.mutate(
       {
-        kindergartenId: kindergartenId,
+        kindergartenId: getKindergartenId()!,
         menu,
       },
       {
