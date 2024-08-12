@@ -7,6 +7,9 @@ import {Signup} from '@/recoil/atoms/signup/Signup';
 import {useMutation} from '@tanstack/react-query';
 import {postSignup} from '@/apis/signup/postSignup';
 import {toast} from 'react-toastify';
+
+import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
+
 const RegisterInfo = () => {
   const [signupregister, setSignupRegister] = useRecoilState(Signup);
   const [isStateUpdated, setIsStateUpdated] = useState(false);
@@ -16,6 +19,7 @@ const RegisterInfo = () => {
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
   const [userpicture, setPicture] = useState<string>('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
   const [ismissingvalue, setIsMissingValue] = useState(false);
@@ -92,17 +96,23 @@ const RegisterInfo = () => {
     setIsStateUpdated(true);
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   setPicture(reader.result);
-      // };
-      reader.readAsDataURL(file);
-      console.log('file', file);
-      console.log('reader', reader);
-    }
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     // reader.onloadend = () => {
+  //     //   setPicture(reader.result);
+  //     // };
+  //     reader.readAsDataURL(file);
+  //     console.log('file', file);
+  //     console.log('reader', reader);
+  //   }
+  // };
+  const handleFileChange = (file: File) => {
+    setImageFile(file);
+  };
+  const handlePreviewChange = (preview: string) => {
+    setPicture(preview);
   };
 
   useEffect(() => {
@@ -126,7 +136,7 @@ const RegisterInfo = () => {
             <img src="/icons/kidwe.png" alt="Kidwe Icon" />
           </div>
         </div>
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <input
             type="file"
             onChange={handleImageChange}
@@ -147,7 +157,12 @@ const RegisterInfo = () => {
               <span className="text-gray-500">이미지 선택</span>
             )}
           </div>
-        </div>
+        </div> */}
+        <ImageUploadButton
+          userPicture={userpicture}
+          onChangeFile={handleFileChange}
+          onChangePreview={handlePreviewChange}
+        />
         <div className="w-full space-y-8">
           <LabelInput
             label="이름"

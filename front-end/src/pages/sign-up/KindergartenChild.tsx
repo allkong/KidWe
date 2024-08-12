@@ -14,6 +14,7 @@ import dayjs, {Dayjs} from 'dayjs';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import {Gender} from '@/enum/gender';
 import {genderLabels} from '@/constants/genderLabel';
+import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
 // const genderItems = [
 //   {value: 'MALE', label: '남아'},
 //   {value: 'FEMALE', label: '여아'},
@@ -25,6 +26,8 @@ const KindergartenChild: React.FC = () => {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
+  const [userpicture, setPicture] = useState<string>('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signupGuardian, setSignupGuardian] =
@@ -32,16 +35,11 @@ const KindergartenChild: React.FC = () => {
   const handleGenderChange = (gender: Gender) => {
     setSelectedGender(gender);
   };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleFileChange = (file: File) => {
+    setImageFile(file);
+  };
+  const handlePreviewChange = (preview: string) => {
+    setPicture(preview);
   };
 
   const signupChildMutate = useMutation({
@@ -132,13 +130,13 @@ const KindergartenChild: React.FC = () => {
       </div>
       <div className="flex items-center justify-center space-x-2">
         <div className="flex flex-col items-center">
-          <input
+          {/* <input
             type="file"
             onChange={handleImageChange}
             className="hidden mb-4"
             id="fileInput"
-          />
-          <div
+          /> */}
+          {/* <div
             className="flex items-center justify-center w-32 h-32 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer"
             onClick={() => document.getElementById('fileInput')?.click()}
           >
@@ -151,7 +149,12 @@ const KindergartenChild: React.FC = () => {
             ) : (
               <span className="text-gray-500">이미지 선택</span>
             )}
-          </div>
+          </div> */}
+          <ImageUploadButton
+            userPicture={userpicture}
+            onChangeFile={handleFileChange}
+            onChangePreview={handlePreviewChange}
+          />
         </div>
         <div className="flex flex-col space-y-2">
           <LabelInput
