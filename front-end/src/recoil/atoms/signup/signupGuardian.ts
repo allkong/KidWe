@@ -5,13 +5,15 @@ import dayjs from 'dayjs';
 export const SignupGuardianState = atom<SignupGuardian>({
   key: 'signupGuardian',
   default: {
-    memberId: 3,
-    kindergartenId: 0,
-    banId: 0,
-    kidName: '',
-    birthday: dayjs().toString(),
-    gender: 'MALE' as Gender,
-    allergies: [''],
+    dto: {
+      memberId: 3,
+      kindergartenId: 0,
+      banId: 0,
+      kidName: '',
+      birthday: dayjs().toString(),
+      gender: 'MALE' as Gender,
+      allergies: [''],
+    },
     picture: '',
   },
 });

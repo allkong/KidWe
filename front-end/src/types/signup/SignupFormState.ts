@@ -1,8 +1,11 @@
 export interface SignupFormState {
-  name: string;
-  tel: string;
-  email: string;
-  password: string;
-  picture: string | ArrayBuffer | null;
-  role: string;
+  dto: {
+    name: string;
+    tel: string;
+    email: string;
+    password: string;
+    role: string;
+  };
+  // picture: string | ArrayBuffer | null;
+  picture: string;
 }

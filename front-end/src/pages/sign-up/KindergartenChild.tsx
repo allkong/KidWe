@@ -13,10 +13,12 @@ import {toast, ToastContainer} from 'react-toastify';
 import dayjs, {Dayjs} from 'dayjs';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import {Gender} from '@/enum/gender';
-const genderItems = [
-  {value: 'MALE', label: '남아'},
-  {value: 'FEMALE', label: '여아'},
-];
+import {genderLabels} from '@/constants/genderLabel';
+import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
+// const genderItems = [
+//   {value: 'MALE', label: '남아'},
+//   {value: 'FEMALE', label: '여아'},
+// ];
 
 const KindergartenChild: React.FC = () => {
   const [childname, setChildname] = useState('');
@@ -24,6 +26,8 @@ const KindergartenChild: React.FC = () => {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
+  const [userpicture, setPicture] = useState<string>('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signupGuardian, setSignupGuardian] =
@@ -31,21 +35,23 @@ const KindergartenChild: React.FC = () => {
   const handleGenderChange = (gender: Gender) => {
     setSelectedGender(gender);
   };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleFileChange = (file: File) => {
+    setImageFile(file);
+  };
+  const handlePreviewChange = (preview: string) => {
+    setPicture(preview);
   };
 
   const signupChildMutate = useMutation({
     mutationFn: async () => {
-      const {banName, ...postsignupGuardian} = signupGuardian;
+      const {
+        dto: {banName, ...restDto},
+        ...restGuardian
+      } = signupGuardian;
+      const postsignupGuardian = {
+        ...restGuardian,
+        dto: restDto,
+      };
       console.log(postsignupGuardian);
       console.log(banName);
       return postGuardian(postsignupGuardian);
@@ -72,11 +78,14 @@ const KindergartenChild: React.FC = () => {
     console.log(checkedAllergies);
     setSignupGuardian(prevState => ({
       ...prevState,
-      kidName: childname,
-      birthday: formattedBirthday,
-      gender: selectedGender as Gender,
+      dto: {
+        ...prevState.dto,
+        kidName: childname,
+        birthday: formattedBirthday,
+        gender: selectedGender as Gender,
+        allergies: checkedAllergies,
+      },
       picture: typeof image === 'string' ? image : '',
-      allergies: checkedAllergies,
     }));
     setIsStateUpdated(true);
   };
@@ -90,7 +99,10 @@ const KindergartenChild: React.FC = () => {
   };
 
   useEffect(() => {
-    if (signupGuardian.banId == 0 || signupGuardian.kindergartenId == 0) {
+    if (
+      signupGuardian.dto.banId == 0 ||
+      signupGuardian.dto.kindergartenId == 0
+    ) {
       toast.error('잘못 들어오셨습니다!', {
         onClose: () => navigate('/signup/kindergarten/search'),
       });
@@ -111,17 +123,20 @@ const KindergartenChild: React.FC = () => {
         limit={1}
       />
       <div className="flex space-x-2">
-        <KindergartenCard kindergartenName={signupGuardian.banName || ''} />
+        <KindergartenCard
+          kindergartenName={`${signupGuardian.dto.kindergartenName} - ${signupGuardian.dto.banName || ''}`}
+        />
+        {/* `${getKindergartenNameById(signupGuardian.dto.kindergartenId)} - ${signupGuardian.dto.banName || ''}` */}
       </div>
       <div className="flex items-center justify-center space-x-2">
         <div className="flex flex-col items-center">
-          <input
+          {/* <input
             type="file"
             onChange={handleImageChange}
             className="hidden mb-4"
             id="fileInput"
-          />
-          <div
+          /> */}
+          {/* <div
             className="flex items-center justify-center w-32 h-32 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer"
             onClick={() => document.getElementById('fileInput')?.click()}
           >
@@ -134,7 +149,12 @@ const KindergartenChild: React.FC = () => {
             ) : (
               <span className="text-gray-500">이미지 선택</span>
             )}
-          </div>
+          </div> */}
+          <ImageUploadButton
+            userPicture={userpicture}
+            onChangeFile={handleFileChange}
+            onChangePreview={handlePreviewChange}
+          />
         </div>
         <div className="flex flex-col space-y-2">
           <LabelInput
@@ -165,14 +185,12 @@ const KindergartenChild: React.FC = () => {
           />
 
           <div className="flex justify-center space-x-2">
-            {genderItems.map((item, index) => (
+            {Object.entries(genderLabels).map(([key, label]) => (
               <Button
-                key={index}
-                variant={
-                  selectedGender === item.value ? 'positive' : 'negative'
-                }
-                label={item.label}
-                onClick={() => handleGenderChange(item.value as Gender)}
+                key={key}
+                variant={selectedGender === key ? 'positive' : 'negative'}
+                label={label}
+                onClick={() => handleGenderChange(key as Gender)}
                 size="small"
               />
             ))}
