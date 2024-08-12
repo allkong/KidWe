@@ -54,7 +54,11 @@ const MemoWrite = () => {
     writeMutate.mutateAsync(
       {teacherId, memo},
       {
-        onSuccess: () => navigate('/memo'),
+        onSuccess: () =>
+          navigate({
+            pathname: '/memo',
+            search: `?date=${paramDate}`,
+          }),
       }
     );
   };

@@ -1,8 +1,9 @@
 import {login} from '@/apis/login/login';
 import {useMutation} from '@tanstack/react-query';
 import {LoginResponse} from '@/types/login/LoginResponse';
-import {setToken} from '@/utils/userToken';
+import {setAccessToken} from '@/utils/userAccessToken';
 import {setUserData} from '@/utils/userData';
+import {setRefreshToken} from '@/utils/userRefreshToken';
 
 /**
  *
@@ -16,9 +17,10 @@ export const useLogin = () => {
       return login(email, password);
     },
     onSuccess: (data: LoginResponse) => {
-      const {accessToken, ...userData} = data;
+      const {accessToken, refreshToken, ...userData} = data;
 
-      setToken(accessToken);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
       setUserData(userData);
     },
   });

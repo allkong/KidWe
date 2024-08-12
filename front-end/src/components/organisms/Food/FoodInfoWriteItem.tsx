@@ -12,11 +12,11 @@ interface FoodInfoWriteItemProps {
   label?: 'lunch' | 'snack' | 'dinner';
   food?: string;
   allergies?: string[];
-  onChange?: (
-    value: string,
+  onAllergyChange?: (
     allergies: string[],
     type: 'lunch' | 'snack' | 'dinner'
   ) => void;
+  onInputChange?: (value: string, type: 'lunch' | 'snack' | 'dinner') => void;
 }
 
 const getLabel = (label: string) => {
@@ -36,14 +36,14 @@ const FoodInfoWriteItem = ({
   label = 'lunch',
   food = '',
   allergies,
-  onChange,
+  onAllergyChange,
+  onInputChange,
 }: FoodInfoWriteItemProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [input, setInput] = useState(food);
 
   const [datas, setDatas] = useState<Allergy[]>(); // 취소 버튼을 눌렀을 경우 사용
   const [copiedDatas, setCopiedDatas] = useState<Allergy[]>(); // 등록 버튼을 눌렀을 경우 사용
-
   const [isDataChecked, setIsDataChecked] = useState(false);
 
   useEffect(() => {
@@ -79,15 +79,20 @@ const FoodInfoWriteItem = ({
     setIsModalOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleAllergySubmit = () => {
     if (copiedDatas !== undefined) {
       setDatas([...copiedDatas]);
       const allergies = copiedDatas
         .filter(element => element.isChecked)
         .map(element => element.value);
-      onChange?.(input, allergies, label);
+      onAllergyChange?.(allergies, label);
     }
     setIsModalOpen(false);
+  };
+
+  const handleChangeInput = (value: string) => {
+    setInput(value);
+    onInputChange?.(value, label);
   };
 
   const handleChangeData = (value: Allergy[]) => {
@@ -99,7 +104,7 @@ const FoodInfoWriteItem = ({
       <div className="space-y-2 text-gray-300">
         <p>{getLabel(label)}</p>
         <div className="w-full h-20">
-          <TextArea value={input} onChange={setInput} />
+          <TextArea value={input} onChange={handleChangeInput} />
         </div>
         <div className="w-full h-fit min-h-7">
           {isDataChecked ? (
@@ -140,7 +145,7 @@ const FoodInfoWriteItem = ({
             round="full"
             size="large"
             variant="positive"
-            onClick={handleSubmit}
+            onClick={handleAllergySubmit}
           ></Modal.BottomButton>
           <Modal.Background onClick={handleModalClose} />
         </Modal>

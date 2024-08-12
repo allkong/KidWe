@@ -1,12 +1,15 @@
 import {useNavigate} from 'react-router-dom';
-import {getToday} from '@/utils/dayjsPlugin';
+import dayjs, {getToday} from '@/utils/dayjsPlugin';
 import Button from '@/components/atoms/Button/Button';
 import pencilIcon from '@/assets/menu/pencil.png';
 
 const MemoShortcut = () => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate('/memo/write');
+    navigate({
+      pathname: '/memo/write',
+      search: `?date=${dayjs().format("YYYY-MM-DD")}`
+    });
   };
 
   return (

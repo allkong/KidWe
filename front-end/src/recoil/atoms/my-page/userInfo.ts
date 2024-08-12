@@ -9,5 +9,6 @@ export const patchUserInfoState = atom<PatchUserInfo>({
     tel: '',
     email: '',
     picture: '',
+    password: '',
   },
 });
