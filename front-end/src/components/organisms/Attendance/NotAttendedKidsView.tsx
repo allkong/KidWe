@@ -11,7 +11,10 @@ import {getBanId} from '@/utils/userData';
 
 const AttendedKidsView = () => {
   const [searchParams] = useSearchParams();
-  const date = dayjs(searchParams.get('date'));
+  let date = dayjs(searchParams.get('date'));
+  if (!date.isValid()) {
+    date = dayjs();
+  }
 
   const [isShowSelect, setIsShowSelect] = useState(false);
   const {data, refetch, isLoading} = useGetAttendanceInfo(
