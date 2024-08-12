@@ -2,20 +2,19 @@ import Toggle from '@/components/atoms/Toggle/Toggle';
 import ScheduleInfoItem from '@/components/organisms/Schedule/ScheduleInfoItem';
 import {Dayjs} from 'dayjs';
 import {useState} from 'react';
-import {ScheduleOption} from '@/enum/kindergarten/schedule';
+import {DirectorScheduleOption} from '@/enum/kindergarten/schedule';
 import {useGetKindergartenSchedules} from '@/hooks/schedule/useGetKindergartenSchedules';
+import {getKindergartenId} from '@/utils/userData';
 
 interface ScheduleInfoProps {
   date: Dayjs;
 }
 
-const kindergartenId = 1;
-
 const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [isShowBan, setIsShowBan] = useState(false);
 
   const {data} = useGetKindergartenSchedules(
-    kindergartenId,
+    getKindergartenId()!,
     date.format('YYYY-MM-DD')
   );
 
@@ -34,8 +33,8 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
           data
             .filter(info =>
               isShowBan
-                ? info.type !== ScheduleOption.유치원
-                : info.type === ScheduleOption.유치원
+                ? info.type !== DirectorScheduleOption.유치원
+                : info.type === DirectorScheduleOption.유치원
             )
             .map(schedule => (
               <ScheduleInfoItem
