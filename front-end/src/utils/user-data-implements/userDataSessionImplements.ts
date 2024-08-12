@@ -31,6 +31,10 @@ class UserDataSessionImplements implements UserDataInterface {
     sessionStorage.setItem(this.DATA_KEY, JSON.stringify(data));
   };
 
+  deleteUserData = () => {
+    sessionStorage.removeItem(this.DATA_KEY);
+  };
+
   getUserData = (): UserData | null => {
     return this.getSessionData<UserData>();
   };
@@ -67,6 +71,9 @@ class UserDataSessionImplements implements UserDataInterface {
 const userDataSessionImplements = UserDataSessionImplements.getInstance();
 
 export const setUserData = userDataSessionImplements.setUserData.bind(
+  userDataSessionImplements
+);
+export const deleteUserData = userDataSessionImplements.deleteUserData.bind(
   userDataSessionImplements
 );
 export const getUserData = userDataSessionImplements.getUserData.bind(

@@ -47,7 +47,10 @@ const KindergartenSearch: React.FC = () => {
     } else if (role === 'ROLE_GUARDIAN') {
       setSignupGuardian(prevState => ({
         ...prevState,
-        kindergartenId,
+        dto: {
+          ...prevState.dto,
+          kindergartenId,
+        },
       }));
     }
 

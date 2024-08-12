@@ -18,6 +18,7 @@ import * as userDataSessionImplements from '@/utils/user-data-implements/userDat
 
 export const {
   setUserData,
+  deleteUserData,
   getUserData,
   getMemberId,
   getMemberEmail,

@@ -32,7 +32,7 @@ const KindergartenBan: React.FC = () => {
   const kindergartenId =
     role === 'ROLE_TEACHER'
       ? signupTeacher.kindergartenId
-      : signupGuardian.kindergartenId;
+      : signupGuardian.dto.kindergartenId;
 
   const signupTeacherMutate = useMutation({
     mutationFn: async () => {
@@ -57,8 +57,12 @@ const KindergartenBan: React.FC = () => {
       if (role === 'ROLE_GUARDIAN') {
         setSignupGuardian(prevState => ({
           ...prevState,
-          banId: selectedBanId,
-          banName: selectedBanName,
+          dto: {
+            ...prevState.dto,
+            banId: selectedBanId,
+            banName: selectedBanName,
+            kindergartenName: kindergartenData.name,
+          },
         }));
 
         navigate('/signup/kindergarten/child');

@@ -8,8 +8,7 @@ import NoResult from '@/components/atoms/NoResult';
 import Button from '@/components/atoms/Button/Button';
 import {useGetTags} from '@/hooks/memo/useGetTags';
 import {memoTagsSelector} from '@/recoil/selectors/memo/memoTags';
-
-const teacherId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const MemoTagSelect = () => {
   const [filteredTags, setFilteredTags] = useState<MemoTag[] | undefined>();
@@ -19,7 +18,7 @@ const MemoTagSelect = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const {data: tagDatas} = useGetTags(teacherId);
+  const {data: tagDatas} = useGetTags(getMemberId()!);
 
   useEffect(() => {
     if (tagDatas) {
@@ -32,7 +31,7 @@ const MemoTagSelect = () => {
       setFilteredTags(tagDatas);
       setIsValid(false);
     } else {
-      setFilteredTags(tagDatas?.filter(tag => tag.content.includes(input)));
+      setFilteredTags(tagDatas?.filter(tag => tag.content === input));
       setIsValid(true);
     }
   }, [input, tagDatas]);
@@ -54,7 +53,7 @@ const MemoTagSelect = () => {
         ...memoTags,
         {
           id: value.id,
-          teacherId,
+          teacherId: getMemberId()!,
           content: value.content,
         },
       ]);
@@ -72,7 +71,7 @@ const MemoTagSelect = () => {
     const find = memoTags.find(tag => tag.content === input);
     if (find === undefined) {
       const newTag: MemoTag = {
-        teacherId,
+        teacherId: getMemberId()!,
         content: input,
       };
       setMemoTags([...memoTags, newTag]);
@@ -103,7 +102,7 @@ const MemoTagSelect = () => {
               />
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center w-full h-full py-1">
               <NoResult text="등록된 태그가 없어요" />
               <Button
                 label="태그 추가"

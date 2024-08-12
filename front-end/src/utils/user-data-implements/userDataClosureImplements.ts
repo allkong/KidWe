@@ -3,6 +3,7 @@ import {UserDataInterface} from '@/utils/user-data-implements/UserDataInterface'
 
 export const {
   setUserData,
+  deleteUserData,
   getUserData,
   getMemberId,
   getMemberEmail,
@@ -20,6 +21,7 @@ export const {
   };
 
   const setUserData = (value: UserData) => (data = value);
+  const deleteUserData = () => (data = null);
   const getUserData = () => data;
   const getMemberId = () => getProperty('memberId');
   const getMemberEmail = () => getProperty('memberEmail');
@@ -31,6 +33,7 @@ export const {
 
   return {
     setUserData,
+    deleteUserData,
     getUserData,
     getMemberId,
     getMemberEmail,

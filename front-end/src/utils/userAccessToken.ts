@@ -1,4 +1,8 @@
-export const {getToken, setToken, deleteToken} = (() => {
+export const {
+  getToken: getAccessToken,
+  setToken: setAccessToken,
+  deleteToken: deleteAccessToken,
+} = (() => {
   let accessToken: string | null = null;
 
   const getToken = () => accessToken;

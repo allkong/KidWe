@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
-    "target": "ES5",
+    "target": "ES2017",
     "module": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
@@ -13,12 +13,13 @@
     "jsx": "react-jsx",
     "strict": true,
     "types": ["vite-plugin-svgr/client"],
-    "lib": ["es6", "dom"],
+    "lib": ["es2017", "dom"],
     "paths": {
       "@/*": ["src/*"]
     },
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "global.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "global.d.ts"],
+  "exclude": ["node_modules", "dist", "src/**/*.stories.tsx"]
 }

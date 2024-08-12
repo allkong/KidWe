@@ -4,10 +4,10 @@ import Button from '@/components/atoms/Button/Button';
 import {useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useRecoilState} from 'recoil';
-import {Signup} from '@/recoil/atoms/signup/Signup';
+import {SignupDirectorState} from '@/recoil/atoms/signup/signupDirector';
 import {useMutation} from '@tanstack/react-query';
-import {postSignup} from '@/apis/signup/postSignup';
-// import {SignupFormState} from '@/types/signup/SignupFormState';
+import {postDirectorKindergarten} from '@/apis/signup/postDirectorKindergarten';
+// import {useGetUserInfo} from '@/hooks/user/useGetUserInfo';
 
 declare global {
   interface Window {
@@ -31,11 +31,11 @@ const RegisterKindergarten: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [signupregisterkindergarten, setSignupRegisterKindergarten] =
-    useRecoilState(Signup);
+    useRecoilState(SignupDirectorState);
 
-  const signupMutate = useMutation({
+  const signupKindergartenMutate = useMutation({
     mutationFn: () => {
-      return postSignup(signupregisterkindergarten);
+      return postDirectorKindergarten(signupregisterkindergarten);
     },
   });
 
@@ -44,14 +44,12 @@ const RegisterKindergarten: React.FC = () => {
   const handleRegisterKindergartenButtonClick = async () => {
     setSignupRegisterKindergarten(prevState => ({
       ...prevState,
-      kindergarten: {
-        ...prevState,
-        name: kindergartenname,
-        address: addr,
-        addressDetail: kindergartenaddrdetail,
-        zipCode: zipNo,
-        tel: kindergartentel,
-      },
+      memberId: 7,
+      name: kindergartenname,
+      address: addr,
+      addressDetail: kindergartenaddrdetail,
+      zipCode: zipNo,
+      tel: kindergartentel,
     }));
     setIsStateUpdated(true);
   };
@@ -61,7 +59,7 @@ const RegisterKindergarten: React.FC = () => {
     if (isStateUpdated) {
       const updateKindergarten = async () => {
         try {
-          await signupMutate.mutate();
+          await signupKindergartenMutate.mutate();
           console.log('원장님 가입 완료');
           navigate('/signup/complete');
         } catch (error) {
@@ -71,7 +69,12 @@ const RegisterKindergarten: React.FC = () => {
       updateKindergarten();
       setIsStateUpdated(false);
     }
-  }, [isStateUpdated, navigate, signupMutate, signupregisterkindergarten]);
+  }, [
+    isStateUpdated,
+    navigate,
+    signupKindergartenMutate,
+    signupregisterkindergarten,
+  ]);
 
   const closeModal = () => {
     setIsModalOpen(false);

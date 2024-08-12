@@ -1,10 +1,12 @@
 export interface PatchKidInfo {
-  id: number;
-  name: string;
-  birthday: string; // YYYY-MM-DD
-  gender: 'MALE' | 'FEMALE';
-  allergies: string[];
+  dto: {
+    id: number;
+    name: string;
+    birthday: string; // YYYY-MM-DD
+    gender: 'MALE' | 'FEMALE';
+    allergies: string[];
+    banId: number;
+    kindergartenId: number;
+  };
   picture: string;
-  banId: number;
-  kindergartenId: number;
 }
