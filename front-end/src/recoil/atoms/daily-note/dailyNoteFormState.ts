@@ -4,7 +4,7 @@ export const dailyNoteFormState = atom({
   key: 'dailyNoteForm',
   default: {
     post: {
-      title: '',
+      title: '제목입니다',
       content: '',
     },
     kidId: 0,

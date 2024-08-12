@@ -1,10 +1,12 @@
-import {useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const TextEditor = () => {
-  const [value, setValue] = useState('');
+interface TextEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
+const TextEditor = ({value, onChange}: TextEditorProps) => {
   const modules = {
     toolbar: [
       [{list: 'ordered'}, {list: 'bullet'}],
@@ -18,7 +20,7 @@ const TextEditor = () => {
     <div>
       <ReactQuill
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         modules={modules}
         className="h-72"
       />
