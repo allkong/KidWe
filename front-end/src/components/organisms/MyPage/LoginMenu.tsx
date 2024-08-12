@@ -1,5 +1,6 @@
 import MyPageItem from '@/components/organisms/MyPage/MyPageItem';
-import {deleteToken} from '@/utils/userToken';
+import {deleteAccessToken} from '@/utils/userAccessToken';
+import {deleteRefreshToken} from '@/utils/userRefreshToken';
 import {useNavigate} from 'react-router-dom';
 
 const LoginMenu = () => {
@@ -10,7 +11,8 @@ const LoginMenu = () => {
   };
 
   const handleLogoutClick = () => {
-    deleteToken();
+    deleteAccessToken();
+    deleteRefreshToken();
     navigate('/login');
   };
 
