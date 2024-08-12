@@ -5,18 +5,30 @@ import AttendedKidsView from '@/components/organisms/Attendance/AttendedKidsView
 import NotAttendedKidsView from '@/components/organisms/Attendance/NotAttendedKidsView';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
-import {useState} from 'react';
 import dayjs from 'dayjs';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 const AttendanceManagement = () => {
-  const [date, setDate] = useState(dayjs());
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const paramDate = searchParams.get('date');
+  let date = dayjs(paramDate);
+  if (!date.isValid()) {
+    date = dayjs();
+  }
 
   const handleLeftClick = () => {
-    setDate(date.subtract(1, 'day'));
+    navigate({
+      pathname: '/attendance',
+      search: `?date=${date.subtract(1, 'day').format('YYYY-MM-DD')}`,
+    });
   };
 
   const handleRightClick = () => {
-    setDate(date.add(1, 'day'));
+    navigate({
+      pathname: '/attendance',
+      search: `?date=${date.add(1, 'day').format('YYYY-MM-DD')}`,
+    });
   };
 
   return (
@@ -34,12 +46,12 @@ const AttendanceManagement = () => {
           {
             id: 0,
             label: '미처리',
-            content: <NotAttendedKidsView date={date} />,
+            content: <NotAttendedKidsView />,
           },
           {
             id: 1,
             label: '처리 완료',
-            content: <AttendedKidsView date={date} />,
+            content: <AttendedKidsView />,
           },
         ]}
       />

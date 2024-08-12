@@ -1,116 +1,41 @@
-import {Dayjs} from 'dayjs';
+import dayjs from 'dayjs';
 import AttendedKidsSelectView from '@/components/organisms/Attendance/AttendedKidsSelectView';
 import AttendedKidsButtonView from '@/components/organisms/Attendance/AttendedKidsButtonView';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {GetAttendance} from '@/types/attendance/GetAttendance';
+import {useSearchParams} from 'react-router-dom';
+import {getBanId} from '@/utils/userData';
+import {useLoading} from '@/hooks/loading/useLoading';
+import {useGetAttendanceInfo} from '@/hooks/attendance/useGetAttendanceInfo';
 
-interface AttendedKidsViewProps {
-  date?: Dayjs;
-}
+const AttendedKidsView = () => {
+  const [searchParams] = useSearchParams();
+  const date = dayjs(searchParams.get('date'));
 
-const data: GetAttendance[] = [
-  {
-    attendanceId: 1,
-    attendedToday: 'NOTHING',
-    banId: 1,
-    banName: '장미반',
-    date: '2024-08-08',
-    kidId: 1,
-    kidName: '강감찬',
-    reason: '',
-  },
-  {
-    attendanceId: 2,
-    attendedToday: 'ATTENDANCE',
-    banId: 1,
-    banName: '장미반',
-    date: '2024-08-08',
-    kidId: 2,
-    kidName: '이순신',
-    reason: '',
-  },
-  {
-    attendanceId: 3,
-    attendedToday: 'ABSENCE',
-    banId: 2,
-    banName: '백합반',
-    date: '2024-08-08',
-    kidId: 3,
-    kidName: '홍길동',
-    reason: '병원 방문',
-  },
-  {
-    attendanceId: 4,
-    attendedToday: 'NOTHING',
-    banId: 1,
-    banName: '장미반',
-    date: '2024-08-08',
-    kidId: 4,
-    kidName: '유관순',
-    reason: '지각',
-  },
-  {
-    attendanceId: 5,
-    attendedToday: 'NOTHING',
-    banId: 3,
-    banName: '해바라기반',
-    date: '2024-08-08',
-    kidId: 5,
-    kidName: '안중근',
-    reason: '',
-  },
-  {
-    attendanceId: 6,
-    attendedToday: 'ATTENDANCE',
-    banId: 2,
-    banName: '백합반',
-    date: '2024-08-08',
-    kidId: 6,
-    kidName: '신사임당',
-    reason: '',
-  },
-  {
-    attendanceId: 7,
-    attendedToday: 'ABSENCE',
-    banId: 1,
-    banName: '장미반',
-    date: '2024-08-08',
-    kidId: 4,
-    kidName: '나나',
-    reason: '지각',
-  },
-  {
-    attendanceId: 8,
-    attendedToday: 'ATTENDANCE',
-    banId: 1,
-    banName: '장미반',
-    date: '2024-08-08',
-    kidId: 4,
-    kidName: '뽀',
-    reason: '지각',
-  },
-];
-
-const AttendedKidsView = ({date}: AttendedKidsViewProps) => {
   const [isShowSelect, setIsShowSelect] = useState(false);
-  const [absenceKids] = useState(
-    data.filter(
-      value =>
-        value.attendedToday === 'ABSENCE' ||
-        value.attendedToday === 'ATTENDANCE'
-    )
+  const {data, refetch, isLoading} = useGetAttendanceInfo(
+    getBanId()!,
+    date.get('year'),
+    date.get('month') + 1,
+    date.get('date')
   );
+  useLoading(isLoading);
 
-  // const {data, refetch} = useGetAttendanceInfo(
-  //   banId,
-  //   date.get('year'),
-  //   date.get('month') + 1,
-  //   date.get('date')
-  // );
+  useEffect(() => {
+    refetch();
+  }, [date, refetch]);
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [date, refetch]);
+  const [attendedKids, setAttendedKids] = useState<GetAttendance[]>();
+
+  useEffect(() => {
+    setAttendedKids(
+      data?.filter(
+        value =>
+          value.attendedToday === 'ABSENCE' ||
+          value.attendedToday === 'ATTENDANCE'
+      )
+    );
+  }, [data]);
 
   const handleClickSelectButton = () => {
     setIsShowSelect(false);
@@ -126,13 +51,13 @@ const AttendedKidsView = ({date}: AttendedKidsViewProps) => {
       <div>
         {isShowSelect ? (
           <AttendedKidsSelectView
-            attendances={absenceKids}
+            attendances={attendedKids}
             date={date}
             onClickButton={handleClickSelectButton}
           />
         ) : (
           <AttendedKidsButtonView
-            attendances={absenceKids}
+            attendances={attendedKids}
             date={date}
             onClickButton={handleClickButtonButton}
           />
