@@ -32,7 +32,7 @@ const MemoTagSelect = () => {
       setFilteredTags(tagDatas);
       setIsValid(false);
     } else {
-      setFilteredTags(tagDatas?.filter(tag => tag.content.includes(input)));
+      setFilteredTags(tagDatas?.filter(tag => tag.content === input));
       setIsValid(true);
     }
   }, [input, tagDatas]);
@@ -103,7 +103,7 @@ const MemoTagSelect = () => {
               />
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center w-full h-full py-1">
               <NoResult text="등록된 태그가 없어요" />
               <Button
                 label="태그 추가"

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getCookie} from '@/utils/getCookie';
+import {getRefreshToken} from '@/utils/userRefreshToken';
 
 export const getAccessToken = async (): Promise<{accessToken: string}> => {
   const result = await axios.post(
@@ -7,8 +7,10 @@ export const getAccessToken = async (): Promise<{accessToken: string}> => {
     {},
     {
       headers: {
-        refreshToken: `${getCookie('refreshToken')}`,
+        Authorization: `Bearer ${getRefreshToken()}`,
+        'Content-Type': 'application/json',
       },
+      timeout: 3000,
     }
   );
   return result.data;

@@ -36,6 +36,7 @@ import LoginMain from '@/pages/login/LoginMain';
 
 import FoodInfo from '@/pages/food/FoodInfo';
 import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
+import FoodView from '@/pages/food/FoodView';
 
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
 
@@ -130,7 +131,7 @@ const App: React.FC = () => {
             <Route path="update/:memoId" element={<MemoUpdate />} />
           </Route>
 
-          <Route path="/food">
+          <Route path="/food/*" element={<FoodView />}>
             <Route path="" element={<FoodInfo />}></Route>
             <Route path="write" element={<FoodInfoWrite />}></Route>
           </Route>
