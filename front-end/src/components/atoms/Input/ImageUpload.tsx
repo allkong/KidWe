@@ -36,7 +36,7 @@ const ImageUpload = ({onChange}: ImageUploadProps) => {
           htmlFor="image"
           className="box-border flex flex-row items-center justify-center w-full h-10 gap-2 text-gray-200 bg-white border-2 border-dashed rounded-lg"
         >
-          <Icon />
+          <Icon fill="#C3C3C3" width={23} height={24} />
           <p className="text-sm">사진 선택</p>
         </label>
       )}

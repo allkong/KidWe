@@ -1,8 +1,9 @@
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
-import AuthorItem from '@/components/molecules/Item/AuthorItem';
-import ArticleContent from '@/components/molecules/Article/ArticleContent';
+import Author from '@/components/molecules/Board/Author';
+import ArticleSection from '@/components/organisms/Board/ArticleSection';
 import InputBar from '@/components/organisms/Navigation/InputBar';
+import CommentSection from '@/components/organisms/Board/CommentSection';
 
 const DailyNoteDetail = () => {
   const imagesTest = [
@@ -18,13 +19,14 @@ const DailyNoteDetail = () => {
     <div className="flex flex-col h-screen">
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
-        <AuthorItem
+        <Author
           profile=""
           writer="햄스터반 선생님"
           date="2024-08-09 15:13"
           isEdit
         />
-        <ArticleContent content="<p>헤헤</p>" images={imagesTest} />
+        <ArticleSection content="<p>헤헤</p>" images={imagesTest} />
+        <CommentSection />
       </div>
       <InputBar />
     </div>
