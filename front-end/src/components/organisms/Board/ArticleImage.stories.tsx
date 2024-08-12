@@ -1,13 +1,13 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import PostImageList from '@/components/molecules/List/PostImageList';
+import ArticleImage from '@/components/organisms/Board/ArticleImage';
 
-const meta: Meta<typeof PostImageList> = {
-  component: PostImageList,
+const meta: Meta<typeof ArticleImage> = {
+  component: ArticleImage,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof PostImageList>;
+type Story = StoryObj<typeof ArticleImage>;
 
 export const Default: Story = {
   args: {

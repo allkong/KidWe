@@ -9,6 +9,7 @@ import {useRecoilState} from 'recoil';
 import type {Kid} from '@/types/memo/Kid';
 import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
 import {memoKidsSelector} from '@/recoil/selectors/memo/memoKids';
+import {dailyNoteKidSelector} from '@/recoil/selectors/daily-note/dailyNoteKid';
 
 interface CheckedKid {
   kid: Kid;
@@ -17,8 +18,17 @@ interface CheckedKid {
 
 const banId = 1;
 
-const MemoChildSelect = () => {
+interface MemoChildSelectProps {
+  type: 'memo' | 'daily-note';
+  isMultipleSelect?: boolean;
+}
+
+const MemoChildSelect = ({
+  type,
+  isMultipleSelect = false,
+}: MemoChildSelectProps) => {
   const [memoKids, setMemoKids] = useRecoilState(memoKidsSelector);
+  const [dailyNoteKid, setDailyNoteKid] = useRecoilState(dailyNoteKidSelector);
 
   const [children, setChildren] = useState<CheckedKid[]>();
   const [filteredChildren, setFilteredChildren] = useState<CheckedKid[]>();
@@ -70,33 +80,52 @@ const MemoChildSelect = () => {
   const handleSubmitChildrenModal = () => {
     if (children !== undefined) {
       const checkedChild = children?.filter(child => child.isChecked);
-      setMemoKids(checkedChild.map(child => child.kid));
+      if (type === 'memo') {
+        setMemoKids(checkedChild.map(child => child.kid));
+      } else if (type === 'daily-note') {
+        setDailyNoteKid(checkedChild[0].kid.id);
+      }
+
       setIsChildrenModalOpen(false);
     }
   };
 
   const handleItemClick = (id: number) => {
     if (children !== undefined) {
-      setChildren(
-        [...children].map(child =>
-          child.kid.id === id
-            ? {...child, isChecked: !child.isChecked}
-            : {...child}
-        )
-      );
+      if (isMultipleSelect) {
+        // 다중 선택 모드
+        setChildren(
+          [...children].map(child =>
+            child.kid.id === id
+              ? {...child, isChecked: !child.isChecked}
+              : {...child}
+          )
+        );
+      } else {
+        // 단일 선택 모드
+        setChildren(
+          [...children].map(child =>
+            child.kid.id === id
+              ? {...child, isChecked: true}
+              : {...child, isChecked: false}
+          )
+        );
+      }
     }
   };
 
   return (
     <>
-      <p className="text-sm">원생 선택</p>
+      <p>원생 선택</p>
       <div
         onClick={handleOpenChildrenModal}
-        className="flex flex-wrap gap-2 overflow-y-auto max-h-10"
+        className="flex flex-wrap gap-2 mt-2 overflow-y-auto"
       >
-        {memoKids &&
+        <DashedRoundedButton />
+        {type === 'memo' &&
+          memoKids &&
           memoKids.map(kid => <ProfileImage key={kid.id} src={''} />)}
-        <DashedRoundedButton></DashedRoundedButton>
+        {type === 'daily-note' && <ProfileImage src={`${dailyNoteKid}`} />}
       </div>
       <ModalPortal>
         <Modal isOpen={isChildrenModalOpen}>

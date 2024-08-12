@@ -1,19 +1,14 @@
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 
-interface AuthorItemProps {
+interface AuthorProps {
   profile?: string;
   writer: string;
   date: string;
   isEdit?: boolean;
 }
 
-const AuthorItem = ({
-  profile,
-  writer,
-  date,
-  isEdit = false,
-}: AuthorItemProps) => {
+const Author = ({profile, writer, date, isEdit = false}: AuthorProps) => {
   return (
     <div className="flex items-center justify-between w-full px-6 py-4">
       <div className="flex items-center justify-between space-x-5 ">
@@ -34,4 +29,4 @@ const AuthorItem = ({
   );
 };
 
-export default AuthorItem;
+export default Author;

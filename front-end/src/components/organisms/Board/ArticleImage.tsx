@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import PostImageList from '@/components/molecules/List/PostImageList';
+import ArticleImageList from '@/components/molecules/List/ArticleImageList';
 import ImageModal from '@/components/organisms/Modal/ImageModal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 
@@ -20,7 +20,7 @@ const ArticleImage = ({images}: ArticleImageProps) => {
 
   return (
     <>
-      <PostImageList images={images} onClick={handleClick} />
+      <ArticleImageList images={images} onClick={handleClick} />
       {selectedImage !== null && (
         <ModalPortal>
           <ImageModal

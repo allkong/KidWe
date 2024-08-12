@@ -34,18 +34,22 @@ const App: React.FC = () => {
   });
 
   const isLoading = useRecoilValue(loadingState);
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <>
       {isLoading && <Spinner />}
       <ToastContainer
-        position="top-center"
-        autoClose={300}
+        autoClose={1000}
         hideProgressBar
-        closeOnClick
         pauseOnFocusLoss
         theme="light"
         limit={1}
+        style={{
+          width: isMobile ? '90%' : 'auto',
+          margin: isMobile ? '0 auto' : undefined,
+          top: isMobile ? '1rem' : undefined,
+        }}
       />
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />

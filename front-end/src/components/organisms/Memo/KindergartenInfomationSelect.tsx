@@ -15,7 +15,7 @@ const KindergartenInfomationSelect = () => {
     <>
       <div className="space-y-2 text-gray-300">
         <p className="mb-1 text-2xl font-semibold cursor-default">내용 선택</p>
-        <MemoChildSelect />
+        <MemoChildSelect type="memo" isMultipleSelect />
         <MemoLessonSelect />
         <div className="h-32">
           <TextArea value={memoContent} onChange={handleChange} />

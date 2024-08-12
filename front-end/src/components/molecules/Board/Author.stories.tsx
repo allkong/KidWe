@@ -1,12 +1,12 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import AuthorItem from '@/components/molecules/Item/AuthorItem';
+import Author from '@/components/molecules/Board/Author';
 
-const meta: Meta<typeof AuthorItem> = {
-  component: AuthorItem,
+const meta: Meta<typeof Author> = {
+  component: Author,
 };
 export default meta;
 
-type Story = StoryObj<typeof AuthorItem>;
+type Story = StoryObj<typeof Author>;
 
 export const Basic: Story = {
   args: {
