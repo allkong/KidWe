@@ -5,10 +5,13 @@ export const patchUserNameSelector = selector<string>({
   key: 'patchUserNameSelector',
   get: ({get}) => {
     const patchUserInfo = get(patchUserInfoState);
-    return patchUserInfo.name;
+    return patchUserInfo.dto.name;
   },
   set: ({get, set}, newValue) => {
     const patchUserInfo = get(patchUserInfoState);
-    set(patchUserInfoState, {...patchUserInfo, name: newValue as string});
+    set(patchUserInfoState, {
+      ...patchUserInfo,
+      dto: {...patchUserInfo.dto, name: newValue as string},
+    });
   },
 });

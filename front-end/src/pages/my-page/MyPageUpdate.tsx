@@ -6,10 +6,11 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {usePatchUserInfo} from '@/hooks/my-page/usePatchUserInfo';
 import type {PatchUserInfo} from '@/types/user/PatchUserInfo';
 import {patchUserInfoState} from '@/recoil/atoms/my-page/userInfo';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {useEffect, useState} from 'react';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {useNavigate} from 'react-router-dom';
+import {patchUserPictureState} from '@/recoil/atoms/my-page/userPicture';
 
 const userId = 1;
 
@@ -22,20 +23,24 @@ const MyPageUpdate = () => {
   const {data} = useGetUserInfo(userId);
   const [patchUserInfo, setPatchUserInfo] =
     useRecoilState<PatchUserInfo>(patchUserInfoState);
+  const userPicture = useRecoilValue(patchUserPictureState);
 
   useEffect(() => {
     if (data !== undefined) {
-      const {id, name, email, tel} = data;
-      setPatchUserInfo({id, email, name, tel, password: '', picture: ''});
+      const {id, name, tel} = data;
+      setPatchUserInfo({dto: {id, name, tel, password: ''}, picture: ''});
     }
   }, [data, setPatchUserInfo]);
 
   const handleClickButton = () => {
     console.log(patchUserInfo);
-    
-    userMutation.mutate(patchUserInfo, {
-      onSuccess: () => navigate('/mypage'),
-    });
+
+    userMutation.mutate(
+      {info: patchUserInfo, picture: userPicture},
+      {
+        onSuccess: () => navigate('/mypage'),
+      }
+    );
   };
 
   const [isValid, setIsValid] = useState(false);
@@ -48,7 +53,7 @@ const MyPageUpdate = () => {
       className={`${containerHeaderClass} justify-center h-screen bg-white flex flex-col px-10`}
     >
       <Header title="정보 변경" buttonType="back" />
-      <div className="flex items-center flex-grow overflow-auto">
+      <div className="flex-grow overflow-auto ">
         <MyPageUpdateView onChangeValid={handleIsValid} />
       </div>
       <div className="box-border w-full px-3 py-5 h-fit">

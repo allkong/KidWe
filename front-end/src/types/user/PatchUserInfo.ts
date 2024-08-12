@@ -1,8 +1,9 @@
 export interface PatchUserInfo {
-  id: number;
-  name: string;
-  tel: string;
-  email: string;
+  dto: {
+    id: number;
+    name: string;
+    tel: string;
+    password: string;
+  };
   picture: string;
-  password: string;
 }

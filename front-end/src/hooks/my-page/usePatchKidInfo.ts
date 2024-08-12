@@ -1,7 +1,7 @@
 import {patchKidInfo} from '@/apis/my-page/patchKidInfo';
 import {PatchKidInfo} from '@/types/user/PatchKidInfo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {userKeys} from './userKeys';
+import {userKeys} from '@/hooks/my-page/userKeys';
 
 export const usePatchKidInfo = (kidId: number) => {
   const queryClient = useQueryClient();
