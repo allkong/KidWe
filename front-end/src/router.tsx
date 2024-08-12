@@ -49,6 +49,15 @@ export const router = createBrowserRouter([
   {
     path: '/schedule',
     element: <KindergartenSchedule />,
+    loader: () => {
+      if (
+        getUserData() === null
+        // || getMemberStatus() !== 'ACCEPT'
+      ) {
+        return redirect('/login');
+      }
+      return null;
+    },
   },
   {
     path: '/mypage',

@@ -1,7 +1,7 @@
 export interface OptionProps {
   text: string;
   id?: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: () => void;
 }
 
 const Option = ({text, onClick}: OptionProps) => {

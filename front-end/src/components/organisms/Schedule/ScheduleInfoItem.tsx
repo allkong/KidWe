@@ -1,10 +1,10 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import type {GetSchedule} from '@/types/schedule/GetSchedule';
-import {deleteSchedule} from '@/apis/schedule/deleteSchedule';
-import {useMutation} from '@tanstack/react-query';
-import {useQueryClient} from '@tanstack/react-query';
 import {Dayjs} from 'dayjs';
+import {useDeleteSchedule} from '@/hooks/schedule/useDeleteSchedule';
+import {getKindergartenId} from '@/utils/userData';
+import {toast} from 'react-toastify';
 
 interface ScheduleInfoItem {
   schedule: GetSchedule;
@@ -21,21 +21,21 @@ const ScheduleInfoItem = ({
   isShowMore = false,
   date,
 }: ScheduleInfoItem) => {
-  const queryClient = useQueryClient();
-
-  const deleteMutate = useMutation({
-    mutationFn: ({scheduleId}: {scheduleId: number}) =>
-      deleteSchedule(scheduleId),
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: ['schedules', 1, date?.format('YYMMDD')],
-      });
-    },
-  });
+  const deleteMutate = useDeleteSchedule(
+    getKindergartenId()!,
+    date!.format('YYYY-MM-DD')
+  );
 
   const handleClickDelete = () => {
     const scheduleId = schedule.scheduleId;
-    deleteMutate.mutate({scheduleId: scheduleId});
+    deleteMutate.mutate(
+      {scheduleId: scheduleId},
+      {
+        onSuccess: () => {
+          toast.info('삭제 완료되었습니다.');
+        },
+      }
+    );
   };
 
   return (

@@ -6,25 +6,34 @@ import type {Dayjs} from 'dayjs';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import TextArea from '@/components/atoms/Input/TextArea';
 import Divider from '@/components/atoms/Divider/Divider';
-import {ScheduleOption} from '@/enum/kindergarten/schedule';
-import {scheduleOptionKeys} from '@/enum/kindergarten/schedule';
+import {
+  DirectorScheduleOption,
+  directorScheduleOptionKeys,
+  TeacherScheduleOption,
+} from '@/enum/kindergarten/schedule';
+import {teacherScheduleOptionKeys} from '@/enum/kindergarten/schedule';
 import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import {getKindergartenId, getMemberId, getMemberRole} from '@/utils/userData';
+import {QueryObserverResult, RefetchOptions} from '@tanstack/react-query';
+import {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
+import {AxiosError} from 'axios';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
+  refetch: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<GetKindergarten, AxiosError>>;
 }
 
-function getScheduleOptionValue(category: keyof typeof ScheduleOption) {
-  return ScheduleOption[category];
+function getScheduleOptionValue(category: keyof typeof TeacherScheduleOption) {
+  return TeacherScheduleOption[category];
 }
-
-const memberId = 2;
-const kindergartenId = 1;
 
 // 스케줄 작성 시 권한 확인
 // 1 : 원장, 2 : 선생님으로 되어있음
 const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
+  // const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<string>();
   const [keyword, setKeyword] = useState('');
@@ -43,7 +52,7 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
     );
   }, [selected, keyword, content]);
 
-  const postMutate = useWriteKindergartenSchedule(kindergartenId);
+  const postMutate = useWriteKindergartenSchedule(getKindergartenId()!);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -56,7 +65,7 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
   const handleSubmit = () => {
     postMutate.mutate(
       {
-        memberId,
+        memberId: getMemberId()!,
         keyword,
         content,
         localDate: date.format('YYYY-MM-DD'),
@@ -64,14 +73,25 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
       },
       {
         onSuccess: () => {
+          // refetch();
           setSelected(undefined);
           setKeyword('');
           setContent('');
+          // navigate(`/schedule?date=${date.format('YYYY-MM-DD')}`);
         },
       }
     );
     setIsOpen(false);
   };
+
+  const keys =
+    getMemberRole() === 'ROLE_TEACHER'
+      ? teacherScheduleOptionKeys
+      : directorScheduleOptionKeys;
+  const option =
+    getMemberRole() === 'ROLE_TEACHER'
+      ? TeacherScheduleOption
+      : DirectorScheduleOption;
 
   return (
     <>
@@ -95,12 +115,12 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
                 <Divider />
               </div>
               <Select label="카테고리" size="medium" onChange={setSelected}>
-                {scheduleOptionKeys &&
-                  scheduleOptionKeys.map((category, idx) => (
+                {getMemberRole() !== 'ROLE_GUARDIAN' &&
+                  keys.map((category, idx) => (
                     <Select.Option
                       key={idx}
                       id={getScheduleOptionValue(
-                        category as keyof typeof ScheduleOption
+                        category as keyof typeof option
                       )}
                       text={category}
                     />

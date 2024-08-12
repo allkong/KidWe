@@ -6,38 +6,57 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import dayjs, {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
 import {useLoading} from '@/hooks/loading/useLoading';
-
-const kindergartenId = 1;
+import {getKindergartenId, getMemberRole} from '@/utils/userData';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 const KindergartenSchedule = () => {
-  const [date, setDate] = useState(dayjs());
+  const [searchParams] = useSearchParams();
+  const paramDate = searchParams.get('date');
+  let date = dayjs(paramDate);
+  if (!date.isValid()) {
+    date = dayjs();
+  }
+
+  const navigate = useNavigate();
 
   const onChangeDate = (value: Dayjs) => {
-    setDate(value);
+    const newDate = value.format('YYYY-MM-DD');
+    navigate({
+      pathname: '/schedule',
+      search: `?date=${newDate}`,
+    });
   };
 
-  useEffect(() => {
-    refetch();
-  }, [date]);
-
   const handleBeforeMonth = () => {
-    setDate(date.subtract(1, 'month'));
+    navigate({
+      pathname: '/schedule',
+      search: `?date=${date.subtract(1, 'month').format('YYYY-MM-DD')}`,
+    });
   };
 
   const handleAfterMonth = () => {
-    setDate(date.add(1, 'month'));
+    navigate({
+      pathname: '/schedule',
+      search: `?date=${date.add(1, 'month').format('YYYY-MM-DD')}`,
+    });
   };
 
-  const {data, refetch, isLoading} = useGetKindergartenInfo(kindergartenId);
+  const {data, refetch, isLoading} = useGetKindergartenInfo(
+    getKindergartenId()!
+  );
   useLoading(isLoading);
+
+  useEffect(() => {
+    refetch();
+  }, [date, refetch]);
 
   return (
     <>
-      <Header title="유치원 일정" />
+      <Header title="유치원 일정" buttonType="close" />
       <DateNavigator
         title={date.format('YY년 MM월')}
         onClickLeft={handleBeforeMonth}
@@ -47,14 +66,22 @@ const KindergartenSchedule = () => {
         className={`${containerNavigatorClass} items-center justify-center w-full px-10 space-y-4 overflow-y-auto`}
       >
         <div className="flex items-center justify-between w-full h-16">
-          <Select label="반" size="small">
-            <Select.Option text="전체" />
-            {data &&
-              data.bans.map(ban => (
-                <Select.Option key={ban.id} text={ban.name} />
-              ))}
-          </Select>
-          <ScheduleAdd defaultDate={date} />
+          {getMemberRole() !== 'ROLE_GUARDIAN' && (
+            <>
+              {getMemberRole() === 'ROLE_DIRECTOR' && (
+                <>
+                  <Select label="반" size="small">
+                    <Select.Option text="전체" />
+                    {data &&
+                      data.bans.map(ban => (
+                        <Select.Option key={ban.id} text={ban.name} />
+                      ))}
+                  </Select>
+                </>
+              )}
+              <ScheduleAdd defaultDate={date} refetch={refetch} />
+            </>
+          )}
         </div>
         <div className="flex items-center justify-center flex-grow w-full">
           <div className="flex items-start justify-center max-w-full px-1 pt-10 pb-3 border border-gray-200 rounded-lg aspect-square">

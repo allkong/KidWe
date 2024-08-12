@@ -47,11 +47,15 @@ class UserDataSessionImplements implements UserDataInterface {
     return this.getUserProperty('memberEmail');
   };
 
-  getMemberRole = (): string | null => {
+  getMemberRole = ():
+    | 'ROLE_DIRECTOR'
+    | 'ROLE_GUARDIAN'
+    | 'ROLE_TEACHER'
+    | null => {
     return this.getUserProperty('memberRole');
   };
 
-  getMemberStatus = (): string | null => {
+  getMemberStatus = (): 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT' | null => {
     return this.getUserProperty('memberStatus');
   };
 
