@@ -8,8 +8,7 @@ import NoResult from '@/components/atoms/NoResult';
 import Button from '@/components/atoms/Button/Button';
 import {useGetTags} from '@/hooks/memo/useGetTags';
 import {memoTagsSelector} from '@/recoil/selectors/memo/memoTags';
-
-const teacherId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const MemoTagSelect = () => {
   const [filteredTags, setFilteredTags] = useState<MemoTag[] | undefined>();
@@ -19,7 +18,7 @@ const MemoTagSelect = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const {data: tagDatas} = useGetTags(teacherId);
+  const {data: tagDatas} = useGetTags(getMemberId()!);
 
   useEffect(() => {
     if (tagDatas) {
@@ -54,7 +53,7 @@ const MemoTagSelect = () => {
         ...memoTags,
         {
           id: value.id,
-          teacherId,
+          teacherId: getMemberId()!,
           content: value.content,
         },
       ]);
@@ -72,7 +71,7 @@ const MemoTagSelect = () => {
     const find = memoTags.find(tag => tag.content === input);
     if (find === undefined) {
       const newTag: MemoTag = {
-        teacherId,
+        teacherId: getMemberId()!,
         content: input,
       };
       setMemoTags([...memoTags, newTag]);

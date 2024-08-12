@@ -11,8 +11,7 @@ import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
 import {useRecoilState} from 'recoil';
 import dayjs from 'dayjs';
-
-const teacherId = 1;
+import { getMemberId } from '@/utils/userData';
 
 const MemoWrite = () => {
   const navigate = useNavigate();
@@ -52,7 +51,7 @@ const MemoWrite = () => {
     console.log(memo);
 
     writeMutate.mutateAsync(
-      {teacherId, memo},
+      {teacherId: getMemberId()!, memo},
       {
         onSuccess: () =>
           navigate({
