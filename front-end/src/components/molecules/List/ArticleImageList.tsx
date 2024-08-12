@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 
 interface ArticleImageListProps {
   images: string[];
-  onClick: (index: number) => void;
+  onClick?: (index: number) => void;
   isEditable?: boolean;
   onAddImage?: (files: FileList) => void;
 }
@@ -54,7 +54,9 @@ const ArticleImageList = ({
           alt={`Image ${index + 1}`}
           className="object-cover h-32 rounded-sm cursor-pointer aspect-square"
           onClick={() => {
-            onClick(index);
+            if (onClick) {
+              onClick(index);
+            }
           }}
         />
       ))}
