@@ -13,10 +13,11 @@ import {toast, ToastContainer} from 'react-toastify';
 import dayjs, {Dayjs} from 'dayjs';
 import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import {Gender} from '@/enum/gender';
-const genderItems = [
-  {value: 'MALE', label: '남아'},
-  {value: 'FEMALE', label: '여아'},
-];
+import {genderLabels} from '@/constants/genderLabel';
+// const genderItems = [
+//   {value: 'MALE', label: '남아'},
+//   {value: 'FEMALE', label: '여아'},
+// ];
 
 const KindergartenChild: React.FC = () => {
   const [childname, setChildname] = useState('');
@@ -45,7 +46,14 @@ const KindergartenChild: React.FC = () => {
 
   const signupChildMutate = useMutation({
     mutationFn: async () => {
-      const {banName, ...postsignupGuardian} = signupGuardian;
+      const {
+        dto: {banName, ...restDto},
+        ...restGuardian
+      } = signupGuardian;
+      const postsignupGuardian = {
+        ...restGuardian,
+        dto: restDto,
+      };
       console.log(postsignupGuardian);
       console.log(banName);
       return postGuardian(postsignupGuardian);
@@ -72,11 +80,14 @@ const KindergartenChild: React.FC = () => {
     console.log(checkedAllergies);
     setSignupGuardian(prevState => ({
       ...prevState,
-      kidName: childname,
-      birthday: formattedBirthday,
-      gender: selectedGender as Gender,
+      dto: {
+        ...prevState.dto,
+        kidName: childname,
+        birthday: formattedBirthday,
+        gender: selectedGender as Gender,
+        allergies: checkedAllergies,
+      },
       picture: typeof image === 'string' ? image : '',
-      allergies: checkedAllergies,
     }));
     setIsStateUpdated(true);
   };
@@ -90,7 +101,10 @@ const KindergartenChild: React.FC = () => {
   };
 
   useEffect(() => {
-    if (signupGuardian.banId == 0 || signupGuardian.kindergartenId == 0) {
+    if (
+      signupGuardian.dto.banId == 0 ||
+      signupGuardian.dto.kindergartenId == 0
+    ) {
       toast.error('잘못 들어오셨습니다!', {
         onClose: () => navigate('/signup/kindergarten/search'),
       });
@@ -111,7 +125,10 @@ const KindergartenChild: React.FC = () => {
         limit={1}
       />
       <div className="flex space-x-2">
-        <KindergartenCard kindergartenName={signupGuardian.banName || ''} />
+        <KindergartenCard
+          kindergartenName={`${signupGuardian.dto.kindergartenName} - ${signupGuardian.dto.banName || ''}`}
+        />
+        {/* `${getKindergartenNameById(signupGuardian.dto.kindergartenId)} - ${signupGuardian.dto.banName || ''}` */}
       </div>
       <div className="flex items-center justify-center space-x-2">
         <div className="flex flex-col items-center">
@@ -165,14 +182,12 @@ const KindergartenChild: React.FC = () => {
           />
 
           <div className="flex justify-center space-x-2">
-            {genderItems.map((item, index) => (
+            {Object.entries(genderLabels).map(([key, label]) => (
               <Button
-                key={index}
-                variant={
-                  selectedGender === item.value ? 'positive' : 'negative'
-                }
-                label={item.label}
-                onClick={() => handleGenderChange(item.value as Gender)}
+                key={key}
+                variant={selectedGender === key ? 'positive' : 'negative'}
+                label={label}
+                onClick={() => handleGenderChange(key as Gender)}
                 size="small"
               />
             ))}
