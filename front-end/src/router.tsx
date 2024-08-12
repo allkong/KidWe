@@ -40,6 +40,11 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 import NotFound from '@/pages/NotFound';
 
 import {getMemberRole, getUserData} from '@/utils/userData';
+import ManagementList from '@/pages/kindergarten-management/managementList';
+import BanManagement from '@/pages/kindergarten-management/banManagement';
+import TeacherManagement from '@/pages/kindergarten-management/teacherManagement';
+import KindergartenManagement from '@/pages/kindergarten-management/kindergartenManagement';
+import ChildManagement from '@/pages/kindergarten-management/childManagement';
 
 export const router = createBrowserRouter([
   {
@@ -169,6 +174,16 @@ export const router = createBrowserRouter([
         path: 'update/:memoId',
         element: <MemoUpdate />,
       },
+    ],
+  },
+  {
+    path: '/kindergarten',
+    children: [
+      {path: '', element: <ManagementList />},
+      {path: 'ban', element: <BanManagement />},
+      {path: 'setting', element: <KindergartenManagement />},
+      {path: 'child', element: <ChildManagement />},
+      {path: 'teacher', element: <TeacherManagement />},
     ],
   },
   {
