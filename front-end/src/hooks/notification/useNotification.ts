@@ -14,7 +14,7 @@ export const useNotification = () => {
 
           // FCM 토큰 가져오기
           const token = await getToken(messaging, {
-            vapidKey: import.meta.env.REACT_APP_VAPID_KEY,
+            vapidKey: import.meta.env.VITE_VAPID_KEY,
           });
 
           console.log('FCM Token:', token);
