@@ -31,6 +31,7 @@ import MemoList from '@/pages/memo/MemoList';
 import MemoWrite from '@/pages/memo/MemoWrite';
 import MemoUpdate from '@/pages/memo/MemoUpdate';
 
+import AttendanceView from '@/pages/attendance/AttendanceView';
 import AttendanceManagement from '@/pages/attendance/AttendanceManagement';
 
 import FoodView from '@/pages/food/FoodView';
@@ -39,34 +40,23 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 
 import NotFound from '@/pages/NotFound';
 
-import {getMemberRole, getUserData} from '@/utils/userData';
+import {getMemberRole} from '@/utils/userData';
+import {validateLoader} from '@/utils/validateLoader';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    loader: validateLoader,
   },
   {
     path: '/schedule',
     element: <KindergartenSchedule />,
-    loader: () => {
-      if (
-        getUserData() === null
-        // || getMemberStatus() !== 'ACCEPT'
-      ) {
-        return redirect('/login');
-      }
-      return null;
-    },
+    loader: validateLoader,
   },
   {
     path: '/mypage',
-    loader: () => {
-      if (getUserData() === null) {
-        return redirect('/login');
-      }
-      return null;
-    },
+    loader: validateLoader,
     children: [
       {
         path: '',
@@ -118,7 +108,14 @@ export const router = createBrowserRouter([
   },
   {
     path: '/attendance',
-    element: <AttendanceManagement />,
+    loader: validateLoader,
+    element: <AttendanceView />,
+    children: [
+      {
+        path: '',
+        element: <AttendanceManagement />,
+      },
+    ],
   },
   {
     path: '/medication',
@@ -165,6 +162,7 @@ export const router = createBrowserRouter([
   {
     path: '/memo',
     element: <MemoView />,
+    loader: validateLoader,
     children: [
       {
         path: '',
@@ -183,12 +181,7 @@ export const router = createBrowserRouter([
   {
     path: '/food',
     element: <FoodView />,
-    loader: () => {
-      if (getUserData() === null) {
-        return redirect('/login');
-      }
-      return null;
-    },
+    loader: validateLoader,
     children: [
       {
         path: '',
