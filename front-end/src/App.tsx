@@ -14,24 +14,28 @@ import {useRecoilValue} from 'recoil';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import {router} from './router';
 import {RouterProvider} from 'react-router-dom';
+import {useState} from 'react';
 
 const App: React.FC = () => {
   const {errorHandler} = useApiHandler();
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 0,
-      },
-      mutations: {
-        onError: errorHandler,
-        retry: 0,
-      },
-    },
-    queryCache: new QueryCache({
-      onError: errorHandler,
-    }),
-  });
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: 0,
+          },
+          mutations: {
+            onError: errorHandler,
+            retry: 0,
+          },
+        },
+        queryCache: new QueryCache({
+          onError: errorHandler,
+        }),
+      })
+  );
 
   const isLoading = useRecoilValue(loadingState);
 
