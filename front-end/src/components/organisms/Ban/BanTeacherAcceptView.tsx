@@ -1,7 +1,14 @@
+import UserCardItem from '@/components/molecules/Item/UserCardItem';
+import {useState} from 'react';
 const BanTeacherAcceptView = () => {
+  const [teacherAcceptList, setTeacherAcceptList] = useState([]);
   return (
     <div>
-      <p>여기는 accept</p>
+      <UserCardItem
+        cardType="detail"
+        profile=""
+        userName="김삿갓"
+      ></UserCardItem>
     </div>
   );
 };
