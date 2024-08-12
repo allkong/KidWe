@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useRecoilState, useResetRecoilState} from 'recoil';
+import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
 import {toast} from 'react-toastify';
 import {containerHeaderClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
@@ -8,8 +10,16 @@ import ArticleImageList from '@/components/molecules/List/ArticleImageList';
 import ImageIcon from '@/assets/icons/pic_line.svg?react';
 
 const DailyNoteWrite = () => {
+  const [formState, setFormState] = useRecoilState(dailyNoteFormState);
+  const resetFormState = useResetRecoilState(dailyNoteFormState);
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+
+  useEffect(() => {
+    return () => {
+      resetFormState();
+    };
+  }, [resetFormState]);
 
   const handleAddImage = (selectedFiles: FileList) => {
     const currentFileCount = files.length;
@@ -32,7 +42,7 @@ const DailyNoteWrite = () => {
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
         <div className="p-4">
-          <MemoChildSelect />
+          <MemoChildSelect type="daily-note" />
         </div>
         <TextEditor />
         <div className="p-4 mt-12">

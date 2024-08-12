@@ -9,6 +9,7 @@ import {useRecoilState} from 'recoil';
 import type {Kid} from '@/types/memo/Kid';
 import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
 import {memoKidsSelector} from '@/recoil/selectors/memo/memoKids';
+import {dailyNoteKidSelector} from '@/recoil/selectors/daily-note/dailyNoteKid';
 
 interface CheckedKid {
   kid: Kid;
@@ -18,11 +19,16 @@ interface CheckedKid {
 const banId = 1;
 
 interface MemoChildSelectProps {
+  type: 'memo' | 'daily-note';
   isMultipleSelect?: boolean;
 }
 
-const MemoChildSelect = ({isMultipleSelect = false}: MemoChildSelectProps) => {
+const MemoChildSelect = ({
+  type,
+  isMultipleSelect = false,
+}: MemoChildSelectProps) => {
   const [memoKids, setMemoKids] = useRecoilState(memoKidsSelector);
+  const [dailyNoteKid, setDailyNoteKid] = useRecoilState(dailyNoteKidSelector);
 
   const [children, setChildren] = useState<CheckedKid[]>();
   const [filteredChildren, setFilteredChildren] = useState<CheckedKid[]>();
@@ -74,7 +80,12 @@ const MemoChildSelect = ({isMultipleSelect = false}: MemoChildSelectProps) => {
   const handleSubmitChildrenModal = () => {
     if (children !== undefined) {
       const checkedChild = children?.filter(child => child.isChecked);
-      setMemoKids(checkedChild.map(child => child.kid));
+      if (type === 'memo') {
+        setMemoKids(checkedChild.map(child => child.kid));
+      } else if (type === 'daily-note') {
+        setDailyNoteKid(checkedChild[0].kid.id);
+      }
+
       setIsChildrenModalOpen(false);
     }
   };
@@ -105,14 +116,16 @@ const MemoChildSelect = ({isMultipleSelect = false}: MemoChildSelectProps) => {
 
   return (
     <>
-      <p className="text-sm">원생 선택</p>
+      <p>원생 선택</p>
       <div
         onClick={handleOpenChildrenModal}
-        className="flex flex-wrap gap-2 overflow-y-auto max-h-10"
+        className="flex flex-wrap gap-2 mt-2 overflow-y-auto"
       >
-        {memoKids &&
+        <DashedRoundedButton />
+        {type === 'memo' &&
+          memoKids &&
           memoKids.map(kid => <ProfileImage key={kid.id} src={''} />)}
-        <DashedRoundedButton></DashedRoundedButton>
+        {type === 'daily-note' && <ProfileImage src={`${dailyNoteKid}`} />}
       </div>
       <ModalPortal>
         <Modal isOpen={isChildrenModalOpen}>
