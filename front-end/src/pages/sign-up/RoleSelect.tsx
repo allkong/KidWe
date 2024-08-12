@@ -16,7 +16,10 @@ const RoleSelect = () => {
   const handleRegisterButtonClick = () => {
     setSignupRole(prevState => ({
       ...prevState,
-      role: selectedRole,
+      dto: {
+        ...prevState.dto,
+        role: selectedRole,
+      },
     }));
     setIsStateUpdated(true);
   };
@@ -34,7 +37,6 @@ const RoleSelect = () => {
     if (!isStateUpdated) {
       closeModal();
     } else {
-      console.log(signuprole, 'useEffect');
       navigate('/signup/info');
     }
   }, [isStateUpdated, navigate, signuprole]);

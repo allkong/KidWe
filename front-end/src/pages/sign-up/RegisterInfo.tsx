@@ -15,7 +15,7 @@ const RegisterInfo = () => {
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
-  const [userpicture, setPicture] = useState<string | ArrayBuffer | null>(null);
+  const [userpicture, setPicture] = useState<string>('');
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
   const [ismissingvalue, setIsMissingValue] = useState(false);
@@ -80,10 +80,13 @@ const RegisterInfo = () => {
 
     setSignupRegister(prevState => ({
       ...prevState,
-      name: username,
-      tel: usertel,
-      email: useremail,
-      password: userpassword,
+      dto: {
+        ...prevState.dto,
+        name: username,
+        tel: usertel,
+        email: useremail,
+        password: userpassword,
+      },
       picture: userpicture,
     }));
     setIsStateUpdated(true);
@@ -104,7 +107,7 @@ const RegisterInfo = () => {
 
   useEffect(() => {
     // 혹시 새로고침하여서 role이 없는 경우 redirect
-    if (!signupregister.role) {
+    if (!signupregister.dto.role) {
       toast.error('역할부터 정해주세요', {
         onClose: () => navigate('/signup/role'),
       });
