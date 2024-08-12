@@ -39,7 +39,7 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 
 import NotFound from '@/pages/NotFound';
 
-import {getUserData} from '@/utils/userData';
+import {getMemberRole, getUserData} from '@/utils/userData';
 
 export const router = createBrowserRouter([
   {
@@ -174,6 +174,12 @@ export const router = createBrowserRouter([
   {
     path: '/food',
     element: <FoodView />,
+    loader: () => {
+      if (getUserData() === null) {
+        return redirect('/login');
+      }
+      return null;
+    },
     children: [
       {
         path: '',
@@ -182,6 +188,12 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <FoodInfoWrite />,
+        loader: () => {
+          if (getMemberRole() === 'ROLE_GUARDIAN') {
+            return redirect('/login');
+          }
+          return null;
+        },
       },
     ],
   },
