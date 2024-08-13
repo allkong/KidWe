@@ -12,7 +12,7 @@ import {scheduleKeys} from '@/hooks/schedule/scheduleKeys';
  * @param localDate YYYY-MM-DD
  * @param type
  */
-export const useWriteKindergartenSchedule = (kindergartenId: number) => {
+export const useWriteKindergartenSchedule = () => {
   const queryClient = useQueryClient();
   const result = useMutation({
     mutationFn: ({
@@ -32,13 +32,13 @@ export const useWriteKindergartenSchedule = (kindergartenId: number) => {
         keyword,
         content,
         localDate,
-        type,
+        scheduleType: type,
       };
       return postSchedule(memberId, body);
     },
-    onSuccess(_, {localDate}) {
+    onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: scheduleKeys.schedules(kindergartenId, localDate),
+        queryKey: scheduleKeys.all,
       });
     },
   });

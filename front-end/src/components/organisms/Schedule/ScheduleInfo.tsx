@@ -57,7 +57,6 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
                 key={schedule.scheduleId}
                 schedule={schedule}
                 backgroundColor={isShowBan ? '#FFF1A7' : '#EAEAEA'}
-                date={date}
                 isShowMore={true}
               />
             ))}

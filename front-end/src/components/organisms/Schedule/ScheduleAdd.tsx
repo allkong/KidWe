@@ -14,7 +14,7 @@ import {
 import {teacherScheduleOptionKeys} from '@/enum/kindergarten/schedule';
 import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import {getKindergartenId, getMemberId, getMemberRole} from '@/utils/userData';
+import {getMemberId, getMemberRole} from '@/utils/userData';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
@@ -46,7 +46,7 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
     );
   }, [selected, keyword, content]);
 
-  const postMutate = useWriteKindergartenSchedule(getKindergartenId()!);
+  const postMutate = useWriteKindergartenSchedule();
 
   const handleClose = () => {
     setIsOpen(false);
