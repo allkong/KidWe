@@ -2,7 +2,7 @@ import MemoListItem from '@/components/organisms/Memo/MemoListItem';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import {memo, useState} from 'react';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Modal from '@/components/organisms/Modal/Modal';
 import MemoView from '@/components/organisms/Memo/MemoView';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
@@ -15,14 +15,10 @@ import {useGetDailyMemo} from '@/hooks/memo/useGetDailyMemo';
 import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
 import {toast} from 'react-toastify';
 import {getMemberId} from '@/utils/userData';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
 const MemoList = memo(() => {
-  const [serachParams] = useSearchParams();
-  const paramDate = serachParams.get('date');
-  let date = dayjs(paramDate);
-  if (!date.isValid()) {
-    date = dayjs();
-  }
+  const date = useGetDateBySearchParam();
 
   // 현재 시간
   const handleLeftClick = () => {

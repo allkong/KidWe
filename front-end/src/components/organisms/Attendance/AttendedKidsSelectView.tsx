@@ -1,30 +1,27 @@
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import {GetAttendance} from '@/types/attendance/GetAttendance';
-import {Dayjs} from 'dayjs';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import Modal from '@/components/organisms/Modal/Modal';
 import {useEffect, useState} from 'react';
 import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import { getBanId } from '@/utils/userData';
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
   onClickButton?: () => void;
-  date?: Dayjs;
 }
 
 interface CheckedGetAttendance extends GetAttendance {
   isChecked: boolean;
 }
 
-const banId = 1;
-
 const AttendedKidsSelectView = ({
   attendances,
   onClickButton,
-  date,
 }: AttendedKidsSelectViewProps) => {
-  date;
+  const date = useGetDateBySearchParam();
   // checked attendances
   const [checkedAttendances, setCheckedAttendances] =
     useState<CheckedGetAttendance[]>();
@@ -64,7 +61,7 @@ const AttendedKidsSelectView = ({
     setIsModalOpen(true);
   };
 
-  const putMutate = usePutAttendanceInfo(banId);
+  const putMutate = usePutAttendanceInfo(getBanId()!);
 
   const handleSubmit = () => {
     if (date !== undefined) {

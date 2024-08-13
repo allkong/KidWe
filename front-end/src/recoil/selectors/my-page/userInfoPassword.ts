@@ -5,10 +5,13 @@ export const patchUserPasswordSelector = selector({
   key: 'patchUserPasswordSelector',
   get: ({get}) => {
     const userInfo = get(patchUserInfoState);
-    return userInfo.password;
+    return userInfo.dto.password;
   },
   set: ({get, set}, newValue) => {
     const userInfo = get(patchUserInfoState);
-    set(patchUserInfoState, {...userInfo, password: newValue as string});
+    set(patchUserInfoState, {
+      ...userInfo,
+      dto: {...userInfo.dto, password: newValue as string},
+    });
   },
 });

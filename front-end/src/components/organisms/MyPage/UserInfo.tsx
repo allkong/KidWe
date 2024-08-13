@@ -13,7 +13,7 @@ const UserInfo = () => {
         <p className="text-3xl font-semibold">{data?.name}</p>
         <p>{data?.role}</p>
       </div>
-      <ProfileImage src={NoProfile} size="6rem" />
+      <ProfileImage src={NoProfile} size="5rem" />
     </div>
   );
 };

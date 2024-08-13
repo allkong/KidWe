@@ -1,31 +1,29 @@
 import {GetAttendance} from '@/types/attendance/GetAttendance';
-import {Dayjs} from 'dayjs';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import Select from '@/components/molecules/DropdownButton/Select';
 import UserCardItemWithButton from '@/components/molecules/Item/UserCardItemWithButton';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {getBanId} from '@/utils/userData';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
   onClickButton?: () => void;
-  date?: Dayjs;
 }
-
-const banId = 1;
 
 const AttendedKidsButtonView = ({
   attendances,
   onClickButton,
-  date,
 }: AttendedKidsButtonViewProps) => {
-  const putMutate = usePutAttendanceInfo(banId);
+  const date = useGetDateBySearchParam();
+  const putMutate = usePutAttendanceInfo(getBanId()!);
 
   const handleSubmit = (kidId: number) => {
     if (date !== undefined) {
       putMutate.mutate({
         kidIds: [kidId],
         year: date.get('year'),
-        month: date.get('month'),
+        month: date.get('month') + 1,
         day: date.get('date'),
         attendedToday: 'NOTHING',
         reason: '',

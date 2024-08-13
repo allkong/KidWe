@@ -1,10 +1,10 @@
 import LabelInput from '@/components/atoms/Input/LabelInput';
-import {patchUserEmailSelector} from '@/recoil/selectors/my-page/userInfoEmail';
 import {patchUserNameSelector} from '@/recoil/selectors/my-page/userInfoName';
-import {patchUserPasswordSelector} from '@/recoil/selectors/my-page/userInfoPassword';
-import {patchUserTelSelector} from '@/recoil/selectors/my-page/userInfoTel';
 import {useEffect, useState} from 'react';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilValue} from 'recoil';
+import UserTelUpdateView from '@/components/organisms/MyPage/UserTelUpdateView';
+import UserPasswordUpdateView from '@/components/organisms/MyPage/UserPasswordUpdateView';
+import UserImageUpdateView from '@/components/organisms/MyPage/UserImageUpdateView';
 
 interface MyPageUpdateViewProps {
   onChangeValid: (value: boolean) => void;
@@ -12,37 +12,16 @@ interface MyPageUpdateViewProps {
 
 const MyPageUpdateView = ({onChangeValid}: MyPageUpdateViewProps) => {
   const name = useRecoilValue(patchUserNameSelector);
-  const email = useRecoilValue(patchUserEmailSelector);
-  const [newPassword, setNewPassword] = useRecoilState(
-    patchUserPasswordSelector
-  );
-  const [newPasswordConfig, setNewPasswordConfig] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
-  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(e.target.value);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const handlePasswordChange = (value: boolean) => {
+    setIsPasswordValid(value);
   };
 
-  const handleNewPasswordConfigChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewPasswordConfig(e.target.value);
-  };
-
-  useEffect(() => {
-    setIsPasswordValid(newPassword === newPasswordConfig);
-  }, [newPassword, newPasswordConfig]);
-
-  const [userTel, setUserTel] = useRecoilState(patchUserTelSelector);
-  const handleTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserTel(e.target.value);
-  };
   const [isTelValid, setIsTelValid] = useState(false);
-
-  useEffect(() => {
-    const telReg = new RegExp(/^0\d{1,2}(-|\))\d{3,4}-\d{4}$/);
-    setIsTelValid(telReg.test(userTel));
-  }, [userTel]);
+  const handleTelChange = (value: boolean) => {
+    setIsTelValid(value);
+  };
 
   useEffect(() => {
     onChangeValid(isPasswordValid && isTelValid);
@@ -50,41 +29,23 @@ const MyPageUpdateView = ({onChangeValid}: MyPageUpdateViewProps) => {
 
   return (
     <div className="w-full py-10 space-y-5">
+      <div className="flex justify-end w-full">
+        <UserImageUpdateView />
+      </div>
       <div className="space-y-2">
         <LabelInput label="이름" value={name} disabled />
-        <LabelInput label="이메일" value={email} disabled />
       </div>
       <div className="space-y-2">
-        <LabelInput
-          label="비밀번호 변경"
-          value={newPassword}
-          onChange={handleNewPasswordChange}
-          type="password"
-          placeholder="비밀번호 변경"
+        <UserPasswordUpdateView
+          isValid={isPasswordValid}
+          onValidChange={handlePasswordChange}
         />
-        <LabelInput
-          label="비밀번호 확인"
-          value={newPasswordConfig}
-          onChange={handleNewPasswordConfigChange}
-          type="password"
-          placeholder="비밀번호 확인"
-        />
-        {!isPasswordValid && (
-          <p className="text-sm text-red-400">비밀번호가 일치하지 않습니다.</p>
-        )}
       </div>
       <div className="space-y-2">
-        <LabelInput
-          label="전화번호"
-          value={userTel}
-          placeholder="ex) 010-1234-5678"
-          onChange={handleTelChange}
+        <UserTelUpdateView
+          isValid={isTelValid}
+          onValidChange={handleTelChange}
         />
-        {!isTelValid && (
-          <p className="text-sm text-red-400">
-            올바른 전화번호 형식이 아닙니다.
-          </p>
-        )}
       </div>
     </div>
   );

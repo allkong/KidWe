@@ -31,6 +31,7 @@ import MemoList from '@/pages/memo/MemoList';
 import MemoWrite from '@/pages/memo/MemoWrite';
 import MemoUpdate from '@/pages/memo/MemoUpdate';
 
+import AttendanceView from '@/pages/attendance/AttendanceView';
 import AttendanceManagement from '@/pages/attendance/AttendanceManagement';
 
 import FoodView from '@/pages/food/FoodView';
@@ -176,6 +177,7 @@ export const router = createBrowserRouter([
     path: '/memos',
     loader: requireAuth,
     element: <MemoView />,
+    loader: validateLoader,
     children: [
       {
         path: '',

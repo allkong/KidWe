@@ -5,10 +5,13 @@ export const patchUserTelSelector = selector({
   key: 'patchUserTelSelector',
   get: ({get}) => {
     const userInfo = get(patchUserInfoState);
-    return userInfo.tel;
+    return userInfo.dto.tel;
   },
   set: ({get, set}, newValue) => {
     const userInfo = get(patchUserInfoState);
-    set(patchUserInfoState, {...userInfo, tel: newValue as string});
+    set(patchUserInfoState, {
+      ...userInfo,
+      dto: {...userInfo.dto, tel: newValue as string},
+    });
   },
 });

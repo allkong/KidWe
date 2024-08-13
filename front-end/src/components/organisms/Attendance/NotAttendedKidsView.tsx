@@ -3,20 +3,17 @@ import NotAttendedKidsSelectView from '@/components/organisms/Attendance/NotAtte
 import {useGetAttendanceInfo} from '@/hooks/attendance/useGetAttendanceInfo';
 // import {useGetAttendanceInfoHook} from '@/hooks/attendance/useGetAttendanceInfoHook';
 import {GetAttendance} from '@/types/attendance/GetAttendance';
-import {Dayjs} from 'dayjs';
 import {useEffect, useState} from 'react';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {getBanId} from '@/utils/userData';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
-interface AttendedKidsViewProps {
-  date: Dayjs;
-}
+const AttendedKidsView = () => {
+  const date = useGetDateBySearchParam();
 
-const banId = 1;
-
-const AttendedKidsView = ({date}: AttendedKidsViewProps) => {
   const [isShowSelect, setIsShowSelect] = useState(false);
   const {data, refetch, isLoading} = useGetAttendanceInfo(
-    banId,
+    getBanId()!,
     date.get('year'),
     date.get('month') + 1,
     date.get('date')
@@ -48,13 +45,11 @@ const AttendedKidsView = ({date}: AttendedKidsViewProps) => {
         {isShowSelect ? (
           <NotAttendedKidsSelectView
             attendances={absenceKids}
-            date={date}
             onClickButton={handleClickButtonButton}
           />
         ) : (
           <NotAttendedKidsButtonView
             attendances={absenceKids}
-            date={date}
             onClickSelect={handleClickSelectButton}
           />
         )}
