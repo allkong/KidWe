@@ -1,12 +1,10 @@
 import axios, {AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import {getAccessToken} from '@/apis/login/getAccessToken';
 import {
-  deleteAccessToken,
   getAccessToken as getToken,
   setAccessToken as setToken,
 } from '@/utils/userAccessToken';
-import {deleteRefreshToken} from '@/utils/userRefreshToken';
-import {deleteUserData} from '@/utils/userData';
+import {ErrorCode} from '@/types/error/ErrorCode';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -36,28 +34,18 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async error => {
-    console.log('server error', error);
+    console.error(error);
 
-    const status = error.response.status;
-    // const {code}: ErrorCode = error.response?.data || {};
-    if (
-      status === 401
-      //  && code === 'EXPIRED_TOKEN'
-    ) {
+    const status = error?.response?.status;
+    const {code}: ErrorCode = error?.response?.data || {};
+    if (status === 400 && code === 'EXPIRED_TOKEN') {
       console.log('Access Token 재발급 시작');
-      try {
-        const {accessToken} = await getAccessToken();
-        setToken(accessToken);
+      const {accessToken} = await getAccessToken();
+      setToken(accessToken);
 
-        console.log('Access Token 재발급 완료');
-        return axiosInstance(error.config);
-      } catch (error) {
-        deleteAccessToken();
-        deleteRefreshToken();
-        deleteUserData();
-      }
+      console.log('Access Token 재발급 완료');
+      return axiosInstance(error.config);
     }
-
     throw error;
   }
 );
