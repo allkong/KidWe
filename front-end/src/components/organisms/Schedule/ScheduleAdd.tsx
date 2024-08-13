@@ -15,15 +15,9 @@ import {teacherScheduleOptionKeys} from '@/enum/kindergarten/schedule';
 import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import {getKindergartenId, getMemberId, getMemberRole} from '@/utils/userData';
-import {QueryObserverResult, RefetchOptions} from '@tanstack/react-query';
-import {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
-import {AxiosError} from 'axios';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
-  refetch: (
-    options?: RefetchOptions
-  ) => Promise<QueryObserverResult<GetKindergarten, AxiosError>>;
 }
 
 function getScheduleOptionValue(category: keyof typeof TeacherScheduleOption) {

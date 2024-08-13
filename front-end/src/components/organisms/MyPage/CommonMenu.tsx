@@ -10,7 +10,7 @@ const CommonMenu = () => {
   const navigate = useNavigate();
 
   const handleUpdateInfoClick = () => {
-    navigate('/my-page/update/user');
+    navigate('/my-page/update');
   };
 
   return (
