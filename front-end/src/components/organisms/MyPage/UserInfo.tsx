@@ -1,11 +1,10 @@
 import NoProfile from '@/assets/no-profile.png';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
-
-const userId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const UserInfo = () => {
-  const {data} = useGetUserInfo(userId);
+  const {data} = useGetUserInfo(getMemberId()!);
 
   return (
     <div className="flex flex-row justify-between w-full px-10 py-10 mb-2 text-gray-300 bg-white">
