@@ -17,7 +17,7 @@ const BanTeacherPendingView = () => {
     null
   ); // 선택된 교사의 ID를 저장하는 상태
 
-  const handlePendingTeacher = async (id: number) => {
+  const handleAcceptTeacher = async (id: number) => {
     try {
       await putTeacherPending({id, accepted: true});
       if (kindergartenId) {
@@ -25,7 +25,7 @@ const BanTeacherPendingView = () => {
         setTeacherPendingList(updatedList);
       }
     } catch (error) {
-      console.error('Failed to Pending teacher', error);
+      console.error('Failed to Accept teacher', error);
     }
   };
 
@@ -64,7 +64,7 @@ const BanTeacherPendingView = () => {
       }
     };
     fetchTeacherPendingList();
-  }, [kindergartenId, setTeacherPendingList]);
+  }, [kindergartenId]);
 
   return (
     <div>
@@ -79,7 +79,7 @@ const BanTeacherPendingView = () => {
             handleOpenNegativeModal(teacher.memberId);
           }}
           onClickPositive={() => {
-            handlePendingTeacher(teacher.memberId);
+            handleAcceptTeacher(teacher.memberId);
           }}
         />
       ))}
