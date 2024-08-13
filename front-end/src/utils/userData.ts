@@ -11,7 +11,7 @@ import {UserDataInterface} from '@/utils/user-data-implements/UserDataInterface'
 //   getMemberStatus,
 //   getKindergartenId,
 //   getBanId,
-//   getKidIds,
+//   getKidId,
 // }: UserDataInterface = userDataClosure;
 
 import * as userDataSessionImplements from '@/utils/user-data-implements/userDataSessionImplements';
@@ -26,5 +26,5 @@ export const {
   getMemberStatus,
   getKindergartenId,
   getBanId,
-  getKidIds,
+  getKidId,
 }: UserDataInterface = userDataSessionImplements;

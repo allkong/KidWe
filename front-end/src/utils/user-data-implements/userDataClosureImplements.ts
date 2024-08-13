@@ -11,7 +11,7 @@ export const {
   getMemberStatus,
   getKindergartenId,
   getBanId,
-  getKidIds,
+  getKidId,
 }: UserDataInterface = (() => {
   let data: UserData | null = null;
   const getProperty = <K extends keyof UserData>(
@@ -29,7 +29,7 @@ export const {
   const getMemberStatus = () => getProperty('memberStatus');
   const getKindergartenId = () => getProperty('kindergartenId');
   const getBanId = () => getProperty('banId');
-  const getKidIds = () => getProperty('kidIds');
+  const getKidId = () => getProperty('kidId');
 
   return {
     setUserData,
@@ -41,6 +41,6 @@ export const {
     getMemberStatus,
     getKindergartenId,
     getBanId,
-    getKidIds,
+    getKidId,
   };
 })();
