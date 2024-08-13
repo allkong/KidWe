@@ -6,7 +6,6 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
-import {useEffect} from 'react';
 import {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
 import {useLoading} from '@/hooks/loading/useLoading';
@@ -41,14 +40,8 @@ const KindergartenSchedule = () => {
     });
   };
 
-  const {data, refetch, isLoading} = useGetKindergartenInfo(
-    getKindergartenId()!
-  );
+  const {data, isLoading} = useGetKindergartenInfo(getKindergartenId()!);
   useLoading(isLoading);
-
-  useEffect(() => {
-    refetch();
-  }, [date, refetch]);
 
   return (
     <>
@@ -75,7 +68,7 @@ const KindergartenSchedule = () => {
                   </Select>
                 </>
               )}
-              <ScheduleAdd defaultDate={date} refetch={refetch} />
+              <ScheduleAdd defaultDate={date} />
             </>
           )}
         </div>
