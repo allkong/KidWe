@@ -1,4 +1,12 @@
+import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+
+import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
+import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
+import {getMemberId, getKidId} from '@/utils/userData';
+import {RoleItem} from '@/enum/roleItem';
+import {ROLE_NAMES} from '@/constants/roleNames';
+
 import NotificationButton from '@/components/atoms/Button/NotificationButton';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -7,18 +15,39 @@ import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const Home = () => {
-  const userInfo = {
-    profile:
-      'https://flexible.img.hani.co.kr/flexible/normal/960/960/imgdb/resize/2019/0121/00501111_20190121.JPG',
-    userName: '강혁준',
-    role: '선생님',
-    kindergartenName: '싸피 유치원',
-  };
-
   const navigate = useNavigate();
+  const {data: userData} = useGetUserInfo(getMemberId()!);
+  const kidId = getKidId();
+  const {data: kidData} = useGetKidInfo(kidId!);
+  const [userProfile, setUserProfile] = useState({
+    picture: '',
+    name: '',
+    role: '',
+    kindergartenName: '유치원',
+  });
+
   const handleUserCardItemClick = () => {
     navigate('/my-page');
   };
+
+  useEffect(() => {
+    if (userData) {
+      const newUserProfile = {...userProfile};
+      newUserProfile.picture = userData.picture || '';
+      newUserProfile.role = ROLE_NAMES[userData.role as RoleItem];
+
+      if (
+        userData.role === RoleItem.Teacher ||
+        userData.role === RoleItem.Director
+      ) {
+        newUserProfile.name = userData.name;
+      } else if (userData.role === RoleItem.Guardian && kidData) {
+        newUserProfile.name = kidData.name || '';
+      }
+
+      setUserProfile(newUserProfile);
+    }
+  }, [userData, kidData, userProfile]);
 
   return (
     <>
@@ -29,12 +58,12 @@ const Home = () => {
           <NotificationButton />
         </div>
         <div className="">
-          <KindergartenCard kindergartenName={userInfo.kindergartenName} />
+          <KindergartenCard kindergartenName={userProfile.kindergartenName} />
         </div>
         <div onClick={handleUserCardItemClick}>
           <UserCardItem
-            profile={userInfo.profile}
-            userName={`${userInfo.userName} ${userInfo.role}`}
+            profile={userProfile.picture}
+            userName={`${userProfile.name} ${userProfile.role}`}
             cardType="arrow"
           />
         </div>
