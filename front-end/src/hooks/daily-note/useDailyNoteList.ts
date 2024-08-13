@@ -10,7 +10,7 @@ export const useDailyNoteList = (
   id: number,
   memberId: number,
   year: number,
-  month: string,
+  month: number,
   role: RoleItem
 ) => {
   return useQuery<DailyNoteList, Error>({

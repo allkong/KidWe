@@ -33,7 +33,7 @@ const DailyNoteListView = () => {
     id!,
     getMemberId()!,
     currentMonth.year(),
-    '08', // currentMonth.month() + 1,
+    currentMonth.month() + 1,
     memberRole
   );
 
