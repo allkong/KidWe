@@ -8,5 +8,5 @@ export interface LoginResponse extends RefreshToken, AccessToken {
   memberStatus: 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT';
   kindergartenId: number | null;
   banId: number | null;
-  kidIds: number[];
+  kidId: number;
 }

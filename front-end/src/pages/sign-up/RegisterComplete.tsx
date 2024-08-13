@@ -11,7 +11,7 @@ const RegisterComplete: React.FC = () => {
   // const [role, setRole] = useState<string | null>(getMemberRole());
 
   const handleGoLoginButtonClick = () => {
-    navigate('/login');
+    navigate('/auth/login');
   };
 
   // const rolename =

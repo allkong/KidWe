@@ -35,7 +35,7 @@ const RegisterInfo = () => {
     },
     onSuccess: data => {
       if (data === '성공') {
-        navigate('/login');
+        navigate('/auth/login');
       } else if (data === '실패') {
         toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
       } else {

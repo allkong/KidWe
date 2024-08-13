@@ -7,13 +7,13 @@ const LoginMenu = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/auth/login');
   };
 
   const handleLogoutClick = () => {
     deleteAccessToken();
     deleteRefreshToken();
-    navigate('/login');
+    navigate('/auth/login');
   };
 
   return (
