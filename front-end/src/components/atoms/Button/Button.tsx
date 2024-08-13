@@ -1,5 +1,5 @@
 export interface ButtonProps {
-  label: string;
+  label?: string;
   size?: 'small' | 'large';
   variant?: 'positive' | 'negative';
   round?: 'small' | 'full';

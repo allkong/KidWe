@@ -1,7 +1,7 @@
 import {Routes, Route} from 'react-router-dom';
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
 
-const KindergartenManagement = () => {
+const Schedule = () => {
   return (
     <div className="h-screen">
       <Routes>
@@ -11,4 +11,4 @@ const KindergartenManagement = () => {
   );
 };
 
-export default KindergartenManagement;
+export default Schedule;

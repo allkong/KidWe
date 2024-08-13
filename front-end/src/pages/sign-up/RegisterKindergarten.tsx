@@ -61,7 +61,7 @@ const RegisterKindergarten: React.FC = () => {
         try {
           await signupKindergartenMutate.mutate();
           console.log('원장님 가입 완료');
-          navigate('/signup/complete');
+          navigate('/auth/signup/complete');
         } catch (error) {
           console.error('유치원 정보 못 보냈어요:', error);
         }

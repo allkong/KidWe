@@ -14,5 +14,5 @@ export interface UserDataInterface {
   getMemberStatus: () => 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT' | null;
   getKindergartenId: () => number | null;
   getBanId: () => number | null;
-  getKidIds: () => number[] | null;
+  getKidId: () => number | null;
 }

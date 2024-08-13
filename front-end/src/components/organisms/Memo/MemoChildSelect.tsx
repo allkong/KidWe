@@ -125,7 +125,9 @@ const MemoChildSelect = ({
         {type === 'memo' &&
           memoKids &&
           memoKids.map(kid => <ProfileImage key={kid.id} src={''} />)}
-        {type === 'daily-note' && <ProfileImage src={`${dailyNoteKid}`} />}
+        {type === 'daily-note' && dailyNoteKid !== 0 && (
+          <ProfileImage src={''} />
+        )}
       </div>
       <ModalPortal>
         <Modal isOpen={isChildrenModalOpen}>

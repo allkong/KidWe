@@ -1,15 +1,21 @@
 import {useState, useEffect} from 'react';
 import {useRecoilState, useResetRecoilState} from 'recoil';
-import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
 import {toast} from 'react-toastify';
+
+import {usePostDailyNote} from '@/hooks/daily-note/usePostDailyNote';
+import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
+import {getMemberId} from '@/utils/userData';
 import {containerHeaderClass} from '@/styles/styles';
+
 import Header from '@/components/organisms/Navigation/Header';
 import TextEditor from '@/components/organisms/Board/TextEditor';
 import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
 import ArticleImageList from '@/components/molecules/List/ArticleImageList';
 import ImageIcon from '@/assets/icons/pic_line.svg?react';
+import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 
 const DailyNoteWrite = () => {
+  const {mutate} = usePostDailyNote();
   const [formState, setFormState] = useRecoilState(dailyNoteFormState);
   const resetFormState = useResetRecoilState(dailyNoteFormState);
   const [files, setFiles] = useState<File[]>([]);
@@ -21,6 +27,10 @@ const DailyNoteWrite = () => {
     };
   }, [resetFormState]);
 
+  const handleEditorChange = (value: string) => {
+    setFormState(prev => ({...prev, content: value}));
+  };
+
   const handleAddImage = (selectedFiles: FileList) => {
     const currentFileCount = files.length;
 
@@ -30,22 +40,36 @@ const DailyNoteWrite = () => {
     }
 
     const newFiles = Array.from(selectedFiles);
-
     setFiles([...files, ...newFiles]);
 
     const newImagePreviews = newFiles.map(file => URL.createObjectURL(file));
     setImagePreviews([...imagePreviews, ...newImagePreviews]);
   };
 
+  const handleFormSubmit = () => {
+    const formData = new FormData();
+
+    formData.append(
+      'dailynote',
+      new Blob([JSON.stringify(formState)], {type: 'application/json'})
+    );
+
+    files.forEach(file => {
+      formData.append('images', file);
+    });
+
+    mutate({memberId: getMemberId()!, formData});
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
-        <div className="p-4">
+        <div className="px-6 py-4">
           <MemoChildSelect type="daily-note" />
         </div>
-        <TextEditor />
-        <div className="p-4 mt-12">
+        <TextEditor value={formState.content} onChange={handleEditorChange} />
+        <div className="p-6 mt-10">
           <div className="flex flex-row items-center mb-2">
             <ImageIcon fill="black" width={24} height={25} />
             <p className="ms-2">사진 선택</p>
@@ -58,6 +82,12 @@ const DailyNoteWrite = () => {
           />
         </div>
       </div>
+      <ButtonBar
+        label="전송하기"
+        disabled={false}
+        onClick={handleFormSubmit}
+        type="more"
+      />
     </div>
   );
 };

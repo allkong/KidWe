@@ -6,12 +6,12 @@ import mypageIcon from '@/assets/icons/baby-fill.svg?react';
 const menuItems = [
   {Icon: homeIcon, alt: 'home icon', text: '홈', to: '/'},
   {Icon: scheduleIcon, alt: 'schedule icon', text: '일정', to: '/schedule'},
-  {Icon: mypageIcon, alt: 'mypage icon', text: '마이', to: '/mypage'},
+  {Icon: mypageIcon, alt: 'mypage icon', text: '마이', to: '/my-page'},
 ];
 
 const NavigationBar = () => {
   return (
-    <nav className="box-border fixed bottom-0 left-0 right-0 w-full py-2 text-base bg-white border-t text-gray-150 ">
+    <nav className="box-border fixed bottom-0 left-0 right-0 w-full max-w-full sm:max-w-[600px] mx-auto py-2 text-base bg-white border-t text-gray-150">
       <div className="flex flex-row">
         {menuItems.map((item, index) => (
           <NavigationMenu

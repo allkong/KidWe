@@ -8,8 +8,8 @@ import LoginMenu from '@/components/organisms/MyPage/LoginMenu';
 
 const Home = () => {
   return (
-    <div className={`${containerHeaderClass} w-screen h-screen`}>
-      <Header title="마이 페이지" buttonType="close" />
+    <div className={`${containerHeaderClass} h-screen`}>
+      <Header title="마이 페이지" />
       <div className="h-full overflow-y-auto bg-[#F8F8F8]">
         <UserInfo />
         <CommonMenu />

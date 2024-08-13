@@ -37,7 +37,7 @@ const RoleSelect = () => {
     if (!isStateUpdated) {
       closeModal();
     } else {
-      navigate('/signup/info');
+      navigate('/auth/signup/info');
     }
   }, [isStateUpdated, navigate, signuprole]);
 

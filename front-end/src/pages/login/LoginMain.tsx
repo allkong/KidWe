@@ -14,7 +14,7 @@ const LoginMain: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const handleSignUpButtonClick = () => {
-    navigate('/signup/role');
+    navigate('/auth/signup/role');
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
