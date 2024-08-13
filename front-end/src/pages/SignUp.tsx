@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {containerHeaderClass} from '@/styles/styles';
 import RoleSelect from '@/pages/sign-up/RoleSelect';
