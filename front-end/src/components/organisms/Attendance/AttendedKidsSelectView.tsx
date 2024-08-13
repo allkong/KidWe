@@ -6,7 +6,8 @@ import {useEffect, useState} from 'react';
 import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
-import { getBanId } from '@/utils/userData';
+import {getBanId} from '@/utils/userData';
+import {toast} from 'react-toastify';
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
@@ -73,13 +74,14 @@ const AttendedKidsSelectView = ({
           {
             kidIds: selectedKids,
             year: date.get('year'),
-            month: date.get('month'),
+            month: date.get('month') + 1,
             day: date.get('date'),
             attendedToday: 'NOTHING',
             reason: '',
           },
           {
             onSuccess: () => {
+              toast.info('일괄 미출석 처리 되었습니다.');
               onClickButton?.();
             },
           }

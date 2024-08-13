@@ -16,6 +16,7 @@ import {useDeleteMemo} from '@/hooks/memo/useDeleteMemo';
 import {toast} from 'react-toastify';
 import {getMemberId} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const MemoList = memo(() => {
   const date = useGetDateBySearchParam();
@@ -36,12 +37,13 @@ const MemoList = memo(() => {
   };
 
   // data fetch
-  const {data, refetch} = useGetDailyMemo(
+  const {data, refetch, isLoading} = useGetDailyMemo(
     getMemberId()!,
     date.format('YYYY'),
     date.format('MM'),
     date.format('DD')
   );
+  useLoading(isLoading);
 
   // modal
   const [modalMemo, setModalMemo] = useState<GetMemo>();

@@ -5,7 +5,9 @@ import {useEffect, useState} from 'react';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import type {GetAttendance} from '@/types/attendance/GetAttendance';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
-import { getBanId } from '@/utils/userData';
+import {getBanId} from '@/utils/userData';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {toast} from 'react-toastify';
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
@@ -20,6 +22,8 @@ const AttendedKidsSelectView = ({
   attendances,
   onClickButton: onClickTabChangeButton,
 }: AttendedKidsSelectViewProps) => {
+  const date = useGetDateBySearchParam();
+
   // checked attendances
   const [checkedAttendances, setCheckedAttendances] =
     useState<CheckedGetAttendance[]>();
@@ -61,8 +65,11 @@ const AttendedKidsSelectView = ({
 
   const submitMutate = usePutAttendanceInfo(getBanId()!);
   const submitCheckedList = () => {
-    if (attendances !== undefined && checkedAttendances !== undefined) {
-      const [year, month, date] = attendances[0].date.split('-').map(Number);
+    if (checkedAttendances !== undefined) {
+      const [year, month, day] = date
+        .format('YYYY-MM-DD')
+        .split('-')
+        .map(Number);
       const selectedList: number[] = checkedAttendances
         ?.filter(value => value.isChecked)
         .map(value => value.kidId);
@@ -72,13 +79,14 @@ const AttendedKidsSelectView = ({
         {
           year,
           month,
-          day: date,
+          day,
           attendedToday: 'ATTENDANCE',
           kidIds: selectedList,
           reason: '',
         },
         {
           onSuccess: () => {
+            toast.info('일괄 출석 처리 되었습니다.');
             setIsPositiveModalOpen(false);
             onClickTabChangeButton?.();
           },
