@@ -14,16 +14,28 @@ import MonthDivider from '@/components/atoms/Divider/MonthDivider';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
 
 const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
+  const memberRole = getMemberRole() as RoleItem;
+  let id: number | null = 0;
+  if (memberRole === RoleItem.Guardian) {
+    id = getKidId();
+  } else if (memberRole === RoleItem.Teacher) {
+    id = getBanId();
+  } else if (memberRole === RoleItem.Director) {
+    // 선택한 반 id로 변경
+    id = 1;
+  }
+
   const {data, isLoading} = useLeaveConsentList(
-    1,
+    id!,
     currentMonth.year(),
     currentMonth.month() + 1,
-    RoleItem.Director
+    memberRole
   );
 
   const handleLeftClick = () => {

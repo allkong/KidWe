@@ -41,7 +41,7 @@ const KindergartenBan: React.FC = () => {
     },
     onSuccess: data => {
       if (data === '성공') {
-        navigate('/signup/complete');
+        navigate('/auth/signup/complete');
       } else if (data === '실패') {
         toast.error('회원가입에 실패하였습니다.');
       } else {
@@ -65,7 +65,7 @@ const KindergartenBan: React.FC = () => {
           },
         }));
 
-        navigate('/signup/kindergarten/child');
+        navigate('/auth/signup/kindergarten/child');
       } else if (role === 'ROLE_TEACHER') {
         console.log('선생님일 때 signupteacher update');
         setSignupTeacher(prevState => ({
@@ -79,7 +79,7 @@ const KindergartenBan: React.FC = () => {
     }
   };
   const handleBackButtonClick = () => {
-    navigate('/signup/kindergarten/search');
+    navigate('/auth/signup/kindergarten/search');
   };
 
   const handleChange = (value: string) => {
@@ -115,7 +115,7 @@ const KindergartenBan: React.FC = () => {
             setKindergartenData(response);
           } else {
             toast.error('유치원을 다시 선택해주세요', {
-              onClose: () => navigate('/signup/kindergarten/search'),
+              onClose: () => navigate('/auth/signup/kindergarten/search'),
             });
           }
         } catch (error) {

@@ -13,6 +13,7 @@ import {
 } from '@/constants/medication';
 import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
+import {getKidId, getMemberId} from '@/utils/userData';
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
@@ -95,7 +96,7 @@ const MedicationWrite = () => {
       formData.append('sign', signImage);
     }
 
-    mutate({kidId: 1, formData, memberId: 1});
+    mutate({kidId: getKidId()!, formData, memberId: getMemberId()!});
     navigate('/medication');
   };
 

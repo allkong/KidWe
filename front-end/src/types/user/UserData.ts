@@ -5,5 +5,5 @@ export interface UserData {
   memberStatus: 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT';
   kindergartenId: number | null;
   banId: number | null;
-  kidIds: number[];
+  kidId: number;
 }

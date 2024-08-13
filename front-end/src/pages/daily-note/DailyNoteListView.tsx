@@ -12,17 +12,29 @@ import ScheduledUserCard from '@/components/molecules/Item/ScheduledUserCard';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {RoleItem} from '@/enum/roleItem';
+import {getMemberRole, getKidId, getBanId, getMemberId} from '@/utils/userData';
 
 const DailyNoteListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
+  const memberRole = getMemberRole() as RoleItem;
+  let id: number | null = 0;
+  if (memberRole === RoleItem.Guardian) {
+    id = getKidId();
+  } else if (memberRole === RoleItem.Teacher) {
+    id = getBanId();
+  } else if (memberRole === RoleItem.Director) {
+    // 선택한 반 id로 변경
+    id = 1;
+  }
+
   const {data, isLoading} = useDailyNoteList(
-    1,
-    4,
+    id!,
+    getMemberId()!,
     currentMonth.year(),
     '08', // currentMonth.month() + 1,
-    RoleItem.Teacher
+    memberRole
   );
 
   const sortedData =

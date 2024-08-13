@@ -67,8 +67,8 @@ class UserDataSessionImplements implements UserDataInterface {
     return this.getUserProperty('banId');
   };
 
-  getKidIds = (): number[] | null => {
-    return this.getUserProperty('kidIds');
+  getKidId = (): number | null => {
+    return this.getUserProperty('kidId');
   };
 }
 
@@ -100,6 +100,6 @@ export const getKindergartenId =
 export const getBanId = userDataSessionImplements.getBanId.bind(
   userDataSessionImplements
 );
-export const getKidIds = userDataSessionImplements.getKidIds.bind(
+export const getKidId = userDataSessionImplements.getKidId.bind(
   userDataSessionImplements
 );

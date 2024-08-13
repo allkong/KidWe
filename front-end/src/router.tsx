@@ -48,7 +48,7 @@ import ChildManagement from '@/pages/kindergarten-management/childManagement';
 
 const requireAuth = () => {
   if (getUserData() === null) {
-    return redirect('/login');
+    return redirect('/auth/login');
   }
   return null;
 };
@@ -58,11 +58,11 @@ export const router = createBrowserRouter([
     path: '/auth',
     children: [
       {
-        path: '/signup/*',
+        path: 'signup/*',
         element: <SignUp />,
       },
       {
-        path: '/login',
+        path: 'login',
         element: <LoginMain />,
       },
     ],
