@@ -4,9 +4,14 @@ import {containerHeaderClass} from '@/styles/styles';
 import MyPageItem from '@/components/organisms/MyPage/MyPageItem';
 import {useNavigate} from 'react-router-dom';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
+import {useState} from 'react';
+import {getMemberRole} from '@/utils/userData';
 
 const ManagementList = () => {
   const navigate = useNavigate();
+
+  const isDirector = getMemberRole() === 'ROLE_DIRECTOR' ? true : false;
+
   const handleTeacherManagementClick = () => {
     navigate('/kindergarten/teacher');
   };
@@ -27,10 +32,12 @@ const ManagementList = () => {
           <KindergartenCard kindergartenName="나의 유치원" />
         </div>
         <div className="mb-5">
-          <MyPageItem
-            label="교사 관리"
-            onClick={handleTeacherManagementClick}
-          />
+          {isDirector && (
+            <MyPageItem
+              label="교사 관리"
+              onClick={handleTeacherManagementClick}
+            />
+          )}
           <MyPageItem label="원생 관리" onClick={handleChildManagementClick} />
         </div>
         <div className="mb-5">

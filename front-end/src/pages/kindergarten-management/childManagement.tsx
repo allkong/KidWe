@@ -15,12 +15,12 @@ const ChildManagement = () => {
           {
             id: 0,
             label: '승인된 아이',
-            content: <BanTeacherAcceptView />, // 선생님 중에서 ACCEPT 된 사람
+            content: <BanTeacherAcceptView />, // 아이 중에서 ACCEPT 된 사람
           },
           {
             id: 1,
             label: '대기중인 아이',
-            content: <BanTeacherPendingView />, // 선생님 중에서 PENDING 인사람
+            content: <BanTeacherPendingView />, // 아이 중에서 PENDING 인사람
           },
         ]}
       />
