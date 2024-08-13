@@ -135,7 +135,13 @@ export const router = createBrowserRouter([
   {
     path: '/attendances',
     loader: requireAuth,
-    element: <AttendanceManagement />,
+    element: <AttendanceView />,
+    children: [
+      {
+        path: '',
+        element: <AttendanceManagement />,
+      },
+    ],
   },
   {
     path: '/medications',
@@ -177,7 +183,6 @@ export const router = createBrowserRouter([
     path: '/memos',
     loader: requireAuth,
     element: <MemoView />,
-    loader: validateLoader,
     children: [
       {
         path: '',
