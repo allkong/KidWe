@@ -52,7 +52,7 @@ const MemoWrite = () => {
         {
           onSuccess: () => {
             navigate({
-              pathname: '/memo',
+              pathname: '/memos',
               search: `?date=${dayjs(data?.updatedTime).format('YYYY-MM-DD')}`,
             });
           },

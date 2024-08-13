@@ -23,7 +23,7 @@ const KidUpdate = () => {
       {info: kidInfo, picture: kidProfile},
       {
         onSuccess: () => {
-          navigate('/mypage');
+          navigate('/my-page');
         },
         onSettled: () => setLoadingState(false),
       }

@@ -15,11 +15,11 @@ const AnnouncementListView = () => {
   const {data, isLoading} = useAnnouncementList(getMemberId()!);
 
   const handleUserItemClick = (announcementId: number) => {
-    navigate(`/announcement/${announcementId}`);
+    navigate(`/announcements/${announcementId}`);
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/announcement/write');
+    navigate('/announcements/write');
   };
 
   return (

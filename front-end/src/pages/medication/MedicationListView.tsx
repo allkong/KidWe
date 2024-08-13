@@ -46,7 +46,7 @@ const MedicationListView = () => {
   };
 
   const handleUserItemClick = (medicationId: number, item: MedicationItem) => {
-    navigate(`/medication/${medicationId}`, {
+    navigate(`/medications/${medicationId}`, {
       state: {
         kidName: item.kidName,
         banName: item.banName,
@@ -55,7 +55,7 @@ const MedicationListView = () => {
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/medication/write');
+    navigate('/medications/write');
   };
 
   const groupedData = groupByDate(data ?? []);

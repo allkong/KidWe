@@ -17,7 +17,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const handleUserCardItemClick = () => {
-    navigate('/mypage');
+    navigate('/my-page');
   };
 
   return (

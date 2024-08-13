@@ -7,8 +7,8 @@ const MemoShortcut = () => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate({
-      pathname: '/memo/write',
-      search: `?date=${dayjs().format("YYYY-MM-DD")}`
+      pathname: '/memos/write',
+      search: `?date=${dayjs().format('YYYY-MM-DD')}`,
     });
   };
 

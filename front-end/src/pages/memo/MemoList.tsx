@@ -23,14 +23,14 @@ const MemoList = memo(() => {
   // 현재 시간
   const handleLeftClick = () => {
     navigate({
-      pathname: '/memo',
+      pathname: '/memos',
       search: `?date=${date.subtract(1, 'day').format('YYYY-MM-DD')}`,
     });
   };
 
   const handleRightClick = () => {
     navigate({
-      pathname: '/memo',
+      pathname: '/memos',
       search: `?date=${date.add(1, 'day').format('YYYY-MM-DD')}`,
     });
   };

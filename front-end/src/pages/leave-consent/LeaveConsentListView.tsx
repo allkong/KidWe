@@ -50,7 +50,7 @@ const LeaveConsentListView = () => {
     leaveConsentId: number,
     item: LeaveConsentItem
   ) => {
-    navigate(`/leave-consent/${leaveConsentId}`, {
+    navigate(`/leave-consents/${leaveConsentId}`, {
       state: {
         kidName: item.kidName,
         banName: item.banName,
@@ -59,7 +59,7 @@ const LeaveConsentListView = () => {
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/leave-consent/write');
+    navigate('/leave-consents/write');
   };
 
   const groupedData = groupByDate(data ?? []);

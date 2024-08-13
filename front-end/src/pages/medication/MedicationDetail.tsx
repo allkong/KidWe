@@ -49,7 +49,7 @@ const MedicationDetail = () => {
     if (medicationId) {
       deleteMutation.mutate(medicationId, {
         onSuccess: () => {
-          navigate('/medication');
+          navigate('/medications');
         },
       });
     }

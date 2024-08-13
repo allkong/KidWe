@@ -11,7 +11,7 @@ import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
 import {useRecoilState} from 'recoil';
 import dayjs from 'dayjs';
-import { getMemberId } from '@/utils/userData';
+import {getMemberId} from '@/utils/userData';
 
 const MemoWrite = () => {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const MemoWrite = () => {
       {
         onSuccess: () =>
           navigate({
-            pathname: '/memo',
+            pathname: '/memos',
             search: `?date=${paramDate}`,
           }),
       }
