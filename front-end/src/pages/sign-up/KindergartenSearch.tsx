@@ -54,7 +54,7 @@ const KindergartenSearch: React.FC = () => {
       }));
     }
 
-    navigate('/signup/kindergarten/ban');
+    navigate('/auth/signup/kindergarten/ban');
   };
   const handleCityChange = (value: string) => {
     const city = CityOptions.find(city => city.value === value);
@@ -155,7 +155,7 @@ const KindergartenSearch: React.FC = () => {
             <NoResult text="유치원을 검색해주세요" />
           </div>
         ) : (
-          <div className="flex items-center justify-center w-full max-h-96 mx-4 mt-8">
+          <div className="flex items-center justify-center w-full mx-4 mt-8 max-h-96">
             {isLoading && <Spinner />}
             {data.length !== 0 ? (
               <div className="w-full overflow-y-scroll h-[400px]">

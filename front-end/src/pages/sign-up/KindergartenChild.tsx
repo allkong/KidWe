@@ -58,7 +58,7 @@ const KindergartenChild: React.FC = () => {
     },
     onSuccess: data => {
       if (data === '성공') {
-        navigate('/signup/complete');
+        navigate('/auth/signup/complete');
       } else if (data === '실패') {
         toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
       } else {
@@ -104,7 +104,7 @@ const KindergartenChild: React.FC = () => {
       signupGuardian.dto.kindergartenId == 0
     ) {
       toast.error('잘못 들어오셨습니다!', {
-        onClose: () => navigate('/signup/kindergarten/search'),
+        onClose: () => navigate('/auth/signup/kindergarten/search'),
       });
     }
 
