@@ -3,7 +3,7 @@ import {
   getDailyNoteByTeacher,
   getDailyNoteByParent,
 } from '@/apis/daily-note/getDailyNoteList';
-import {DailyNoteList} from '@/types/daily-note/DailyNoteList';
+import type {DailyNoteList} from '@/types/daily-note/DailyNoteList';
 import {RoleItem} from '@/enum/roleItem';
 
 export const useDailyNoteList = (

@@ -10,7 +10,7 @@ interface Writer {
   name: string;
   email: string;
   tel: string;
-  //   role: 'ROLE_GUARDIAN' | 'ROLE_TEACHER' | 'ROLE_DIRECTOR';
+  picture: string;
   role: RoleItem;
 }
 
@@ -18,7 +18,7 @@ export interface DailyNoteItem {
   id: number;
   kid: Kid;
   writer: Writer;
-  sendTime: [number, number, number, number, number, number, number]; // 빠질 예정
+  sendTime: string;
   stringSendTime: string;
 }
 
