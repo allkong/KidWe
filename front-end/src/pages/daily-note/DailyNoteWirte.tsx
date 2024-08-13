@@ -15,6 +15,7 @@ import ArticleImageList from '@/components/molecules/List/ArticleImageList';
 import ImageIcon from '@/assets/icons/pic_line.svg?react';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 import ScheduleModal from '@/components/organisms/Modal/ScheduleModal';
+import DailyNoteAutoCreateModal from '@/components/organisms/Modal/DailyNoteAutoCreateModal';
 
 const DailyNoteWrite = () => {
   const navigate = useNavigate();
@@ -96,8 +97,9 @@ const DailyNoteWrite = () => {
     <div className="flex flex-col h-screen">
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
-        <div className="px-6 py-4">
+        <div className="flex flex-row items-center justify-between px-6 py-4">
           <MemoChildSelect type="daily-note" />
+          <DailyNoteAutoCreateModal />
         </div>
         <TextEditor value={formState.content} onChange={handleEditorChange} />
         <div className="p-6 mt-10">

@@ -2,7 +2,7 @@ import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 
 interface AuthorProps {
-  profile?: string;
+  profile: string;
   writer: string;
   date: string;
   isEdit?: boolean;
