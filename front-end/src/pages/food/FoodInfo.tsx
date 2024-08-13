@@ -13,6 +13,8 @@ import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import {useDeleteDailyFood} from '@/hooks/food/useDeleteDailyFood';
 
 dayjs.extend(weekOfYear);
 
@@ -30,6 +32,17 @@ const FoodInfo = () => {
   const {data: food, isLoading} = useGetDailyFood(getKindergartenId()!, date);
   useLoading(isLoading);
 
+  const deleteMutate = useDeleteDailyFood();
+  const handleDeleteClick = () => {};
+
+  const handleUpdateClick = () => {
+    navigate({
+      pathname: 'write',
+      search: `date=${date.format('YYYY-MM-DD')}&update=true`,
+    });
+  };
+
+  // navigate
   const handleLeftClick = () => {
     navigate({
       pathname: '/foods',
@@ -73,9 +86,17 @@ const FoodInfo = () => {
         <div className="flex justify-center gap-2 mb-4 w-fit h-fit">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
-        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
+        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3">
           {food ? (
             <>
+              <div className="flex justify-end w-full gap-1">
+                <XSmallButton label="삭제" />
+                <XSmallButton
+                  label="수정"
+                  variant="positive"
+                  onClick={handleUpdateClick}
+                />
+              </div>
               <FoodInfomationItem
                 variant="lunch"
                 menu={food.lunch}

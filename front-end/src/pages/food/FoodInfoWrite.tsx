@@ -4,12 +4,15 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
 import dayjs from 'dayjs';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {PostFood} from '@/types/food/PostFood';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useWriteDailyFood} from '@/hooks/food/useWriteDailyFood';
 import {getKindergartenId} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
+import {useLoading} from '@/hooks/loading/useLoading';
+import {usePutDailyFood} from '@/hooks/food/usePutDailyFood';
 
 const FoodInfoWrite = () => {
   const date = useGetDateBySearchParam().format('YYYY-MM-DD');
@@ -25,23 +28,60 @@ const FoodInfoWrite = () => {
     menuDate: date,
   });
 
-  const foodMutate = useWriteDailyFood();
+  // querystring에 update가 true일 때 값을 서버로부터 가져와서 세팅
+  const [searchParam] = useSearchParams();
+  const isUpdate = searchParam.get('update') === 'true';
+  const {data: food, isLoading} = useGetDailyFood(
+    getKindergartenId()!,
+    dayjs(date)
+  );
+
+  useLoading(isLoading);
+  useEffect(() => {
+    if (isUpdate && food !== undefined) {
+      const {
+        lunch,
+        lunchAllergies,
+        snack,
+        snackAllergies,
+        dinner,
+        dinnerAllergies,
+      } = food;
+      setMenu({
+        lunch,
+        lunchAllergies,
+        snack,
+        snackAllergies,
+        dinner,
+        dinnerAllergies,
+        menuDate: date,
+      });
+    }
+  }, [food, isUpdate, date]);
+
+  // 등록 및 수정
+  const foodWriteMutate = useWriteDailyFood();
+  const foodUpdateMutate = usePutDailyFood();
 
   const handleButtonClick = () => {
-    foodMutate.mutate(
-      {
-        kindergartenId: getKindergartenId()!,
-        menu,
-      },
-      {
-        onSuccess: () => {
-          navigate({
-            pathname: '/foods',
-            search: `?date=${date}`,
-          });
+    if (isUpdate) {
+      foodUpdateMutate.mutate();
+    } else {
+      foodWriteMutate.mutate(
+        {
+          kindergartenId: getKindergartenId()!,
+          menu,
         },
-      }
-    );
+        {
+          onSuccess: () => {
+            navigate({
+              pathname: '/foods',
+              search: `?date=${date}`,
+            });
+          },
+        }
+      );
+    }
   };
 
   const handleChangeData = (
@@ -99,7 +139,11 @@ const FoodInfoWrite = () => {
         />
       </div>
       <div className="px-5 py-6 h-fit min-h-fit min-w-fit">
-        <Button onClick={handleButtonClick} label="작성 완료" size="large" />
+        <Button
+          onClick={handleButtonClick}
+          label={isUpdate ? '수정 완료' : '작성 완료'}
+          size="large"
+        />
       </div>
       <NavigationBar />
     </div>
