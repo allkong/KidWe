@@ -11,13 +11,12 @@ import {useGetLessonInfomation} from '@/hooks/memo/useGetLessonInfomation';
 import dayjs from 'dayjs';
 import {memoLessonSelector} from '@/recoil/selectors/memo/memoLesson';
 import {memoTimeSelector} from '@/recoil/selectors/memo/memoTime';
+import {getBanId} from '@/utils/userData';
 
 interface CheckedLesson {
   lesson: Lesson;
   isChecked: boolean;
 }
-
-const banId = 1;
 
 const MemoLessonSelect = () => {
   const [lessons, setLessons] = useState<CheckedLesson[]>();
@@ -30,7 +29,7 @@ const MemoLessonSelect = () => {
   const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
 
   const {data} = useGetLessonInfomation(
-    banId,
+    getBanId()!,
     dayjs(memoTime).format('YYYY-MM-DD')
   );
 

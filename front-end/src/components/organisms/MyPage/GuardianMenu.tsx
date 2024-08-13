@@ -5,7 +5,7 @@ const GuardianMenu = () => {
   const navigate = useNavigate();
 
   const handleKidUpdateClick = () => {
-    navigate('/my-page/update/kid');
+    navigate('kid/update');
   };
 
   return (

@@ -5,6 +5,7 @@ import UserInfo from '@/components/organisms/MyPage/UserInfo';
 import CommonMenu from '@/components/organisms/MyPage/CommonMenu';
 import GuardianMenu from '@/components/organisms/MyPage/GuardianMenu';
 import LoginMenu from '@/components/organisms/MyPage/LoginMenu';
+import {getMemberRole} from '@/utils/userData';
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
       <div className="h-full overflow-y-auto bg-[#F8F8F8]">
         <UserInfo />
         <CommonMenu />
-        <GuardianMenu />
+        {getMemberRole() === 'ROLE_GUARDIAN' ? <GuardianMenu /> : null}
         <LoginMenu />
       </div>
       <NavigationBar />

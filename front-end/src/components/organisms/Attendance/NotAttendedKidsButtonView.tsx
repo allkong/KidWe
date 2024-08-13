@@ -9,7 +9,8 @@ import type {GetAttendance} from '@/types/attendance/GetAttendance';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {PutAttendance} from '@/types/attendance/PutAttendance';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
-import { getBanId } from '@/utils/userData';
+import {getBanId} from '@/utils/userData';
+import {toast} from 'react-toastify';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
@@ -45,14 +46,21 @@ const AttendedKidsButtonView = ({
         .format('YYYY-MM-DD')
         .split('-')
         .map(Number);
-      await attendanceMutate.mutateAsync({
-        year,
-        month,
-        day,
-        kidIds: [kidId],
-        attendedToday: 'ABSENCE',
-        reason: inputRef.current ? inputRef.current.value : '',
-      });
+      await attendanceMutate.mutateAsync(
+        {
+          year,
+          month,
+          day,
+          kidIds: [kidId],
+          attendedToday: 'ABSENCE',
+          reason: inputRef.current ? inputRef.current.value : '',
+        },
+        {
+          onSuccess: () => {
+            toast.info('결석 처리 되었습니다.');
+          },
+        }
+      );
       setIsNegativeModalOpen(false);
     }
   };
@@ -65,14 +73,21 @@ const AttendedKidsButtonView = ({
     attendedToday,
     reason,
   }: PutAttendance) => {
-    attendanceMutate.mutate({
-      year,
-      month,
-      day,
-      kidIds,
-      attendedToday,
-      reason,
-    });
+    attendanceMutate.mutate(
+      {
+        year,
+        month,
+        day,
+        kidIds,
+        attendedToday,
+        reason,
+      },
+      {
+        onSuccess: () => {
+          toast.info('출석 처리 되었습니다.');
+        },
+      }
+    );
   };
 
   return (

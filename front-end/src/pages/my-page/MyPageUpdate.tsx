@@ -11,16 +11,15 @@ import {useEffect, useState} from 'react';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {useNavigate} from 'react-router-dom';
 import {patchUserPictureState} from '@/recoil/atoms/my-page/userPicture';
-
-const userId = 1;
+import {getMemberId} from '@/utils/userData';
 
 const MyPageUpdate = () => {
   const navigate = useNavigate();
 
-  const userMutation = usePatchUserInfo(userId);
+  const userMutation = usePatchUserInfo(getMemberId()!);
 
   // 페이지 불러올 때 추가로 data fetch한 후 set 필요
-  const {data} = useGetUserInfo(userId);
+  const {data} = useGetUserInfo(getMemberId()!);
   const [patchUserInfo, setPatchUserInfo] =
     useRecoilState<PatchUserInfo>(patchUserInfoState);
   const userPicture = useRecoilValue(patchUserPictureState);
@@ -33,8 +32,6 @@ const MyPageUpdate = () => {
   }, [data, setPatchUserInfo]);
 
   const handleClickButton = () => {
-    console.log(patchUserInfo);
-
     userMutation.mutate(
       {info: patchUserInfo, picture: userPicture},
       {

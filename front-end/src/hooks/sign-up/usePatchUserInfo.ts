@@ -1,16 +1,15 @@
-import {patchKidInfo} from '@/apis/my-page/patchKidInfo';
-import {PatchKidInfo} from '@/types/user/PatchKidInfo';
+import {patchUserInfo} from '@/apis/my-page/patchUserInfo';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {userKeys} from '@/hooks/my-page/userKeys';
-
-export const usePatchKidInfo = (kidId: number) => {
+import type {SignupFormState} from '@/types/signup/SignupFormState';
+export const usePatchUserInfo = (userId: number) => {
   const queryClient = useQueryClient();
-  const kidMutation = useMutation({
+  const userInfoMutation = useMutation({
     mutationFn: ({
       info,
       picture,
     }: {
-      info: PatchKidInfo;
+      info: SignupFormState;
       picture: File | null;
     }) => {
       const formData = new FormData();
@@ -24,13 +23,13 @@ export const usePatchKidInfo = (kidId: number) => {
         formData.append('picture', picture);
       }
 
-      return patchKidInfo(formData);
+      return patchUserInfo(formData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: userKeys.kid(kidId),
+        queryKey: userKeys.user(userId),
       });
     },
   });
-  return kidMutation;
+  return userInfoMutation;
 };

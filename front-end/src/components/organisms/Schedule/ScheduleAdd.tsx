@@ -14,7 +14,7 @@ import {
 import {teacherScheduleOptionKeys} from '@/enum/kindergarten/schedule';
 import {useWriteKindergartenSchedule} from '@/hooks/schedule/useWriteKindergartenSchedule';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import {getKindergartenId, getMemberId, getMemberRole} from '@/utils/userData';
+import {getMemberId, getMemberRole} from '@/utils/userData';
 
 interface ScheduleAddProps {
   defaultDate: Dayjs;
@@ -22,6 +22,12 @@ interface ScheduleAddProps {
 
 function getScheduleOptionValue(category: keyof typeof TeacherScheduleOption) {
   return TeacherScheduleOption[category];
+}
+
+function getDirectorScheduleOptionValue(
+  category: keyof typeof DirectorScheduleOption
+) {
+  return DirectorScheduleOption[category];
 }
 
 // 스케줄 작성 시 권한 확인
@@ -46,9 +52,12 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
     );
   }, [selected, keyword, content]);
 
-  const postMutate = useWriteKindergartenSchedule(getKindergartenId()!);
+  const postMutate = useWriteKindergartenSchedule();
 
   const handleClose = () => {
+    setSelected('');
+    setKeyword('');
+    setContent('');
     setIsOpen(false);
   };
 
@@ -113,9 +122,15 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
                   keys.map((category, idx) => (
                     <Select.Option
                       key={idx}
-                      id={getScheduleOptionValue(
-                        category as keyof typeof option
-                      )}
+                      id={
+                        getMemberRole() === 'ROLE_DIRECTOR'
+                          ? getDirectorScheduleOptionValue(
+                              category as keyof typeof option
+                            )
+                          : getScheduleOptionValue(
+                              category as keyof typeof option
+                            )
+                      }
                       text={category}
                     />
                   ))}

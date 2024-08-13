@@ -1,22 +1,47 @@
 import Toggle from '@/components/atoms/Toggle/Toggle';
 import ScheduleInfoItem from '@/components/organisms/Schedule/ScheduleInfoItem';
 import {Dayjs} from 'dayjs';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {DirectorScheduleOption} from '@/enum/kindergarten/schedule';
 import {useGetKindergartenSchedules} from '@/hooks/schedule/useGetKindergartenSchedules';
-import {getKindergartenId} from '@/utils/userData';
+import {getBanId, getKindergartenId} from '@/utils/userData';
+import {GetSchedule} from '@/types/schedule/GetSchedule';
+import {useGetBanSchedule} from '@/hooks/schedule/useGetBanSchedule';
+import {getMemberRole} from '@/utils/userData';
+import {directorBanState} from '@/recoil/atoms/schedule/directorBan';
+import {useRecoilValue} from 'recoil';
 
 interface ScheduleInfoProps {
   date: Dayjs;
 }
 
+const isDirector = getMemberRole() === 'ROLE_DIRECTOR';
+
 const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [isShowBan, setIsShowBan] = useState(false);
+  const [data, setData] = useState<GetSchedule[]>();
+  const banState = useRecoilValue(directorBanState);
 
-  const {data} = useGetKindergartenSchedules(
-    getKindergartenId()!,
+  const {data: allScheduleData, refetch: allRefetch} =
+    useGetKindergartenSchedules(
+      getKindergartenId()!,
+      date.format('YYYY-MM-DD')
+    );
+
+  const {data: banScheduleData, refetch: banRefetch} = useGetBanSchedule(
+    isDirector ? banState! : getBanId()!,
     date.format('YYYY-MM-DD')
   );
+
+  useEffect(() => {
+    if (isShowBan) {
+      banRefetch();
+      setData(banScheduleData);
+    } else {
+      allRefetch();
+      setData(allScheduleData);
+    }
+  }, [isShowBan, allScheduleData, banScheduleData, allRefetch, banRefetch]);
 
   const handleToggle = () => {
     setIsShowBan(!isShowBan);
@@ -41,7 +66,6 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
                 key={schedule.scheduleId}
                 schedule={schedule}
                 backgroundColor={isShowBan ? '#FFF1A7' : '#EAEAEA'}
-                date={date}
                 isShowMore={true}
               />
             ))}

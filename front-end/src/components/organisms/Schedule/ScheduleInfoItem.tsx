@@ -1,9 +1,7 @@
 import Tag from '@/components/atoms/Tag/Tag';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import type {GetSchedule} from '@/types/schedule/GetSchedule';
-import {Dayjs} from 'dayjs';
 import {useDeleteSchedule} from '@/hooks/schedule/useDeleteSchedule';
-import {getKindergartenId} from '@/utils/userData';
 import {toast} from 'react-toastify';
 
 interface ScheduleInfoItem {
@@ -11,7 +9,6 @@ interface ScheduleInfoItem {
   backgroundColor?: string;
   textColor?: 'black' | 'white';
   isShowMore?: boolean;
-  date?: Dayjs;
 }
 
 const ScheduleInfoItem = ({
@@ -19,12 +16,8 @@ const ScheduleInfoItem = ({
   backgroundColor,
   textColor,
   isShowMore = false,
-  date,
 }: ScheduleInfoItem) => {
-  const deleteMutate = useDeleteSchedule(
-    getKindergartenId()!,
-    date!.format('YYYY-MM-DD')
-  );
+  const deleteMutate = useDeleteSchedule();
 
   const handleClickDelete = () => {
     const scheduleId = schedule.scheduleId;
