@@ -1,10 +1,12 @@
 import Toggle from '@/components/atoms/Toggle/Toggle';
 import ScheduleInfoItem from '@/components/organisms/Schedule/ScheduleInfoItem';
 import {Dayjs} from 'dayjs';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {DirectorScheduleOption} from '@/enum/kindergarten/schedule';
 import {useGetKindergartenSchedules} from '@/hooks/schedule/useGetKindergartenSchedules';
-import {getKindergartenId} from '@/utils/userData';
+import {getBanId, getKindergartenId} from '@/utils/userData';
+import {GetSchedule} from '@/types/schedule/GetSchedule';
+import {useGetBanSchedule} from '@/hooks/schedule/useGetBanSchedule';
 
 interface ScheduleInfoProps {
   date: Dayjs;
@@ -12,11 +14,25 @@ interface ScheduleInfoProps {
 
 const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [isShowBan, setIsShowBan] = useState(false);
+  const [data, setData] = useState<GetSchedule[]>();
 
-  const {data} = useGetKindergartenSchedules(
+  const {data: allScheduleData} = useGetKindergartenSchedules(
     getKindergartenId()!,
     date.format('YYYY-MM-DD')
   );
+
+  const {data: banScheduleData} = useGetBanSchedule(
+    getBanId()!,
+    date.format('YYYY-MM-DD')
+  );
+
+  useEffect(() => {
+    if (isShowBan) {
+      setData(banScheduleData);
+    } else {
+      setData(allScheduleData);
+    }
+  }, [isShowBan, allScheduleData, banScheduleData]);
 
   const handleToggle = () => {
     setIsShowBan(!isShowBan);
