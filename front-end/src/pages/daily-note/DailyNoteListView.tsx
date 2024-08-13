@@ -56,11 +56,11 @@ const DailyNoteListView = () => {
   };
 
   const handleUserItemClick = (dailyNoteId: number) => {
-    navigate(`/daily-note/${dailyNoteId}`);
+    navigate(`/daily-notes/${dailyNoteId}`);
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/daily-note/write');
+    navigate('/daily-notes/write');
   };
 
   return (

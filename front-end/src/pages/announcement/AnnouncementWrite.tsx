@@ -79,7 +79,7 @@ const AnnouncementWrite = () => {
         try {
           await announcementMutate.mutate();
           console.log('작성 완료');
-          navigate('/announcement');
+          navigate('/announcements');
         } catch (error) {
           console.error('공지사항 작성 못 보냈어요:', error);
         }

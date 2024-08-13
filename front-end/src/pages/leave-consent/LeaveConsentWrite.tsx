@@ -77,7 +77,7 @@ const LeaveConsentnWrite = () => {
     }
 
     mutate({kidId: getKidId()!, formData, memberId: getMemberId()!});
-    navigate('/leave-consent');
+    navigate('/leave-consents');
   };
 
   return (

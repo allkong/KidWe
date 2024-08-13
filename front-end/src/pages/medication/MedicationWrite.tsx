@@ -97,7 +97,7 @@ const MedicationWrite = () => {
     }
 
     mutate({kidId: getKidId()!, formData, memberId: getMemberId()!});
-    navigate('/medication');
+    navigate('/medications');
   };
 
   return (

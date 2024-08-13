@@ -1,11 +1,11 @@
 import MyPageItem from '@/components/organisms/MyPage/MyPageItem';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const GuardianMenu = () => {
   const navigate = useNavigate();
 
   const handleKidUpdateClick = () => {
-    navigate('/mypage/update/kid');
+    navigate('/my-page/update/kid');
   };
 
   return (

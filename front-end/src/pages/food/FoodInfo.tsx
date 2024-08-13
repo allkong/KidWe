@@ -32,21 +32,21 @@ const FoodInfo = () => {
 
   const handleLeftClick = () => {
     navigate({
-      pathname: '/food',
+      pathname: '/foods',
       search: `?date=${date.subtract(1, 'week').format('YYYY-MM-DD')}`,
     });
   };
 
   const handleRightClick = () => {
     navigate({
-      pathname: '/food',
+      pathname: '/foods',
       search: `?date=${date.add(1, 'week').format('YYYY-MM-DD')}`,
     });
   };
 
   const handleDateChange = (value: Dayjs) => {
     navigate({
-      pathname: '/food',
+      pathname: '/foods',
       search: `?date=${value.format('YYYY-MM-DD')}`,
     });
   };

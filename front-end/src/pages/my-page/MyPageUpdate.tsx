@@ -38,7 +38,7 @@ const MyPageUpdate = () => {
     userMutation.mutate(
       {info: patchUserInfo, picture: userPicture},
       {
-        onSuccess: () => navigate('/mypage'),
+        onSuccess: () => navigate('/my-page'),
       }
     );
   };

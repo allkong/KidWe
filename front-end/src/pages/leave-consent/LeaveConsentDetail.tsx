@@ -32,7 +32,7 @@ const LeaveConsentDetail = () => {
     if (leaveConsentId) {
       deleteMutation.mutate(leaveConsentId, {
         onSuccess: () => {
-          navigate('/leave-consent');
+          navigate('/leave-consents');
         },
       });
     }

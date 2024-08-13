@@ -14,14 +14,14 @@ const AttendanceManagement = () => {
 
   const handleLeftClick = () => {
     navigate({
-      pathname: '/attendance',
+      pathname: '/attendances',
       search: `?date=${date.subtract(1, 'day').format('YYYY-MM-DD')}`,
     });
   };
 
   const handleRightClick = () => {
     navigate({
-      pathname: '/attendance',
+      pathname: '/attendances',
       search: `?date=${date.add(1, 'day').format('YYYY-MM-DD')}`,
     });
   };
