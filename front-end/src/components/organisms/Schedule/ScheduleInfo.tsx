@@ -7,32 +7,41 @@ import {useGetKindergartenSchedules} from '@/hooks/schedule/useGetKindergartenSc
 import {getBanId, getKindergartenId} from '@/utils/userData';
 import {GetSchedule} from '@/types/schedule/GetSchedule';
 import {useGetBanSchedule} from '@/hooks/schedule/useGetBanSchedule';
+import {getMemberRole} from '@/utils/userData';
+import {directorBanState} from '@/recoil/atoms/schedule/directorBan';
+import {useRecoilValue} from 'recoil';
 
 interface ScheduleInfoProps {
   date: Dayjs;
 }
 
+const isDirector = getMemberRole() === 'ROLE_DIRECTOR';
+
 const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [isShowBan, setIsShowBan] = useState(false);
   const [data, setData] = useState<GetSchedule[]>();
+  const banState = useRecoilValue(directorBanState);
 
-  const {data: allScheduleData} = useGetKindergartenSchedules(
-    getKindergartenId()!,
-    date.format('YYYY-MM-DD')
-  );
+  const {data: allScheduleData, refetch: allRefetch} =
+    useGetKindergartenSchedules(
+      getKindergartenId()!,
+      date.format('YYYY-MM-DD')
+    );
 
-  const {data: banScheduleData} = useGetBanSchedule(
-    getBanId()!,
+  const {data: banScheduleData, refetch: banRefetch} = useGetBanSchedule(
+    isDirector ? banState! : getBanId()!,
     date.format('YYYY-MM-DD')
   );
 
   useEffect(() => {
     if (isShowBan) {
+      banRefetch();
       setData(banScheduleData);
     } else {
+      allRefetch();
       setData(allScheduleData);
     }
-  }, [isShowBan, allScheduleData, banScheduleData]);
+  }, [isShowBan, allScheduleData, banScheduleData, allRefetch, banRefetch]);
 
   const handleToggle = () => {
     setIsShowBan(!isShowBan);

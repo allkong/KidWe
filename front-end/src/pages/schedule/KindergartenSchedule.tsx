@@ -12,8 +12,18 @@ import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
 import {useNavigate} from 'react-router-dom';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {directorBanState} from '@/recoil/atoms/schedule/directorBan';
+import {useSetRecoilState} from 'recoil';
 
 const KindergartenSchedule = () => {
+  const setBanState = useSetRecoilState(directorBanState);
+  const handleBanChange = (value: string) => {
+    setBanState(+value);
+  };
+  const {data, isLoading} = useGetKindergartenInfo(getKindergartenId()!);
+  const bans = data?.bans;
+  useLoading(isLoading);
+
   const date = useGetDateBySearchParam();
 
   const navigate = useNavigate();
@@ -40,9 +50,6 @@ const KindergartenSchedule = () => {
     });
   };
 
-  const {data, isLoading} = useGetKindergartenInfo(getKindergartenId()!);
-  useLoading(isLoading);
-
   return (
     <>
       <Header title="유치원 일정" buttonType="close" />
@@ -59,11 +66,14 @@ const KindergartenSchedule = () => {
             <>
               {getMemberRole() === 'ROLE_DIRECTOR' && (
                 <>
-                  <Select label="반" size="small">
-                    <Select.Option text="전체" />
-                    {data &&
-                      data.bans.map(ban => (
-                        <Select.Option key={ban.id} text={ban.name} />
+                  <Select label="반" size="small" onChange={handleBanChange}>
+                    {bans &&
+                      bans.map(ban => (
+                        <Select.Option
+                          key={ban.id}
+                          id={`${ban.id}`}
+                          text={ban.name}
+                        />
                       ))}
                   </Select>
                 </>

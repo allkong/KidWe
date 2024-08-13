@@ -34,6 +34,7 @@ export const useWriteKindergartenSchedule = () => {
         localDate,
         scheduleType: type,
       };
+      console.log(body);
       return postSchedule(memberId, body);
     },
     onSuccess() {

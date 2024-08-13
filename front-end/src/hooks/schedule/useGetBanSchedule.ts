@@ -11,6 +11,7 @@ export const useGetBanSchedule = (
   const result = useQuery({
     queryKey: scheduleKeys.banSchedules(banId, date),
     queryFn: () => getBanSchedule(banId, date),
+    enabled: !!banId,
   });
   return result;
 };

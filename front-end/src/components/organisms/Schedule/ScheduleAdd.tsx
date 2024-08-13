@@ -24,6 +24,12 @@ function getScheduleOptionValue(category: keyof typeof TeacherScheduleOption) {
   return TeacherScheduleOption[category];
 }
 
+function getDirectorScheduleOptionValue(
+  category: keyof typeof DirectorScheduleOption
+) {
+  return DirectorScheduleOption[category];
+}
+
 // 스케줄 작성 시 권한 확인
 // 1 : 원장, 2 : 선생님으로 되어있음
 const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
@@ -49,6 +55,9 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
   const postMutate = useWriteKindergartenSchedule();
 
   const handleClose = () => {
+    setSelected('');
+    setKeyword('');
+    setContent('');
     setIsOpen(false);
   };
 
@@ -113,9 +122,15 @@ const ScheduleAdd = ({defaultDate}: ScheduleAddProps) => {
                   keys.map((category, idx) => (
                     <Select.Option
                       key={idx}
-                      id={getScheduleOptionValue(
-                        category as keyof typeof option
-                      )}
+                      id={
+                        getMemberRole() === 'ROLE_DIRECTOR'
+                          ? getDirectorScheduleOptionValue(
+                              category as keyof typeof option
+                            )
+                          : getScheduleOptionValue(
+                              category as keyof typeof option
+                            )
+                      }
                       text={category}
                     />
                   ))}
