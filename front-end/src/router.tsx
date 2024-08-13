@@ -199,7 +199,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/kindergartens',
+    path: '/kindergarten',
     loader: requireAuth,
     children: [
       {path: '', element: <ManagementList />},
