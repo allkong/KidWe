@@ -7,7 +7,7 @@ import {TeacherInfo} from '@/types/management/TeacherInfo';
 import {getKindergartenId} from '@/utils/userData';
 const BanTeacherAcceptView = () => {
   const [teacherAcceptList, setTeacherAcceptList] = useState<TeacherInfo[]>([]);
-  const [kindergartenId, setKindergartenId] = useState(getKindergartenId);
+  const [kindergartenId, setKindergartenId] = useState(getKindergartenId());
   const navigate = useNavigate();
 
   const options = [
@@ -28,12 +28,13 @@ const BanTeacherAcceptView = () => {
   useEffect(() => {
     const fetchTeacherAcceptList = async () => {
       try {
+        console.log('kindergartenId', kindergartenId);
         if (kindergartenId) {
           const response = await getTeacherAccept(kindergartenId);
           setTeacherAcceptList(response);
         }
       } catch (error) {
-        console.error('Failed to featch teacher accept list', error);
+        console.error('Failed to fetch teacher accept list', error);
       }
     };
     fetchTeacherAcceptList();
@@ -50,6 +51,7 @@ const BanTeacherAcceptView = () => {
           options={options}
         />
       ))}
+
       <p>morebutton의 옵션!</p>
     </div>
   );
