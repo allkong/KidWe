@@ -33,13 +33,14 @@ const BanManagement = () => {
           teacherCount={12}
         />
         <p>이제 이 반 관련을 props로 받게하기! + api </p>
+        <p>반 추가하고 handleAddBan 관련해서도 api 연결 (/directors/ban) </p>
       </div>
       <div
         className={
           'w-full flex justify-center items-center absolute bottom-32 left-1/2 transform -translate-x-1/2'
         }
       >
-        <Button label="회원 가입" onClick={handleAddBan} />
+        <Button label="+ 반 추가하기" onClick={handleAddBan} />
       </div>
       <NavigationBar />
     </div>
