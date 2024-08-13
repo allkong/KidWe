@@ -5,7 +5,7 @@ export const getDailyNoteByTeacher = async (
   banId: number,
   memberId: number,
   year: number,
-  month: string
+  month: number
 ): Promise<DailyNoteList> => {
   try {
     const response = await axiosInstance.get(
@@ -22,7 +22,7 @@ export const getDailyNoteByParent = async (
   kidId: number,
   memberId: number,
   year: number,
-  month: string
+  month: number
 ): Promise<DailyNoteList> => {
   try {
     const response = await axiosInstance.get(
