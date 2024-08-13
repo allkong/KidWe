@@ -7,19 +7,15 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
 import ScheduleAdd from '@/components/organisms/Schedule/ScheduleAdd';
 import {useEffect} from 'react';
-import dayjs, {Dayjs} from 'dayjs';
+import {Dayjs} from 'dayjs';
 import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
 const KindergartenSchedule = () => {
-  const [searchParams] = useSearchParams();
-  const paramDate = searchParams.get('date');
-  let date = dayjs(paramDate);
-  if (!date.isValid()) {
-    date = dayjs();
-  }
+  const date = useGetDateBySearchParam();
 
   const navigate = useNavigate();
 

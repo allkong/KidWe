@@ -5,17 +5,12 @@ import AttendedKidsView from '@/components/organisms/Attendance/AttendedKidsView
 import NotAttendedKidsView from '@/components/organisms/Attendance/NotAttendedKidsView';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerNavigatorClass} from '@/styles/styles';
-import dayjs from 'dayjs';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
 const AttendanceManagement = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const paramDate = searchParams.get('date');
-  let date = dayjs(paramDate);
-  if (!date.isValid()) {
-    date = dayjs();
-  }
+  const date = useGetDateBySearchParam();
 
   const handleLeftClick = () => {
     navigate({

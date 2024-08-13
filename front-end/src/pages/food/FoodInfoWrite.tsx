@@ -4,16 +4,15 @@ import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {containerHeaderClass} from '@/styles/styles';
 import dayjs from 'dayjs';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {PostFood} from '@/types/food/PostFood';
 import {useState} from 'react';
 import {useWriteDailyFood} from '@/hooks/food/useWriteDailyFood';
 import {getKindergartenId} from '@/utils/userData';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
 const FoodInfoWrite = () => {
-  const [serachParams] = useSearchParams();
-  const paramDate = serachParams.get('date'); // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
-  const date = dayjs(paramDate).format('YYYY-MM-DD');
+  const date = useGetDateBySearchParam().format('YYYY-MM-DD');
 
   const navigate = useNavigate();
   const [menu, setMenu] = useState<PostFood>({

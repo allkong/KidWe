@@ -4,7 +4,7 @@ import FoodInfomationItem from '@/components/organisms/Food/FoodInfomationItem';
 import FoodDateNavigator from '@/components/organisms/Food/FoodDateNavigator';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
 import NoResult from '@/components/atoms/NoResult';
 import dayjs, {Dayjs} from 'dayjs';
@@ -12,6 +12,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
+import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 
 dayjs.extend(weekOfYear);
 
@@ -24,13 +25,7 @@ function getWeekOfMonth(date: Dayjs) {
 
 const FoodInfo = () => {
   const navigate = useNavigate();
-
-  const [serachParams] = useSearchParams();
-  const paramDate = serachParams.get('date');
-  let date = dayjs(paramDate);
-  if (!date.isValid()) {
-    date = dayjs();
-  }
+  const date = useGetDateBySearchParam();
 
   const {data: food, isLoading} = useGetDailyFood(getKindergartenId()!, date);
   useLoading(isLoading);
