@@ -46,49 +46,58 @@ import TeacherManagement from '@/pages/kindergarten-management/teacherManagement
 import KindergartenManagement from '@/pages/kindergarten-management/kindergartenManagement';
 import ChildManagement from '@/pages/kindergarten-management/childManagement';
 
+const requireAuth = () => {
+  if (getUserData() === null) {
+    return redirect('/login');
+  }
+  return null;
+};
+
 export const router = createBrowserRouter([
+  {
+    path: '/auth',
+    children: [
+      {
+        path: '/signup/*',
+        element: <SignUp />,
+      },
+      {
+        path: '/login',
+        element: <LoginMain />,
+      },
+    ],
+  },
   {
     path: '/',
     element: <Home />,
+    loader: requireAuth,
   },
   {
     path: '/schedule',
     element: <KindergartenSchedule />,
-    loader: () => {
-      if (
-        getUserData() === null
-        // || getMemberStatus() !== 'ACCEPT'
-      ) {
-        return redirect('/login');
-      }
-      return null;
-    },
+    loader: requireAuth,
   },
   {
-    path: '/mypage',
-    loader: () => {
-      if (getUserData() === null) {
-        return redirect('/login');
-      }
-      return null;
-    },
+    path: '/my-page',
+    loader: requireAuth,
     children: [
       {
         path: '',
         element: <MyPage />,
       },
       {
-        path: 'update/user',
+        path: 'update',
         element: <MyPageUpdate />,
       },
       {
-        path: 'update/kid',
+        path: 'kid/update',
         element: <KidUpdate />,
       },
     ],
   },
   {
-    path: '/daily-note',
+    path: '/daily-notes',
+    loader: requireAuth,
     children: [
       {
         path: '',
@@ -105,7 +114,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/announcement',
+    path: '/announcements',
+    loader: requireAuth,
     children: [
       {
         path: '',
@@ -122,11 +132,13 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/attendance',
+    path: '/attendances',
+    loader: requireAuth,
     element: <AttendanceManagement />,
   },
   {
-    path: '/medication',
+    path: '/medications',
+    loader: requireAuth,
     children: [
       {
         path: '',
@@ -143,7 +155,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/leave-consent',
+    path: '/leave-consents',
+    loader: requireAuth,
     children: [
       {
         path: '',
@@ -160,15 +173,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/signup/*',
-    element: <SignUp />,
-  },
-  {
-    path: '/login',
-    element: <LoginMain />,
-  },
-  {
-    path: '/memo',
+    path: '/memos',
+    loader: requireAuth,
     element: <MemoView />,
     children: [
       {
@@ -186,7 +192,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/kindergarten',
+    path: '/kindergartens',
+    loader: requireAuth,
     children: [
       {path: '', element: <ManagementList />},
       {path: 'ban', element: <BanManagement />},
@@ -196,14 +203,9 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/food',
+    path: '/foods',
+    loader: requireAuth,
     element: <FoodView />,
-    loader: () => {
-      if (getUserData() === null) {
-        return redirect('/login');
-      }
-      return null;
-    },
     children: [
       {
         path: '',
