@@ -17,6 +17,8 @@ export const putAttendanceInfo = async (
     attendedToday,
     reason,
   };
-  const result = await axiosInstance.put(`/attendance`, body);
+  console.log(body);
+
+  const result = await axiosInstance.put(`/attendances`, body);
   return result.data;
 };

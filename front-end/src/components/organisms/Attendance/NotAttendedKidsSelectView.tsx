@@ -5,14 +5,11 @@ import {useEffect, useState} from 'react';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import type {GetAttendance} from '@/types/attendance/GetAttendance';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
-import {Dayjs} from 'dayjs';
-
-const banId = 1;
+import { getBanId } from '@/utils/userData';
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
   onClickButton?: () => void;
-  date: Dayjs;
 }
 
 interface CheckedGetAttendance extends GetAttendance {
@@ -62,7 +59,7 @@ const AttendedKidsSelectView = ({
     setIsPositiveModalOpen(true);
   };
 
-  const submitMutate = usePutAttendanceInfo(banId);
+  const submitMutate = usePutAttendanceInfo(getBanId()!);
   const submitCheckedList = () => {
     if (attendances !== undefined && checkedAttendances !== undefined) {
       const [year, month, date] = attendances[0].date.split('-').map(Number);
