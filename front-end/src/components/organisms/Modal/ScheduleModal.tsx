@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {toast} from 'react-toastify';
+import dayjs from 'dayjs';
 
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
@@ -7,12 +8,23 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 interface ScheduleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (selectedDate: string, selectedTime: string) => void;
+  onSubmit: (date: string, time: string) => void;
 }
 
 const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
+  const [minDate, setMinDate] = useState('');
+  const [minTime, setMinTime] = useState('');
+
+  useEffect(() => {
+    const now = dayjs();
+    const minDate = now.format('YYYY-MM-DD');
+    const minTime = now.add(5, 'minute').format('HH:mm');
+
+    setMinDate(minDate);
+    setMinTime(minTime);
+  }, []);
 
   const handleSubmit = () => {
     if (!selectedDate) {
@@ -21,7 +33,6 @@ const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
       toast.error('시간을 선택해 주세요');
     } else {
       onSubmit(selectedDate, selectedTime);
-      onClose();
     }
   };
 
@@ -39,6 +50,7 @@ const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
               id="date"
               className="w-full p-2 border border-gray-200 rounded-md"
               value={selectedDate}
+              min={minDate}
               onChange={e => setSelectedDate(e.target.value)}
             />
           </div>
@@ -51,6 +63,7 @@ const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
               id="time"
               className="w-full p-2 border border-gray-200 rounded-md"
               value={selectedTime}
+              min={selectedDate === minDate ? minTime : undefined} // 현재 날짜의 경우에만 minTime 적용
               onChange={e => setSelectedTime(e.target.value)}
             />
           </div>

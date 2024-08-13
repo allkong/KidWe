@@ -1,10 +1,10 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 import {toast} from 'react-toastify';
 
-import {usePostDailyNote} from '@/hooks/daily-note/usePostDailyNote';
 import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
+import {usePostDailyNote} from '@/hooks/daily-note/usePostDailyNote';
 import {getMemberId} from '@/utils/userData';
 import {containerHeaderClass} from '@/styles/styles';
 
@@ -24,6 +24,7 @@ const DailyNoteWrite = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isScheduled, setIsScheduled] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -50,7 +51,7 @@ const DailyNoteWrite = () => {
     setImagePreviews([...imagePreviews, ...newImagePreviews]);
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = useCallback(() => {
     const formData = new FormData();
 
     formData.append(
@@ -64,7 +65,14 @@ const DailyNoteWrite = () => {
 
     mutate({memberId: getMemberId()!, formData});
     navigate('/daily-notes');
-  };
+  }, [formState, files, mutate, navigate]);
+
+  const options = [
+    {
+      text: '예약 전송',
+      onClick: () => setIsModalOpen(true),
+    },
+  ];
 
   const handleFormScheduledSubmit = (
     selectedDate: string,
@@ -75,15 +83,14 @@ const DailyNoteWrite = () => {
       sendTime: `${selectedDate} ${selectedTime}`,
     }));
 
-    handleFormSubmit();
+    setIsScheduled(true);
   };
 
-  const options = [
-    {
-      text: '예약 전송',
-      onClick: () => setIsModalOpen(true),
-    },
-  ];
+  useEffect(() => {
+    if (isScheduled) {
+      handleFormSubmit();
+    }
+  }, [handleFormSubmit, isScheduled]);
 
   return (
     <div className="flex flex-col h-screen">
