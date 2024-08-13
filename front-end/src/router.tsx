@@ -218,7 +218,7 @@ export const router = createBrowserRouter([
         element: <FoodInfoWrite />,
         loader: () => {
           if (getMemberRole() === 'ROLE_GUARDIAN') {
-            return redirect('/login');
+            return redirect('/auth/login');
           }
           return null;
         },
