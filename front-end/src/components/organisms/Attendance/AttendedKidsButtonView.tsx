@@ -5,6 +5,7 @@ import UserCardItemWithButton from '@/components/molecules/Item/UserCardItemWith
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 import {getBanId} from '@/utils/userData';
+import {toast} from 'react-toastify';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
@@ -20,14 +21,21 @@ const AttendedKidsButtonView = ({
 
   const handleSubmit = (kidId: number) => {
     if (date !== undefined) {
-      putMutate.mutate({
-        kidIds: [kidId],
-        year: date.get('year'),
-        month: date.get('month') + 1,
-        day: date.get('date'),
-        attendedToday: 'NOTHING',
-        reason: '',
-      });
+      putMutate.mutate(
+        {
+          kidIds: [kidId],
+          year: date.get('year'),
+          month: date.get('month') + 1,
+          day: date.get('date'),
+          attendedToday: 'NOTHING',
+          reason: '',
+        },
+        {
+          onSuccess: () => {
+            toast.info('미출석 처리 되었습니다.');
+          },
+        }
+      );
     }
   };
 

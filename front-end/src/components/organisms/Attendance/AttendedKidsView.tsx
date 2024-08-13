@@ -11,17 +11,13 @@ const AttendedKidsView = () => {
   const date = useGetDateBySearchParam();
 
   const [isShowSelect, setIsShowSelect] = useState(false);
-  const {data, refetch, isLoading} = useGetAttendanceInfo(
+  const {data, isLoading} = useGetAttendanceInfo(
     getBanId()!,
     date.get('year'),
     date.get('month') + 1,
     date.get('date')
   );
   useLoading(isLoading);
-
-  useEffect(() => {
-    refetch();
-  }, [date, refetch]);
 
   const [attendedKids, setAttendedKids] = useState<GetAttendance[]>();
 
