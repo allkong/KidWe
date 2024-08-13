@@ -26,7 +26,7 @@ const DailyNoteListView = () => {
     id = getBanId();
   } else if (memberRole === RoleItem.Director) {
     // 선택한 반 id로 변경
-    id = 0;
+    id = 1;
   }
 
   const {data, isLoading} = useDailyNoteList(
@@ -34,7 +34,7 @@ const DailyNoteListView = () => {
     getMemberId()!,
     currentMonth.year(),
     '08', // currentMonth.month() + 1,
-    RoleItem.Teacher
+    memberRole
   );
 
   const sortedData =

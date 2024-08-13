@@ -7,11 +7,12 @@ import NoResult from '@/components/atoms/NoResult';
 import AnnounceItem from '@/components/molecules/Item/AnnounceItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {getMemberId} from '@/utils/userData';
 
 const AnnouncementListView = () => {
   const navigate = useNavigate();
 
-  const {data, isLoading} = useAnnouncementList(4);
+  const {data, isLoading} = useAnnouncementList(getMemberId()!);
 
   const handleUserItemClick = (announcementId: number) => {
     navigate(`/announcement/${announcementId}`);

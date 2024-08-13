@@ -1,9 +1,12 @@
 import {useState, useEffect} from 'react';
 import {useRecoilState, useResetRecoilState} from 'recoil';
+import {toast} from 'react-toastify';
+
 import {usePostDailyNote} from '@/hooks/daily-note/usePostDailyNote';
 import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
-import {toast} from 'react-toastify';
+import {getMemberId} from '@/utils/userData';
 import {containerHeaderClass} from '@/styles/styles';
+
 import Header from '@/components/organisms/Navigation/Header';
 import TextEditor from '@/components/organisms/Board/TextEditor';
 import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
@@ -25,13 +28,7 @@ const DailyNoteWrite = () => {
   }, [resetFormState]);
 
   const handleEditorChange = (value: string) => {
-    setFormState(prevState => ({
-      ...prevState,
-      post: {
-        ...prevState.post,
-        content: value,
-      },
-    }));
+    setFormState(prev => ({...prev, content: value}));
   };
 
   const handleAddImage = (selectedFiles: FileList) => {
@@ -61,7 +58,7 @@ const DailyNoteWrite = () => {
       formData.append('images', file);
     });
 
-    mutate({memberId: 1, formData});
+    mutate({memberId: getMemberId()!, formData});
   };
 
   return (
@@ -71,10 +68,7 @@ const DailyNoteWrite = () => {
         <div className="px-6 py-4">
           <MemoChildSelect type="daily-note" />
         </div>
-        <TextEditor
-          value={formState.post.content}
-          onChange={handleEditorChange}
-        />
+        <TextEditor value={formState.content} onChange={handleEditorChange} />
         <div className="p-6 mt-10">
           <div className="flex flex-row items-center mb-2">
             <ImageIcon fill="black" width={24} height={25} />
