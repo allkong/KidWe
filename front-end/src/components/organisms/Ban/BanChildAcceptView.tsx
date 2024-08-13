@@ -2,13 +2,12 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
-import {getTeacherAccept} from '@/apis/management/getTeacherAccept';
-import {TeacherInfo} from '@/types/management/TeacherInfo';
+import {getChildAccept} from '@/apis/management/getChildAccept';
+import {ChildInfo} from '@/types/management/ChildInfo';
 import {getKindergartenId} from '@/utils/userData';
-const BanTeacherAcceptView = () => {
-  const [teacherAcceptList, setTeacherAcceptList] = useState<TeacherInfo[]>([]);
+const BanChildAcceptView = () => {
+  const [childAcceptList, setChildAcceptList] = useState<ChildInfo[]>([]);
   const [kindergartenId, setKindergartenId] = useState(getKindergartenId());
-  const navigate = useNavigate();
 
   const options = [
     {
@@ -20,41 +19,39 @@ const BanTeacherAcceptView = () => {
     {
       text: '퇴사 처리',
       onClick: () => {
-        console.log('선생님 삭제?');
+        console.log(' 아이 삭제?');
       },
     },
   ];
 
   useEffect(() => {
-    const fetchTeacherAcceptList = async () => {
+    const fetchChildAcceptList = async () => {
       try {
         console.log('kindergartenId', kindergartenId);
         if (kindergartenId) {
-          const response = await getTeacherAccept(kindergartenId);
-          setTeacherAcceptList(response);
+          const response = await getChildAccept(kindergartenId);
+          setChildAcceptList(response);
         }
       } catch (error) {
-        console.error('Failed to fetch teacher accept list', error);
+        console.error('Failed to fetch child accept list', error);
       }
     };
-    fetchTeacherAcceptList();
+    fetchChildAcceptList();
   }, [kindergartenId]);
 
   return (
     <div>
-      {teacherAcceptList.map(teacher => (
+      {childAcceptList.map(child => (
         <UserCardItem
-          key={teacher.memberId}
+          key={child.kidId}
           cardType="detail"
           profile=""
-          userName={teacher.name}
+          userName={child.name}
           options={options}
         />
       ))}
-
-      <p>morebutton의 옵션!</p>
     </div>
   );
 };
 
-export default BanTeacherAcceptView;
+export default BanChildAcceptView;

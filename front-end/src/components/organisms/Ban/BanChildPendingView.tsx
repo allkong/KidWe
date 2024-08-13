@@ -2,84 +2,62 @@ import UserCardItemWithButton from '@/components/molecules/Item/UserCardItemWith
 import {useState, useEffect} from 'react';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
-import {getTeacherPending} from '@/apis/management/getTeacherPending';
-import {putTeacherPending} from '@/apis/management/putTeacherPending';
-import {putTeacherDecline} from '@/apis/management/putTeacherDecline';
-import {TeacherInfo} from '@/types/management/TeacherInfo';
+import {getChildPending} from '@/apis/management/getChildPending';
+import {putChildPending} from '@/apis/management/putChildPending';
+import {ChildInfo} from '@/types/management/ChildInfo';
 import {getKindergartenId} from '@/utils/userData';
-const BanTeacherPendingView = () => {
-  const [teacherPendingList, setTeacherPendingList] = useState<TeacherInfo[]>(
-    []
-  );
+const BanChildPendingView = () => {
+  const [childPendingList, setChildPendingList] = useState<ChildInfo[]>([]);
   const [kindergartenId, setKindergartenId] = useState(getKindergartenId());
   const [isNegativeModalOpen, setIsNegativeModalOpen] = useState(false);
-  const [selectedTeacherId, setSelectedTeacherId] = useState<number | null>(
-    null
-  ); // 선택된 교사의 ID를 저장하는 상태
 
-  const handlePendingTeacher = async (id: number) => {
+  const handleAcceptChild = async (id: number) => {
     try {
-      await putTeacherPending({id, accepted: true});
+      await putChildPending({id, accepted: true});
       if (kindergartenId) {
-        const updatedList = await getTeacherPending(kindergartenId);
-        setTeacherPendingList(updatedList);
+        const updatedList = await getChildPending(kindergartenId);
+        setChildPendingList(updatedList);
       }
     } catch (error) {
-      console.error('Failed to Pending teacher', error);
+      console.error('Failed to accept child', error);
     }
   };
-
-  const handleDeclineTeacher = async (teacherId: number) => {
-    try {
-      await putTeacherDecline(teacherId);
-      if (kindergartenId) {
-        const updatedList = await getTeacherPending(kindergartenId);
-        setTeacherPendingList(updatedList);
-      }
-      handleCloseNegativeModal();
-    } catch (error) {
-      console.error('Failed to Decline teacher', error);
-    }
-  };
-
-  const handleOpenNegativeModal = (teacherId: number) => {
-    setSelectedTeacherId(teacherId);
+  const handleOpenNegativeModal = () => {
     setIsNegativeModalOpen(true);
   };
 
   const handleCloseNegativeModal = () => {
     setIsNegativeModalOpen(false);
-    setSelectedTeacherId(null);
   };
 
   useEffect(() => {
     const fetchTeacherPendingList = async () => {
       try {
         if (kindergartenId) {
-          const response = await getTeacherPending(kindergartenId);
-          setTeacherPendingList(response);
+          const response = await getChildPending(kindergartenId);
+          setChildPendingList(response);
         }
       } catch (error) {
-        console.error('Failed to featch teacher pending list', error);
+        console.error('Failed to featch child pending list', error);
       }
     };
     fetchTeacherPendingList();
-  }, [kindergartenId, setTeacherPendingList]);
+  }, [kindergartenId]);
 
   return (
     <div>
-      {teacherPendingList.map(teacher => (
+      {childPendingList.map(child => (
         <UserCardItemWithButton
-          key={teacher.memberId}
+          key={child.kidId}
           profile=""
-          userName={teacher.name}
+          userName={child.name}
           negativeLabel="거절"
           positiveLabel="수락"
           onClickNegative={() => {
-            handleOpenNegativeModal(teacher.memberId);
+            handleOpenNegativeModal();
           }}
           onClickPositive={() => {
-            handlePendingTeacher(teacher.memberId);
+            handleAcceptChild(child.kidId);
           }}
         />
       ))}
@@ -103,11 +81,7 @@ const BanTeacherPendingView = () => {
           ></Modal.BottomButton>
           <Modal.BottomButton
             label="거절"
-            onClick={() => {
-              if (selectedTeacherId !== null) {
-                handleDeclineTeacher(selectedTeacherId); // 선택된 교사의 ID로 거절 처리
-              }
-            }}
+            onClick={handleCloseNegativeModal}
             round="full"
             size="large"
             variant="positive"
@@ -121,4 +95,4 @@ const BanTeacherPendingView = () => {
   );
 };
 
-export default BanTeacherPendingView;
+export default BanChildPendingView;

@@ -1,7 +1,7 @@
 import axiosInstance from '@/apis/axiosInstance';
 import {Accept} from '@/types/management/Accept';
 
-export const putTeacherAccept = async (request: Accept): Promise<void> => {
+export const putTeacherPending = async (request: Accept): Promise<void> => {
   try {
     await axiosInstance.put('/directors/teachers/pending', request);
   } catch (error) {
