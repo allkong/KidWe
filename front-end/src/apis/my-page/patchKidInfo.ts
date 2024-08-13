@@ -15,7 +15,7 @@ import axiosInstance from '@/apis/axiosInstance';
  * @returns
  */
 export const patchKidInfo = async (body: FormData) => {
-  const result = await axiosInstance.patch('/kids', body, {
+  const result = await axiosInstance.post('/kids', body, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
