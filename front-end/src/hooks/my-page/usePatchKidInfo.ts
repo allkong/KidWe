@@ -15,9 +15,10 @@ export const usePatchKidInfo = (kidId: number) => {
     }) => {
       const formData = new FormData();
       const {picture: _, ...infos} = info;
+
       formData.append(
         'dto',
-        new Blob([JSON.stringify(infos)], {type: 'application/json'})
+        new Blob([JSON.stringify(infos.dto)], {type: 'application/json'})
       );
       if (picture !== null) {
         formData.append('picture', picture);
