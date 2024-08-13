@@ -1,7 +1,6 @@
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {getTeacherAccept} from '@/apis/management/getTeacherAccept';
@@ -81,7 +80,6 @@ const BanTeacherAcceptView = () => {
         />
       ))}
 
-      <p>morebutton의 옵션!</p>
       <ModalPortal>
         <Modal isOpen={isNegativeModalOpen}>
           <Modal.Header title="알림" />
