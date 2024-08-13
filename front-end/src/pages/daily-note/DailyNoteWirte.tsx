@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 import {toast} from 'react-toastify';
 
@@ -13,13 +14,16 @@ import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
 import ArticleImageList from '@/components/molecules/List/ArticleImageList';
 import ImageIcon from '@/assets/icons/pic_line.svg?react';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
+import ScheduleModal from '@/components/organisms/Modal/ScheduleModal';
 
 const DailyNoteWrite = () => {
+  const navigate = useNavigate();
   const {mutate} = usePostDailyNote();
   const [formState, setFormState] = useRecoilState(dailyNoteFormState);
   const resetFormState = useResetRecoilState(dailyNoteFormState);
   const [files, setFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -59,7 +63,27 @@ const DailyNoteWrite = () => {
     });
 
     mutate({memberId: getMemberId()!, formData});
+    navigate('/daily-notes');
   };
+
+  const handleFormScheduledSubmit = (
+    selectedDate: string,
+    selectedTime: string
+  ) => {
+    setFormState(prev => ({
+      ...prev,
+      sendTime: `${selectedDate} ${selectedTime}`,
+    }));
+
+    handleFormSubmit();
+  };
+
+  const options = [
+    {
+      text: '예약 전송',
+      onClick: () => setIsModalOpen(true),
+    },
+  ];
 
   return (
     <div className="flex flex-col h-screen">
@@ -86,7 +110,12 @@ const DailyNoteWrite = () => {
         label="전송하기"
         disabled={false}
         onClick={handleFormSubmit}
-        type="more"
+        options={options}
+      />
+      <ScheduleModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleFormScheduledSubmit}
       />
     </div>
   );
