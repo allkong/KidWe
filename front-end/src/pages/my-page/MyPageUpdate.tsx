@@ -33,12 +33,10 @@ const MyPageUpdate = () => {
   }, [data, setPatchUserInfo]);
 
   const handleClickButton = () => {
-    console.log(patchUserInfo);
-
     userMutation.mutate(
       {info: patchUserInfo, picture: userPicture},
       {
-        onSuccess: () => navigate('/mypage'),
+        onSuccess: () => navigate('/my-page'),
       }
     );
   };
