@@ -10,13 +10,12 @@ import type {Kid} from '@/types/memo/Kid';
 import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
 import {memoKidsSelector} from '@/recoil/selectors/memo/memoKids';
 import {dailyNoteKidSelector} from '@/recoil/selectors/daily-note/dailyNoteKid';
+import {getBanId} from '@/utils/userData';
 
 interface CheckedKid {
   kid: Kid;
   isChecked: boolean;
 }
-
-const banId = 1;
 
 interface MemoChildSelectProps {
   type: 'memo' | 'daily-note';
@@ -39,7 +38,7 @@ const MemoChildSelect = ({
     setInput(value);
   };
 
-  const {data} = useGetBanInfomation(banId);
+  const {data} = useGetBanInfomation(getBanId()!);
 
   useEffect(() => {
     setChildren(
