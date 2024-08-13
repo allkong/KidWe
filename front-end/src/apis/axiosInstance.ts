@@ -38,7 +38,10 @@ axiosInstance.interceptors.response.use(
 
     const status = error?.response?.status;
     const {code}: ErrorCode = error?.response?.data || {};
-    if (status === 400 && code === 'EXPIRED_TOKEN') {
+    if (
+      (status === 400 && code === 'EXPIRED_TOKEN') ||
+      (status === 400 && code === 'TOKEN_MISSING')
+    ) {
       console.log('Access Token 재발급 시작');
       const {accessToken} = await getAccessToken();
       setToken(accessToken);
