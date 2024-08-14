@@ -1,53 +1,25 @@
-import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-
-// import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
-// import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
-// import {getMemberId, getKidId} from '@/utils/userData';
-// import {RoleItem} from '@/enum/roleItem';
-// import {ROLE_NAMES} from '@/constants/roleNames';
-
 import NotificationButton from '@/components/atoms/Button/NotificationButton';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import HomeMenu from '@/components/organisms/Content/HomeMenu';
 import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
+import {getMemberId} from '@/utils/userData';
+import noProfile from '@/assets/no-profile.png';
+import {ROLE_NAMES} from '@/constants/roleNames';
+import {RoleItem} from '@/enum/roleItem';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const Home = () => {
-  const navigate = useNavigate();
-  // const {data: userData} = useGetUserInfo(getMemberId()!);
-  // const kidId = getKidId();
-  // const {data: kidData} = useGetKidInfo(kidId!);
-  const [userProfile, setUserProfile] = useState({
-    picture: '',
-    name: '',
-    role: '',
-    kindergartenName: '유치원',
-  });
+  const {data: userInfo} = useGetUserInfo(getMemberId()!);
+  const userImage = getFullImageSource(userInfo?.picture);
 
+  const navigate = useNavigate();
   const handleUserCardItemClick = () => {
     navigate('/my-page');
   };
-
-  // useEffect(() => {
-  //   if (userData) {
-  //     const newUserProfile = {...userProfile};
-  //     newUserProfile.picture = userData.picture || '';
-  //     newUserProfile.role = ROLE_NAMES[userData.role as RoleItem];
-
-  //     if (
-  //       userData.role === RoleItem.Teacher ||
-  //       userData.role === RoleItem.Director
-  //     ) {
-  //       newUserProfile.name = userData.name;
-  //     } else if (userData.role === RoleItem.Guardian && kidData) {
-  //       newUserProfile.name = kidData.name || '';
-  //     }
-
-  //     setUserProfile(newUserProfile);
-  //   }
-  // }, [userData, kidData, userProfile]);
 
   return (
     <>
@@ -58,12 +30,14 @@ const Home = () => {
           <NotificationButton />
         </div>
         <div className="">
-          <KindergartenCard kindergartenName={userProfile.kindergartenName} />
+          <KindergartenCard
+            kindergartenName={userInfo?.kindergartenName ?? ''}
+          />
         </div>
         <div onClick={handleUserCardItemClick}>
           <UserCardItem
-            profile={userProfile.picture}
-            userName={`${userProfile.name} ${userProfile.role}`}
+            profile={userImage ?? noProfile}
+            userName={`${userInfo?.name} ${ROLE_NAMES[userInfo?.role as RoleItem]}`}
             cardType="arrow"
           />
         </div>

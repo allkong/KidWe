@@ -14,7 +14,7 @@ const MyPageItem = ({label, content, onClick}: MyPageItemProps) => {
     >
       <div className="flex items-center justify-between">
         <div className="text-sm">
-          <p>{label}</p>
+          <p className="font-semibold">{label}</p>
           {content && <p>{content}</p>}
         </div>
         {onClick && <BracketButton direction="right" />}

@@ -2,13 +2,16 @@ import pencil from '@/assets/icons/pencil.svg';
 
 interface WriteButtonProps {
   onClick: React.MouseEventHandler<HTMLDivElement>;
+  disabled?: boolean;
 }
 
-const WriteButton = ({onClick}: WriteButtonProps) => {
+const WriteButton = ({onClick, disabled}: WriteButtonProps) => {
+  const colorClass = disabled ? 'bg-gray-200' : 'bg-primary';
+
   return (
     <div
-      onClick={onClick}
-      className="fixed flex items-center justify-center rounded-full shadow-sm cursor-pointer bg-primary w-14 h-14 right-8 bottom-24 "
+      onClick={disabled ? () => {} : onClick}
+      className={`${colorClass} fixed flex items-center justify-center rounded-full shadow-sm cursor-pointer w-14 h-14 right-8 bottom-24 transition-colors`}
     >
       <img src={pencil} alt={'NoWriteImage'} className="w-8 h-8 " />
     </div>

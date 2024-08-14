@@ -8,6 +8,7 @@ import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {getBanId} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 import {toast} from 'react-toastify';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 interface AttendedKidsSelectViewProps {
   attendances?: GetAttendance[];
@@ -128,7 +129,7 @@ const AttendedKidsSelectView = ({
           checkedAttendances.map(attendance => (
             <CheckListItem
               key={attendance.attendanceId}
-              src="sd"
+              src={getFullImageSource(attendance?.image)}
               text={attendance.kidName}
               isChecked={attendance.isChecked}
               onClick={() => handleAttendancesCheck(attendance.attendanceId)}

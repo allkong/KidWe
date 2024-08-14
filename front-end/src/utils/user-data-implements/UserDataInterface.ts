@@ -7,9 +7,9 @@ export interface UserDataInterface {
   getMemberId: () => number | null;
   getMemberEmail: () => string | null;
   getMemberRole: () =>
-    | 'ROLE_DIRECTOR'
     | 'ROLE_GUARDIAN'
     | 'ROLE_TEACHER'
+    | 'ROLE_DIRECTOR'
     | null;
   getMemberStatus: () => 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT' | null;
   getKindergartenId: () => number | null;

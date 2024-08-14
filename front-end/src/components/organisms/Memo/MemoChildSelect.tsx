@@ -1,8 +1,8 @@
 import DashedRoundedButton from '@/components/atoms/Button/DashedRoundedButton';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import {useEffect, useState} from 'react';
-import ModalPortal from '../Modal/ModalPortal';
-import Modal from '../Modal/Modal';
+import ModalPortal from '@/components/organisms/Modal/ModalPortal';
+import Modal from '@/components/organisms/Modal/Modal';
 import CheckListItem from '@/components/organisms/Check/CheckListItem';
 import Input from '@/components/atoms/Input/Input';
 import {useRecoilState} from 'recoil';
@@ -11,6 +11,7 @@ import {useGetBanInfomation} from '@/hooks/memo/useGetBanInfomation';
 import {memoKidsSelector} from '@/recoil/selectors/memo/memoKids';
 import {dailyNoteKidSelector} from '@/recoil/selectors/daily-note/dailyNoteKid';
 import {getBanId} from '@/utils/userData';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 interface CheckedKid {
   kid: Kid;
@@ -124,7 +125,9 @@ const MemoChildSelect = ({
           <DashedRoundedButton />
           {type === 'memo' &&
             memoKids &&
-            memoKids.map(kid => <ProfileImage key={kid.id} src={''} />)}
+            memoKids.map(kid => (
+              <ProfileImage key={kid.id} src={getFullImageSource(kid.image)} />
+            ))}
           {type === 'daily-note' && dailyNoteKid !== 0 && (
             <ProfileImage src={''} />
           )}

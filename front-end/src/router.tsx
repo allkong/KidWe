@@ -6,6 +6,7 @@ import MyPageUpdate from '@/pages/my-page/MyPageUpdate';
 import KidUpdate from '@/pages/my-page/KidUpdate';
 
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
+import ScheduleView from '@/pages/schedule/ScheduleView';
 
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
 import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
@@ -40,16 +41,47 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 
 import NotFound from '@/pages/NotFound';
 
-import {getMemberRole, getUserData} from '@/utils/userData';
+import {getUserData} from '@/utils/userData';
 import ManagementList from '@/pages/kindergarten-management/managementList';
 import BanManagement from '@/pages/kindergarten-management/banManagement';
 import TeacherManagement from '@/pages/kindergarten-management/teacherManagement';
 import KindergartenManagement from '@/pages/kindergarten-management/kindergartenManagement';
 import ChildManagement from '@/pages/kindergarten-management/childManagement';
+import {isGuardian} from './utils/auth/isGuardian';
+import {isTeacher} from './utils/auth/isTeacher';
+import {isDirector} from './utils/auth/isDirector';
 
 const requireAuth = () => {
   if (getUserData() === null) {
     return redirect('/auth/login');
+  }
+  return null;
+};
+
+const onlyDirectorAndTeacher = () => {
+  if (isGuardian()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyGuardian = () => {
+  if (!isGuardian()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyTeacher = () => {
+  if (!isTeacher()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyDirector = () => {
+  if (!isDirector()) {
+    return redirect('/');
   }
   return null;
 };
@@ -75,8 +107,14 @@ export const router = createBrowserRouter([
   },
   {
     path: '/schedule',
-    element: <KindergartenSchedule />,
+    element: <ScheduleView />,
     loader: requireAuth,
+    children: [
+      {
+        path: '',
+        element: <KindergartenSchedule />,
+      },
+    ],
   },
   {
     path: '/my-page',
@@ -134,7 +172,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/attendances',
-    loader: requireAuth,
+    loader: onlyDirectorAndTeacher,
     element: <AttendanceView />,
     children: [
       {
@@ -158,6 +196,7 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <MedicationWrite />,
+        loader: onlyGuardian,
       },
     ],
   },
@@ -176,12 +215,13 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <LeaveConsentnWrite />,
+        loader: onlyGuardian,
       },
     ],
   },
   {
     path: '/memos',
-    loader: requireAuth,
+    loader: onlyTeacher,
     element: <MemoView />,
     children: [
       {
@@ -200,13 +240,17 @@ export const router = createBrowserRouter([
   },
   {
     path: '/kindergarten',
-    loader: requireAuth,
+    loader: onlyDirectorAndTeacher,
     children: [
       {path: '', element: <ManagementList />},
       {path: 'ban', element: <BanManagement />},
-      {path: 'setting', element: <KindergartenManagement />},
+      {
+        path: 'setting',
+        element: <KindergartenManagement />,
+        loader: onlyDirector,
+      },
       {path: 'child', element: <ChildManagement />},
-      {path: 'teacher', element: <TeacherManagement />},
+      {path: 'teacher', element: <TeacherManagement />, loader: onlyDirector},
     ],
   },
   {
@@ -221,12 +265,7 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <FoodInfoWrite />,
-        loader: () => {
-          if (getMemberRole() === 'ROLE_GUARDIAN') {
-            return redirect('/auth/login');
-          }
-          return null;
-        },
+        loader: onlyDirectorAndTeacher,
       },
     ],
   },

@@ -3,12 +3,15 @@ import {useNavigate} from 'react-router-dom';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 import {toast} from 'react-toastify';
 
+import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
 import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
 import {usePostDailyNote} from '@/hooks/daily-note/usePostDailyNote';
-import {getMemberId} from '@/utils/userData';
+import {getMemberId, getKidId, getMemberRole} from '@/utils/userData';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 import {containerHeaderClass} from '@/styles/styles';
 
 import Header from '@/components/organisms/Navigation/Header';
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import TextEditor from '@/components/organisms/Board/TextEditor';
 import MemoChildSelect from '@/components/organisms/Memo/MemoChildSelect';
 import ArticleImageList from '@/components/molecules/List/ArticleImageList';
@@ -16,9 +19,12 @@ import ImageIcon from '@/assets/icons/pic_line.svg?react';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
 import ScheduleModal from '@/components/organisms/Modal/ScheduleModal';
 import DailyNoteAutoCreateModal from '@/components/organisms/Modal/DailyNoteAutoCreateModal';
+import {RoleItem} from '@/enum/roleItem';
 
 const DailyNoteWrite = () => {
   const navigate = useNavigate();
+  const kidId = getKidId();
+  const {data} = useGetKidInfo(kidId!);
   const {mutate} = usePostDailyNote();
   const [formState, setFormState] = useRecoilState(dailyNoteFormState);
   const resetFormState = useResetRecoilState(dailyNoteFormState);
@@ -26,12 +32,16 @@ const DailyNoteWrite = () => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isScheduled, setIsScheduled] = useState(false);
+  const userRole = getMemberRole();
 
   useEffect(() => {
     return () => {
       resetFormState();
+      if (userRole === RoleItem.Guardian) {
+        setFormState(prev => ({...prev, kidId: kidId!}));
+      }
     };
-  }, [resetFormState]);
+  }, [resetFormState, userRole, setFormState, kidId]);
 
   const handleEditorChange = (value: string) => {
     setFormState(prev => ({...prev, content: value}));
@@ -97,9 +107,19 @@ const DailyNoteWrite = () => {
     <div className="flex flex-col h-screen">
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
-        <div className="flex flex-row items-center justify-between px-6 py-4">
-          <MemoChildSelect type="daily-note" />
-          <DailyNoteAutoCreateModal />
+        <div className="px-6 py-4">
+          {userRole === RoleItem.Teacher && (
+            <div className="flex flex-row items-center justify-between">
+              <MemoChildSelect type="daily-note" />
+              <DailyNoteAutoCreateModal />
+            </div>
+          )}
+          {userRole === RoleItem.Guardian && (
+            <div>
+              <p className="mb-2">내 아이</p>
+              <ProfileImage src={getFullImageSource(data?.picture)} />
+            </div>
+          )}
         </div>
         <TextEditor value={formState.content} onChange={handleEditorChange} />
         <div className="p-6 mt-10">

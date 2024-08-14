@@ -3,6 +3,7 @@ import {patchUserPictureState} from '@/recoil/atoms/my-page/userPicture';
 import {patchUserPictureSelector} from '@/recoil/selectors/my-page/userInfoPicture';
 import {useRecoilState, useSetRecoilState} from 'recoil';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
+import noProfile from '@/assets/no-profile.png';
 
 const UserImageUpdateView = () => {
   const [userPicture, setUserPicture] = useRecoilState(
@@ -20,19 +21,24 @@ const UserImageUpdateView = () => {
 
   const handleDeleteButton = () => {
     setUserFile(null);
-    setUserPicture('');
+    setUserPicture(undefined);
   };
 
   return (
-    <div className="flex items-end justify-end w-full gap-2">
-      <div>
-        <XSmallButton label="삭제" onClick={handleDeleteButton} />
+    <div className="flex flex-col items-start justify-start w-full gap-2">
+      <p>유저 프로필</p>
+      <div className="flex flex-col items-center justify-center w-full gap-2">
+        <ImageUploadButton
+          userPicture={userPicture ?? noProfile}
+          onChangePreview={handleChangePreview}
+          onChangeFile={handleChangeFile}
+        />
+        {userPicture && (
+          <div className="space-x-1">
+            <XSmallButton label="삭제" onClick={handleDeleteButton} />
+          </div>
+        )}
       </div>
-      <ImageUploadButton
-        userPicture={userPicture}
-        onChangePreview={handleChangePreview}
-        onChangeFile={handleChangeFile}
-      />
     </div>
   );
 };
