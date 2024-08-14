@@ -15,7 +15,7 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
-import DirectorSelectItem from '@/components/organisms/Select/DirectorSelectItem';
+import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
 
 const MedicationListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
