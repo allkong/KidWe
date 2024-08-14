@@ -79,7 +79,6 @@ const LeaveConsentDetail = () => {
             contact={data?.emergencyContact}
           />
         </div>
-        {/* 서명 */}
         <ConsentSignatureCard
           text="원아의 귀가를 위 보호자에게 인도해 주세요.\n변동이 있다면 사전에 반드시 연락을 취하겠습니다."
           date={data?.signDate || ''}
