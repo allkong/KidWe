@@ -4,9 +4,11 @@ import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {getMemberId} from '@/utils/userData';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const UserInfo = () => {
-  const {data} = useGetUserInfo(getMemberId()!);
+  const {data, isLoading} = useGetUserInfo(getMemberId()!);
+  useLoading(isLoading);
 
   return (
     <div className="flex flex-row items-center justify-between w-full px-10 py-10 mb-2 text-gray-300 bg-white">
