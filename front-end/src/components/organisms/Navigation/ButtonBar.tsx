@@ -1,12 +1,17 @@
 import Button from '@/components/atoms/Button/Button';
-import MoreButton from '@/components/molecules/DropdownButton/MoreButtonMain';
+import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
+
+interface Option {
+  text: string;
+  onClick: () => void;
+}
 
 interface ButtonBarProps {
   label: string;
   variant?: 'positive' | 'negative';
   disabled: boolean;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
-  type?: 'basic' | 'more';
+  options?: Option[];
 }
 
 const ButtonBar = ({
@@ -14,13 +19,21 @@ const ButtonBar = ({
   variant = 'positive',
   disabled,
   onClick,
-  type = 'basic',
+  options,
 }: ButtonBarProps) => {
   return (
     <nav className="box-border fixed bottom-0 flex flex-row items-center w-full py-4 text-base bg-white border-t px-7">
-      {type === 'more' && (
+      {options && (
         <div className="flex items-center justify-center w-12 h-10 bg-gray-100 rounded-sm me-2">
-          <MoreButton />
+          <MoreButton position="right" isUp>
+            {options?.map(option => (
+              <MoreButton.Option
+                key={option.text}
+                text={option.text}
+                onClick={option.onClick}
+              />
+            ))}
+          </MoreButton>
         </div>
       )}
       <Button

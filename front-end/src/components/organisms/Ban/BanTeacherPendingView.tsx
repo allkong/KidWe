@@ -4,7 +4,6 @@ import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 import {getTeacherPending} from '@/apis/management/getTeacherPending';
 import {putTeacherPending} from '@/apis/management/putTeacherPending';
-import {putTeacherDecline} from '@/apis/management/putTeacherDecline';
 import {TeacherInfo} from '@/types/management/TeacherInfo';
 import {getKindergartenId} from '@/utils/userData';
 const BanTeacherPendingView = () => {
@@ -29,9 +28,9 @@ const BanTeacherPendingView = () => {
     }
   };
 
-  const handleDeclineTeacher = async (teacherId: number) => {
+  const handleDeclineTeacher = async (id: number) => {
     try {
-      await putTeacherDecline(teacherId);
+      await putTeacherPending({id, accepted: false});
       if (kindergartenId) {
         const updatedList = await getTeacherPending(kindergartenId);
         setTeacherPendingList(updatedList);

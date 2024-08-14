@@ -9,9 +9,11 @@ import {postSignup} from '@/apis/signup/postSignup';
 import {toast} from 'react-toastify';
 
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
-
+import {SignupFormState} from '@/types/signup/SignupFormState';
+import {signupPictureState} from '@/recoil/atoms/signup/signupPicture';
 const RegisterInfo = () => {
-  const [signupregister, setSignupRegister] = useRecoilState(Signup);
+  const [signupregister, setSignupRegister] =
+    useRecoilState<SignupFormState>(Signup);
   const [isStateUpdated, setIsStateUpdated] = useState(false);
   const [username, setUsername] = useState('');
   const [useremail, setUseremail] = useState('');
@@ -19,7 +21,8 @@ const RegisterInfo = () => {
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
   const [userpicture, setPicture] = useState<string>('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  // const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useRecoilState(signupPictureState);
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
   const [ismissingvalue, setIsMissingValue] = useState(false);
@@ -31,16 +34,10 @@ const RegisterInfo = () => {
 
   const signupMutate = useMutation({
     mutationFn: async () => {
-      return postSignup(signupregister);
+      return postSignup(signupregister, imageFile);
     },
-    onSuccess: data => {
-      if (data === '성공') {
-        navigate('/auth/login');
-      } else if (data === '실패') {
-        toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
-      } else {
-        toast.error(data);
-      }
+    onSuccess: () => {
+      navigate('/auth/login');
     },
     onError: error => {
       toast.error(`회원가입에 실패했습니다: ${error.message}`);
@@ -123,6 +120,9 @@ const RegisterInfo = () => {
       });
     }
     if (isStateUpdated) {
+      // 여기서 info랑 pircture 타입 맞춰서 인수로 주기@@@@@@@@@@@@@@@@@@@@
+      // 0813 19:10 기준으로 하기
+      // 다시 보니 여기서는 인수를 넘기는게 없고, 어차피 api 에서 인수 바꿔줄거임
       signupMutate.mutate();
       setIsStateUpdated(false);
     }

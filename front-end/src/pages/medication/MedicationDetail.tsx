@@ -1,9 +1,10 @@
 import {useEffect} from 'react';
 import {useNavigate, useLocation, useParams} from 'react-router-dom';
+
 import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
 import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
-import Spinner from '@/components/atoms/Loader/Spinner';
+
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
@@ -64,7 +65,6 @@ const MedicationDetail = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {isLoading && <Spinner />}
       <Header title={'투약의뢰서'} buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem

@@ -25,9 +25,9 @@ const BanChildPendingView = () => {
     }
   };
 
-  const handleDeclineChild = async (kidId: number) => {
+  const handleDeclineChild = async (id: number) => {
     try {
-      await putChildDecline(kidId);
+      await putChildPending({id, accepted: false});
       if (kindergartenId) {
         const updatedList = await getChildPending(kindergartenId);
         setChildPendingList(updatedList);

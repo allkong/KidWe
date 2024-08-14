@@ -116,22 +116,22 @@ const MemoChildSelect = ({
 
   return (
     <>
-      <p>원생 선택</p>
-      <div
-        onClick={handleOpenChildrenModal}
-        className="flex flex-wrap gap-2 mt-2 overflow-y-auto"
-      >
-        <DashedRoundedButton />
-        {type === 'memo' &&
-          memoKids &&
-          memoKids.map(kid => {
-            return (
+      <div>
+        <p>원생 선택</p>
+        <div
+          onClick={handleOpenChildrenModal}
+          className="flex flex-wrap gap-2 mt-2 overflow-y-auto"
+        >
+          <DashedRoundedButton />
+          {type === 'memo' &&
+            memoKids &&
+            memoKids.map(kid => (
               <ProfileImage key={kid.id} src={getFullImageSource(kid.image)} />
-            );
-          })}
-        {type === 'daily-note' && dailyNoteKid !== 0 && (
-          <ProfileImage src={''} />
-        )}
+            ))}
+          {type === 'daily-note' && dailyNoteKid !== 0 && (
+            <ProfileImage src={''} />
+          )}
+        </div>
       </div>
       <ModalPortal>
         <Modal isOpen={isChildrenModalOpen}>
