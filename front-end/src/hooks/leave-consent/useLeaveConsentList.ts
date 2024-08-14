@@ -7,7 +7,7 @@ import {LeaveConsentItem} from '@/types/leave-consent/LeaveConsentItem';
 import {RoleItem} from '@/enum/roleItem';
 
 export const useLeaveConsentList = (
-  id: number,
+  id: number | null,
   year: number,
   month: number,
   role: RoleItem
@@ -16,12 +16,13 @@ export const useLeaveConsentList = (
     queryKey: ['leaveConsentList', id, year, month, role],
     queryFn: () => {
       if (role === RoleItem.Director || role === RoleItem.Teacher) {
-        return getLeaveConsentByTeacher(id, year, month);
+        return getLeaveConsentByTeacher(id!, year, month);
       } else if (role === RoleItem.Guardian) {
-        return getLeaveConsentByParent(id, year, month);
+        return getLeaveConsentByParent(id!, year, month);
       } else {
         return [];
       }
     },
+    enabled: !!id,
   });
 };
