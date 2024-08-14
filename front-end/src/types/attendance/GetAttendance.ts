@@ -10,4 +10,5 @@ export interface GetAttendance {
   reason: string;
   attendedToday: 'NOTHING' | 'ATTENDANCE' | 'ABSENCE';
   date: string;
+  image?: string;
 }
