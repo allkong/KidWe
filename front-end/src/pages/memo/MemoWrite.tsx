@@ -48,8 +48,6 @@ const MemoWrite = () => {
 
   const writeMutate = useWriteDailyMemo();
   const handleClick = () => {
-    console.log(memo);
-
     writeMutate.mutateAsync(
       {teacherId: getMemberId()!, memo},
       {

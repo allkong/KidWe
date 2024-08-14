@@ -71,22 +71,27 @@ const AttendedKidsSelectView = ({
         ?.filter(value => value.isChecked)
         .map(value => value.kidId);
       if (selectedKids !== undefined) {
-        putMutate.mutate(
-          {
-            kidIds: selectedKids,
-            year: date.get('year'),
-            month: date.get('month') + 1,
-            day: date.get('date'),
-            attendedToday: 'NOTHING',
-            reason: '',
-          },
-          {
-            onSuccess: () => {
-              toast.info('일괄 미출석 처리 되었습니다.');
-              onClickButton?.();
+        if (selectedKids.length !== 0) {
+          toast.info('선택된 학생이 없습니다.');
+          onClickButton?.();
+        } else {
+          putMutate.mutate(
+            {
+              kidIds: selectedKids,
+              year: date.get('year'),
+              month: date.get('month') + 1,
+              day: date.get('date'),
+              attendedToday: 'NOTHING',
+              reason: '',
             },
-          }
-        );
+            {
+              onSuccess: () => {
+                toast.info('일괄 미출석 처리 되었습니다.');
+                onClickButton?.();
+              },
+            }
+          );
+        }
       }
     }
   };
@@ -114,7 +119,7 @@ const AttendedKidsSelectView = ({
           />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center w-screen h-fit">
+      <div className="flex flex-col items-center justify-center w-full h-fit">
         {checkedAttendances &&
           checkedAttendances.map(attendance => (
             <CheckListItem

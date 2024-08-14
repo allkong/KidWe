@@ -11,7 +11,7 @@ const menuItems = [
 
 const NavigationBar = () => {
   return (
-    <nav className="box-border fixed bottom-0 left-0 right-0 w-full max-w-full sm:max-w-[600px] mx-auto py-2 text-base bg-white border-t text-gray-150">
+    <nav className="box-border fixed z-10 bottom-0 left-0 right-0 w-full max-w-full sm:max-w-[600px] mx-auto py-2 text-base bg-white border-t text-gray-150">
       <div className="flex flex-row">
         {menuItems.map((item, index) => (
           <NavigationMenu
