@@ -16,7 +16,7 @@ export default defineConfig({
     // basicSsl(),
   ],
   build: {
-    minify: 'terser',
+    minify: 'esbuild',
     terserOptions: {
       compress: {
         drop_console: true,
