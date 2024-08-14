@@ -92,7 +92,7 @@ const MemoList = memo(() => {
   return (
     <>
       <div
-        className={`${containerNavigatorClass} flex flex-col h-screen items-center bg-[#F8F8F8]`}
+        className={`${containerNavigatorClass} relative flex flex-col h-screen items-center`}
       >
         <Header title="관찰 메모" buttonType="close" />
         <DateNavigator
@@ -100,7 +100,7 @@ const MemoList = memo(() => {
           onClickLeft={handleLeftClick}
           onClickRight={handleRightClick}
         />
-        <div className="mt-10">
+        <div className="z-10 mt-10">
           <MemoListView data={data} onModalClick={handleModalOpen} />
         </div>
         <WriteButton onClick={moveToWrite} />
@@ -112,6 +112,7 @@ const MemoList = memo(() => {
           onDeleteClick={handleDeleteClick}
           onUpdateClick={moveToUpdate}
         />
+        <div className="absolute w-full h-full bg-[#F8F8F8] top-0 bottom-0 left-0 right-0" />
       </div>
     </>
   );

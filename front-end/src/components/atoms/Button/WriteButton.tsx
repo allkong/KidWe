@@ -11,7 +11,7 @@ const WriteButton = ({onClick, disabled}: WriteButtonProps) => {
   return (
     <div
       onClick={disabled ? () => {} : onClick}
-      className={`${colorClass} fixed flex items-center justify-center rounded-full shadow-sm cursor-pointer w-14 h-14 right-8 bottom-24 transition-colors`}
+      className={`${colorClass} z-10 fixed flex items-center justify-center rounded-full shadow-sm cursor-pointer w-14 h-14 right-8 bottom-24 transition-colors`}
     >
       <img src={pencil} alt={'NoWriteImage'} className="w-8 h-8 " />
     </div>
