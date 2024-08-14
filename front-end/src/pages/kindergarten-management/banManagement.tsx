@@ -26,6 +26,7 @@ const BanManagement = () => {
   const [banName, setBanName] = useState('');
   const [banIdToEdit, setBanIdToEdit] = useState<number | null>(null);
   const handleAddModalOpen = () => {
+    setBanName('');
     setIsAddModalOpen(true);
   };
   const handleAddModalClose = () => {
