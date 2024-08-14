@@ -122,14 +122,18 @@ const MemoChildSelect = ({
           onClick={handleOpenChildrenModal}
           className="flex flex-wrap gap-2 mt-2 overflow-y-auto"
         >
-          <DashedRoundedButton />
+          <DashedRoundedButton size="3rem" />
           {type === 'memo' &&
             memoKids &&
             memoKids.map(kid => (
-              <ProfileImage key={kid.id} src={getFullImageSource(kid.image)} />
+              <ProfileImage
+                key={kid.id}
+                src={getFullImageSource(kid.image)}
+                size="3rem"
+              />
             ))}
           {type === 'daily-note' && dailyNoteKid !== 0 && (
-            <ProfileImage src={''} />
+            <ProfileImage src={''} size="3rem" />
           )}
         </div>
       </div>

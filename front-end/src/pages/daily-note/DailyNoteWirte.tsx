@@ -117,7 +117,10 @@ const DailyNoteWrite = () => {
           {userRole === RoleItem.Guardian && (
             <div>
               <p className="mb-2">내 아이</p>
-              <ProfileImage src={getFullImageSource(data?.picture)} />
+              <ProfileImage
+                src={getFullImageSource(data?.picture)}
+                size="3rem"
+              />
             </div>
           )}
         </div>
