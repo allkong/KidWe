@@ -75,27 +75,33 @@ const AttendedKidsSelectView = ({
         ?.filter(value => value.isChecked)
         .map(value => value.kidId);
 
-      // 로직 처리 성공시
-      submitMutate.mutate(
-        {
-          year,
-          month,
-          day,
-          attendedToday: 'ATTENDANCE',
-          kidIds: selectedList,
-          reason: '',
-        },
-        {
-          onSuccess: () => {
-            toast.info('일괄 출석 처리 되었습니다.');
-            setIsPositiveModalOpen(false);
-            onClickTabChangeButton?.();
+      if (selectedList.length === 0) {
+        toast.info('선택된 학생이 없습니다.');
+        setIsPositiveModalOpen(false);
+        onClickTabChangeButton?.();
+      } else {
+        // 로직 처리 성공시
+        submitMutate.mutate(
+          {
+            year,
+            month,
+            day,
+            attendedToday: 'ATTENDANCE',
+            kidIds: selectedList,
+            reason: '',
           },
-          onError: () => {
-            // error handling
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              toast.info('일괄 출석 처리 되었습니다.');
+              setIsPositiveModalOpen(false);
+              onClickTabChangeButton?.();
+            },
+            onError: () => {
+              // error handling
+            },
+          }
+        );
+      }
     }
   };
 
