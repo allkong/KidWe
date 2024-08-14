@@ -1,6 +1,9 @@
 import {useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
+
+import {getFullImageSource} from '@/utils/getFullImageSource';
+
 import CloseButton from '@/components/atoms/Button/CloseButton';
 import DownloadButton from '@/components/atoms/Button/DownloadButton';
 
@@ -35,7 +38,7 @@ const ImageModal = ({images, selectedImage, onClose}: ImageModalProps) => {
           {images.map((src, index) => (
             <SwiperSlide key={index}>
               <img
-                src={src}
+                src={getFullImageSource(src)}
                 alt={`Image ${index + 1}`}
                 className="object-contain w-full h-full"
               />

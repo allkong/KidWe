@@ -26,9 +26,13 @@ const DailyNoteDetail = () => {
         />
         <ArticleSection
           content={data?.content || ''}
-          images={data?.thumbnails || []}
+          images={data?.images || []}
+          thumbnails={data?.thumbnails || []}
         />
-        <CommentSection />
+        <CommentSection
+          commentCount={data?.commentCount || 0}
+          comments={data?.comments || []}
+        />
       </div>
       <InputBar />
     </div>

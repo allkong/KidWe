@@ -1,13 +1,15 @@
 import {useNavigate} from 'react-router-dom';
+
 import {useAnnouncementList} from '@/hooks/announcement/useAnnouncementList';
+import {getMemberId} from '@/utils/userData';
 import {containerHeaderClass} from '@/styles/styles';
+
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import NoResult from '@/components/atoms/NoResult';
 import AnnounceItem from '@/components/molecules/Item/AnnounceItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {getMemberId} from '@/utils/userData';
 
 const AnnouncementListView = () => {
   const navigate = useNavigate();
@@ -38,11 +40,11 @@ const AnnouncementListView = () => {
               onClick={() => handleUserItemClick(item.announcementId)}
             >
               <AnnounceItem
-                title="제목"
-                banName="전체"
-                writer="햄스터반 선생님"
-                date="24.7.6"
-                commentCount={8}
+                title={item.title}
+                banName={item.memberBan}
+                writer={item.memberName}
+                date={item.createdDate}
+                commentCount={item.commentCnt}
               />
             </div>
           ))

@@ -4,15 +4,16 @@ import ArticleImage from '@/components/organisms/Board/ArticleImage';
 interface ArticleSectionProps {
   content: string;
   images: string[];
+  thumbnails: string[];
 }
 
-const ArticleSection = ({content, images}: ArticleSectionProps) => {
+const ArticleSection = ({content, images, thumbnails}: ArticleSectionProps) => {
   const safeContent = checkSafeHTML(content);
 
   return (
     <div className="px-6 pt-3 pb-6 bg-white border-b">
       <div className="mb-5" dangerouslySetInnerHTML={{__html: safeContent}} />
-      <ArticleImage images={images} />
+      <ArticleImage images={images} thumbnails={thumbnails} />
     </div>
   );
 };
