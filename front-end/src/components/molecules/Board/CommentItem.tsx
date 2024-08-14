@@ -1,3 +1,4 @@
+import {getFullImageSource} from '@/utils/getFullImageSource';
 import ReplyIcon from '@/assets/icons/reply-enter.svg?react';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
@@ -11,6 +12,7 @@ interface CommentItemProps {
   date: string;
   onClick: () => void;
   isReply?: boolean;
+  isSelected?: boolean;
 }
 
 const CommentItem = ({
@@ -21,18 +23,21 @@ const CommentItem = ({
   date,
   onClick,
   isReply = false,
+  isSelected = false,
 }: CommentItemProps) => {
-  // const backgroundColor;
-
   return (
-    <div className="flex flex-row justify-between bg-white">
+    <div
+      className={`flex flex-row justify-between rounded-sm p-2 ${
+        isSelected ? 'bg-yellow-50' : 'bg-white'
+      }`}
+    >
       <div className="flex flex-row gap-3">
         {isReply && (
           <div>
             <ReplyIcon width={30} height={30} />
           </div>
         )}
-        <ProfileImage src={profile} size="2rem" />
+        <ProfileImage src={getFullImageSource(profile)} size="2rem" />
         <div className="flex flex-col">
           <div className="flex flex-row items-end gap-2 mb-0.5">
             <p className="text-sm font-semibold">{writer}</p>
@@ -40,7 +45,6 @@ const CommentItem = ({
           </div>
           <p className="mb-2 text-sm">{content}</p>
           <div className="flex flex-row items-center gap-3">
-            {/* <Button label="답글" size="small" round="full" variant="negative" /> */}
             <Tag
               text="답글"
               size="small"
