@@ -1,4 +1,5 @@
 import type {UserData} from '@/types/user/UserData';
+import {RoleItem} from '@/enum/roleItem';
 
 export interface UserDataInterface {
   setUserData: (data: UserData) => void;
@@ -6,11 +7,7 @@ export interface UserDataInterface {
   getUserData: () => UserData | null;
   getMemberId: () => number | null;
   getMemberEmail: () => string | null;
-  getMemberRole: () =>
-    | 'ROLE_DIRECTOR'
-    | 'ROLE_GUARDIAN'
-    | 'ROLE_TEACHER'
-    | null;
+  getMemberRole: () => RoleItem | null;
   getMemberStatus: () => 'NOTHING' | 'DECLINE' | 'PENDING' | 'ACCEPT' | null;
   getKindergartenId: () => number | null;
   getBanId: () => number | null;

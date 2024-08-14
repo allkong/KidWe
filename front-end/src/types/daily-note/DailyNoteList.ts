@@ -4,7 +4,7 @@ export interface DailyNoteItem {
   id: number;
   banName: string;
   kidName: string;
-  writerRle: RoleItem;
+  writerRole: RoleItem;
   sendTime: string;
 }
 
