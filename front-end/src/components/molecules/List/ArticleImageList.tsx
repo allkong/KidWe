@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import {getFullImageSource} from '@/utils/getFullImageSource';
+import {getFullThumbnailImageSource} from '@/utils/getFullImageSource';
 
 interface ArticleImageListProps {
   images: string[];
@@ -53,7 +53,7 @@ const ArticleImageList = ({
       {images.map((src, index) => (
         <img
           key={index}
-          src={readOnly ? getFullImageSource(src) : src}
+          src={readOnly ? getFullThumbnailImageSource(src) : src}
           alt={`Image ${index + 1}`}
           className="object-cover h-32 rounded-sm cursor-pointer aspect-square"
           onClick={() => {

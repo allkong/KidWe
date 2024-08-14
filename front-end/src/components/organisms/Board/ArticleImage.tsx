@@ -5,10 +5,9 @@ import ModalPortal from '@/components/organisms/Modal/ModalPortal';
 
 interface ArticleImageProps {
   images: string[];
-  thumbnails: string[];
 }
 
-const ArticleImage = ({images, thumbnails}: ArticleImageProps) => {
+const ArticleImage = ({images}: ArticleImageProps) => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const handleClick = (index: number) => {
@@ -21,7 +20,7 @@ const ArticleImage = ({images, thumbnails}: ArticleImageProps) => {
 
   return (
     <>
-      <ArticleImageList images={thumbnails} onClick={handleClick} readOnly />
+      <ArticleImageList images={images} onClick={handleClick} readOnly />
       {selectedImage !== null && (
         <ModalPortal>
           <ImageModal
