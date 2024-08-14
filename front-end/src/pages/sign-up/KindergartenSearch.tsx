@@ -18,6 +18,7 @@ import {SignupTeacherState} from '@/recoil/atoms/signup/signupTeacher';
 import {SignupGuardianState} from '@/recoil/atoms/signup/signupGuardian';
 import {getMemberRole} from '@/utils/userData';
 import {toast, ToastContainer} from 'react-toastify';
+import {getMemberId} from '@/utils/userData';
 
 const KindergartenSearch: React.FC = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const KindergartenSearch: React.FC = () => {
       setSignupTeacher(prevState => ({
         ...prevState,
         kindergartenId,
+        memberId: getMemberId()!,
       }));
     } else if (role === 'ROLE_GUARDIAN') {
       setSignupGuardian(prevState => ({
@@ -50,6 +52,7 @@ const KindergartenSearch: React.FC = () => {
         dto: {
           ...prevState.dto,
           kindergartenId,
+          memberId: getMemberId()!,
         },
       }));
     }
