@@ -37,7 +37,7 @@ const Home = () => {
         <div onClick={handleUserCardItemClick}>
           <UserCardItem
             profile={userImage ?? noProfile}
-            userName={`${userInfo?.name} ${ROLE_NAMES[userInfo?.role as RoleItem]}`}
+            userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
             cardType="arrow"
           />
         </div>
