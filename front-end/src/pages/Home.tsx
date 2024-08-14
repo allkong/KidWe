@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
-import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
-import {getMemberId, getKidId} from '@/utils/userData';
-import {RoleItem} from '@/enum/roleItem';
-import {ROLE_NAMES} from '@/constants/roleNames';
+// import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
+// import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
+// import {getMemberId, getKidId} from '@/utils/userData';
+// import {RoleItem} from '@/enum/roleItem';
+// import {ROLE_NAMES} from '@/constants/roleNames';
 
 import NotificationButton from '@/components/atoms/Button/NotificationButton';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
@@ -16,9 +16,9 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 const Home = () => {
   const navigate = useNavigate();
-  const {data: userData} = useGetUserInfo(getMemberId()!);
-  const kidId = getKidId();
-  const {data: kidData} = useGetKidInfo(kidId!);
+  // const {data: userData} = useGetUserInfo(getMemberId()!);
+  // const kidId = getKidId();
+  // const {data: kidData} = useGetKidInfo(kidId!);
   const [userProfile, setUserProfile] = useState({
     picture: '',
     name: '',
@@ -30,24 +30,24 @@ const Home = () => {
     navigate('/my-page');
   };
 
-  useEffect(() => {
-    if (userData) {
-      const newUserProfile = {...userProfile};
-      newUserProfile.picture = userData.picture || '';
-      newUserProfile.role = ROLE_NAMES[userData.role as RoleItem];
+  // useEffect(() => {
+  //   if (userData) {
+  //     const newUserProfile = {...userProfile};
+  //     newUserProfile.picture = userData.picture || '';
+  //     newUserProfile.role = ROLE_NAMES[userData.role as RoleItem];
 
-      if (
-        userData.role === RoleItem.Teacher ||
-        userData.role === RoleItem.Director
-      ) {
-        newUserProfile.name = userData.name;
-      } else if (userData.role === RoleItem.Guardian && kidData) {
-        newUserProfile.name = kidData.name || '';
-      }
+  //     if (
+  //       userData.role === RoleItem.Teacher ||
+  //       userData.role === RoleItem.Director
+  //     ) {
+  //       newUserProfile.name = userData.name;
+  //     } else if (userData.role === RoleItem.Guardian && kidData) {
+  //       newUserProfile.name = kidData.name || '';
+  //     }
 
-      setUserProfile(newUserProfile);
-    }
-  }, [userData, kidData, userProfile]);
+  //     setUserProfile(newUserProfile);
+  //   }
+  // }, [userData, kidData, userProfile]);
 
   return (
     <>

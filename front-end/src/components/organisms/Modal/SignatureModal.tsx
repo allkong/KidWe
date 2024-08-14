@@ -45,7 +45,7 @@ const SignatureModal = ({onClick}: SignatureModalProps) => {
       <DashedButton
         label="서명하기"
         Icon={signatureIcon}
-        variant="positive"
+        variant="primary"
         onClick={handleModalOpen}
       />
       <ModalPortal>

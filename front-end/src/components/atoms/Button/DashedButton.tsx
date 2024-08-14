@@ -2,18 +2,22 @@ interface DashedButtonProps {
   label: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  variant?: 'positive' | 'negative';
+  variant?: 'primary' | 'gray' | 'lightgray';
 }
 
 const DashedButton = ({label, onClick, Icon, variant}: DashedButtonProps) => {
-  const colorClass =
-    variant === 'positive'
-      ? 'border-primary text-primary'
-      : 'border-gray-200 text-gray-200';
+  let colorClass = '';
+  if (variant === 'primary') {
+    colorClass = 'border-primary text-primary';
+  } else if (variant === 'gray') {
+    colorClass = 'border-gray-200 text-gray-200';
+  } else if (variant === 'lightgray') {
+    colorClass = 'border-gray-150 text-gray-150';
+  }
 
   return (
     <button
-      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 font-semibold  border-2  border-dashed rounded-md h-9 text-lg ${colorClass}`}
+      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 font-medium  border-2  border-dashed rounded-md h-9 ${colorClass}`}
       onClick={onClick}
     >
       {Icon && <Icon />}
