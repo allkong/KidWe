@@ -4,13 +4,20 @@ import {containerHeaderClass} from '@/styles/styles';
 import MyPageItem from '@/components/organisms/MyPage/MyPageItem';
 import {useNavigate} from 'react-router-dom';
 import KindergartenCard from '@/components/atoms/KindergartenCard';
+import {useGetKindergartenInfo} from '@/hooks/schedule/useGetKindergartenInfo';
+import {useLoading} from '@/hooks/loading/useLoading';
+
 import {useState} from 'react';
-import {getMemberRole} from '@/utils/userData';
+import {getMemberRole, getKindergartenId} from '@/utils/userData';
 
 const ManagementList = () => {
   const navigate = useNavigate();
 
   const isDirector = getMemberRole() === 'ROLE_DIRECTOR' ? true : false;
+
+  const {data, isLoading} = useGetKindergartenInfo(getKindergartenId()!);
+  console.log(data, 'data는 어떨까+유치원 정보를 보기위함');
+  useLoading(isLoading);
 
   const handleTeacherManagementClick = () => {
     navigate('/kindergarten/teacher');
@@ -29,7 +36,7 @@ const ManagementList = () => {
       <Header title="유치원 관리" buttonType="close" />
       <div className="h-full overflow-y-auto bg-[#F8F8F8]">
         <div className="p-5 mb-5 bg-white">
-          <KindergartenCard kindergartenName="나의 유치원" />
+          <KindergartenCard kindergartenName={data!.name} />
         </div>
         <div className="mb-5">
           {isDirector && (
