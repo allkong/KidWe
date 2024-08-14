@@ -6,6 +6,7 @@ import MyPageUpdate from '@/pages/my-page/MyPageUpdate';
 import KidUpdate from '@/pages/my-page/KidUpdate';
 
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
+import ScheduleView from '@/pages/schedule/ScheduleView';
 
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
 import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
@@ -75,8 +76,14 @@ export const router = createBrowserRouter([
   },
   {
     path: '/schedule',
-    element: <KindergartenSchedule />,
+    element: <ScheduleView />,
     loader: requireAuth,
+    children: [
+      {
+        path: '',
+        element: <KindergartenSchedule />,
+      },
+    ],
   },
   {
     path: '/my-page',
