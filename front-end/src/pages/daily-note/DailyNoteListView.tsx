@@ -79,21 +79,18 @@ const DailyNoteListView = () => {
             <div key={day}>
               <MonthDivider text={`${day}일`} color="gray" />
               {items.map(item => {
-                const isFutureTime = dayjs(item.stringSendTime).isAfter(
-                  dayjs()
-                );
+                const isFutureTime = dayjs(item.sendTime).isAfter(dayjs());
                 return (
                   <div
                     key={item.id}
                     onClick={() => handleUserItemClick(item.id)}
                   >
                     <ScheduledUserCard
-                      userName={item.kid.name}
-                      banName={item.writer.name}
-                      writer={item.writer.role}
-                      {...(isFutureTime && {
-                        sendTime: dayjs(item.stringSendTime).format('HH:mm'),
-                      })}
+                      userName={item.kidName}
+                      banName={item.banName}
+                      writer={item.writerRle}
+                      isSchedule={isFutureTime}
+                      sendTime={dayjs(item.sendTime).format('HH:mm')}
                     />
                   </div>
                 );

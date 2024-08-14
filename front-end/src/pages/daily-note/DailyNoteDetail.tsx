@@ -1,5 +1,4 @@
-import {useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import {useDailyNoteDetail} from '@/hooks/daily-note/useDailyNoteDetail';
 import {containerHeaderClass} from '@/styles/styles';
@@ -12,18 +11,8 @@ import InputBar from '@/components/organisms/Navigation/InputBar';
 import CommentSection from '@/components/organisms/Board/CommentSection';
 
 const DailyNoteDetail = () => {
-  const navigate = useNavigate();
   const {dailyNoteId} = useParams();
-
   const {data} = useDailyNoteDetail(getMemberId()!, dailyNoteId!);
-
-  useEffect(() => {
-    if (!data) {
-      setTimeout(() => {
-        navigate(-1);
-      }, 1000);
-    }
-  }, [data, navigate]);
 
   return (
     <div className="flex flex-col h-screen">
