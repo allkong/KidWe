@@ -1,18 +1,21 @@
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import FoodInfomationItem from '@/components/organisms/Food/FoodInfomationItem';
 import FoodDateNavigator from '@/components/organisms/Food/FoodDateNavigator';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
-import NoResult from '@/components/atoms/NoResult';
 import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
+import {useDeleteDailyFood} from '@/hooks/food/useDeleteDailyFood';
+import {toast} from 'react-toastify';
+import {useState} from 'react';
+import FoodListView from '@/components/organisms/Food/FoodListView';
+import FoodModal from '@/components/organisms/Food/FoodModal';
 
 dayjs.extend(weekOfYear);
 
@@ -30,6 +33,38 @@ const FoodInfo = () => {
   const {data: food, isLoading} = useGetDailyFood(getKindergartenId()!, date);
   useLoading(isLoading);
 
+  // 삭제 기능 및 모달
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const deleteMutate = useDeleteDailyFood();
+  const handleDeleteClick = () => {
+    if (food) {
+      deleteMutate.mutate(
+        {menuId: food.menuId},
+        {
+          onSuccess: () => {
+            toast.info('삭제 완료되었습니다.');
+          },
+        }
+      );
+    }
+    handleCloseModal();
+  };
+
+  const handleUpdateClick = () => {
+    navigate({
+      pathname: 'write',
+      search: `date=${date.format('YYYY-MM-DD')}&update=true`,
+    });
+  };
+
+  // navigate
   const handleLeftClick = () => {
     navigate({
       pathname: '/foods',
@@ -73,39 +108,25 @@ const FoodInfo = () => {
         <div className="flex justify-center gap-2 mb-4 w-fit h-fit">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
-        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-6">
-          {food ? (
-            <>
-              <FoodInfomationItem
-                variant="lunch"
-                menu={food.lunch}
-                allergies={food.lunchAllergies}
-                kidAllergies={food.kidAllergyListOfLunch}
-                onClick={moveToWrite}
-              />
-              <FoodInfomationItem
-                variant="snack"
-                menu={food.snack}
-                allergies={food.snackAllergies}
-                kidAllergies={food.kidAllergyListOfSnack}
-                onClick={moveToWrite}
-              />
-              <FoodInfomationItem
-                variant="dinner"
-                menu={food.dinner}
-                allergies={food.dinnerAllergies}
-                kidAllergies={food.kidAllergyListOfDinner}
-                onClick={moveToWrite}
-              />
-            </>
-          ) : (
-            <NoResult text="등록된 식단이 없습니다" />
-          )}
+        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3">
+          <FoodListView
+            food={food}
+            onUpdateClick={handleUpdateClick}
+            onOpenModalClick={handleOpenModal}
+          />
         </div>
         <NavigationBar />
       </div>
+      <FoodModal
+        isOpen={isModalOpen}
+        onClickClose={handleCloseModal}
+        onDeleteClick={handleDeleteClick}
+      />
       {getMemberRole() !== 'ROLE_GUARDIAN' && (
-        <WriteButton onClick={() => moveToWrite()} />
+        <WriteButton
+          onClick={() => moveToWrite()}
+          disabled={food?.menuId !== undefined}
+        />
       )}
     </>
   );

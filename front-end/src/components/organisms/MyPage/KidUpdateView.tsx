@@ -7,12 +7,10 @@ import KidBirthdayUpdateView from '@/components/organisms/MyPage/KidBirthdayUpda
 import KidGenderUpdateView from '@/components/organisms/MyPage/KidGenderUpdateView';
 import KidAllergyUpdateView from '@/components/organisms/MyPage/KidAllergyUpdateView';
 import KidProfileUpdateView from '@/components/organisms/MyPage/KidProfileUpdateView';
-import {getKindergartenId} from '@/utils/userData';
-
-const kidId = 1;
+import {getKidId, getKindergartenId} from '@/utils/userData';
 
 const KidUpdateView = () => {
-  const {data} = useGetKidInfo(kidId);
+  const {data} = useGetKidInfo(getKidId()!);
   const setKidInfo = useSetRecoilState(patchKidInfoState);
 
   useEffect(() => {

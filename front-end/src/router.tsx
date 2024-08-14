@@ -6,6 +6,7 @@ import MyPageUpdate from '@/pages/my-page/MyPageUpdate';
 import KidUpdate from '@/pages/my-page/KidUpdate';
 
 import KindergartenSchedule from '@/pages/schedule/KindergartenSchedule';
+import ScheduleView from '@/pages/schedule/ScheduleView';
 
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
 import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
@@ -40,7 +41,7 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 
 import NotFound from '@/pages/NotFound';
 
-import {getMemberRole, getUserData} from '@/utils/userData';
+import {getUserData} from '@/utils/userData';
 import ManagementList from '@/pages/kindergarten-management/managementList';
 import BanManagement from '@/pages/kindergarten-management/banManagement';
 import TeacherManagement from '@/pages/kindergarten-management/teacherManagement';
@@ -75,8 +76,14 @@ export const router = createBrowserRouter([
   },
   {
     path: '/schedule',
-    element: <KindergartenSchedule />,
+    element: <ScheduleView />,
     loader: requireAuth,
+    children: [
+      {
+        path: '',
+        element: <KindergartenSchedule />,
+      },
+    ],
   },
   {
     path: '/my-page',
@@ -221,12 +228,6 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <FoodInfoWrite />,
-        loader: () => {
-          if (getMemberRole() === 'ROLE_GUARDIAN') {
-            return redirect('/auth/login');
-          }
-          return null;
-        },
       },
     ],
   },
