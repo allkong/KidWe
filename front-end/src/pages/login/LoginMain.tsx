@@ -30,7 +30,7 @@ const LoginMain: React.FC = () => {
     loginMutate.mutateAsync(
       {email, password},
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           navigate('/');
         },
         onSettled: () => setisLoaded(false),
