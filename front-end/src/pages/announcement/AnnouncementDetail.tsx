@@ -31,7 +31,6 @@ const AnnounementDetail = () => {
         <ArticleSection
           content={data?.post.content || ''}
           images={data?.images || []}
-          thumbnails={data?.images || []}
         />
         <CommentSection
           commentCount={data?.commentCount || 0}

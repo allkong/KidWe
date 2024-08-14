@@ -5,6 +5,7 @@ export interface Comment {
   picture: string;
   role: RoleItem;
   name: string;
+  banName: string;
   content: string;
   createdTime: string;
   canDelete: boolean;
@@ -16,6 +17,7 @@ interface Child {
   picture: string;
   role: RoleItem;
   name: string;
+  banName: string;
   content: string;
   createdTime: string;
   canDelete: boolean;
