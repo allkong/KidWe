@@ -10,7 +10,7 @@ export const sortedByNewest = (data: DailyNoteList) => {
       items: data.dailyNoteListItemResponseDtos[key.toString()]
         .slice()
         .sort((a, b) =>
-          dayjs(b.stringSendTime).isAfter(dayjs(a.stringSendTime)) ? 1 : -1
+          dayjs(b.sendTime).isAfter(dayjs(a.sendTime)) ? 1 : -1
         ),
     }));
 };
