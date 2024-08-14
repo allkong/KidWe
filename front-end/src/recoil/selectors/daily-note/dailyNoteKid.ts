@@ -1,7 +1,7 @@
 import {selector} from 'recoil';
 import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
 
-export const dailyNoteKidSelector = selector<number>({
+export const dailyNoteKidSelector = selector<number | undefined>({
   key: 'dailyNoteKid',
   get: ({get}) => {
     const dailyNote = get(dailyNoteFormState);
