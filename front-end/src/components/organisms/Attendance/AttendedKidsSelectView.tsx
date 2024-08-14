@@ -119,7 +119,7 @@ const AttendedKidsSelectView = ({
           />
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center w-screen h-fit">
+      <div className="flex flex-col items-center justify-center w-full h-fit">
         {checkedAttendances &&
           checkedAttendances.map(attendance => (
             <CheckListItem
