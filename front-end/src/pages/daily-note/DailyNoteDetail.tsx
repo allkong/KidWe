@@ -2,6 +2,7 @@ import {useParams} from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import {useDailyNoteDetail} from '@/hooks/daily-note/useDailyNoteDetail';
+import {usePostComment} from '@/hooks/daily-note/usePostComment';
 import {containerHeaderClass} from '@/styles/styles';
 import {getMemberId} from '@/utils/userData';
 
@@ -14,7 +15,17 @@ import CommentSection from '@/components/organisms/Board/CommentSection';
 const DailyNoteDetail = () => {
   const {dailyNoteId} = useParams();
   const {data} = useDailyNoteDetail(getMemberId()!, dailyNoteId!);
+  const {mutate} = usePostComment();
   const isFutureTime = dayjs(data?.sendTime).isAfter(dayjs());
+
+  const handleCommentSubmit = (content: string) => {
+    mutate({
+      dailynoteId: dailyNoteId!,
+      memberId: getMemberId()!,
+      content,
+      parentCommentId: 0,
+    });
+  };
 
   return (
     <div className="flex flex-col h-screen">
@@ -36,7 +47,7 @@ const DailyNoteDetail = () => {
           comments={data?.comments || []}
         />
       </div>
-      {!isFutureTime && <InputBar />}
+      {!isFutureTime && <InputBar onSubmit={handleCommentSubmit} />}
     </div>
   );
 };
