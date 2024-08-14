@@ -1,4 +1,5 @@
 import {useParams} from 'react-router-dom';
+import dayjs from 'dayjs';
 
 import {useDailyNoteDetail} from '@/hooks/daily-note/useDailyNoteDetail';
 import {containerHeaderClass} from '@/styles/styles';
@@ -13,6 +14,7 @@ import CommentSection from '@/components/organisms/Board/CommentSection';
 const DailyNoteDetail = () => {
   const {dailyNoteId} = useParams();
   const {data} = useDailyNoteDetail(getMemberId()!, dailyNoteId!);
+  const isFutureTime = dayjs(data?.sendTime).isAfter(dayjs());
 
   return (
     <div className="flex flex-col h-screen">
@@ -34,7 +36,7 @@ const DailyNoteDetail = () => {
           comments={data?.comments || []}
         />
       </div>
-      <InputBar />
+      {!isFutureTime && <InputBar />}
     </div>
   );
 };
