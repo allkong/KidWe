@@ -9,5 +9,5 @@ export const MENU_ITEMS = [
   {id: 8, img: 'bus', text: '스쿨버스', to: ''},
   {id: 9, img: 'folder', text: '일지', to: ''},
   {id: 10, img: 'imageGallery', text: '앨범', to: ''},
-  {id: 11, img: 'dinosaur', text: '반 관리', to: '/kindergarten'},
+  {id: 11, img: 'dinosaur', text: '유치원관리', to: '/kindergarten'},
 ];
