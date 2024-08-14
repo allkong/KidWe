@@ -9,8 +9,8 @@ import Header from '@/components/organisms/Navigation/Header';
 import Author from '@/components/molecules/Board/Author';
 import ArticleTitle from '@/components/molecules/Board/ArticleTitle';
 import ArticleSection from '@/components/organisms/Board/ArticleSection';
-import CommentSection from '@/components/organisms/Board/CommentSection';
-import InputBar from '@/components/organisms/Navigation/InputBar';
+// import CommentSection from '@/components/organisms/Board/CommentSection';
+// import InputBar from '@/components/organisms/Navigation/InputBar';
 import noProfile from '@/assets/no-profile.png';
 
 const AnnounementDetail = () => {
@@ -32,12 +32,12 @@ const AnnounementDetail = () => {
           content={data?.post.content || ''}
           images={data?.images || []}
         />
-        <CommentSection
+        {/* <CommentSection
           commentCount={data?.commentCount || 0}
           comments={data?.comments || []}
-        />
+        /> */}
       </div>
-      <InputBar />
+      {/* <InputBar /> */}
     </div>
   );
 };
