@@ -1,12 +1,14 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {toast} from 'react-toastify';
+import {useSetRecoilState} from 'recoil';
 
 import {dailyNoteFormState} from '@/recoil/atoms/daily-note/dailyNoteFormState';
 import {useGetTeacherMemoInfo} from '@/hooks/daily-note/useGetTeacherMemoInfo';
 import {usePostAutoDailyNote} from '@/hooks/daily-note/usePostAutoDailyNote';
 import {getMemberId} from '@/utils/userData';
 import {checkSafeHTML} from '@/utils/checkSafeHTML';
+import {loadingState} from '@/recoil/atoms/axios/loading';
 
 import Button from '@/components/atoms/Button/Button';
 import Modal from '@/components/organisms/Modal/Modal';
@@ -22,7 +24,8 @@ const DailyNoteAutoCreateModal = () => {
     setPreviewContent(checkSafeHTML(response));
   };
 
-  const {mutate} = usePostAutoDailyNote(handleSuccess);
+  const setLoadingState = useSetRecoilState(loadingState);
+  const {mutate, isPending} = usePostAutoDailyNote(handleSuccess);
   const {data} = useGetTeacherMemoInfo(getMemberId()!, formState.kidId!);
 
   const handleDailyNotePreview = () => {
@@ -31,9 +34,18 @@ const DailyNoteAutoCreateModal = () => {
       return;
     }
 
-    mutate({teacherId: getMemberId()!, memoInfo: data!});
+    setPreviewContent('');
+    mutate(
+      {teacherId: getMemberId()!, memoInfo: data!},
+      {
+        onSettled: () => setLoadingState(false),
+      }
+    );
     setIsOpen(true);
   };
+  useEffect(() => {
+    setLoadingState(isPending);
+  }, [isPending, setLoadingState]);
 
   const onSubmit = () => {
     setFormState(prev => ({
@@ -68,6 +80,7 @@ const DailyNoteAutoCreateModal = () => {
             round="full"
             variant="positive"
           />
+          <Modal.Background onClick={() => setIsOpen(false)} />
         </Modal>
       </ModalPortal>
     </>

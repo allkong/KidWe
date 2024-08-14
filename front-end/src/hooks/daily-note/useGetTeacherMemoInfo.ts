@@ -8,5 +8,6 @@ export const useGetTeacherMemoInfo = (teacherId: number, kidId: number) => {
     queryFn: () => {
       return getTeacherMemoInfo(teacherId, kidId);
     },
+    enabled: !!kidId,
   });
 };

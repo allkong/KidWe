@@ -29,6 +29,7 @@ const MemoChildSelect = ({
 }: MemoChildSelectProps) => {
   const [memoKids, setMemoKids] = useRecoilState(memoKidsSelector);
   const [dailyNoteKid, setDailyNoteKid] = useRecoilState(dailyNoteKidSelector);
+  const [kidImage, setKidImage] = useState<undefined | string>();
 
   const [children, setChildren] = useState<CheckedKid[]>();
   const [filteredChildren, setFilteredChildren] = useState<CheckedKid[]>();
@@ -83,6 +84,7 @@ const MemoChildSelect = ({
       if (type === 'memo') {
         setMemoKids(checkedChild.map(child => child.kid));
       } else if (type === 'daily-note') {
+        setKidImage(checkedChild[0].kid?.image);
         setDailyNoteKid(checkedChild[0].kid.id);
       }
 
@@ -128,8 +130,8 @@ const MemoChildSelect = ({
             memoKids.map(kid => (
               <ProfileImage key={kid.id} src={getFullImageSource(kid.image)} />
             ))}
-          {type === 'daily-note' && dailyNoteKid !== 0 && (
-            <ProfileImage src={''} />
+          {type === 'daily-note' && dailyNoteKid !== undefined && (
+            <ProfileImage src={getFullImageSource(kidImage)} />
           )}
         </div>
       </div>
