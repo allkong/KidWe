@@ -1,4 +1,3 @@
-// src/hooks/dailyNote/usePostComment.ts
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {postComment, PostCommentPayload} from '@/apis/daily-note/postComment';
 
