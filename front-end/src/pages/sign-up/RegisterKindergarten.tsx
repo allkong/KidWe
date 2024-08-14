@@ -7,6 +7,8 @@ import {useRecoilState} from 'recoil';
 import {SignupDirectorState} from '@/recoil/atoms/signup/signupDirector';
 import {useMutation} from '@tanstack/react-query';
 import {postDirectorKindergarten} from '@/apis/signup/postDirectorKindergarten';
+import {getMemberId} from '@/utils/userData';
+
 // import {useGetUserInfo} from '@/hooks/user/useGetUserInfo';
 
 declare global {
@@ -44,7 +46,7 @@ const RegisterKindergarten: React.FC = () => {
   const handleRegisterKindergartenButtonClick = async () => {
     setSignupRegisterKindergarten(prevState => ({
       ...prevState,
-      memberId: 7,
+      memberId: getMemberId()!,
       name: kindergartenname,
       address: addr,
       addressDetail: kindergartenaddrdetail,

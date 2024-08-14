@@ -1,5 +1,6 @@
 import {getToken} from 'firebase/messaging';
 import {messaging} from '@/utils/notification/settingFCM';
+import {postNotification} from '@/apis/notification/postNotification';
 export const useNotification = () => {
   // firebase의 VAPID 키를 전달하여 토큰 발급!
   const requestPermissionAndRegister = async () => {
@@ -18,6 +19,7 @@ export const useNotification = () => {
           });
 
           console.log('FCM Token:', token);
+          await postNotification(token);
         })
         .catch(error => {
           console.log('Service Worker 등록 실패:', error);

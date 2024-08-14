@@ -150,7 +150,7 @@ const KindergartenBan: React.FC = () => {
       <div className="flex flex-col items-center space-y-8">
         <h2 className="text-lg text-primary">{kindergartenData.name}</h2>
         <p className="text-sm">
-          {kindergartenData.address}
+          {kindergartenData.address}&nbsp;
           {kindergartenData.addressDetail}
         </p>
       </div>

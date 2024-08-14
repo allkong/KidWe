@@ -6,7 +6,7 @@ export const SignupGuardianState = atom<SignupGuardian>({
   key: 'signupGuardian',
   default: {
     dto: {
-      memberId: 3,
+      memberId: 0,
       kindergartenId: 0,
       banId: 0,
       kidName: '',

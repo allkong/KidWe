@@ -88,7 +88,7 @@ const DailyNoteListView = () => {
                     <ScheduledUserCard
                       userName={item.kidName}
                       banName={item.banName}
-                      writer={item.writerRle}
+                      writer={item.writerRole}
                       isSchedule={isFutureTime}
                       sendTime={dayjs(item.sendTime).format('HH:mm')}
                     />

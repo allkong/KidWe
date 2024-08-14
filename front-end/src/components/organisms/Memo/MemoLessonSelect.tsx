@@ -94,7 +94,11 @@ const MemoLessonSelect = () => {
             <p>{memoLesson}</p>
           </div>
         ) : (
-          <DashedButton label="+" onClick={handleOpenLessonModal} />
+          <DashedButton
+            label="+"
+            onClick={handleOpenLessonModal}
+            variant="lightgray"
+          />
         )}
       </div>
       <p className="text-sm">메모</p>
