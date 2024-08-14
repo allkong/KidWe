@@ -5,7 +5,7 @@ import {setAccessToken} from '@/utils/userAccessToken';
 import {setUserData} from '@/utils/userData';
 import {setRefreshToken} from '@/utils/userRefreshToken';
 import {getFcmToken} from '@/utils/notification/getFcmToken';
-import {postNotification} from '@/apis/notification/postNotification';
+import {sendFcmToken} from '@/apis/notification/sendFcmToken';
 
 /**
  *
@@ -33,7 +33,7 @@ export const useLogin = () => {
 
             // FCM 토큰 가져오기
             const token = await getFcmToken();
-            await postNotification(token);
+            await sendFcmToken(token);
           })
           .catch(error => {
             console.log('Service Worker 등록 실패:', error);

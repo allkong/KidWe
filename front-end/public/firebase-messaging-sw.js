@@ -1,14 +1,14 @@
-self.addEventListener('install', function (e) {
+self.addEventListener('install', () => {
   console.log('fcm sw install..');
   self.skipWaiting();
 });
 
-self.addEventListener('activate', function (e) {
+self.addEventListener('activate', () => {
   console.log('fcm sw activate..');
 });
 
-self.addEventListener('push', function (e) {
-  console.log('push: ', e.data.json());
+self.addEventListener('push', async e => {
+  // console.log('push: ', e.data.json());
   if (!e.data.json()) return;
 
   const resultData = e.data.json().notification;
@@ -26,7 +26,7 @@ self.addEventListener('push', function (e) {
 
 self.addEventListener('notificationclick', function (event) {
   console.log('notification click');
-  const url = '/';
   event.notification.close();
-  event.waitUntil(clients.openWindow(url));
+  // const url = '/';
+  // event.waitUntil(clients.openWindow(url));
 });
