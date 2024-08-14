@@ -15,6 +15,15 @@ export default defineConfig({
     }),
     // basicSsl(),
   ],
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
   resolve: {
     alias: [
       {find: '@', replacement: path.resolve(__dirname, 'src')},
