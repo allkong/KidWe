@@ -140,7 +140,8 @@ const DailyNoteWrite = () => {
       </div>
       <ButtonBar
         label="전송하기"
-        disabled={false}
+        disabled={formState.kidId === undefined}
+        variant={formState.kidId === undefined ? 'negative' : 'positive'}
         onClick={handleFormSubmit}
         options={options}
       />

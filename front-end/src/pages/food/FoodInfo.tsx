@@ -16,6 +16,8 @@ import {toast} from 'react-toastify';
 import {useState} from 'react';
 import FoodListView from '@/components/organisms/Food/FoodListView';
 import FoodModal from '@/components/organisms/Food/FoodModal';
+import FoodModifyButton from '@/components/organisms/Food/FoodModifyButton';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 dayjs.extend(weekOfYear);
 
@@ -108,12 +110,16 @@ const FoodInfo = () => {
         <div className="flex justify-center gap-2 mb-4 w-fit h-fit">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
+        <div className="flex justify-end w-full">
+          {!isGuardian() && food && (
+            <FoodModifyButton
+              onOpenModalClick={handleOpenModal}
+              onUpdateClick={handleUpdateClick}
+            />
+          )}
+        </div>
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3">
-          <FoodListView
-            food={food}
-            onUpdateClick={handleUpdateClick}
-            onOpenModalClick={handleOpenModal}
-          />
+          <FoodListView food={food} />
         </div>
         <NavigationBar />
       </div>

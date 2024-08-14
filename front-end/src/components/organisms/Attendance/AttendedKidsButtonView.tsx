@@ -56,7 +56,7 @@ const AttendedKidsButtonView = ({
           variant="negative"
         />
       </div>
-      <div className="flex flex-col items-center justify-center w-screen h-fit">
+      <div className="flex flex-col items-center justify-center w-full h-fit">
         {attendances &&
           attendances.map(attendance => (
             <UserCardItemWithButton
