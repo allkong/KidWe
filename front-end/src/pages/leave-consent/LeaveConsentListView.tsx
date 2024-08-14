@@ -16,6 +16,7 @@ import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
 import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
@@ -70,7 +71,7 @@ const LeaveConsentListView = () => {
   const groupedData = groupByDate(data ?? []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen">
       {isLoading && <Spinner />}
       <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
@@ -108,7 +109,7 @@ const LeaveConsentListView = () => {
           ))
         )}
       </div>
-      <WriteButton onClick={handleWriteButtonClick} />
+      {isGuardian() && <WriteButton onClick={handleWriteButtonClick} />}
       <NavigationBar />
     </div>
   );

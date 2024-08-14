@@ -98,7 +98,7 @@ const FoodInfo = () => {
   return (
     <>
       <div
-        className={`${containerNavigatorClass} flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
+        className={`${containerNavigatorClass} relative flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
       >
         <Header title="급식 정보" buttonType="close" />
         <DateNavigator
@@ -122,18 +122,18 @@ const FoodInfo = () => {
           <FoodListView food={food} />
         </div>
         <NavigationBar />
+        {getMemberRole() !== 'ROLE_GUARDIAN' && (
+          <WriteButton
+            onClick={() => moveToWrite()}
+            disabled={food?.menuId !== undefined}
+          />
+        )}
       </div>
       <FoodModal
         isOpen={isModalOpen}
         onClickClose={handleCloseModal}
         onDeleteClick={handleDeleteClick}
       />
-      {getMemberRole() !== 'ROLE_GUARDIAN' && (
-        <WriteButton
-          onClick={() => moveToWrite()}
-          disabled={food?.menuId !== undefined}
-        />
-      )}
     </>
   );
 };
