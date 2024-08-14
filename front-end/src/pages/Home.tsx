@@ -5,15 +5,16 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import HomeMenu from '@/components/organisms/Content/HomeMenu';
 import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
+import {getMemberId} from '@/utils/userData';
+import noProfile from '@/assets/no-profile.png';
+import {ROLE_NAMES} from '@/constants/roleNames';
+import {RoleItem} from '@/enum/roleItem';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const Home = () => {
-  const userInfo = {
-    profile:
-      'https://flexible.img.hani.co.kr/flexible/normal/960/960/imgdb/resize/2019/0121/00501111_20190121.JPG',
-    userName: '강혁준',
-    role: '선생님',
-    kindergartenName: '싸피 유치원',
-  };
+  const {data: userInfo} = useGetUserInfo(getMemberId()!);
+  const userImage = getFullImageSource(userInfo?.picture);
 
   const navigate = useNavigate();
   const handleUserCardItemClick = () => {
@@ -29,12 +30,14 @@ const Home = () => {
           <NotificationButton />
         </div>
         <div className="">
-          <KindergartenCard kindergartenName={userInfo.kindergartenName} />
+          <KindergartenCard
+            kindergartenName={userInfo?.kindergartenName ?? ''}
+          />
         </div>
         <div onClick={handleUserCardItemClick}>
           <UserCardItem
-            profile={userInfo.profile}
-            userName={`${userInfo.userName} ${userInfo.role}`}
+            profile={userImage ?? noProfile}
+            userName={`${userInfo?.name} ${ROLE_NAMES[userInfo?.role as RoleItem]}`}
             cardType="arrow"
           />
         </div>
