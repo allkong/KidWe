@@ -5,5 +5,5 @@ export interface PatchUserInfo {
     tel: string;
     password: string;
   };
-  picture: string;
+  picture: string | undefined;
 }

@@ -12,6 +12,7 @@ import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {useNavigate} from 'react-router-dom';
 import {patchUserPictureState} from '@/recoil/atoms/my-page/userPicture';
 import {getMemberId} from '@/utils/userData';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const MyPageUpdate = () => {
   const navigate = useNavigate();
@@ -26,8 +27,11 @@ const MyPageUpdate = () => {
 
   useEffect(() => {
     if (data !== undefined) {
-      const {id, name, tel} = data;
-      setPatchUserInfo({dto: {id, name, tel, password: ''}, picture: ''});
+      const {id, name, tel, picture} = data;
+      setPatchUserInfo({
+        dto: {id, name, tel, password: ''},
+        picture: getFullImageSource(picture),
+      });
     }
   }, [data, setPatchUserInfo]);
 
