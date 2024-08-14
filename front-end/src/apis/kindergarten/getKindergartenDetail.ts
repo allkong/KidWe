@@ -1,9 +1,11 @@
 import axiosInstance from '@/apis/axiosInstance';
-import {GetKindergarten} from '@/types/kindergarten/GetKindergarten';
+import {GetKindergartenDetail} from '@/types/kindergarten/GetKindergartenDetail';
 
-export const getKindergartenInfo = async (
+export const getKindergartenDetail = async (
   kindergartenId: number
-): Promise<GetKindergarten> => {
-  const result = await axiosInstance.get(`/kindergartens/${kindergartenId}`);
+): Promise<GetKindergartenDetail[]> => {
+  const result = await axiosInstance.get(
+    `/kindergartens/${kindergartenId}/detail`
+  );
   return result.data;
 };
