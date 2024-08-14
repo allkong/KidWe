@@ -1,24 +1,21 @@
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import FoodInfomationItem from '@/components/organisms/Food/FoodInfomationItem';
 import FoodDateNavigator from '@/components/organisms/Food/FoodDateNavigator';
 import Header from '@/components/organisms/Navigation/Header';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
-import NoResult from '@/components/atoms/NoResult';
 import dayjs, {Dayjs} from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {useGetDailyFood} from '@/hooks/food/useGetDailyFood';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getKindergartenId, getMemberRole} from '@/utils/userData';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
-import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import {useDeleteDailyFood} from '@/hooks/food/useDeleteDailyFood';
 import {toast} from 'react-toastify';
-import ModalPortal from '@/components/organisms/Modal/ModalPortal';
-import Modal from '@/components/organisms/Modal/Modal';
 import {useState} from 'react';
+import FoodListView from '@/components/organisms/Food/FoodListView';
+import FoodModal from '@/components/organisms/Food/FoodModal';
 
 dayjs.extend(weekOfYear);
 
@@ -112,71 +109,24 @@ const FoodInfo = () => {
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
         <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3">
-          {food ? (
-            <>
-              <div className="flex justify-end w-full gap-1">
-                <XSmallButton label="삭제" onClick={handleOpenModal} />
-                <XSmallButton
-                  label="수정"
-                  variant="positive"
-                  onClick={handleUpdateClick}
-                />
-              </div>
-              <FoodInfomationItem
-                variant="lunch"
-                menu={food.lunch}
-                allergies={food.lunchAllergies}
-                kidAllergies={food.kidAllergyListOfLunch}
-                onClick={moveToWrite}
-              />
-              <FoodInfomationItem
-                variant="snack"
-                menu={food.snack}
-                allergies={food.snackAllergies}
-                kidAllergies={food.kidAllergyListOfSnack}
-                onClick={moveToWrite}
-              />
-              <FoodInfomationItem
-                variant="dinner"
-                menu={food.dinner}
-                allergies={food.dinnerAllergies}
-                kidAllergies={food.kidAllergyListOfDinner}
-                onClick={moveToWrite}
-              />
-            </>
-          ) : (
-            <NoResult text="등록된 식단이 없습니다" />
-          )}
+          <FoodListView
+            food={food}
+            onUpdateClick={handleUpdateClick}
+            onOpenModalClick={handleOpenModal}
+          />
         </div>
         <NavigationBar />
       </div>
-      <ModalPortal>
-        <Modal isOpen={isModalOpen}>
-          <Modal.Header title="알림" />
-          <Modal.Body>
-            <div className="flex flex-col items-center justify-center w-full h-full py-10">
-              <p>식단을 삭제하시겠습니까?</p>
-              <p>삭제한 식단은 되돌릴 수 없습니다.</p>
-            </div>
-          </Modal.Body>
-          <Modal.BottomButton
-            size="large"
-            label="취소"
-            round="full"
-            variant="negative"
-            onClick={handleCloseModal}
-          />
-          <Modal.BottomButton
-            size="large"
-            label="삭제"
-            round="full"
-            onClick={handleDeleteClick}
-          />
-          <Modal.Background onClick={handleCloseModal} />
-        </Modal>
-      </ModalPortal>
+      <FoodModal
+        isOpen={isModalOpen}
+        onClickClose={handleCloseModal}
+        onDeleteClick={handleDeleteClick}
+      />
       {getMemberRole() !== 'ROLE_GUARDIAN' && (
-        <WriteButton onClick={() => moveToWrite()} />
+        <WriteButton
+          onClick={() => moveToWrite()}
+          disabled={food?.menuId !== undefined}
+        />
       )}
     </>
   );
