@@ -6,6 +6,7 @@ import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 import {getBanId} from '@/utils/userData';
 import {toast} from 'react-toastify';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
@@ -60,7 +61,7 @@ const AttendedKidsButtonView = ({
           attendances.map(attendance => (
             <UserCardItemWithButton
               key={attendance.attendanceId}
-              profile=""
+              profile={getFullImageSource(attendance?.image)}
               userName={attendance.kidName}
               negativeLabel="미처리"
               onClickNegative={() => {

@@ -47,10 +47,41 @@ import BanManagement from '@/pages/kindergarten-management/banManagement';
 import TeacherManagement from '@/pages/kindergarten-management/teacherManagement';
 import KindergartenManagement from '@/pages/kindergarten-management/kindergartenManagement';
 import ChildManagement from '@/pages/kindergarten-management/childManagement';
+import {isGuardian} from './utils/auth/isGuardian';
+import {isTeacher} from './utils/auth/isTeacher';
+import {isDirector} from './utils/auth/isDirector';
 
 const requireAuth = () => {
   if (getUserData() === null) {
     return redirect('/auth/login');
+  }
+  return null;
+};
+
+const onlyDirectorAndTeacher = () => {
+  if (isGuardian()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyGuardian = () => {
+  if (!isGuardian()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyTeacher = () => {
+  if (!isTeacher()) {
+    return redirect('/');
+  }
+  return null;
+};
+
+const onlyDirector = () => {
+  if (!isDirector()) {
+    return redirect('/');
   }
   return null;
 };
@@ -141,7 +172,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/attendances',
-    loader: requireAuth,
+    loader: onlyDirectorAndTeacher,
     element: <AttendanceView />,
     children: [
       {
@@ -165,6 +196,7 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <MedicationWrite />,
+        loader: onlyGuardian,
       },
     ],
   },
@@ -183,12 +215,13 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <LeaveConsentnWrite />,
+        loader: onlyGuardian,
       },
     ],
   },
   {
     path: '/memos',
-    loader: requireAuth,
+    loader: onlyTeacher,
     element: <MemoView />,
     children: [
       {
@@ -207,13 +240,17 @@ export const router = createBrowserRouter([
   },
   {
     path: '/kindergarten',
-    loader: requireAuth,
+    loader: onlyDirectorAndTeacher,
     children: [
       {path: '', element: <ManagementList />},
       {path: 'ban', element: <BanManagement />},
-      {path: 'setting', element: <KindergartenManagement />},
+      {
+        path: 'setting',
+        element: <KindergartenManagement />,
+        loader: onlyDirector,
+      },
       {path: 'child', element: <ChildManagement />},
-      {path: 'teacher', element: <TeacherManagement />},
+      {path: 'teacher', element: <TeacherManagement />, loader: onlyDirector},
     ],
   },
   {
@@ -228,6 +265,7 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <FoodInfoWrite />,
+        loader: onlyDirectorAndTeacher,
       },
     ],
   },

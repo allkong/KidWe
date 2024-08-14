@@ -28,7 +28,7 @@ const AttendanceManagement = () => {
 
   return (
     <div
-      className={`${containerNavigatorClass} flex flex-col h-screen w-screen max-w-screen`}
+      className={`${containerNavigatorClass} flex flex-col h-screen w-full max-w-screen`}
     >
       <Header title="출석" buttonType="close" />
       <DateNavigator

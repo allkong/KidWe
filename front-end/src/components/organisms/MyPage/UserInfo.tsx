@@ -5,6 +5,7 @@ import {getMemberId} from '@/utils/userData';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const UserInfo = () => {
   const {data, isLoading} = useGetUserInfo(getMemberId()!);
@@ -16,7 +17,10 @@ const UserInfo = () => {
         <p className="text-3xl font-semibold">{data?.name}</p>
         <p>{ROLE_NAMES[data?.role as RoleItem]}</p>
       </div>
-      <ProfileImage src={NoProfile} size="7rem" />
+      <ProfileImage
+        src={getFullImageSource(data?.picture) ?? NoProfile}
+        size="7rem"
+      />
     </div>
   );
 };
