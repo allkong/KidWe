@@ -123,6 +123,7 @@ const FoodInfoWriteItem = ({
             <DashedButton
               onClick={handleModalOpen}
               label="알레르기 정보 추가"
+              variant="lightgray"
             />
           )}
         </div>
