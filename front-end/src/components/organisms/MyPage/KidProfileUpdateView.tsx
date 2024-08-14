@@ -22,16 +22,21 @@ const KidProfileUpdateView = () => {
   };
 
   return (
-    <>
-      <ImageUploadButton
-        userPicture={kidProfile}
-        onChangePreview={handleChangePicture}
-        onChangeFile={handleChangeFile}
-      />
-      <div className="w-fit">
-        <XSmallButton label="삭제" onClick={handleDeletePicture} />
+    <div className="flex flex-col w-full">
+      <p>자녀 이미지</p>
+      <div className="flex flex-col items-center justify-center w-full gap-1">
+        <ImageUploadButton
+          userPicture={kidProfile}
+          onChangePreview={handleChangePicture}
+          onChangeFile={handleChangeFile}
+        />
+        {kidProfile && (
+          <div className="w-fit">
+            <XSmallButton label="삭제" onClick={handleDeletePicture} />
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
