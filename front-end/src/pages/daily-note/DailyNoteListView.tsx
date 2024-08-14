@@ -60,7 +60,7 @@ const DailyNoteListView = () => {
   );
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen">
       <Header title="알림장" buttonType="close" />
       <DateNavigator
         title={currentMonth.format('YY년 M월')}
