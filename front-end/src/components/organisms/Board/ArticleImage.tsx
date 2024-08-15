@@ -20,7 +20,7 @@ const ArticleImage = ({images}: ArticleImageProps) => {
 
   return (
     <>
-      <ArticleImageList images={images} onClick={handleClick} />
+      <ArticleImageList images={images} onClick={handleClick} readOnly />
       {selectedImage !== null && (
         <ModalPortal>
           <ImageModal

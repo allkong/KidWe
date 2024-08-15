@@ -11,6 +11,7 @@ import ScheduleView from '@/pages/schedule/ScheduleView';
 import DailyNoteListView from '@/pages/daily-note/DailyNoteListView';
 import DailyNoteDetail from '@/pages/daily-note/DailyNoteDetail';
 import DailyNoteWrite from '@/pages/daily-note/DailyNoteWirte';
+import DailyNoteEdit from '@/pages/daily-note/DailyNoteEdit';
 
 import AnnouncementListView from '@/pages/announcement/AnnouncementListView';
 import AnnouncementDetail from '@/pages/announcement/AnnouncementDetail';
@@ -149,6 +150,10 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <DailyNoteWrite />,
+      },
+      {
+        path: ':dailyNoteId/edit',
+        element: <DailyNoteEdit />,
       },
     ],
   },

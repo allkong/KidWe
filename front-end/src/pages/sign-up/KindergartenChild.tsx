@@ -54,16 +54,10 @@ const KindergartenChild: React.FC = () => {
       };
       console.log(postsignupGuardian);
       console.log(banName);
-      return postGuardian(postsignupGuardian);
+      return postGuardian(postsignupGuardian, imageFile);
     },
-    onSuccess: data => {
-      if (data === '성공') {
-        navigate('/auth/signup/complete');
-      } else if (data === '실패') {
-        toast.error('이메일 중복으로 인해 회원가입에 실패하였습니다.');
-      } else {
-        toast.error(data);
-      }
+    onSuccess: () => {
+      navigate('/auth/signup/complete');
     },
     onError: error => {
       toast.error(`회원가입에 실패했습니다: ${error.message}`);

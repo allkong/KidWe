@@ -1,30 +1,26 @@
+import {Comment} from '@/types/article/Comment';
+
+export interface ArticleOfAnnouncement {
+  picture: string;
+  role: string;
+  banName: string;
+  post: Post;
+  images: string[];
+  voteId: number;
+  voteItems: VoteItem[];
+  commentCount: number;
+  comments: Comment[];
+  canDelete: boolean;
+}
+
 interface Post {
-  createDateTime: string;
+  createdDateTime: string;
   title: string;
   content: string;
-  picture: string;
 }
 
 interface VoteItem {
   voteItemId: number;
   itemName: string;
   value: number;
-}
-
-interface Comment {
-  commentId: number;
-  parentCommentId: number;
-  memberName: string;
-  content: string;
-  dateTimeWritten: string;
-}
-
-export interface ArticleOfAnnouncement {
-  banName: string;
-  post: Post;
-  annoucementImages: string[];
-  voteId: number;
-  voteItems: VoteItem[];
-  commentCnt: number;
-  comment: Comment[];
 }
