@@ -31,7 +31,9 @@ const FoodListView = ({food}: FoodListViewProps) => {
           />
         </>
       ) : (
-        <NoResult text="등록된 식단이 없습니다" />
+        <div className="flex items-center justify-center w-full h-full">
+          <NoResult text="등록된 식단이 없습니다" />
+        </div>
       )}
     </>
   );
