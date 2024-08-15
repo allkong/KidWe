@@ -71,7 +71,7 @@ const AttendedKidsSelectView = ({
         ?.filter(value => value.isChecked)
         .map(value => value.kidId);
       if (selectedKids !== undefined) {
-        if (selectedKids.length !== 0) {
+        if (selectedKids.length === 0) {
           toast.info('선택된 학생이 없습니다.');
           onClickButton?.();
         } else {
