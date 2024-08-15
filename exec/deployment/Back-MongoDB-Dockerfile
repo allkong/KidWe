@@ -1,0 +1,7 @@
+FROM openjdk:17-jdk
+
+ARG JAR_FILE=mongo-back-0.0.1-SNAPSHOT.jar
+
+COPY ${JAR_FILE} /back-mongo.jar
+
+ENTRYPOINT ["java", "-jar", "/back-mongo.jar"]
