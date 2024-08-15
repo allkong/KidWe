@@ -110,7 +110,7 @@ const FoodInfo = () => {
         <div className="flex justify-center gap-2 mb-4 w-fit h-fit">
           <FoodDateNavigator date={date} onClick={handleDateChange} />
         </div>
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full mb-3">
           {!isGuardian() && food && (
             <FoodModifyButton
               onOpenModalClick={handleOpenModal}
@@ -118,7 +118,7 @@ const FoodInfo = () => {
             />
           )}
         </div>
-        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3 overflow-y-auto scrollbar-hide">
+        <div className="flex-grow mb-20 space-y-3 overflow-y-auto scrollbar-hide">
           <FoodListView food={food} />
         </div>
         <NavigationBar />
