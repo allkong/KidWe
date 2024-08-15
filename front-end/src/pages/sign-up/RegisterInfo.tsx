@@ -21,7 +21,6 @@ const RegisterInfo = () => {
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
   const [userpicture, setPicture] = useState<string>('');
-  // const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useRecoilState(signupPictureState);
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
