@@ -82,11 +82,14 @@ const FoodInfomationItem = ({
             <p className="text-xs">주의 학생</p>
             <div className="flex flex-wrap gap-1 mb-3">
               {kidAllergies?.map(kid => (
-                <ProfileImage
-                  src={getFullImageSource(kid.kidImageUrl)}
-                  key={kid.kidName}
-                  size="1rem"
-                />
+                <div className="flex flex-col items-center justify-center gap-1 w-fit h-fit">
+                  <ProfileImage
+                    src={getFullImageSource(kid.kidImageUrl)}
+                    key={kid.kidName}
+                    size="2rem"
+                  />
+                  <p className="text-xxs">{kid.kidName}</p>
+                </div>
               ))}
             </div>
           </>

@@ -179,9 +179,7 @@ const RegisterKindergarten: React.FC = () => {
           />
         </div>
       </div>
-      <div
-        className={`${isShort ? 'absolute bottom-0' : 'relative mt-8'} py-10 w-full flex justify-center px-4`}
-      >
+      <div className={`py-10 w-full flex items-center justify-center px-4`}>
         <Button
           label="유치원 등록"
           onClick={handleRegisterKindergartenButtonClick}
