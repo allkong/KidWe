@@ -12,6 +12,7 @@ import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {getFullImageSource} from '@/utils/getFullImageSource';
 import {isTeacher} from '@/utils/auth/isTeacher';
+import kidweLogo from '@/assets/kidwe-logo.png';
 
 const Home = () => {
   const {data: userInfo} = useGetUserInfo(getMemberId()!);
@@ -24,26 +25,29 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen px-5 space-y-3 border-t pb-[8rem] bg-secondary">
-        <div className="flex justify-between pt-7">
-          {/* 서비스명 & 로고 */}
-          <div></div>
+      <div className="min-h-screen px-5 border-t pb-[8rem] bg-secondary">
+        <div className="flex justify-between pt-4">
+          <div>
+            <img className="w-32" src={kidweLogo} />
+          </div>
           <NotificationButton />
         </div>
-        <div className="">
+        <div className="mb-2">
           <KindergartenCard
             kindergartenName={userInfo?.kindergartenName ?? ''}
           />
         </div>
-        <div onClick={handleUserCardItemClick}>
-          <UserCardItem
-            profile={userImage ?? noProfile}
-            userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
-            cardType="arrow"
-          />
+        <div className="space-y-3 ">
+          <div onClick={handleUserCardItemClick}>
+            <UserCardItem
+              profile={userImage ?? noProfile}
+              userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
+              cardType="arrow"
+            />
+          </div>
+          <HomeMenu />
+          {isTeacher() && <MemoShortcut />}
         </div>
-        <HomeMenu />
-        {isTeacher() && <MemoShortcut />}
       </div>
       <NavigationBar />
     </>
