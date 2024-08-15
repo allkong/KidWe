@@ -50,7 +50,7 @@ const KindergartenSchedule = () => {
 
   return (
     <>
-      <Header title="유치원 일정" buttonType="close" />
+      <Header title="유치원 일정" />
       <DateNavigator
         title={date.format('YY년 MM월')}
         onClickLeft={handleBeforeMonth}
