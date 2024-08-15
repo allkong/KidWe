@@ -30,7 +30,7 @@ const LoginMain: React.FC = () => {
     loginMutate.mutateAsync(
       {email, password},
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           const memberStatus = getMemberStatus();
           const memberRole = getMemberRole();
           console.log('LoginMain page에서 상태,역할', memberRole, memberStatus);
