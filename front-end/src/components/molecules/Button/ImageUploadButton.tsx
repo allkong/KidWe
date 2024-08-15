@@ -1,7 +1,10 @@
-import ProfileImage from '@/components/atoms/Image/ProfileImage';
-import NoProfile from '@/assets/no-profile.png';
+import {useState} from 'react';
 import {ChangeEvent, useRef} from 'react';
 import {getImageFromInputEvent} from '@/utils/getImageFromInputEvent';
+import {getFullImageSource} from '@/utils/getFullImageSource';
+
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
+import NoProfile from '@/assets/no-profile.png';
 
 interface ImageUploadButtonProps {
   userPicture?: string;
@@ -15,6 +18,7 @@ const ImageUploadButton = ({
   onChangePreview,
 }: ImageUploadButtonProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isImageSelected, setIsImageSelected] = useState(false);
 
   const handleImageChangeClick = () => {
     inputRef.current?.click();
@@ -25,9 +29,16 @@ const ImageUploadButton = ({
     if (file !== null && preview !== null) {
       onChangeFile?.(file);
       onChangePreview?.(preview);
+      setIsImageSelected(true);
     }
   };
 
+  const imageSrc = isImageSelected
+    ? userPicture
+    : getFullImageSource(userPicture || NoProfile);
+
+  console.log(isImageSelected);
+  console.log(getFullImageSource(userPicture));
   return (
     <div onClick={handleImageChangeClick} className="relative w-fit h-fit">
       <input
@@ -41,10 +52,7 @@ const ImageUploadButton = ({
       <div className="absolute flex items-center justify-center w-20 h-20 text-2xl font-bold transition-opacity bg-gray-200 rounded-full opacity-0 hover:opacity-30">
         +
       </div>
-      <ProfileImage
-        src={userPicture && userPicture !== '' ? userPicture : NoProfile}
-        size="5rem"
-      />
+      <ProfileImage src={imageSrc || ''} size="5rem" />
     </div>
   );
 };

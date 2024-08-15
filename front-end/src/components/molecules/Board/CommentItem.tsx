@@ -13,6 +13,7 @@ interface CommentItemProps {
   onClick: () => void;
   isReply?: boolean;
   isSelected?: boolean;
+  canDelete?: boolean;
   onDelete: () => void;
 }
 
@@ -25,6 +26,7 @@ const CommentItem = ({
   onClick,
   isReply = false,
   isSelected = false,
+  canDelete = false,
   onDelete,
 }: CommentItemProps) => {
   return (
@@ -57,9 +59,11 @@ const CommentItem = ({
           </div>
         </div>
       </div>
-      <MoreButton align="vertical">
-        <MoreButton.Option text="삭제하기" onClick={onDelete} />
-      </MoreButton>
+      {canDelete && (
+        <MoreButton align="vertical">
+          <MoreButton.Option text="삭제하기" onClick={onDelete} />
+        </MoreButton>
+      )}
     </div>
   );
 };

@@ -51,7 +51,7 @@ const LeaveConsentDetail = () => {
       <Header title="귀가동의서" buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem
-          profile=""
+          profile={userInfo.picture}
           userName={userInfo.kidName}
           banName={userInfo.banName}
           cardType="detail"

@@ -1,3 +1,4 @@
+import {getFullImageSource} from '@/utils/getFullImageSource';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 
@@ -25,7 +26,7 @@ const UserCardItem = ({
       className={`flex justify-between w-full items-center py-5 px-8 bg-white border-b`}
     >
       <div className="flex items-center space-x-3">
-        <ProfileImage src={profile} size="2.9rem" />
+        <ProfileImage src={getFullImageSource(profile)} size="2.9rem" />
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>

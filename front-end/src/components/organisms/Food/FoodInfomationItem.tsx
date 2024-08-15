@@ -1,10 +1,11 @@
+import {KidAllergy} from '@/types/food/KidAllergy';
+import {getFullImageSource} from '@/utils/getFullImageSource';
+
 import sun from '@/assets/icons/sun-with-face.svg';
 import moon from '@/assets/icons/full-moon-face.svg';
 import hotDog from '@/assets/icons/hot-dog.svg';
 import Tag from '@/components/atoms/Tag/Tag';
-import {KidAllergy} from '@/types/food/KidAllergy';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
-import {getFullImageSource} from '@/utils/getFullImageSource';
 
 interface FoodInfomationItemProps {
   variant?: 'lunch' | 'snack' | 'dinner';

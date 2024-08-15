@@ -3,7 +3,6 @@ import {patchUserPictureState} from '@/recoil/atoms/my-page/userPicture';
 import {patchUserPictureSelector} from '@/recoil/selectors/my-page/userInfoPicture';
 import {useRecoilState, useSetRecoilState} from 'recoil';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import noProfile from '@/assets/no-profile.png';
 
 const UserImageUpdateView = () => {
   const [userPicture, setUserPicture] = useRecoilState(
@@ -29,7 +28,7 @@ const UserImageUpdateView = () => {
       <p>유저 프로필</p>
       <div className="flex flex-col items-center justify-center w-full gap-2">
         <ImageUploadButton
-          userPicture={userPicture ?? noProfile}
+          userPicture={userPicture}
           onChangePreview={handleChangePreview}
           onChangeFile={handleChangeFile}
         />
