@@ -129,7 +129,7 @@ const RegisterInfo = () => {
 
   return (
     <div>
-      <div className="flex flex-col items-center w-full h-full min-h-screen px-10 py-6 space-y-8 main-container">
+      <div className="flex flex-col items-center w-full h-full min-h-full px-10 py-6 space-y-8 main-container">
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center ">
             <img src="/icons/kidwe.png" alt="Kidwe Icon" />

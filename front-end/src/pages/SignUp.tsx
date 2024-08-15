@@ -12,7 +12,7 @@ const SignUp: React.FC = () => {
   // const {headerTitle} = useHeader();
 
   return (
-    <div className="h-screen">
+    <div className="h-full max-h-full">
       <div className={containerHeaderClass}>
         <Routes>
           <Route path="/role" element={<RoleSelect />}></Route>
