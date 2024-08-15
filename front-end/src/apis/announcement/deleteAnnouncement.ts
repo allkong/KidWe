@@ -5,7 +5,7 @@ export const deleteAnnouncement = async (
 ): Promise<void> => {
   try {
     const response = await axiosInstance.delete(
-      `announcemets/${announcementId}`
+      `announcements/${announcementId}`
     );
     return response.data;
   } catch (error) {

@@ -44,7 +44,12 @@ const MedicationDetail = () => {
         },
         {title: '보관', content: data.storageMethod, color: '#FFEC9E'},
         {title: '비고', content: data.others, color: '#FFEC9E'},
-        {title: '사진', imageUrl: data.medicineUrl, color: '#FFEC9E'},
+        {
+          title: '사진',
+          content: 'image',
+          imageUrl: data.medicineUrl,
+          color: '#FFEC9E',
+        },
       ].filter(item => item.content && item.content.trim() !== '')
     : [];
 
@@ -87,7 +92,6 @@ const MedicationDetail = () => {
             />
           ))}
         </div>
-        {/* 서명 */}
         <ConsentSignatureCard
           text="학부모가 요청한 투약의뢰서에 따른 책임은\n 학부모에게 있습니다."
           date={data?.medicationExecuteDate || ''}

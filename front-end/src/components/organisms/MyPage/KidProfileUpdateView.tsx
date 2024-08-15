@@ -2,7 +2,6 @@ import XSmallButton from '@/components/atoms/Button/XSmallButton';
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
 import {patchKidPictureState} from '@/recoil/atoms/my-page/kidPicture';
 import {kidInfoPicture} from '@/recoil/selectors/my-page/kidInfoPicture';
-import {getFullImageSource} from '@/utils/getFullImageSource';
 import {useRecoilState, useSetRecoilState} from 'recoil';
 
 const KidProfileUpdateView = () => {
@@ -27,7 +26,7 @@ const KidProfileUpdateView = () => {
       <p>자녀 이미지</p>
       <div className="flex flex-col items-center justify-center w-full gap-1">
         <ImageUploadButton
-          userPicture={getFullImageSource(kidProfile)}
+          userPicture={kidProfile}
           onChangePreview={handleChangePicture}
           onChangeFile={handleChangeFile}
         />

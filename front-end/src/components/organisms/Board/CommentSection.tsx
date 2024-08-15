@@ -47,7 +47,8 @@ const CommentSection = ({
             date={comment.createdTime}
             onClick={() => onReplyClick(comment.id)}
             isSelected={comment.id === selectedCommentId}
-            onDelete={() => handleDeleteComment(comment.id)} // 삭제 핸들러 전달
+            canDelete={comment.canDelete}
+            onDelete={() => handleDeleteComment(comment.id)}
           />
           {comment.childs.length > 0 && (
             <div className="pl-3 mt-4 space-y-4">
@@ -55,12 +56,13 @@ const CommentSection = ({
                 <CommentItem
                   key={reply.id}
                   profile={reply.picture}
-                  writer={reply.name}
-                  banName={reply.role}
+                  writer={`${reply.name} ${ROLE_NAMES[reply.role]}`}
+                  banName={reply.banName}
                   content={reply.content}
                   date={reply.createdTime}
                   onClick={() => onReplyClick(comment.id)}
                   isReply
+                  canDelete={reply.canDelete}
                   onDelete={() => handleDeleteComment(Number(reply.id))}
                 />
               ))}
