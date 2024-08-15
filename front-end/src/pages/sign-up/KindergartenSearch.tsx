@@ -109,10 +109,10 @@ const KindergartenSearch: React.FC = () => {
 
   useEffect(() => {
     if (role !== 'ROLE_TEACHER' && role !== 'ROLE_GUARDIAN') {
-      toast.error('당신은 원장님입니다.', {onClose: () => navigate('/')});
-      // navigate('/');
+      toast.error('당신은 원장님입니다.', {
+        onClose: () => navigate('/auth/login'),
+      });
     }
-    console.log('지금 role', role);
   }, [role, navigate]);
 
   return (
