@@ -1,4 +1,6 @@
-[Version]
+How can you build and deployment our service? 
+
+[Version]  
 nginx: 1.27.0
 
 node:  20.15.0
@@ -28,12 +30,12 @@ jenkins 2.470
 3. docker-compose
 - docker-compose up --build -d
 
-[Information]
-MongoDB:
-    username: ssafy
-    password: ssafy
-MySQL:
-    username: ssafy
-    password: ssafy
-redis:
-    password: ssafy
+[Information]  
+MongoDB:  
+  - username: ssafy 
+  - password: ssafy  
+MySQL:  
+  - username: ssafy  
+  - password: ssafy  
+redis:  
+  - password: ssafy  
