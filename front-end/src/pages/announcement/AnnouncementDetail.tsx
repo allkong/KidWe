@@ -6,6 +6,8 @@ import {usePostAnnouncementComment} from '@/hooks/announcement/usePostAnnounceme
 import {usePostAnnouncementReply} from '@/hooks/announcement/usePostAnnouncementReply';
 import {getFullImageSource} from '@/utils/getFullImageSource';
 import {getMemberId} from '@/utils/userData';
+import {RoleItem} from '@/enum/roleItem';
+import {ROLE_NAMES} from '@/constants/roleNames';
 import {containerHeaderClass} from '@/styles/styles';
 
 import Header from '@/components/organisms/Navigation/Header';
@@ -58,7 +60,7 @@ const AnnounementDetail = () => {
       <div className={containerHeaderClass}>
         <Author
           profile={getFullImageSource(data?.picture) || noProfile}
-          writer="햄스터반 선생님"
+          writer={`${data?.banName ?? ''} ${ROLE_NAMES[data?.role as RoleItem] ?? ''}`}
           date={data?.post.createdDateTime || ''}
           isEdit={data?.canDelete}
           isAnnouncement
