@@ -1,6 +1,6 @@
 import axiosInstance from '@/apis/axiosInstance';
 
-interface DeleteDailyNoteCommentParams {
+export interface DeleteDailyNoteCommentParams {
   memberId: number;
   dailyNoteId: number;
   dailyNoteCommentId: number;

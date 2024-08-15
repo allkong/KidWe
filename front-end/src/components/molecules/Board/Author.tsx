@@ -14,35 +14,55 @@ interface AuthorProps {
   writer: string;
   date: string;
   isEdit?: boolean;
+  isAnnouncement?: boolean;
 }
 
-const Author = ({profile, writer, date, isEdit = false}: AuthorProps) => {
+const Author = ({
+  profile,
+  writer,
+  date,
+  isEdit = false,
+  isAnnouncement = false,
+}: AuthorProps) => {
   const navigate = useNavigate();
+  const {dailyNoteId, announcementId} = useParams<{
+    dailyNoteId?: string;
+    announcementId?: string;
+  }>();
   const deleteMutation = useDeleteDailyNote();
-  const {dailyNoteId} = useParams();
 
-  const handleDailyNoteDelete = () => {
-    deleteMutation.mutate(
-      {memberId: getMemberId()!, dailyNoteId: dailyNoteId!},
-      {
-        onSuccess: () => {
-          navigate('/daily-notes');
-        },
-      }
-    );
+  const handleDelete = () => {
+    if (isAnnouncement && announcementId) {
+      // 공지사항 삭제 로직 추가
+      // 예: useDeleteAnnouncement 훅 사용
+    } else if (dailyNoteId) {
+      deleteMutation.mutate(
+        {memberId: getMemberId()!, dailyNoteId},
+        {
+          onSuccess: () => {
+            navigate('/daily-notes');
+          },
+        }
+      );
+    }
   };
 
   const handleEditClick = () => {
     const currentTime = dayjs();
     const sendTimeWithBuffer = dayjs(date).add(5, 'minute');
 
-    if (sendTimeWithBuffer.isBefore(currentTime)) {
+    if (!isAnnouncement && sendTimeWithBuffer.isBefore(currentTime)) {
       toast.error('전송 시간 5분 전까지 수정할 수 있어요.');
       return;
     }
 
-    navigate(`/daily-notes/${dailyNoteId}/edit`);
+    if (isAnnouncement && announcementId) {
+      navigate(`/announcements/${announcementId}/edit`);
+    } else if (dailyNoteId) {
+      navigate(`/daily-notes/${dailyNoteId}/edit`);
+    }
   };
+
   return (
     <div className="flex items-center justify-between w-full px-6 py-4">
       <div className="flex items-center justify-between space-x-5 ">
@@ -55,7 +75,7 @@ const Author = ({profile, writer, date, isEdit = false}: AuthorProps) => {
       {isEdit && (
         <MoreButton align="vertical">
           <MoreButton.Option text="수정하기" onClick={handleEditClick} />
-          <MoreButton.Option text="삭제하기" onClick={handleDailyNoteDelete} />
+          <MoreButton.Option text="삭제하기" onClick={handleDelete} />
         </MoreButton>
       )}
     </div>

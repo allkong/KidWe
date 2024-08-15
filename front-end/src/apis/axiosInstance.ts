@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true, // Cross Origin
-  timeout: 3000,
+  timeout: 10000,
 });
 
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {

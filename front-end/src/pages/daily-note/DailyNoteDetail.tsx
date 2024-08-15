@@ -43,7 +43,7 @@ const DailyNoteDetail = () => {
       <Header title="알림장" buttonType="back" />
       <div className={containerHeaderClass}>
         <Author
-          profile={data?.picture || ''}
+          profile={data?.picture ?? ''}
           writer={
             `${data?.name ?? ''} ${data?.role ? ROLE_NAMES[data.role] : ''}` ||
             ''

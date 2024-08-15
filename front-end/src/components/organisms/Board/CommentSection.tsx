@@ -1,4 +1,4 @@
-// import {useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 import {Comment} from '@/types/article/Comment';
 import {ROLE_NAMES} from '@/constants/roleNames';
@@ -21,14 +21,13 @@ const CommentSection = ({
   onReplyClick,
   selectedCommentId,
 }: CommentSectionProps) => {
-  // const id = useParams();\
-  const id = 1;
+  const {dailyNoteId} = useParams();
   const deleteMutation = useDeleteDailyNoteComment();
 
   const handleDeleteComment = (commentId: number) => {
     deleteMutation.mutate({
       memberId: getMemberId()!,
-      dailyNoteId: id,
+      dailyNoteId: Number(dailyNoteId),
       dailyNoteCommentId: commentId,
     });
   };

@@ -16,6 +16,7 @@ import DailyNoteEdit from '@/pages/daily-note/DailyNoteEdit';
 import AnnouncementListView from '@/pages/announcement/AnnouncementListView';
 import AnnouncementDetail from '@/pages/announcement/AnnouncementDetail';
 import AnnouncementWrite from '@/pages/announcement/AnnouncementWrite';
+import AnnouncementEdit from '@/pages/announcement/AnnouncementEdit';
 
 import MedicationListView from '@/pages/medication/MedicationListView';
 import MedicationDetail from '@/pages/medication/MedicationDetail';
@@ -175,6 +176,10 @@ export const router = createBrowserRouter([
       {
         path: 'write',
         element: <AnnouncementWrite />,
+      },
+      {
+        path: ':announcementId/edit',
+        element: <AnnouncementEdit />,
       },
     ],
   },

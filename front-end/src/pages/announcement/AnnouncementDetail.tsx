@@ -61,6 +61,7 @@ const AnnounementDetail = () => {
           writer="햄스터반 선생님"
           date={data?.post.createdDateTime || ''}
           isEdit={data?.canDelete}
+          isAnnouncement
         />
         <ArticleTitle title={data?.post.title || ''} />
         <ArticleSection
