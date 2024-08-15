@@ -43,7 +43,7 @@ import FoodInfoWrite from '@/pages/food/FoodInfoWrite';
 
 import NotFound from '@/pages/NotFound';
 
-import {getUserData} from '@/utils/userData';
+import {deleteUserData, getUserData} from '@/utils/userData';
 import ManagementList from '@/pages/kindergarten-management/managementList';
 import BanManagement from '@/pages/kindergarten-management/banManagement';
 import TeacherManagement from '@/pages/kindergarten-management/teacherManagement';
@@ -52,6 +52,9 @@ import ChildManagement from '@/pages/kindergarten-management/childManagement';
 import {isGuardian} from './utils/auth/isGuardian';
 import {isTeacher} from './utils/auth/isTeacher';
 import {isDirector} from './utils/auth/isDirector';
+import {getAccessToken} from './apis/login/getAccessToken';
+import {deleteAccessToken, setAccessToken} from './utils/userAccessToken';
+import {deleteRefreshToken} from './utils/userRefreshToken';
 
 const requireAuth = () => {
   if (getUserData() === null) {
@@ -74,12 +77,12 @@ const onlyGuardian = () => {
   return null;
 };
 
-const onlyTeacher = () => {
-  if (!isTeacher()) {
-    return redirect('/');
-  }
-  return null;
-};
+// const onlyTeacher = () => {
+//   if (!isTeacher()) {
+//     return redirect('/');
+//   }
+//   return null;
+// };
 
 const onlyDirector = () => {
   if (!isDirector()) {
@@ -231,7 +234,23 @@ export const router = createBrowserRouter([
   },
   {
     path: '/memos',
-    loader: onlyTeacher,
+    loader: async () => {
+      if (!isTeacher()) {
+        return redirect('/');
+      }
+
+      try {
+        const result = await getAccessToken();
+        const {accessToken} = result;
+        setAccessToken(accessToken);
+      } catch (error) {
+        deleteAccessToken();
+        deleteRefreshToken();
+        deleteUserData();
+        return redirect('/auth/login');
+      }
+      return null;
+    },
     element: <MemoView />,
     children: [
       {

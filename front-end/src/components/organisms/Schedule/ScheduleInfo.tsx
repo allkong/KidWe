@@ -10,6 +10,7 @@ import {useGetBanSchedule} from '@/hooks/schedule/useGetBanSchedule';
 import {getMemberRole} from '@/utils/userData';
 import {directorBanState} from '@/recoil/atoms/schedule/directorBan';
 import {useRecoilValue} from 'recoil';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 interface ScheduleInfoProps {
   date: Dayjs;
@@ -22,26 +23,30 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [data, setData] = useState<GetSchedule[]>();
   const banState = useRecoilValue(directorBanState);
 
-  const {data: allScheduleData, refetch: allRefetch} =
+  const {data: allScheduleData, isLoading: isAllLoading} =
     useGetKindergartenSchedules(
       getKindergartenId()!,
       date.format('YYYY-MM-DD')
     );
+  useLoading(isAllLoading);
 
-  const {data: banScheduleData, refetch: banRefetch} = useGetBanSchedule(
-    isDirector ? banState! : getBanId()!,
+  const {data: banScheduleData, isLoading: isBanLoading} = useGetBanSchedule(
+    isDirector ? banState : getBanId(),
     date.format('YYYY-MM-DD')
   );
+  useLoading(isBanLoading);
 
   useEffect(() => {
     if (isShowBan) {
-      banRefetch();
       setData(banScheduleData);
-    } else {
-      allRefetch();
+    }
+  }, [isShowBan, setData, banScheduleData]);
+
+  useEffect(() => {
+    if (!isShowBan) {
       setData(allScheduleData);
     }
-  }, [isShowBan, allScheduleData, banScheduleData, allRefetch, banRefetch]);
+  }, [isShowBan, setData, allScheduleData]);
 
   const handleToggle = () => {
     setIsShowBan(!isShowBan);

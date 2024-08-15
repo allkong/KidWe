@@ -77,10 +77,12 @@ const MedicationListView = () => {
         onClickRight={handleRightClick}
       />
       <div className={`${containerNavigatorClass} pt-[6.5rem] flex flex-col`}>
-        <DirectorSelectItem
-          memberRole={memberRole}
-          onBanChange={handleIdChange}
-        />
+        <div className="w-full px-3">
+          <DirectorSelectItem
+            memberRole={memberRole}
+            onBanChange={handleIdChange}
+          />
+        </div>
         {(data && data.length === 0) || !id ? (
           <div className="flex items-center justify-center flex-grow">
             <NoResult text="등록된 의뢰서가 없어요" />

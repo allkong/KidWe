@@ -108,7 +108,7 @@ const KindergartenChild: React.FC = () => {
     }
   }, [navigate, isStateUpdated, signupGuardian, signupChildMutate]);
   return (
-    <div className="flex flex-col w-full h-full min-h-screen px-5 space-y-16">
+    <div className="flex flex-col w-full h-full max-h-full px-5 space-y-5">
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -116,21 +116,22 @@ const KindergartenChild: React.FC = () => {
         pauseOnFocusLoss
         limit={1}
       />
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 h-fit">
         <KindergartenCard
           kindergartenName={`${signupGuardian.dto.kindergartenName} - ${signupGuardian.dto.banName || ''}`}
         />
         {/* `${getKindergartenNameById(signupGuardian.dto.kindergartenId)} - ${signupGuardian.dto.banName || ''}` */}
       </div>
-      <div className="flex items-center justify-center space-x-2">
-        <div className="flex flex-col items-center">
-          {/* <input
+      <div className="flex flex-col flex-grow gap-5 overflow-y-auto">
+        <div className="flex items-center justify-center space-x-2 h-fit w-fit">
+          <div className="flex flex-col items-center">
+            {/* <input
             type="file"
             onChange={handleImageChange}
             className="hidden mb-4"
             id="fileInput"
           /> */}
-          {/* <div
+            {/* <div
             className="flex items-center justify-center w-32 h-32 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer"
             onClick={() => document.getElementById('fileInput')?.click()}
           >
@@ -144,58 +145,59 @@ const KindergartenChild: React.FC = () => {
               <span className="text-gray-500">이미지 선택</span>
             )}
           </div> */}
-          <ImageUploadButton
-            userPicture={userpicture}
-            onChangeFile={handleFileChange}
-            onChangePreview={handlePreviewChange}
-          />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <LabelInput
-            value={childname}
-            placeholder="이름을 적어주세요"
-            onChange={e => setChildname(e.target.value)}
-          />
-          {/* <LabelInput
+            <ImageUploadButton
+              userPicture={userpicture}
+              onChangeFile={handleFileChange}
+              onChangePreview={handlePreviewChange}
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <LabelInput
+              value={childname}
+              placeholder="이름을 적어주세요"
+              onChange={e => setChildname(e.target.value)}
+            />
+            {/* <LabelInput
             value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
             placeholder="클릭하여 생일을 입력해주세요"
             onChange={handleBirthChange}
           /> */}
-          {/* <CustomCalendar
+            {/* <CustomCalendar
             defaultDate={childbirth}
             onChange={handleDateChange}
             activeStartDate={false}
           /> */}
-          <CalendarButton
-            render={() => (
-              <LabelInput
-                value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
-                placeholder="클릭하여 생일을 입력해주세요"
-                onChange={() => {}}
-              />
-            )}
-            defaultDate={childbirth}
-            onClick={handleDateChange}
-          />
+            <CalendarButton
+              render={() => (
+                <LabelInput
+                  value={childbirth ? childbirth.format('YYYY-MM-DD') : ''}
+                  placeholder="클릭하여 생일을 입력해주세요"
+                  onChange={() => {}}
+                />
+              )}
+              defaultDate={childbirth}
+              onClick={handleDateChange}
+            />
 
-          <div className="flex justify-center space-x-2">
-            {Object.entries(genderLabels).map(([key, label]) => (
-              <Button
-                key={key}
-                variant={selectedGender === key ? 'positive' : 'negative'}
-                label={label}
-                onClick={() => handleGenderChange(key as Gender)}
-                size="small"
-              />
-            ))}
+            <div className="flex justify-center space-x-2">
+              {Object.entries(genderLabels).map(([key, label]) => (
+                <Button
+                  key={key}
+                  variant={selectedGender === key ? 'positive' : 'negative'}
+                  label={label}
+                  onClick={() => handleGenderChange(key as Gender)}
+                  size="small"
+                />
+              ))}
+            </div>
           </div>
         </div>
+        <div className="flex flex-col items-center justify-center border rounded-lg">
+          <h2 className="mt-2">알레르기</h2>
+          <AllergyView datas={datas} onChangeData={handleAllergyChange} />
+        </div>
       </div>
-      <div className="flex flex-col items-center justify-center border rounded-lg">
-        <h2 className="mt-2">알레르기</h2>
-        <AllergyView datas={datas} onChangeData={handleAllergyChange} />
-      </div>
-      <div>
+      <div className="h-fit">
         <Button
           label="입력 완료"
           size="large"

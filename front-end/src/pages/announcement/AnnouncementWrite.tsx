@@ -163,7 +163,7 @@ const AnnouncementWrite = () => {
           />
         </div>
         <div className="px-6 pb-10">
-          <VoteModal onVoteChange={handleVoteChange} />
+          {/* <VoteModal onVoteChange={handleVoteChange} /> */}
         </div>
       </div>
       <ButtonBar

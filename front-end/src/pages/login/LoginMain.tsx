@@ -43,7 +43,7 @@ const LoginMain: React.FC = () => {
             ) {
               navigate('/auth/signup/kindergarten/search');
             } else if (memberRole === 'ROLE_DIRECTOR') {
-              navigate('/auth/signup/kinderagarten/register');
+              navigate('/auth/signup/kindergarten/register');
             }
           } else if (memberStatus === 'PENDING') {
             console.log('너는 아직 PENDING이다');

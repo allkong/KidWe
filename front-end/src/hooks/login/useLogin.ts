@@ -4,8 +4,8 @@ import {LoginResponse} from '@/types/login/LoginResponse';
 import {setAccessToken} from '@/utils/userAccessToken';
 import {setUserData} from '@/utils/userData';
 import {setRefreshToken} from '@/utils/userRefreshToken';
-import {getFcmToken} from '@/utils/notification/getFcmToken';
-import {sendFcmToken} from '@/apis/notification/sendFcmToken';
+// import {getFcmToken} from '@/utils/notification/getFcmToken';
+// import {sendFcmToken} from '@/apis/notification/sendFcmToken';
 
 /**
  *
@@ -24,24 +24,24 @@ export const useLogin = () => {
       setRefreshToken(refreshToken);
       setUserData(userData);
 
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        navigator.serviceWorker
-          .register('/firebase-messaging-sw.js')
-          .then(async registration => {
-            console.log('Service Worker 등록 성공:', registration);
+      // const permission = await Notification.requestPermission();
+      // if (permission === 'granted') {
+      //   navigator.serviceWorker
+      //     .register('/firebase-messaging-sw.js')
+      //     .then(async registration => {
+      //       console.log('Service Worker 등록 성공:', registration);
 
-            // FCM 토큰 가져오기
-            const token = await getFcmToken();
-            await sendFcmToken(token);
-          })
-          .catch(error => {
-            console.log('Service Worker 등록 실패:', error);
-          });
-        // FCM 토큰 가져오기
-      } else {
-        console.log('알림 권한이 없습니다.');
-      }
+      //       // FCM 토큰 가져오기
+      //       const token = await getFcmToken();
+      //       await sendFcmToken(token);
+      //     })
+      //     .catch(error => {
+      //       console.log('Service Worker 등록 실패:', error);
+      //     });
+      //   // FCM 토큰 가져오기
+      // } else {
+      //   console.log('알림 권한이 없습니다.');
+      // }
     },
   });
   return result;

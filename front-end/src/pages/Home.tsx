@@ -11,6 +11,7 @@ import noProfile from '@/assets/no-profile.png';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {getFullImageSource} from '@/utils/getFullImageSource';
+import {isTeacher} from '@/utils/auth/isTeacher';
 
 const Home = () => {
   const {data: userInfo} = useGetUserInfo(getMemberId()!);
@@ -42,7 +43,7 @@ const Home = () => {
           />
         </div>
         <HomeMenu />
-        <MemoShortcut />
+        {isTeacher() && <MemoShortcut />}
       </div>
       <NavigationBar />
     </>

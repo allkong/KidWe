@@ -9,9 +9,11 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useSetRecoilState} from 'recoil';
 import dayjs from 'dayjs';
 import {getMemberId} from '@/utils/userData';
+import {loadingState} from '@/recoil/atoms/axios/loading';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const MemoWrite = () => {
   const navigate = useNavigate();
@@ -46,6 +48,7 @@ const MemoWrite = () => {
     );
   }, [memo]);
 
+  const setLoadingState = useSetRecoilState(loadingState);
   const writeMutate = useWriteDailyMemo();
   const handleClick = () => {
     writeMutate.mutateAsync(
@@ -56,15 +59,17 @@ const MemoWrite = () => {
             pathname: '/memos',
             search: `?date=${paramDate}`,
           }),
+        onSettled: () => setLoadingState(false),
       }
     );
   };
+  useLoading(writeMutate.isPending);
 
   return (
     <>
       <div className={`${containerHeaderClass} flex flex-col h-full bg-white`}>
         <Header title="관찰 메모 작성" buttonType="back" />
-        <div className="flex-grow px-5 py-5 space-y-8 overflow-y-scroll">
+        <div className="flex-grow px-5 py-5 space-y-8 overflow-y-auto">
           <MemoTimeSelect />
           <MemoTagSelect />
           <KindergartenInfomationSelect />
