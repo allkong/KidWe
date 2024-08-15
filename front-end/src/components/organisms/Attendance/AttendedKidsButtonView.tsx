@@ -1,21 +1,26 @@
 import {GetAttendance} from '@/types/attendance/GetAttendance';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
-import Select from '@/components/molecules/DropdownButton/Select';
 import UserCardItemWithButton from '@/components/molecules/Item/UserCardItemWithButton';
 import {usePutAttendanceInfo} from '@/hooks/attendance/usePutAttendanceInfo';
 import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 import {getBanId} from '@/utils/userData';
 import {toast} from 'react-toastify';
 import {getFullImageSource} from '@/utils/getFullImageSource';
+import {RoleItem} from '@/enum/roleItem';
+import DirectorSelectItem from '../Medication/DirectorSelectItem';
 
 interface AttendedKidsButtonViewProps {
   attendances?: GetAttendance[];
   onClickButton?: () => void;
+  memberRole: RoleItem;
+  onBanChange: (value: number) => void;
 }
 
 const AttendedKidsButtonView = ({
   attendances,
   onClickButton,
+  memberRole,
+  onBanChange,
 }: AttendedKidsButtonViewProps) => {
   const date = useGetDateBySearchParam();
   const putMutate = usePutAttendanceInfo(getBanId()!);
@@ -43,18 +48,19 @@ const AttendedKidsButtonView = ({
   return (
     <>
       <div className="flex items-center justify-between px-8 py-2 border-b border-gray-200 min-h-14">
-        <div>
-          <Select label="반 이름" size="small">
-            <Select.Option text="장미반" />
-          </Select>
+        <div className="flex items-center justify-between w-full">
+          <XSmallButton
+            label="선택"
+            onClick={() => {
+              onClickButton?.();
+            }}
+            variant="negative"
+          />
+          <DirectorSelectItem
+            memberRole={memberRole}
+            onBanChange={onBanChange}
+          />
         </div>
-        <XSmallButton
-          label="선택"
-          onClick={() => {
-            onClickButton?.();
-          }}
-          variant="negative"
-        />
       </div>
       <div className="flex flex-col items-center justify-center w-full h-fit">
         {attendances &&
