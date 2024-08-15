@@ -13,10 +13,12 @@ import Author from '@/components/molecules/Board/Author';
 import ArticleSection from '@/components/organisms/Board/ArticleSection';
 import InputBar from '@/components/organisms/Navigation/InputBar';
 import CommentSection from '@/components/organisms/Board/CommentSection';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const DailyNoteDetail = () => {
   const {dailyNoteId} = useParams();
-  const {data} = useDailyNoteDetail(getMemberId()!, dailyNoteId!);
+  const {data, isLoading} = useDailyNoteDetail(getMemberId()!, dailyNoteId!);
+  useLoading(isLoading);
   const {mutate} = usePostComment();
   const [parentCommentId, setParentCommentId] = useState<number>(0);
   const isFutureTime = dayjs(data?.sendTime).isAfter(dayjs());
@@ -43,7 +45,8 @@ const DailyNoteDetail = () => {
         <Author
           profile={data?.picture || ''}
           writer={
-            `${data?.name} ${data?.role ? ROLE_NAMES[data.role] : ''}` || ''
+            `${data?.name ?? ''} ${data?.role ? ROLE_NAMES[data.role] : ''}` ||
+            ''
           }
           date={data?.sendTime || ''}
           isEdit={data?.canDelete}
