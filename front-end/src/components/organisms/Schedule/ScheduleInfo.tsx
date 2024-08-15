@@ -22,26 +22,27 @@ const ScheduleInfo = ({date}: ScheduleInfoProps) => {
   const [data, setData] = useState<GetSchedule[]>();
   const banState = useRecoilValue(directorBanState);
 
-  const {data: allScheduleData, refetch: allRefetch} =
-    useGetKindergartenSchedules(
-      getKindergartenId()!,
-      date.format('YYYY-MM-DD')
-    );
+  const {data: allScheduleData} = useGetKindergartenSchedules(
+    getKindergartenId()!,
+    date.format('YYYY-MM-DD')
+  );
 
-  const {data: banScheduleData, refetch: banRefetch} = useGetBanSchedule(
-    isDirector ? banState! : getBanId()!,
+  const {data: banScheduleData} = useGetBanSchedule(
+    isDirector ? banState : getBanId(),
     date.format('YYYY-MM-DD')
   );
 
   useEffect(() => {
     if (isShowBan) {
-      banRefetch();
       setData(banScheduleData);
-    } else {
-      allRefetch();
+    }
+  }, [isShowBan, setData, banScheduleData]);
+
+  useEffect(() => {
+    if (!isShowBan) {
       setData(allScheduleData);
     }
-  }, [isShowBan, allScheduleData, banScheduleData, allRefetch, banRefetch]);
+  }, [isShowBan, setData, allScheduleData]);
 
   const handleToggle = () => {
     setIsShowBan(!isShowBan);
