@@ -2,7 +2,7 @@ import axiosInstance from '@/apis/axiosInstance';
 
 interface DeleteDailyNoteCommentParams {
   memberId: number;
-  dailyNoteId: string;
+  dailyNoteId: number;
   dailyNoteCommentId: number;
 }
 

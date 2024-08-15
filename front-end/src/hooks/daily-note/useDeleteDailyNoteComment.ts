@@ -5,7 +5,7 @@ export const useDeleteDailyNoteComment = () => {
   return useMutation<
     void,
     Error,
-    {memberId: number; dailyNoteId: string; dailyNoteCommentId: number}
+    {memberId: number; dailyNoteId: number; dailyNoteCommentId: number}
   >({
     mutationFn: deleteDailyNoteComment,
     onSuccess: () => {},
