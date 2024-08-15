@@ -16,7 +16,7 @@ const TitleInput: React.FC<TitleInputProps> = ({
     <input
       value={value}
       onChange={onChange}
-      className="w-full h-10 px-4 text-xs font-normal text-gray-200 bg-white "
+      className="w-full px-4 font-normal text-gray-200 bg-white h-14 "
       placeholder={placeholder}
       {...props}
     />

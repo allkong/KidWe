@@ -9,7 +9,6 @@ export interface KidOfDailyNote {
   content: string;
   sendTime: string;
   images: string[];
-  thumbnails: string[];
   canDelete: boolean;
   commentCount: number;
   comments: Comment[];

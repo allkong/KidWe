@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import dayjs from 'dayjs';
 import {groupByDate} from '@/utils/groupByDate';
@@ -15,24 +15,30 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
+import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
   const navigate = useNavigate();
 
   const memberRole = getMemberRole() as RoleItem;
-  let id: number | null = 0;
-  if (memberRole === RoleItem.Guardian) {
-    id = getKidId();
-  } else if (memberRole === RoleItem.Teacher) {
-    id = getBanId();
-  } else if (memberRole === RoleItem.Director) {
-    // 선택한 반 id로 변경
-    id = 1;
-  }
+
+  const [id, setId] = useState<number | null>(null);
+  const handleIdChange = (value: number) => {
+    setId(value);
+  };
+
+  useEffect(() => {
+    if (memberRole === RoleItem.Guardian) {
+      setId(getKidId());
+    } else if (memberRole === RoleItem.Teacher) {
+      setId(getBanId());
+    }
+  }, [memberRole]);
 
   const {data, isLoading} = useLeaveConsentList(
-    id!,
+    id,
     currentMonth.year(),
     currentMonth.month() + 1,
     memberRole
@@ -65,7 +71,7 @@ const LeaveConsentListView = () => {
   const groupedData = groupByDate(data ?? []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen">
       {isLoading && <Spinner />}
       <Header title="귀가동의서" buttonType="close" />
       <DateNavigator
@@ -73,9 +79,13 @@ const LeaveConsentListView = () => {
         onClickLeft={handleLeftClick}
         onClickRight={handleRightClick}
       />
-      <div className={`${containerNavigatorClass} pt-[6.5rem]`}>
-        {data?.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
+      <div className={`${containerNavigatorClass} pt-[6.5rem] flex flex-col`}>
+        <DirectorSelectItem
+          memberRole={memberRole}
+          onBanChange={handleIdChange}
+        />
+        {(data && data.length === 0) || !id ? (
+          <div className="flex items-center justify-center flex-grow">
             <NoResult text="등록된 동의서가 없어요" />
           </div>
         ) : (
@@ -99,7 +109,7 @@ const LeaveConsentListView = () => {
           ))
         )}
       </div>
-      <WriteButton onClick={handleWriteButtonClick} />
+      {isGuardian() && <WriteButton onClick={handleWriteButtonClick} />}
       <NavigationBar />
     </div>
   );

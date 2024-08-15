@@ -7,3 +7,11 @@ export const getFullImageSource = (img: string | undefined) => {
     return noProfile;
   }
 };
+
+export const getFullThumbnailImageSource = (img: string | undefined) => {
+  if (img) {
+    return `${import.meta.env.VITE_THUMBNAIL_IMG_URL}${img}`;
+  } else {
+    return noProfile;
+  }
+};

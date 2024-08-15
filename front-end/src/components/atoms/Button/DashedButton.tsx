@@ -5,7 +5,12 @@ interface DashedButtonProps {
   variant?: 'primary' | 'gray' | 'lightgray';
 }
 
-const DashedButton = ({label, onClick, Icon, variant}: DashedButtonProps) => {
+const DashedButton = ({
+  label,
+  onClick,
+  Icon,
+  variant = 'lightgray',
+}: DashedButtonProps) => {
   let colorClass = '';
   if (variant === 'primary') {
     colorClass = 'border-primary text-primary';
@@ -17,7 +22,7 @@ const DashedButton = ({label, onClick, Icon, variant}: DashedButtonProps) => {
 
   return (
     <button
-      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 font-medium  border-2  border-dashed rounded-md h-9 ${colorClass}`}
+      className={`box-border gap-2 w-full flex flex-row items-center justify-center px-6 font-medium border-2 border-dashed rounded-md h-9 ${colorClass}`}
       onClick={onClick}
     >
       {Icon && <Icon />}
