@@ -10,6 +10,7 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
 import {getMemberId} from '@/utils/userData';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 const AnnouncementListView = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const AnnouncementListView = () => {
           ))
         )}
       </div>
-      <WriteButton onClick={handleWriteButtonClick} />
+      {!isGuardian() && <WriteButton onClick={handleWriteButtonClick} />}
       <NavigationBar />
     </div>
   );
