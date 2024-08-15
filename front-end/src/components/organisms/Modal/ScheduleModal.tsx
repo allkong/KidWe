@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
+import DatePicker from '@/components/atoms/Input/DatePicker';
 
 interface ScheduleModalProps {
   isOpen: boolean;
@@ -41,17 +42,12 @@ const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
       <Modal isOpen={isOpen}>
         <Modal.Header title="예약 전송" />
         <Modal.Body>
-          <div className="mb-4">
-            <label className="block mb-1 text-sm font-medium" htmlFor="date">
-              날짜 선택
-            </label>
-            <input
-              type="date"
-              id="date"
-              className="w-full p-2 border border-gray-200 rounded-md"
-              value={selectedDate}
-              min={minDate}
-              onChange={e => setSelectedDate(e.target.value)}
+          <div className="mb-4 text-sm">
+            <DatePicker
+              label="날짜 선택"
+              selectedDate={selectedDate}
+              minDate={minDate}
+              onDateChange={setSelectedDate}
             />
           </div>
           <div className="mb-4">
@@ -61,7 +57,7 @@ const ScheduleModal = ({isOpen, onClose, onSubmit}: ScheduleModalProps) => {
             <input
               type="time"
               id="time"
-              className="w-full p-2 border border-gray-200 rounded-md"
+              className="w-full p-2 text-sm border border-gray-200 rounded-md"
               value={selectedTime}
               min={selectedDate === minDate ? minTime : undefined} // 현재 날짜의 경우에만 minTime 적용
               onChange={e => setSelectedTime(e.target.value)}

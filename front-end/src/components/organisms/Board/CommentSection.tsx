@@ -19,7 +19,7 @@ const CommentSection = ({
   selectedCommentId,
 }: CommentSectionProps) => {
   return (
-    <div className="px-4 pt-3 space-y-2">
+    <div className="px-4 pt-3 mb-2 space-y-2">
       <div className="m-2 text-sm">
         <CommentCount count={commentCount} />
       </div>
