@@ -10,6 +10,7 @@ import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
 import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const MedicationDetail = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const MedicationDetail = () => {
   const deleteMutation = useDeleteMedication();
 
   const {data, isLoading} = useMedicationDetail(medicationId ?? '');
+  useLoading(isLoading);
 
   useEffect(() => {
     if (!isLoading && !data) {

@@ -118,7 +118,7 @@ const FoodInfo = () => {
             />
           )}
         </div>
-        <div className="flex-grow mb-20 space-y-3 overflow-y-auto scrollbar-hide">
+        <div className="flex-grow mb-20 space-y-3 overflow-y-auto  scrollbar-hide">
           <FoodListView food={food} />
         </div>
         <NavigationBar />

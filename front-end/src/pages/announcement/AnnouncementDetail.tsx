@@ -15,10 +15,16 @@ import ArticleSection from '@/components/organisms/Board/ArticleSection';
 import CommentSection from '@/components/organisms/Board/CommentSection';
 import InputBar from '@/components/organisms/Navigation/InputBar';
 import noProfile from '@/assets/no-profile.png';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const AnnounementDetail = () => {
   const {announcementId} = useParams();
-  const {data} = useAnnouncementDetail(announcementId!, getMemberId()!);
+  const {data, isLoading} = useAnnouncementDetail(
+    announcementId!,
+    getMemberId()!
+  );
+  useLoading(isLoading);
+
   const postCommentMutation = usePostAnnouncementComment();
   const postReplyMutation = usePostAnnouncementReply();
   const [parentCommentId, setParentCommentId] = useState<number>(0);

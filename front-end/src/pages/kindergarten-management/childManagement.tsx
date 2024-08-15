@@ -7,7 +7,7 @@ import BanChildAcceptView from '@/components/organisms/Ban/BanChildAcceptView';
 const ChildManagement = () => {
   return (
     <div
-      className={`${containerNavigatorClass} flex flex-col h-screen w-screen max-w-screen`}
+      className={`${containerNavigatorClass} flex flex-col h-screen w-full max-w-full`}
     >
       <Header title="원생 관리" buttonType="back" />
       <Tabs

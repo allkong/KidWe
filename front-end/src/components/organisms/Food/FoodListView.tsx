@@ -10,7 +10,7 @@ const FoodListView = ({food}: FoodListViewProps) => {
   return (
     <>
       {food ? (
-        <>
+        <div className="flex flex-col items-center justify-center w-full gap-3 h-fit">
           <FoodInfomationItem
             variant="lunch"
             menu={food.lunch}
@@ -29,7 +29,7 @@ const FoodListView = ({food}: FoodListViewProps) => {
             allergies={food.dinnerAllergies}
             kidAllergies={food.kidAllergyListOfDinner}
           />
-        </>
+        </div>
       ) : (
         <div className="flex items-center justify-center w-full h-full">
           <NoResult text="등록된 식단이 없습니다" />

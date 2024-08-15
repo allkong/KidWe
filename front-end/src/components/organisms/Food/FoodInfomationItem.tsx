@@ -77,7 +77,7 @@ const FoodInfomationItem = ({
             </div>
           </>
         )}
-        {kidAllergies && (
+        {kidAllergies?.length !== 0 && (
           <>
             <p className="text-xs">주의 학생</p>
             <div className="flex flex-wrap gap-1 mb-3">
