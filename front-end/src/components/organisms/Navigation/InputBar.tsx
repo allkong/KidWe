@@ -15,7 +15,7 @@ const InputBar = ({onSubmit}: InputBarProps) => {
   };
 
   return (
-    <nav className="box-border fixed bottom-0 w-full py-4 text-base bg-white border-t px-7">
+    <nav className="box-border relative bottom-0 w-full py-4 text-base bg-white border-t px-7">
       <InputForm
         placeholder="댓글 입력"
         inputValue={comment}
