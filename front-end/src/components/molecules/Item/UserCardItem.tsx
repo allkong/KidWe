@@ -9,7 +9,7 @@ interface Option {
 }
 
 interface UserCardItemProps {
-  profile: string;
+  profile: string|undefined;
   userName: string;
   banName?: string;
   cardType: 'basic' | 'detail' | 'arrow';

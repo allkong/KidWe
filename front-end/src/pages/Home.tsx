@@ -7,15 +7,12 @@ import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {getMemberId} from '@/utils/userData';
-import noProfile from '@/assets/no-profile.png';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
-import {getFullImageSource} from '@/utils/getFullImageSource';
 import {isTeacher} from '@/utils/auth/isTeacher';
 
 const Home = () => {
   const {data: userInfo} = useGetUserInfo(getMemberId()!);
-  const userImage = getFullImageSource(userInfo?.picture);
 
   const navigate = useNavigate();
   const handleUserCardItemClick = () => {
@@ -37,7 +34,7 @@ const Home = () => {
         </div>
         <div onClick={handleUserCardItemClick}>
           <UserCardItem
-            profile={userImage ?? noProfile}
+            profile={userInfo?.picture}
             userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
             cardType="arrow"
           />
