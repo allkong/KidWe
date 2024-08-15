@@ -14,9 +14,10 @@ export const putDailyNote = async ({
   dailyNoteId,
   body,
 }: PutDailyNoteParams) => {
+  console.log(body);
   const response = await axiosInstace.put(
     `/dailynotes/${memberId}/${dailyNoteId}`,
-    {dailyNoteUpdateRequestDto: body}
+    body
   );
   return response.data;
 };
