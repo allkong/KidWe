@@ -118,7 +118,7 @@ const AttendedKidsButtonView = ({
           attendances.map(attendance => (
             <UserCardItemWithButton
               key={attendance.attendanceId}
-              profile={getFullImageSource(attendance.image)}
+              profile={attendance?.image}
               userName={attendance.kidName}
               negativeLabel="결석"
               onClickNegative={() => {

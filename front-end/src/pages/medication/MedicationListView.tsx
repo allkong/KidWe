@@ -97,8 +97,8 @@ const MedicationListView = () => {
                   onClick={() => handleUserItemClick(item.medicationId, item)}
                 >
                   <UserCardItem
-                    profile={item.profileImage || ''}
-                    userName={item.kidName}
+                    profile={isGuardian() ? item?.kidName : item?.profileImage}
+                    userName={isGuardian() ? item.profileImage! : item.kidName}
                     banName={item.banName}
                     cardType="basic"
                   />

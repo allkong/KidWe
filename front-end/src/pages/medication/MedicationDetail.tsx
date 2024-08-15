@@ -11,6 +11,7 @@ import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
 import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useLoading} from '@/hooks/loading/useLoading';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 const MedicationDetail = () => {
   const navigate = useNavigate();
@@ -75,8 +76,8 @@ const MedicationDetail = () => {
       <Header title={'투약의뢰서'} buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem
-          profile=""
-          userName={userInfo.kidName}
+          profile={isGuardian() ? userInfo?.kidName : userInfo.profileImage}
+          userName={isGuardian() ? userInfo.profileImage : userInfo?.kidName}
           banName={userInfo.banName}
           cardType="detail"
           options={options}
