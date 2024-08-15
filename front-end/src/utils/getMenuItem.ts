@@ -8,7 +8,7 @@ interface MenuItem {
 }
 
 const directorMenus = [1, 2, 3, 5, 6, 7, 11];
-const teacherMenus = [1, 2, 3, 4, 5, 6, 7];
+const teacherMenus = [1, 2, 3, 4, 5, 6, 7, 11];
 const guardianMenus = [1, 2, 5, 6, 7];
 
 export const getMenuItem = (

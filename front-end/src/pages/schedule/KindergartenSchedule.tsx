@@ -16,6 +16,7 @@ import {ScheduleTeacherMenu} from '@/components/organisms/Schedule/ScheduleTeach
 
 const KindergartenSchedule = () => {
   const setBanState = useSetRecoilState(directorBanState);
+
   const handleBanChange = (value: string) => {
     setBanState(+value);
   };
