@@ -1,9 +1,12 @@
+import {useParams} from 'react-router-dom';
+
 import {Comment} from '@/types/article/Comment';
-// import {ROLE_NAMES} from '@/constants/roleNames';
+import {ROLE_NAMES} from '@/constants/roleNames';
+import {useDeleteDailyNoteComment} from '@/hooks/daily-note/useDeleteDailyNoteComment';
+import {getMemberId} from '@/utils/userData';
 
 import CommentCount from '@/components/atoms/Comment/CommentCount';
 import CommentItem from '@/components/molecules/Board/CommentItem';
-import {ROLE_NAMES} from '@/constants/roleNames';
 
 interface CommentSectionProps {
   commentCount: number;
@@ -18,6 +21,17 @@ const CommentSection = ({
   onReplyClick,
   selectedCommentId,
 }: CommentSectionProps) => {
+  const id = useParams();
+  const deleteMutation = useDeleteDailyNoteComment();
+
+  const handleDeleteComment = (commentId: number) => {
+    deleteMutation.mutate({
+      memberId: getMemberId()!,
+      id,
+      dailyNoteCommentId: commentId,
+    });
+  };
+
   return (
     <div className="px-4 pt-3 mb-2 space-y-2">
       <div className="m-2 text-sm">
@@ -33,6 +47,7 @@ const CommentSection = ({
             date={comment.createdTime}
             onClick={() => onReplyClick(comment.id)}
             isSelected={comment.id === selectedCommentId}
+            onDelete={() => handleDeleteComment(comment.id)} // 삭제 핸들러 전달
           />
           {comment.childs.length > 0 && (
             <div className="pl-3 mt-4 space-y-4">
@@ -46,6 +61,7 @@ const CommentSection = ({
                   date={reply.createdTime}
                   onClick={() => onReplyClick(comment.id)}
                   isReply
+                  onDelete={() => handleDeleteComment(Number(reply.id))}
                 />
               ))}
             </div>
