@@ -74,10 +74,12 @@ const DailyNoteListView = () => {
         onClickRight={handleRightClick}
       />
       <div className={`${containerNavigatorClass} pt-[6.5rem] flex flex-col`}>
-        <DirectorSelectItem
-          memberRole={memberRole}
-          onBanChange={handleIdChange}
-        />
+        <div className="w-full px-3">
+          <DirectorSelectItem
+            memberRole={memberRole}
+            onBanChange={handleIdChange}
+          />
+        </div>
         {(data &&
           Object.keys(data.dailyNoteListItemResponseDtos).length === 0) ||
         !id ? (
