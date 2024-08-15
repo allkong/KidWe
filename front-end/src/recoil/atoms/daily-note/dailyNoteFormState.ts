@@ -4,7 +4,6 @@ import {atom} from 'recoil';
 export const dailyNoteFormState = atom<DailyNoteForm>({
   key: 'dailyNoteForm',
   default: {
-    kidId: undefined,
     sendTime: '',
     content: '',
   },

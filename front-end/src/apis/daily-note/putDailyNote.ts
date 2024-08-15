@@ -4,7 +4,7 @@ export interface PutDailyNoteParams {
   memberId: number;
   dailyNoteId: string;
   body: {
-    kidId: number;
+    sendTime: string;
     content: string;
   };
 }
