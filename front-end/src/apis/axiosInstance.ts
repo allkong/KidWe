@@ -50,7 +50,7 @@ axiosInstance.interceptors.response.use(
         console.log('Access Token 재발급 완료');
         return axiosInstance(error.config);
       } catch (error) {
-        // window.location.replace('/auth/login');
+        window.location.replace('/auth/login');
       }
     }
     throw error;
