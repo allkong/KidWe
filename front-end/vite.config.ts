@@ -29,6 +29,6 @@ export default defineConfig({
     port: 3030, // 포트를 3030으로 설정
   },
   esbuild: {
-    drop: ['console', 'debugger'],
+    // drop: ['console', 'debugger'],
   },
 });
