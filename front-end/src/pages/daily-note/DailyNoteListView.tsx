@@ -17,6 +17,7 @@ import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {isDirector} from '@/utils/auth/isDirector';
 import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 const DailyNoteListView = () => {
   const navigate = useNavigate();
@@ -37,13 +38,14 @@ const DailyNoteListView = () => {
     }
   }, [memberRole]);
 
-  const {data} = useDailyNoteList(
+  const {data, isLoading} = useDailyNoteList(
     id,
     getMemberId()!,
     currentMonth.year(),
     currentMonth.month() + 1,
     memberRole
   );
+  useLoading(isLoading);
 
   const handleLeftClick = () => {
     setCurrentMonth(prev => prev.subtract(1, 'month').startOf('month'));
