@@ -88,7 +88,7 @@ const MedicationDetail = () => {
               key={index}
               color={item.color}
               title={item.title}
-              content={item.content}
+              content={item.content === 'image' ? '' : item.content}
               imageUrl={item.imageUrl}
             />
           ))}
