@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import {toast} from 'react-toastify';
 
 import {useDeleteDailyNote} from '@/hooks/daily-note/useDeleteDailyNote';
+import {useDeleteAnnouncement} from '@/hooks/announcement/useDeleteAnnouncement';
 import {getMemberId} from '@/utils/userData';
 import {getFullImageSource} from '@/utils/getFullImageSource';
 
@@ -29,14 +30,21 @@ const Author = ({
     dailyNoteId?: string;
     announcementId?: string;
   }>();
-  const deleteMutation = useDeleteDailyNote();
+  const {mutate: deleteDailyNote} = useDeleteDailyNote();
+  const {mutate: deleteAnnouncement} = useDeleteAnnouncement();
 
   const handleDelete = () => {
     if (isAnnouncement && announcementId) {
-      // 공지사항 삭제 로직 추가
-      // 예: useDeleteAnnouncement 훅 사용
+      deleteAnnouncement(
+        {announcementId},
+        {
+          onSuccess: () => {
+            navigate('/announcements');
+          },
+        }
+      );
     } else if (dailyNoteId) {
-      deleteMutation.mutate(
+      deleteDailyNote(
         {memberId: getMemberId()!, dailyNoteId},
         {
           onSuccess: () => {
