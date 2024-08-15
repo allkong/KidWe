@@ -3,7 +3,7 @@ import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import XSmallButton from '@/components/atoms/Button/XSmallButton';
 
 interface UserCardItemProps {
-  profile: string;
+  profile?: string;
   userName: string;
   banName?: string;
   onClickNegative?: () => void;
