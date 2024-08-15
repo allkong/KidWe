@@ -1,4 +1,4 @@
-import axiosInstace from 'axios';
+import axiosInstace from '@/apis/axiosInstance';
 
 export interface PutDailyNoteParams {
   memberId: number;
@@ -16,7 +16,7 @@ export const putDailyNote = async ({
 }: PutDailyNoteParams) => {
   const response = await axiosInstace.put(
     `/dailynotes/${memberId}/${dailyNoteId}`,
-    body
+    {dailyNoteUpdateRequestDto: body}
   );
   return response.data;
 };
