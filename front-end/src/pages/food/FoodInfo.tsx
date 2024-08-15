@@ -98,7 +98,7 @@ const FoodInfo = () => {
   return (
     <>
       <div
-        className={`${containerNavigatorClass} relative flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
+        className={`${containerNavigatorClass} max-h-screen relative flex flex-col items-center justify-center box-border h-screen px-5 overflow-y-auto`}
       >
         <Header title="급식 정보" buttonType="close" />
         <DateNavigator
@@ -118,7 +118,7 @@ const FoodInfo = () => {
             />
           )}
         </div>
-        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3">
+        <div className="flex flex-col items-center justify-center flex-grow mb-20 space-y-3 overflow-y-auto scrollbar-hide">
           <FoodListView food={food} />
         </div>
         <NavigationBar />

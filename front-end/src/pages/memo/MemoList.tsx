@@ -100,7 +100,7 @@ const MemoList = memo(() => {
           onClickLeft={handleLeftClick}
           onClickRight={handleRightClick}
         />
-        <div className="z-10 mt-10">
+        <div className="z-10 max-h-full px-4 py-4 overflow-y-auto min-w-fit scrollbar-hide">
           <MemoListView data={data} onModalClick={handleModalOpen} />
         </div>
         <WriteButton onClick={moveToWrite} />

@@ -69,7 +69,7 @@ const MemoWrite = () => {
     <>
       <div className={`${containerHeaderClass} flex flex-col h-full bg-white`}>
         <Header title="관찰 메모 작성" buttonType="back" />
-        <div className="flex-grow px-5 py-5 space-y-8 overflow-y-scroll">
+        <div className="flex-grow px-5 py-5 space-y-8 overflow-y-auto">
           <MemoTimeSelect />
           <MemoTagSelect />
           <KindergartenInfomationSelect />

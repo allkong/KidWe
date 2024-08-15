@@ -27,7 +27,7 @@ const AnnouncementListView = () => {
   useLoading(isLoading);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen max-h-screen">
       <Header title="공지사항" buttonType="close" />
       <div className={`${containerHeaderClass}`}>
         {data?.length === 0 ? (
