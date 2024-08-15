@@ -1,0 +1,63 @@
+version: '3.3'
+
+services:
+  # main back-end
+  back-jpa:
+    build:
+      context: ./build_files
+      dockerfile: Back-JPA-Dockerfile
+    container_name: back-jpa-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - redis
+  # sub back-end
+  back-mongo:
+    build:
+      context: ./build_files
+      dockerfile: Back-MongoDB-Dockerfile
+    container_name: back-mongo-container
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mongodb
+  # db - mysql
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql-container
+    volumes:
+      - /home/ubuntu/mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=ssafy
+      - MYSQL_DATABASE=kidwe
+      - MYSQL_USER=ssafy
+      - MYSQL_PASSWORD=ssafy
+  # db - redis
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    volumes:
+      - /home/ubuntu/redis_data:/data
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=ssafy
+  # db - mongo db
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container
+    volumes:
+            - /home/ubuntu/mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ssafy
+      - MONGO_INITDB_ROOT_PASSWORD=ssafy
+  # ㅁ
+
+volumes:
+  mysql_data:
+  mongodb_data:
