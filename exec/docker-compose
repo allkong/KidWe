@@ -50,13 +50,12 @@ services:
     image: mongo:latest
     container_name: mongodb-container
     volumes:
-            - /home/ubuntu/mongodb_data:/data/db
+      - /home/ubuntu/mongodb_data:/data/db
     ports:
       - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=ssafy
       - MONGO_INITDB_ROOT_PASSWORD=ssafy
-  # ㅁ
 
 volumes:
   mysql_data:
