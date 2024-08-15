@@ -1,9 +1,11 @@
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 import {toast} from 'react-toastify';
 
 import {announcementFormState} from '@/recoil/atoms/announcement/announcementFormState';
+import {usePostAnnouncement} from '@/hooks/announcement/usePostAnnouncement';
+import {getMemberId} from '@/utils/userData';
 import {containerHeaderClass} from '@/styles/styles';
 
 import Header from '@/components/organisms/Navigation/Header';
@@ -16,6 +18,7 @@ import VoteModal from '@/components/organisms/Modal/VoteModal';
 
 const AnnouncementWrite = () => {
   const navigate = useNavigate();
+  const {mutate} = usePostAnnouncement();
   const [formState, setFormState] = useRecoilState(announcementFormState);
   const resetFormState = useResetRecoilState(announcementFormState);
   const [files, setFiles] = useState<File[]>([]);
@@ -26,6 +29,10 @@ const AnnouncementWrite = () => {
       resetFormState();
     };
   }, [resetFormState]);
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormState(prev => ({...prev, title: e.target.value}));
+  };
 
   const handleEditorChange = (value: string) => {
     setFormState(prev => ({...prev, content: value}));
@@ -58,9 +65,9 @@ const AnnouncementWrite = () => {
       formData.append('images', file);
     });
 
-    // mutate({memberId: getMemberId()!, formData});
+    mutate({memberId: getMemberId()!, formData});
     navigate('/announcements');
-  }, [formState, files, navigate]);
+  }, [formState, files, mutate, navigate]);
 
   const options = [
     {
@@ -80,12 +87,12 @@ const AnnouncementWrite = () => {
         <TitleInput
           value={formState.title}
           placeholder="제목"
-          // onChange={e => setTitle(e.target.value)}
+          onChange={handleTitleChange}
         />
         <TextEditor value={formState.content} onChange={handleEditorChange} />
-        <div className="p-6 mt-10">
+        <div className="p-6 mt-12">
           <div className="flex flex-row items-center mb-2">
-            <ImageIcon fill="black" width={24} height={25} />
+            <ImageIcon width={20} height={21} />
             <p className="ms-2">사진 선택</p>
             <p className="text-xs ms-5">{files.length}/10</p>
           </div>
@@ -95,7 +102,7 @@ const AnnouncementWrite = () => {
             onAddImage={handleAddImage}
           />
         </div>
-        <div className="p-6">
+        <div className="px-6 py-3">
           <VoteModal />
         </div>
       </div>

@@ -12,9 +12,9 @@ import Button from '@/components/atoms/Button/Button';
 import DashedButton from '@/components/atoms/Button/DashedButton';
 import Modal from '@/components/organisms/Modal/Modal';
 import ModalPortal from '@/components/organisms/Modal/ModalPortal';
-import VoteIcon from '@/assets/icons/vote.svg?react';
 import Divider from '@/components/atoms/Divider/Divider';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
+import VoteIcon from '@/assets/icons/vote-outline.svg?react';
 
 const VoteModal = () => {
   //   const navigate = useNavigate();
@@ -53,7 +53,6 @@ const VoteModal = () => {
         {voteInfo ? (
           <>
             <div className="flex items-center justify-start">
-              <VoteIcon width={36} height={36} />
               <p>투표</p>
             </div>
             <div className="box-border max-w-full px-2 py-2 mx-2 space-y-2 border rounded-lg">
@@ -82,7 +81,10 @@ const VoteModal = () => {
           </>
         ) : (
           <>
-            <p className="w-full px-2 space-y-2">투표 추가</p>
+            <div className="flex flex-row items-center mb-2">
+              <VoteIcon width={20} height={20} />
+              <p className="ms-2">투표 추가</p>
+            </div>
             <DashedButton
               label="+"
               onClick={handleModalOpen}
