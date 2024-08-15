@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 import {announcementFormState} from '@/recoil/atoms/announcement/announcementFormState';
 import {usePostAnnouncement} from '@/hooks/announcement/usePostAnnouncement';
 import {getMemberId} from '@/utils/userData';
+import type {VoteInfo} from '@/types/announcement/VoteInfo';
 import {containerHeaderClass} from '@/styles/styles';
 
 import Header from '@/components/organisms/Navigation/Header';
@@ -53,6 +54,10 @@ const AnnouncementWrite = () => {
     setImagePreviews([...imagePreviews, ...newImagePreviews]);
   };
 
+  const handleVoteChange = (vote: VoteInfo | undefined) => {
+    setFormState(prev => ({...prev, vote}));
+  };
+
   const handleFormSubmit = useCallback(() => {
     const formData = new FormData();
 
@@ -64,6 +69,13 @@ const AnnouncementWrite = () => {
     files.forEach(file => {
       formData.append('images', file);
     });
+
+    if (formState.vote) {
+      formData.append(
+        'vote',
+        new Blob([JSON.stringify(formState.vote)], {type: 'application/json'})
+      );
+    }
 
     mutate({memberId: getMemberId()!, formData});
     navigate('/announcements');
@@ -102,8 +114,8 @@ const AnnouncementWrite = () => {
             onAddImage={handleAddImage}
           />
         </div>
-        <div className="px-6 py-3">
-          <VoteModal />
+        <div className="px-6 pb-10">
+          <VoteModal onVoteChange={handleVoteChange} />
         </div>
       </div>
       <ButtonBar
