@@ -3,7 +3,7 @@ import {useMutation} from '@tanstack/react-query';
 import {LoginResponse} from '@/types/login/LoginResponse';
 import {setAccessToken} from '@/utils/userAccessToken';
 import {setUserData} from '@/utils/userData';
-import {setRefreshToken} from '@/utils/userRefreshToken';
+// import {setRefreshToken} from '@/utils/userRefreshToken';
 // import {getFcmToken} from '@/utils/notification/getFcmToken';
 // import {sendFcmToken} from '@/apis/notification/sendFcmToken';
 
@@ -19,9 +19,9 @@ export const useLogin = () => {
       return login(email, password);
     },
     onSuccess: async (data: LoginResponse) => {
-      const {accessToken, refreshToken, ...userData} = data;
+      const {accessToken, ...userData} = data;
       setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
+      // setRefreshToken(refreshToken);
       setUserData(userData);
 
       // const permission = await Notification.requestPermission();
