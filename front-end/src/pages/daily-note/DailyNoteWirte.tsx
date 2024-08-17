@@ -35,13 +35,17 @@ const DailyNoteWrite = () => {
   const userRole = getMemberRole();
 
   useEffect(() => {
+    if (!isLoading && userRole === RoleItem.Guardian && kidId) {
+      console.log('Data Loaded: ', kidId);
+      setFormState(prev => ({...prev, kidId: kidId!}));
+    }
+  }, [isLoading, data, kidId, userRole, setFormState]);
+
+  useEffect(() => {
     return () => {
       resetFormState();
-      if (!isLoading && userRole === RoleItem.Guardian && kidId) {
-        setFormState(prev => ({...prev, kidId: kidId!}));
-      }
     };
-  }, [resetFormState, isLoading, userRole, setFormState, kidId]);
+  }, [resetFormState]);
 
   const handleEditorChange = (value: string) => {
     setFormState(prev => ({...prev, content: value}));
