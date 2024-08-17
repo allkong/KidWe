@@ -24,7 +24,7 @@ import {RoleItem} from '@/enum/roleItem';
 const DailyNoteWrite = () => {
   const navigate = useNavigate();
   const kidId = getKidId();
-  const {data} = useGetKidInfo(kidId!);
+  const {data, isLoading} = useGetKidInfo(kidId!);
   const {mutate} = usePostDailyNote();
   const [formState, setFormState] = useRecoilState(dailyNoteFormState);
   const resetFormState = useResetRecoilState(dailyNoteFormState);
@@ -37,11 +37,11 @@ const DailyNoteWrite = () => {
   useEffect(() => {
     return () => {
       resetFormState();
-      if (kidId && userRole === RoleItem.Guardian) {
+      if (!isLoading && userRole === RoleItem.Guardian && kidId) {
         setFormState(prev => ({...prev, kidId: kidId!}));
       }
     };
-  }, [resetFormState, userRole, setFormState, kidId]);
+  }, [resetFormState, isLoading, userRole, setFormState, kidId]);
 
   const handleEditorChange = (value: string) => {
     setFormState(prev => ({...prev, content: value}));
