@@ -37,7 +37,7 @@ const DailyNoteWrite = () => {
   useEffect(() => {
     return () => {
       resetFormState();
-      if (userRole === RoleItem.Guardian) {
+      if (kidId && userRole === RoleItem.Guardian) {
         setFormState(prev => ({...prev, kidId: kidId!}));
       }
     };
