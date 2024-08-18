@@ -1,6 +1,6 @@
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
 import WriteButton from '@/components/atoms/Button/WriteButton';
-import {memo, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {containerNavigatorClass} from '@/styles/styles';
 import Header from '@/components/organisms/Navigation/Header';
@@ -14,6 +14,8 @@ import {useGetDateBySearchParam} from '@/hooks/useGetDateBySearchParam';
 import {useLoading} from '@/hooks/loading/useLoading';
 import MemoListView from '@/components/organisms/Memo/MemoListView';
 import MemoModal from '@/components/organisms/Memo/MemoModal';
+import {useResetRecoilState} from 'recoil';
+import {memoState} from '@/recoil/atoms/memo/memo';
 
 const MemoList = memo(() => {
   const date = useGetDateBySearchParam();
@@ -32,6 +34,11 @@ const MemoList = memo(() => {
       search: `?date=${date.add(1, 'day').format('YYYY-MM-DD')}`,
     });
   };
+
+  const memoReset = useResetRecoilState(memoState);
+  useEffect(() => {
+    memoReset();
+  }, []);
 
   // data fetch
   const {data, refetch, isLoading} = useGetDailyMemo(
