@@ -11,6 +11,7 @@ import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {isTeacher} from '@/utils/auth/isTeacher';
 import kidweLogo from '@/assets/kidwe-logo.png';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const Home = () => {
   const {data: userInfo} = useGetUserInfo(getMemberId()!);
@@ -37,7 +38,7 @@ const Home = () => {
         <div className="space-y-3 ">
           <div onClick={handleUserCardItemClick}>
             <UserCardItem
-              profile={userInfo?.picture}
+              profile={getFullImageSource(userInfo?.picture)}
               userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
               cardType="arrow"
             />
