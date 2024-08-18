@@ -1,4 +1,3 @@
-import {getFullImageSource} from '@/utils/getFullImageSource';
 import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import MoreButton from '@/components/molecules/DropdownButton/MoreButton';
 import BracketButton from '@/components/atoms/Button/BracketButton';
@@ -9,7 +8,7 @@ interface Option {
 }
 
 interface UserCardItemProps {
-  profile: string|undefined;
+  profile: string | undefined;
   userName: string;
   banName?: string;
   cardType: 'basic' | 'detail' | 'arrow';
@@ -30,7 +29,7 @@ const UserCardItem = ({
       className={`flex justify-between items-center py-5 px-8 bg-white ${arrowClass}`}
     >
       <div className="flex items-center space-x-4">
-        <ProfileImage src={getFullImageSource(profile)} size="2.9rem" />
+        <ProfileImage src={profile || ''} size="2.9rem" />
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}
       </div>

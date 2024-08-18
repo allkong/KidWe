@@ -17,6 +17,7 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
 import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
 import {isGuardian} from '@/utils/auth/isGuardian';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const MedicationListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
@@ -97,8 +98,8 @@ const MedicationListView = () => {
                   onClick={() => handleUserItemClick(item.medicationId, item)}
                 >
                   <UserCardItem
-                    profile={isGuardian() ? item?.kidName : item?.profileImage}
-                    userName={isGuardian() ? item.profileImage! : item.kidName}
+                    profile={getFullImageSource(item?.kidPicture)}
+                    userName={item.kidName}
                     banName={item.banName}
                     cardType="basic"
                   />
