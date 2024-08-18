@@ -18,6 +18,8 @@ import {useLoading} from '@/hooks/loading/useLoading';
 const MemoWrite = () => {
   const navigate = useNavigate();
 
+  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
+
   const [serachParams] = useSearchParams();
   const paramDate = serachParams.get('date'); // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
   let currentDate = dayjs().format('YYYY-MM-DD HH:mm');
@@ -27,15 +29,8 @@ const MemoWrite = () => {
     );
   }
 
-  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   useEffect(() => {
-    setMemo({
-      content: '',
-      kids: [],
-      lesson: '',
-      tags: [],
-      updatedTime: dayjs(currentDate),
-    });
+    setMemo({...memo, updatedTime: dayjs(currentDate)});
   }, [currentDate, setMemo]);
 
   const [isValid, setIsValid] = useState(false);

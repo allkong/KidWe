@@ -15,6 +15,7 @@ import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import {Gender} from '@/enum/gender';
 import {genderLabels} from '@/constants/genderLabel';
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
+import noProfile from '@/assets/no-profile.png';
 // const genderItems = [
 //   {value: 'MALE', label: '남아'},
 //   {value: 'FEMALE', label: '여아'},
@@ -26,7 +27,7 @@ const KindergartenChild: React.FC = () => {
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [selectedGender, setSelectedGender] = useState<string>('');
   const [datas, setDatas] = useState<Allergy[]>(ALLERGIES);
-  const [userpicture, setPicture] = useState<string>('');
+  const [userpicture, setPicture] = useState<string | undefined>();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const [isStateUpdated, setIsStateUpdated] = useState(false);
@@ -146,7 +147,7 @@ const KindergartenChild: React.FC = () => {
             )}
           </div> */}
             <ImageUploadButton
-              userPicture={userpicture}
+              userPicture={userpicture === undefined ? noProfile : userpicture}
               onChangeFile={handleFileChange}
               onChangePreview={handlePreviewChange}
             />
