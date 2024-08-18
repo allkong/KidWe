@@ -17,6 +17,7 @@ import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {getMemberRole, getKidId, getBanId} from '@/utils/userData';
 import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
 import {isGuardian} from '@/utils/auth/isGuardian';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 const LeaveConsentListView = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs().startOf('month'));
@@ -100,7 +101,7 @@ const LeaveConsentListView = () => {
                   onClick={() => handleUserItemClick(item.leaveConsentId, item)}
                 >
                   <UserCardItem
-                    profile={item.profileImage || ''}
+                    profile={getFullImageSource(item.kidPicture)}
                     userName={item.kidName}
                     banName={item.banName}
                     cardType="basic"
