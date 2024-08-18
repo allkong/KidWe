@@ -11,6 +11,8 @@ import {toast} from 'react-toastify';
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
 import {SignupFormState} from '@/types/signup/SignupFormState';
 import {signupPictureState} from '@/recoil/atoms/signup/signupPicture';
+import noProfile from '@/assets/no-profile.png';
+
 const RegisterInfo = () => {
   const [signupregister, setSignupRegister] =
     useRecoilState<SignupFormState>(Signup);
@@ -20,7 +22,7 @@ const RegisterInfo = () => {
   const [userpassword, setUserpassword] = useState('');
   const [userpassword2, setUserpassword2] = useState('');
   const [usertel, setUsertel] = useState('');
-  const [userpicture, setPicture] = useState<string>('');
+  const [userpicture, setPicture] = useState<string | undefined>();
   const [imageFile, setImageFile] = useRecoilState(signupPictureState);
   const [iswrongpasswordtype, setIsWrongPasswordType] = useState(false);
   const [iswrongemailtype, setIsWrongEmailType] = useState(false);
@@ -158,7 +160,7 @@ const RegisterInfo = () => {
           </div>
         </div> */}
         <ImageUploadButton
-          userPicture={userpicture}
+          userPicture={userpicture === undefined ? noProfile : userpicture}
           onChangeFile={handleFileChange}
           onChangePreview={handlePreviewChange}
         />
