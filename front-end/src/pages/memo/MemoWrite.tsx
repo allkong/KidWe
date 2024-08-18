@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {useWriteDailyMemo} from '@/hooks/memo/useWriteDailyMemo';
 import {PostMemo} from '@/types/memo/PostMemo';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useRecoilState, useResetRecoilState, useSetRecoilState} from 'recoil';
 import dayjs from 'dayjs';
 import {getMemberId} from '@/utils/userData';
 import {loadingState} from '@/recoil/atoms/axios/loading';
@@ -17,6 +17,9 @@ import {useLoading} from '@/hooks/loading/useLoading';
 
 const MemoWrite = () => {
   const navigate = useNavigate();
+
+  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
+  const memoReset = useResetRecoilState(memoState);
 
   const [serachParams] = useSearchParams();
   const paramDate = serachParams.get('date'); // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
@@ -27,16 +30,13 @@ const MemoWrite = () => {
     );
   }
 
-  const [memo, setMemo] = useRecoilState<PostMemo>(memoState);
   useEffect(() => {
-    setMemo({
-      content: '',
-      kids: [],
-      lesson: '',
-      tags: [],
-      updatedTime: dayjs(currentDate),
-    });
+    setMemo({...memo, updatedTime: dayjs(currentDate)});
   }, [currentDate, setMemo]);
+
+  useEffect(() => {
+    memoReset();
+  }, []);
 
   const [isValid, setIsValid] = useState(false);
   useEffect(() => {
