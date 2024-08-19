@@ -4,14 +4,14 @@ import {useNavigate, useLocation, useParams} from 'react-router-dom';
 import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
 import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
+import {useLoading} from '@/hooks/loading/useLoading';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
 import DetailLabelItem from '@/components/molecules/Item/DetailLabelItem';
 import ConsentSignatureCard from '@/components/organisms/Signature/ConsentSignatureCard';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {useLoading} from '@/hooks/loading/useLoading';
-import {isGuardian} from '@/utils/auth/isGuardian';
 
 const MedicationDetail = () => {
   const navigate = useNavigate();
