@@ -5,7 +5,7 @@ import {useMedicationDetail} from '@/hooks/medication/useMedicationDetail';
 import {useDeleteMedication} from '@/hooks/medication/useDeleteMedication';
 import {containerHeaderClass} from '@/styles/styles';
 import {useLoading} from '@/hooks/loading/useLoading';
-import {isGuardian} from '@/utils/auth/isGuardian';
+import {getFullImageSource} from '@/utils/getFullImageSource';
 
 import Header from '@/components/organisms/Navigation/Header';
 import UserCardItem from '@/components/molecules/Item/UserCardItem';
@@ -76,8 +76,8 @@ const MedicationDetail = () => {
       <Header title={'투약의뢰서'} buttonType="back" />
       <div className={containerHeaderClass}>
         <UserCardItem
-          profile={isGuardian() ? userInfo?.kidName : userInfo.profileImage}
-          userName={isGuardian() ? userInfo.profileImage : userInfo?.kidName}
+          profile={getFullImageSource(data?.kidPicture)}
+          userName={userInfo.kidName}
           banName={userInfo.banName}
           cardType="detail"
           options={options}
