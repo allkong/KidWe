@@ -1,6 +1,7 @@
 import {useEffect, useState, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useRecoilState, useResetRecoilState} from 'recoil';
+
 import {usePostLeaveConsent} from '@/hooks/leave-consent/usePostLeaveConsent';
 import {leaveConsentFormState} from '@/recoil/atoms/leave-consent/leaveConsentFormState';
 import {formatDateToYMD} from '@/utils/dayjsPlugin';
@@ -12,6 +13,7 @@ import {
 import {DATE_OPTIONS} from '@/constants/dateOptions';
 import {containerHeaderClass} from '@/styles/styles';
 import {getKidId, getMemberId} from '@/utils/userData';
+
 import Spinner from '@/components/atoms/Loader/Spinner';
 import Header from '@/components/organisms/Navigation/Header';
 import RadioCircleButton from '@/components/atoms/CheckBox/RadioCircleButton';
