@@ -8,14 +8,17 @@ import AnnounceItem from '@/components/molecules/Item/AnnounceItem';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 
-import {getMemberId} from '@/utils/userData';
+import {getMemberId, getKindergartenId} from '@/utils/userData';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {isGuardian} from '@/utils/auth/isGuardian';
 
 const AnnouncementListView = () => {
   const navigate = useNavigate();
 
-  const {data, isLoading} = useAnnouncementList(getMemberId()!);
+  const {data, isLoading} = useAnnouncementList(
+    getMemberId()!,
+    getKindergartenId()!
+  );
 
   const handleUserItemClick = (announcementId: number) => {
     navigate(`/announcements/${announcementId}`);
