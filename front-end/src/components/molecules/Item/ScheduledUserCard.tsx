@@ -1,10 +1,13 @@
-import homeImage from '@/assets/image/home.png';
+import {RoleItem} from '@/enum/roleItem';
+import {getFullImageSource} from '@/utils/getFullImageSource';
+
 import kindergartenImage from '@/assets/image/kindergarten.png';
 import ScheduledIcon from '@/assets/icons/time-line.svg?react';
 import SendIcon from '@/assets/icons/send-plane-line.svg?react';
-import {RoleItem} from '@/enum/roleItem';
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
 
 interface ScheduledUserCardProps {
+  profile?: string;
   userName: string;
   banName?: string;
   writer: RoleItem;
@@ -13,6 +16,7 @@ interface ScheduledUserCardProps {
 }
 
 const ScheduledUserCard = ({
+  profile,
   userName,
   banName,
   writer,
@@ -26,9 +30,9 @@ const ScheduledUserCard = ({
     >
       <div className="flex items-center space-x-4">
         {writer === RoleItem.Guardian ? (
-          <img className="w-12" src={homeImage} />
+          <ProfileImage src={getFullImageSource(profile)} size="2.75rem" />
         ) : (
-          <img className="w-12" src={kindergartenImage} />
+          <img className="w-11" src={kindergartenImage} />
         )}
         <span className="text-lg font-medium">{userName}</span>
         {banName && <span className="text-sm font-medium">{banName}</span>}

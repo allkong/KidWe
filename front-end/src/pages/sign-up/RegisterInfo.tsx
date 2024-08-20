@@ -11,7 +11,7 @@ import {toast} from 'react-toastify';
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
 import {SignupFormState} from '@/types/signup/SignupFormState';
 import {signupPictureState} from '@/recoil/atoms/signup/signupPicture';
-import noProfile from '@/assets/no-profile.png';
+import noProfile from '@/assets/image/no-profile.png';
 
 const RegisterInfo = () => {
   const [signupregister, setSignupRegister] =

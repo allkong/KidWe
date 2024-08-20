@@ -101,6 +101,7 @@ const DailyNoteListView = () => {
                     onClick={() => handleUserItemClick(item.id)}
                   >
                     <ScheduledUserCard
+                      profile={item.kidPicture}
                       userName={item.kidName}
                       banName={item.banName}
                       writer={item.writerRole}

@@ -1,11 +1,12 @@
-import NoProfile from '@/assets/no-profile.png';
-import ProfileImage from '@/components/atoms/Image/ProfileImage';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 import {getMemberId} from '@/utils/userData';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {useLoading} from '@/hooks/loading/useLoading';
 import {getFullImageSource} from '@/utils/getFullImageSource';
+
+import NoProfile from '@/assets/image/no-profile.png';
+import ProfileImage from '@/components/atoms/Image/ProfileImage';
 
 const UserInfo = () => {
   const {data, isLoading} = useGetUserInfo(getMemberId()!);
