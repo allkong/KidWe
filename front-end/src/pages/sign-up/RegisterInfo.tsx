@@ -34,7 +34,13 @@ const RegisterInfo = () => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const signupMutate = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({
+      signupregister,
+      imageFile,
+    }: {
+      signupregister: SignupFormState;
+      imageFile: File | null;
+    }) => {
       return postSignup(signupregister, imageFile);
     },
     onSuccess: () => {
@@ -80,18 +86,32 @@ const RegisterInfo = () => {
       }
     }
 
-    setSignupRegister(prevState => ({
-      ...prevState,
-      dto: {
-        ...prevState.dto,
-        name: username,
-        tel: usertel,
-        email: useremail,
-        password: userpassword,
+    signupMutate.mutate({
+      signupregister: {
+        ...signupregister,
+        dto: {
+          ...signupregister.dto,
+          name: username,
+          tel: usertel,
+          email: useremail,
+          password: userpassword,
+        },
       },
-      picture: userpicture,
-    }));
-    setIsStateUpdated(true);
+      imageFile,
+    });
+
+    // setSignupRegister(prevState => ({
+    //   ...prevState,
+    //   dto: {
+    //     ...prevState.dto,
+    //     name: username,
+    //     tel: usertel,
+    //     email: useremail,
+    //     password: userpassword,
+    //   },
+    //   picture: userpicture,
+    // }));
+    // setIsStateUpdated(true);
   };
 
   // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,13 +140,13 @@ const RegisterInfo = () => {
         onClose: () => navigate('/auth/signup/role'),
       });
     }
-    if (isStateUpdated) {
-      // 여기서 info랑 pircture 타입 맞춰서 인수로 주기@@@@@@@@@@@@@@@@@@@@
-      // 0813 19:10 기준으로 하기
-      // 다시 보니 여기서는 인수를 넘기는게 없고, 어차피 api 에서 인수 바꿔줄거임
-      signupMutate.mutate();
-      setIsStateUpdated(false);
-    }
+    // if (isStateUpdated) {
+    //   // 여기서 info랑 pircture 타입 맞춰서 인수로 주기@@@@@@@@@@@@@@@@@@@@
+    //   // 0813 19:10 기준으로 하기
+    //   // 다시 보니 여기서는 인수를 넘기는게 없고, 어차피 api 에서 인수 바꿔줄거임
+    //   signupMutate.mutate();
+    //   setIsStateUpdated(false);
+    // }
   }, [isStateUpdated, navigate, signupMutate, signupregister]);
 
   return (
