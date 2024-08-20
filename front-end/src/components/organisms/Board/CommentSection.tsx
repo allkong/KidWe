@@ -5,7 +5,6 @@ import {ROLE_NAMES} from '@/constants/roleNames';
 import {useDeleteDailyNoteComment} from '@/hooks/daily-note/useDeleteDailyNoteComment';
 import {getMemberId} from '@/utils/userData';
 import {RoleItem} from '@/enum/roleItem';
-import {isGuardian} from '@/utils/auth/isGuardian';
 
 import CommentCount from '@/components/atoms/Comment/CommentCount';
 import CommentItem from '@/components/molecules/Board/CommentItem';
@@ -55,7 +54,7 @@ const CommentSection = ({
           <CommentItem
             profile={comment.picture}
             writer={writerNameByRole(comment) || ''}
-            banName={isGuardian() ? comment.banName : ''}
+            banName={comment.role === RoleItem.Guardian ? comment.banName : ''}
             content={comment.content}
             date={comment.createdTime}
             onClick={() => onReplyClick(comment.id)}
