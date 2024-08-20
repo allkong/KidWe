@@ -104,7 +104,7 @@ const DailyNoteListView = () => {
                       profile={item.kidPicture}
                       userName={item.kidName}
                       banName={item.banName}
-                      writer={item.writerRole}
+                      writerRole={item.writerRole}
                       isSchedule={isFutureTime}
                       sendTime={dayjs(item.sendTime).format('HH:mm')}
                     />
