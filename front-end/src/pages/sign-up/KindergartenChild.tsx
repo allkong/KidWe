@@ -15,7 +15,7 @@ import CalendarButton from '@/components/molecules/Button/CalendarButton';
 import {Gender} from '@/enum/gender';
 import {genderLabels} from '@/constants/genderLabel';
 import ImageUploadButton from '@/components/molecules/Button/ImageUploadButton';
-import noProfile from '@/assets/no-profile.png';
+import noProfile from '@/assets/image/no-profile.png';
 // const genderItems = [
 //   {value: 'MALE', label: '남아'},
 //   {value: 'FEMALE', label: '여아'},

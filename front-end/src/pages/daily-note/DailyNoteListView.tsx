@@ -7,6 +7,8 @@ import {containerNavigatorClass} from '@/styles/styles';
 import {RoleItem} from '@/enum/roleItem';
 import {getMemberRole, getKidId, getBanId, getMemberId} from '@/utils/userData';
 import {sortedByNewest} from '@/utils/sortedByNewest';
+import {isDirector} from '@/utils/auth/isDirector';
+import {useLoading} from '@/hooks/loading/useLoading';
 
 import Header from '@/components/organisms/Navigation/Header';
 import DateNavigator from '@/components/organisms/Navigation/DateNavigator';
@@ -15,9 +17,7 @@ import MonthDivider from '@/components/atoms/Divider/MonthDivider';
 import ScheduledUserCard from '@/components/molecules/Item/ScheduledUserCard';
 import WriteButton from '@/components/atoms/Button/WriteButton';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
-import {isDirector} from '@/utils/auth/isDirector';
 import DirectorSelectItem from '@/components/organisms/Medication/DirectorSelectItem';
-import {useLoading} from '@/hooks/loading/useLoading';
 
 const DailyNoteListView = () => {
   const navigate = useNavigate();
@@ -101,9 +101,10 @@ const DailyNoteListView = () => {
                     onClick={() => handleUserItemClick(item.id)}
                   >
                     <ScheduledUserCard
+                      profile={item.kidPicture}
                       userName={item.kidName}
                       banName={item.banName}
-                      writer={item.writerRole}
+                      writerRole={item.writerRole}
                       isSchedule={isFutureTime}
                       sendTime={dayjs(item.sendTime).format('HH:mm')}
                     />
