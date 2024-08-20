@@ -24,12 +24,9 @@ const MemoWrite = () => {
   const paramDate = serachParams.get('date'); // query로 date가 올바르지 않게 들어올 때 에러 처리 필요
   let currentDate = dayjs().format('YYYY-MM-DD HH:mm');
   if (paramDate !== undefined) {
-    // currentDate = dayjs(`${paramDate} ${dayjs().format('HH:mm')}`).format(
-    //   'YYYY-MM-DD HH:mm'
-    // );
-    currentDate = dayjs(
-      `${paramDate} ${dayjs('2024-08-20 16:00').format('HH:mm')}`
-    ).format('YYYY-MM-DD HH:mm');
+    currentDate = dayjs(`${paramDate} ${dayjs().format('HH:mm')}`).format(
+      'YYYY-MM-DD HH:mm'
+    );
   }
 
   useEffect(() => {
