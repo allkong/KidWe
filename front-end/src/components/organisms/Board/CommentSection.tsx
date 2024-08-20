@@ -1,9 +1,11 @@
 import {useParams} from 'react-router-dom';
 
-import {Comment} from '@/types/article/Comment';
+import {Comment, Child} from '@/types/article/Comment';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {useDeleteDailyNoteComment} from '@/hooks/daily-note/useDeleteDailyNoteComment';
 import {getMemberId} from '@/utils/userData';
+import {RoleItem} from '@/enum/roleItem';
+import {isGuardian} from '@/utils/auth/isGuardian';
 
 import CommentCount from '@/components/atoms/Comment/CommentCount';
 import CommentItem from '@/components/molecules/Board/CommentItem';
@@ -32,6 +34,17 @@ const CommentSection = ({
     });
   };
 
+  const writerNameByRole = (comment: Comment | Child) => {
+    if (comment.role === RoleItem.Director) {
+      return '유치원 원장님';
+    } else if (comment.role === RoleItem.Teacher) {
+      return `${comment.banName} ${ROLE_NAMES[comment.role]}`;
+    } else if (comment.role === RoleItem.Guardian) {
+      return `${comment.name} ${ROLE_NAMES[comment.role]}`;
+    }
+    return;
+  };
+
   return (
     <div className="px-4 pt-3 mb-2 space-y-2">
       <div className="m-2 text-sm">
@@ -41,8 +54,8 @@ const CommentSection = ({
         <div key={comment.id}>
           <CommentItem
             profile={comment.picture}
-            writer={`${comment.name} ${ROLE_NAMES[comment.role]}`}
-            banName={comment.banName}
+            writer={writerNameByRole(comment) || ''}
+            banName={isGuardian() ? comment.banName : ''}
             content={comment.content}
             date={comment.createdTime}
             onClick={() => onReplyClick(comment.id)}
@@ -56,8 +69,10 @@ const CommentSection = ({
                 <CommentItem
                   key={reply.id}
                   profile={reply.picture}
-                  writer={`${reply.name} ${ROLE_NAMES[reply.role]}`}
-                  banName={reply.banName}
+                  writer={writerNameByRole(reply) || ''}
+                  banName={
+                    reply.role === RoleItem.Guardian ? reply.banName : ''
+                  }
                   content={reply.content}
                   date={reply.createdTime}
                   onClick={() => onReplyClick(comment.id)}

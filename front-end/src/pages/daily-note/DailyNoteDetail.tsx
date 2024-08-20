@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 
 import {useDailyNoteDetail} from '@/hooks/daily-note/useDailyNoteDetail';
 import {usePostComment} from '@/hooks/daily-note/usePostComment';
+import {useLoading} from '@/hooks/loading/useLoading';
 import {containerHeaderClass} from '@/styles/styles';
 import {getMemberId} from '@/utils/userData';
 import {ROLE_NAMES} from '@/constants/roleNames';
@@ -13,7 +14,6 @@ import Author from '@/components/molecules/Board/Author';
 import ArticleSection from '@/components/organisms/Board/ArticleSection';
 import InputBar from '@/components/organisms/Navigation/InputBar';
 import CommentSection from '@/components/organisms/Board/CommentSection';
-import {useLoading} from '@/hooks/loading/useLoading';
 
 const DailyNoteDetail = () => {
   const {dailyNoteId} = useParams();
