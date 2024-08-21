@@ -6,15 +6,28 @@ import HomeMenu from '@/components/organisms/Content/HomeMenu';
 import MemoShortcut from '@/components/organisms/Content/MemoShortcut';
 import NavigationBar from '@/components/organisms/Navigation/NavigationBar';
 import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
-import {getMemberId} from '@/utils/userData';
+import {getKidId, getMemberId} from '@/utils/userData';
 import {ROLE_NAMES} from '@/constants/roleNames';
 import {RoleItem} from '@/enum/roleItem';
 import {isTeacher} from '@/utils/auth/isTeacher';
 import kidweLogo from '@/assets/kidwe-logo.png';
 import {getFullImageSource} from '@/utils/getFullImageSource';
+import {useGetKidInfo} from '@/hooks/my-page/useGetKidInfo';
+import {isGuardian} from '@/utils/auth/isGuardian';
+import {useEffect, useState} from 'react';
 
 const Home = () => {
   const {data: userInfo} = useGetUserInfo(getMemberId()!);
+  const {data: kidInfo} = useGetKidInfo(getKidId()!);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    if (isGuardian()) {
+      setName(kidInfo?.name ?? '');
+    } else {
+      setName(userInfo?.name ?? '');
+    }
+  }, [kidInfo, userInfo]);
 
   const navigate = useNavigate();
   const handleUserCardItemClick = () => {
@@ -39,7 +52,7 @@ const Home = () => {
           <div onClick={handleUserCardItemClick}>
             <UserCardItem
               profile={getFullImageSource(userInfo?.picture)}
-              userName={`${userInfo?.name ?? ''} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
+              userName={`${name} ${ROLE_NAMES[userInfo?.role as RoleItem] ?? ''}`}
               cardType="arrow"
             />
           </div>
