@@ -23,7 +23,7 @@ const ImageModal = ({images, selectedImage, onClose}: ImageModalProps) => {
         <span className="text-xl text-white">
           {currentIndex + 1}/{images.length}
         </span>
-        <DownloadButton imageUrl={images[currentIndex]} />
+        <DownloadButton imageUrl={getFullImageSource(images[currentIndex])} />
       </div>
       <div className="absolute inset-0 w-full h-full">
         <Swiper
