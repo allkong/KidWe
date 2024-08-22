@@ -22,6 +22,7 @@ import LabelInput from '@/components/atoms/Input/LabelInput';
 import ConsentSection from '@/components/organisms/Signature/ConsentSection';
 import AreaDivider from '@/components/atoms/Divider/AreaDivider';
 import ButtonBar from '@/components/organisms/Navigation/ButtonBar';
+import {useGetUserInfo} from '@/hooks/my-page/useGetUserInfo';
 
 const LeaveConsentnWrite = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const LeaveConsentnWrite = () => {
   const resetFormState = useResetRecoilState(leaveConsentFormState);
   const [signImage, setSignImage] = useState<File | null>(null);
   const [isValid, setIsValid] = useState(false);
+  const {data: userInfo} = useGetUserInfo(getMemberId()!);
 
   // 모든 필드가 채워졌는지 검사하여 유효성 업데이트
   useEffect(() => {
@@ -150,7 +152,7 @@ const LeaveConsentnWrite = () => {
           <ConsentSection
             text={LEAVECONSENT_MESSAGES.parentConsent}
             date={formatDateToYMD(formState.leaveDate)}
-            parentName="김부모"
+            parentName={userInfo?.name ?? ''}
             onClick={setSignImage}
           />
         </div>
