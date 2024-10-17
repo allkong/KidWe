@@ -300,7 +300,7 @@
 
 | Name      | Roles                                   | GitHub                                         |
 | :-------- | :-------------------------------------- | :--------------------------------------------- |
-| 정다빈 👑 | 팀장, Frontend Leader, Frontend, Design | [@allempti](https://github.com/allkong)        |
+| 정다빈 👑 | 팀장, Frontend Leader, Frontend, Design | [@allkong](https://github.com/allkong)        |
 | 강혁준 🐹 | Frontend                                | [@kanghyukjun](https://github.com/kanghyukjun) |
 | 백승우 🍀 | Frontend, UCC                           | [@galler-ist](https://github.com/galler-ist)   |
 | 변지환 🐶 | Backend Leader, Backend                 | [@JihwanByun](https://github.com/JihwanByun)   |
